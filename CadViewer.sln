@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34601.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadViewer", "CadViewer\CadViewer.csproj", "{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCBView", "PCBViewer\PCBViewer.vcxproj", "{5140F236-4A74-4D34-91FB-0F8187CCFDD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{127F2D72-F55A-4EDE-9EAC-14F619AA910C}"
+	ProjectSection(SolutionItems) = preProject
+		Common\apicom.cpp = Common\apicom.cpp
+		Common\apicom.h = Common\apicom.h
+		Common\apidef.h = Common\apidef.h
+		Common\dllexports.h = Common\dllexports.h
+		NotifyObject.h = NotifyObject.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Context", "Context", "{F327595D-EFBA-4D7C-AAB9-65BCDE64E878}"
+	ProjectSection(SolutionItems) = preProject
+		Common\xctx.h = Common\xctx.h
+		Common\xopenglctx.h = Common\xopenglctx.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{4C2ADDF9-B9D9-4543-9952-A2F5A074AF2D}"
+	ProjectSection(SolutionItems) = preProject
+		Common\GL\eglew.h = Common\GL\eglew.h
+		Common\GL\glew.h = Common\GL\glew.h
+		Common\GL\glxew.h = Common\GL\glxew.h
+		Common\GL\wglew.h = Common\GL\wglew.h
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCBModelData", "PCBModelData\PCBModelData.vcxproj", "{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Debug|x64.Build.0 = Debug|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Debug|x86.Build.0 = Debug|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Release|x64.ActiveCfg = Release|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Release|x64.Build.0 = Release|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}.Release|x86.Build.0 = Release|Any CPU
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Debug|x64.ActiveCfg = Debug|x64
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Debug|x64.Build.0 = Debug|x64
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Debug|x86.ActiveCfg = Debug|Win32
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Debug|x86.Build.0 = Debug|Win32
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Release|Any CPU.ActiveCfg = Release|Win32
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Release|x64.ActiveCfg = Release|x64
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Release|x64.Build.0 = Release|x64
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Release|x86.ActiveCfg = Release|Win32
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9}.Release|x86.Build.0 = Release|Win32
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Debug|x64.ActiveCfg = Debug|x64
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Debug|x64.Build.0 = Debug|x64
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Debug|x86.ActiveCfg = Debug|Win32
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Debug|x86.Build.0 = Debug|Win32
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Release|Any CPU.ActiveCfg = Release|Win32
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Release|x64.ActiveCfg = Release|x64
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Release|x64.Build.0 = Release|x64
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Release|x86.ActiveCfg = Release|Win32
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F327595D-EFBA-4D7C-AAB9-65BCDE64E878} = {127F2D72-F55A-4EDE-9EAC-14F619AA910C}
+		{4C2ADDF9-B9D9-4543-9952-A2F5A074AF2D} = {F327595D-EFBA-4D7C-AAB9-65BCDE64E878}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A44E2BF-116A-4BB4-B1C8-8EC41CFF5058}
+	EndGlobalSection
+EndGlobal

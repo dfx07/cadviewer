@@ -1,0 +1,16 @@
+F:\Simpledrawer\Build\x64\Release\Simpledrawer.exe.config
+F:\Simpledrawer\Build\x64\Release\Simpledrawer.exe
+F:\Simpledrawer\Build\x64\Release\Simpledrawer.pdb
+F:\Simpledrawer\Simpledrawer\obj\Release\View\MainWindow.g.cs
+F:\Simpledrawer\Simpledrawer\obj\Release\App.g.cs
+F:\Simpledrawer\Simpledrawer\obj\Release\GeneratedInternalTypeHelper.g.cs
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer_MarkupCompile.cache
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer_MarkupCompile.lref
+F:\Simpledrawer\Simpledrawer\obj\Release\View\MainWindow.baml
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer.g.resources
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer.Properties.Resources.resources
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer.csproj.GenerateResource.cache
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer.csproj.CoreCompileInputs.cache
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer.csproj.CopyComplete
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer.exe
+F:\Simpledrawer\Simpledrawer\obj\Release\Simpledrawer.pdb
