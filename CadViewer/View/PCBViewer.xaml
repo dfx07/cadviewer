@@ -22,7 +22,7 @@
                    Margin="5, 5, 5, 5"/>
         </Grid>
         <Grid Grid.Row="1">
-            <local:OpenGLView OpenGLContent="{Binding PCBViewModel.openGLHost, UpdateSourceTrigger=PropertyChanged,
+            <local:OpenGLView OpenGLContent="{Binding PCBViewModel.OpenGLControl, UpdateSourceTrigger=PropertyChanged,
                               RelativeSource={RelativeSource AncestorType=UserControl} }" >
             </local:OpenGLView>
         </Grid>

@@ -18,7 +18,7 @@ namespace CadViewer.ViewModels
 		public MainViewModel()
 		{
 			MainPCBViewModel = new PCBViewModel();
-			MainPCBViewModel.Name = "CardViewer";
+			MainPCBViewModel.Name = "Main PCB";
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 		}

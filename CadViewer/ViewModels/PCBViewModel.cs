@@ -14,7 +14,7 @@ namespace CadViewer.ViewModels
 	{
 		public PCBViewModel()
 		{
-
+			OpenGLControl = new OpenGLHost();
 		}
 
 		~PCBViewModel()
@@ -24,22 +24,23 @@ namespace CadViewer.ViewModels
 
 		public void InitContext()
 		{
+			if(OpenGLControl != null)
+			{
+				m_pViewModelBase = PCBViewerAPI.CreatePCBView(OpenGLControl.Hwnd);
+			}
+
+			PCBViewerAPI.SetCallbackFunctionNotifyUI(m_pViewModelBase, m_pCallbackUI);
+
 			ContextConfig ctxConfig = new ContextConfig
 			{
 				m_bUseContextExt = BaseAPI.TRUE,
 				m_nAntialiasingLevel = 8,
 			};
 
-			openGLHost = new OpenGLHost();
-
-			if (openGLHost.Hwnd != IntPtr.Zero)
+			if(PCBViewerAPI.CreateContext(m_pViewModelBase, ctxConfig) != BaseAPI.TRUE)
 			{
-				m_pViewModelBase = PCBViewerAPI.CreatePCBView(openGLHost.Hwnd);
+				MessageBox.Show("Create OpenGL context FAIL");
 			}
-
-			PCBViewerAPI.SetCallbackFunctionNotifyUI(m_pViewModelBase, m_pCallbackUI);
-
-			int ret = PCBViewerAPI.CreateContext(m_pViewModelBase, ctxConfig);
 		}
 
 		public void OnViewChanged(int nWidth, int nHeight)
@@ -62,7 +63,7 @@ namespace CadViewer.ViewModels
 
 		public override void OnNotifyUI(string message, int nParam, int nWaram)
 		{
-			switch(message)
+			switch (message)
 			{
 				case "DrawLine":
 					MessageBox.Show("User set : " + nParam);
@@ -74,7 +75,7 @@ namespace CadViewer.ViewModels
 			}
 		}
 
-		public OpenGLHost openGLHost { get; set; }
+		private OpenGLHost _openGLControl; public OpenGLHost OpenGLControl { get => _openGLControl; set => SetProperty(ref _openGLControl, value); }
 		private string _name; public string Name { get => _name; set => SetProperty(ref _name, value); }
 		private double _width; public double Width { get => _width; set => SetProperty(ref _width, value); }
 		private double _height; public double Height { get => _height; set => SetProperty(ref _height, value); }

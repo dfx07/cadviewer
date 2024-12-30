@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CadViewer.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,16 +27,12 @@ namespace CadViewer.View
 		}
 
 		public static readonly DependencyProperty OpenGLContentProperty =
-			DependencyProperty.Register(
-				nameof(OpenGLContent),
-				typeof(object),
-				typeof(OpenGLView),
-				new PropertyMetadata(null));
+			DependencyProperty.Register(nameof(OpenGLContent), typeof(OpenGLHost), typeof(OpenGLView), new PropertyMetadata(null));
 
-		public object OpenGLContent
+		public OpenGLHost OpenGLContent
 		{
-			get => GetValue(ContentProperty);
-			set => SetValue(ContentProperty, value);
+			get => (OpenGLHost)GetValue(OpenGLContentProperty);
+			set => SetValue(OpenGLContentProperty, value);
 		}
 	}
 }

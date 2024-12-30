@@ -43,7 +43,7 @@ namespace CadViewer.View
 
 		// DependencyProperty for binding the model
 		public static readonly DependencyProperty PCBViewModelProperty =
-			DependencyProperty.Register("PCBViewModel", typeof(PCBViewModel), typeof(PCBViewer), new PropertyMetadata(null));
+			DependencyProperty.Register(nameof(PCBViewModel), typeof(PCBViewModel), typeof(PCBViewer), new PropertyMetadata(null));
 
 		public PCBViewModel PCBViewModel
 		{
