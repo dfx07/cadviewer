@@ -17,8 +17,8 @@ namespace CadViewer.ViewModels
 		public PCBViewModel()
 		{
 			OpenGLControl = new OpenGLHost();
-			MouseMoveCommand = new RelayCommand(OnMouseMove);
-			MouseEnterCommand = new RelayCommand(OnMouseEnter);
+			MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMove);
+			MouseEnterCommand = new RelayCommand<MouseEventArgs>(OnMouseEnter);
 		}
 
 		~PCBViewModel()
@@ -59,16 +59,12 @@ namespace CadViewer.ViewModels
 		}
 		private void OnMouseMove(object parameter)
 		{
-			//if (parameter is MouseEventArgs args)
-			//{
-			//	var position = args.GetPosition(null);
-			//	Console.WriteLine($"Mouse moved to X: {position.X}, Y: {position.Y}");
-			//}
+
 		}
 
 		private void OnMouseEnter(object parameter)
 		{
-			//Console.WriteLine("Mouse entered the area!");
+
 		}
 
 		public void DrawLine()
