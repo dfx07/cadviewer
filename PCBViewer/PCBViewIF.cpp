@@ -3,19 +3,10 @@
 
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-LIBRARY_API void SetCallbackFunctionNotifyUI(IntPtr _pBase, CallBackFunctionNotifyUI _pCall)
-{
-	NotifyObject* pNotifyObject = reinterpret_cast<NotifyObject*>(_pBase);
-
-	NULL_RETURN(pNotifyObject);
-
-	pNotifyObject->SetCallBackUI(_pCall);
-	return;
-}
-
-IntPtr CreatePCBView(IntPtr pHandle)
+LIBRARY_API IntPtr CreatePCBView(IntPtr pHandle)
 {
 	PCBView* pPCBView = new PCBView();
+	NULL_RETURN(pPCBView, NULL);
 
 	if (!pPCBView->Create((HWND)pHandle, 100, 100))
 	{
@@ -24,17 +15,6 @@ IntPtr CreatePCBView(IntPtr pHandle)
 	}
 
 	return pPCBView;
-}
-
-LIBRARY_API int CreateContext(IntPtr pHandle, ContextConfig _ctxConfig)
-{
-	PCBView* pView = reinterpret_cast<PCBView*>(pHandle);
-	NULL_RETURN(pView, FALSE);
-
-	if (pView->CreateContext(_ctxConfig))
-		return TRUE;
-
-	return FALSE;
 }
 
 LIBRARY_API void DestroyPCBView(IntPtr pPCB)
@@ -48,7 +28,18 @@ LIBRARY_API void DestroyPCBView(IntPtr pPCB)
 	return;
 }
 
-LIBRARY_API void DrawLine(IntPtr pPCB, int a)
+LIBRARY_API Int CreateContext(IntPtr pHandle, ContextConfig _ctxConfig)
+{
+	PCBView* pView = reinterpret_cast<PCBView*>(pHandle);
+	NULL_RETURN(pView, FALSE);
+
+	if (pView->CreateContext(_ctxConfig))
+		return TRUE;
+
+	return FALSE;
+}
+
+LIBRARY_API void DrawLine(IntPtr pPCB, Int a)
 {
 	PCBView* pView = reinterpret_cast<PCBView*>(pPCB);
 
@@ -67,7 +58,7 @@ LIBRARY_API void Draw(IntPtr pPCB)
 	pView->Draw();
 }
 
-LIBRARY_API void SetView(IntPtr pPCB, int nWidth, int nHeight)
+LIBRARY_API void SetView(IntPtr pPCB, Int nWidth, Int nHeight)
 {
 	PCBView* pView = reinterpret_cast<PCBView*>(pPCB);
 

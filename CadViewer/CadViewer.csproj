@@ -93,7 +93,9 @@
     <Compile Include="API\BaseAPI.cs" />
     <Compile Include="API\GCHandleProvider.cs" />
     <Compile Include="API\PCBViewerAPI.cs" />
-    <Compile Include="Common\NotifyPropertyChangedBase.cs" />
+    <Compile Include="Common\EventBehavior.cs" />
+    <Compile Include="Common\MouseBehavior.cs" />
+    <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Components\OpenGLHost.cs" />
     <Compile Include="Settings.cs" />

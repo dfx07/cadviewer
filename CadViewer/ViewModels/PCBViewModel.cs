@@ -1,4 +1,5 @@
 ﻿using CadViewer.API;
+using CadViewer.Common;
 using CadViewer.Components;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 
 namespace CadViewer.ViewModels
@@ -15,6 +17,8 @@ namespace CadViewer.ViewModels
 		public PCBViewModel()
 		{
 			OpenGLControl = new OpenGLHost();
+			MouseMoveCommand = new RelayCommand(OnMouseMove);
+			MouseEnterCommand = new RelayCommand(OnMouseEnter);
 		}
 
 		~PCBViewModel()
@@ -53,6 +57,19 @@ namespace CadViewer.ViewModels
 			PCBViewerAPI.Clear(m_pViewModelBase);
 			PCBViewerAPI.Draw(m_pViewModelBase);
 		}
+		private void OnMouseMove(object parameter)
+		{
+			//if (parameter is MouseEventArgs args)
+			//{
+			//	var position = args.GetPosition(null);
+			//	Console.WriteLine($"Mouse moved to X: {position.X}, Y: {position.Y}");
+			//}
+		}
+
+		private void OnMouseEnter(object parameter)
+		{
+			//Console.WriteLine("Mouse entered the area!");
+		}
 
 		public void DrawLine()
 		{
@@ -74,7 +91,8 @@ namespace CadViewer.ViewModels
 					break;
 			}
 		}
-
+		public ICommand MouseMoveCommand { get; }
+		public ICommand MouseEnterCommand { get; }
 		private OpenGLHost _openGLControl; public OpenGLHost OpenGLControl { get => _openGLControl; set => SetProperty(ref _openGLControl, value); }
 		private string _name; public string Name { get => _name; set => SetProperty(ref _name, value); }
 		private double _width; public double Width { get => _width; set => SetProperty(ref _width, value); }

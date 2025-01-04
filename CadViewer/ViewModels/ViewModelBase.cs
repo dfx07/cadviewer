@@ -11,7 +11,7 @@ using CadViewer.Common;
 
 namespace CadViewer.ViewModels
 {
-	public class ViewModelBase : NotifyPropertyChangedBase
+	public class ViewModelBase : NotifyPropertyChanged
 	{
 		public ViewModelBase()
 		{

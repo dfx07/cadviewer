@@ -5,7 +5,7 @@
 #include <NotifyObject.h>
 #include "PCBViewDef.h"
 
-LIBRARY_API class PCBView : public NotifyObject
+class PCBView : public NotifyObject
 {
 public:
 	PCBView();

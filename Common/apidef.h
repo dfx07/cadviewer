@@ -16,7 +16,4 @@
 #define True	1
 #define False	0
 
-
-#define NULL_RETURN(ptr, r) if(ptr == NULL) return r;
-
-
+#define NULL_RETURN(ptr, ...) if (ptr == nullptr) return __VA_ARGS__

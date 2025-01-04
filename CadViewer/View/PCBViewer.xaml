@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.View"
+             xmlns:com="clr-namespace:CadViewer.Common"
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
@@ -23,7 +24,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <local:OpenGLView OpenGLContent="{Binding PCBViewModel.OpenGLControl, UpdateSourceTrigger=PropertyChanged,
-                              RelativeSource={RelativeSource AncestorType=UserControl} }" >
+                              RelativeSource={RelativeSource AncestorType=UserControl} }">
             </local:OpenGLView>
         </Grid>
     </Grid>

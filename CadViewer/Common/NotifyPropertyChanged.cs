@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CadViewer.Common
 {
-	public class NotifyPropertyChangedBase : INotifyPropertyChanged
+	public class NotifyPropertyChanged : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 		protected void OnPropertyChanged(string propertyName)

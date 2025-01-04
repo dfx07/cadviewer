@@ -20,7 +20,7 @@ namespace CadViewer.ViewModels
 			MainPCBViewModel = new PCBViewModel();
 			MainPCBViewModel.Name = "Main PCB";
 
-			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
+			//IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 		}
 		public override void OnNotifyUI(string message, int nParam, int nWaram)
 		{
