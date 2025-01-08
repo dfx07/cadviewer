@@ -26,7 +26,7 @@ namespace CadViewer
 			InitializeComponent();
 
 			_MainViewModel = new MainViewModel();
-			DataContext = _MainViewModel;
+			this.DataContext = _MainViewModel;
 		}
 
 		public MainViewModel _MainViewModel;

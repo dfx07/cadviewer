@@ -1,4 +1,5 @@
-﻿using CadViewer.ViewModels;
+﻿using CadViewer.Common;
+using CadViewer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,12 @@ namespace CadViewer.View
 
 		private void OnPCBViewer_Loaded(object sender, RoutedEventArgs e)
 		{
-			PCBViewModel.InitContext();
+			if(PCBViewModel != null)
+			{
+				PCBViewModel.InitContext();
+			}
 		}
+
 		private void OnPCBViewer_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			if (PCBViewModel != null)

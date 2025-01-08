@@ -34,5 +34,14 @@ namespace CadViewer.View
 			get => (OpenGLHost)GetValue(OpenGLContentProperty);
 			set => SetValue(OpenGLContentProperty, value);
 		}
+
+		public static readonly DependencyProperty OpenGLMouseMoveCommandProperty =
+			DependencyProperty.Register(nameof(OpenGLMouseMoveCommand), typeof(ICommand), typeof(OpenGLView), new PropertyMetadata(null));
+
+		public ICommand OpenGLMouseMoveCommand
+		{
+			get { return (ICommand)GetValue(OpenGLMouseMoveCommandProperty); }
+			set { SetValue(OpenGLMouseMoveCommandProperty, value); }
+		}
 	}
 }

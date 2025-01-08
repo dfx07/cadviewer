@@ -57,12 +57,14 @@ namespace CadViewer.ViewModels
 			PCBViewerAPI.Clear(m_pViewModelBase);
 			PCBViewerAPI.Draw(m_pViewModelBase);
 		}
-		private void OnMouseMove(object parameter)
+		private void OnMouseMove(MouseEventArgs e)
 		{
 
+			var position = e.GetPosition((UIElement)e.Source);  // Lấy vị trí chuột
+			Logger.LogInfo("Mouse move ." + position.ToString());
 		}
 
-		private void OnMouseEnter(object parameter)
+		private void OnMouseEnter(MouseEventArgs e)
 		{
 
 		}
@@ -87,8 +89,8 @@ namespace CadViewer.ViewModels
 					break;
 			}
 		}
-		public ICommand MouseMoveCommand { get; }
-		public ICommand MouseEnterCommand { get; }
+		public ICommand MouseMoveCommand { get; private set; }
+		public ICommand MouseEnterCommand { get; set; }
 		private OpenGLHost _openGLControl; public OpenGLHost OpenGLControl { get => _openGLControl; set => SetProperty(ref _openGLControl, value); }
 		private string _name; public string Name { get => _name; set => SetProperty(ref _name, value); }
 		private double _width; public double Width { get => _width; set => SetProperty(ref _width, value); }

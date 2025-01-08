@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:CadViewer"
         xmlns:uctrl="clr-namespace:CadViewer.View"
         xmlns:vm="clr-namespace:CadViewer.ViewModels"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="CadViewer" Height="450" Width="800">
+        Title="CadViewer" Height="640" Width="680">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -18,7 +18,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
-            <uctrl:PCBViewer PCBViewModel="{Binding MainPCBViewModel}"></uctrl:PCBViewer>
+            <uctrl:PCBViewer PCBViewModel="{Binding MainPCBViewModel}">
+            </uctrl:PCBViewer>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Button Name="btnGenOpenGL" Content="Click to gen OpenGL context" Margin=" 10 ,10 ,10, 10" Command="{Binding IBtnRegisterClickComand}">

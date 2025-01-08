@@ -2,13 +2,27 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:CadViewer.View"
              xmlns:com="clr-namespace:CadViewer.Common"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ContentPresenter Content="{Binding OpenGLContent, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        </ContentPresenter>
+             mc:Ignorable="d"
+             d:DesignHeight="640" d:DesignWidth="640">
+
+    <Grid Style="{StaticResource ResourceKey=OpenGLViewStyle}">
+        <Border BorderBrush="Black" Background="#e6e7e8" BorderThickness="1" CornerRadius="5" Opacity="0.5">
+            <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseMove">
+                        <i:InvokeCommandAction Command="{Binding OpenGLMouseMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        PassEventArgsToCommand="True">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ContentPresenter Content="{Binding OpenGLContent, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                </ContentPresenter>
+            </Label>
+        </Border>
     </Grid>
+
 </UserControl>
