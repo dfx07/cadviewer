@@ -6,11 +6,29 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:CadViewer.View"
              xmlns:com="clr-namespace:CadViewer.Common"
+             IsHitTestVisible="True"
+             MouseDown="OpenGLView_MouseDown"
+             MouseUp="OpenGLView_MouseUp"
+             MouseMove="OpenGLView_MouseMove"
              mc:Ignorable="d"
+             IsTabStop="True"
              d:DesignHeight="640" d:DesignWidth="640">
 
     <Grid Style="{StaticResource ResourceKey=OpenGLViewStyle}">
-        <Border BorderBrush="Black" Background="#e6e7e8" BorderThickness="1" CornerRadius="5" Opacity="0.5">
+        <Border x:Name="OpenGLViewPanel" BorderBrush="Black" Background="#e6e7e8" BorderThickness="1" CornerRadius="5" Opacity="0.5" Focusable="True" >
+            <Border.FocusVisualStyle>
+                <Style TargetType="Control">
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Style>
+            </Border.FocusVisualStyle>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="KeyDown">
+                    <i:InvokeCommandAction Command="{Binding OpenGLKeyDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="KeyUp">
+                    <i:InvokeCommandAction Command="{Binding OpenGLKeyUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseMove">
@@ -18,7 +36,35 @@
                         PassEventArgsToCommand="True">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseEnter">
+                        <i:InvokeCommandAction Command="{Binding OpenGLMouseEnterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        PassEventArgsToCommand="True">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+
+                    <!--Mouse click events-->
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding OpenGLMouseDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseUp">
+                        <i:InvokeCommandAction Command="{Binding OpenGLMouseUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
+
+                <!--UI Handler-->
+                <Label.Style>
+                    <Style TargetType="Label">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=OpenGLViewPanel}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+
+                <!--OpenGLView-->
                 <ContentPresenter Content="{Binding OpenGLContent, RelativeSource={RelativeSource AncestorType=UserControl}}">
                 </ContentPresenter>
             </Label>

@@ -91,11 +91,15 @@
     <Compile Include="API\GCHandleProvider.cs" />
     <Compile Include="API\PCBViewerAPI.cs" />
     <Compile Include="Common\EventBehavior.cs" />
+    <Compile Include="Common\EventDef.cs" />
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\MouseBehavior.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Components\OpenGLHost.cs" />
+    <Compile Include="Implements\MainPCBViewHandler.cs" />
+    <Compile Include="Interfaces\PCBViewNotify.cs" />
+    <Compile Include="Interfaces\PCBViewHandler.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

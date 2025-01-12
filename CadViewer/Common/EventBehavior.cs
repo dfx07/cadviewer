@@ -8,6 +8,16 @@ using System.Windows.Input;
 
 namespace CadViewer.Common
 {
+	public class MouseDragDropEventArgs : MouseEventArgs
+	{
+		public MouseDragDropEventArgs(MouseEventArgs originalArgs, MouseDragDropState state)
+			: base(originalArgs.MouseDevice, originalArgs.Timestamp)
+		{
+			State = state;
+		}
+		public MouseDragDropState State { get; set; }
+	}
+
 	public static class EventBehavior<TEventArgs> where TEventArgs : EventArgs
 	{
 		public static readonly DependencyProperty EventCommandProperty =

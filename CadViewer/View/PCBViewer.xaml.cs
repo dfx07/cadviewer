@@ -46,6 +46,10 @@ namespace CadViewer.View
 			}
 		}
 
+		#region [Property]
+		/// <summary>
+		/// /////////////////////////////////////////////////////////////////////////////
+		/// </summary>
 		// DependencyProperty for binding the model
 		public static readonly DependencyProperty PCBViewModelProperty =
 			DependencyProperty.Register(nameof(PCBViewModel), typeof(PCBViewModel), typeof(PCBViewer), new PropertyMetadata(null));
@@ -55,5 +59,7 @@ namespace CadViewer.View
 			get => (PCBViewModel)GetValue(PCBViewModelProperty);
 			set => SetValue(PCBViewModelProperty, value);
 		}
+		//------------------------------------------------------------------------------/
+		#endregion
 	}
 }

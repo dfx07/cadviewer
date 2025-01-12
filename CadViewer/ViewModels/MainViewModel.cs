@@ -6,19 +6,24 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CadViewer.API;
 using CadViewer.Common;
+using CadViewer.Implements;
 
 namespace CadViewer.ViewModels
 {
 	public class MainViewModel : ViewModelBase
 	{
 		public PCBViewModel MainPCBViewModel { get; set; }
+		public MainPCBViewHandler mainPCBViewHandler { get; set; }
 
 		public ICommand IBtnRegisterClickComand { get; }
 
 		public MainViewModel()
 		{
+			mainPCBViewHandler = new MainPCBViewHandler();
+
 			MainPCBViewModel = new PCBViewModel();
-			MainPCBViewModel.Name = "Main PCB";
+			MainPCBViewModel.Name = "Chjange";
+			MainPCBViewModel.SetHandler(mainPCBViewHandler);
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 		}

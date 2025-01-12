@@ -14,20 +14,28 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="26"/>
-            <RowDefinition />
+            <RowDefinition Height="Auto" MaxHeight="26"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#ccd5f0">
+        <Grid Grid.Row="0" Background="#ccd5f0" Visibility="{Binding PCBViewModel.TitleVisibility, RelativeSource={RelativeSource AncestorType=UserControl} }">
             <TextBlock Text="{Binding PCBViewModel.Name, UpdateSourceTrigger=PropertyChanged,
                               RelativeSource={RelativeSource AncestorType=UserControl}}"
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Center"
-                   Margin="5, 5, 5, 5"/>
+                   Margin="5, 5, 5, 5">
+            </TextBlock>
         </Grid>
         <Grid Grid.Row="1">
-            <local:OpenGLView OpenGLContent="{Binding PCBViewModel.OpenGLControl, UpdateSourceTrigger=PropertyChanged,
-                                              RelativeSource={RelativeSource AncestorType=UserControl} }"
-                              OpenGLMouseMoveCommand="{Binding PCBViewModel.MouseMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <local:OpenGLView OpenGLContent="{Binding PCBViewModel.OpenGLControl, RelativeSource={RelativeSource AncestorType=UserControl} }"
+                              OpenGLMouseMoveCommand="{Binding PCBViewModel.MouseMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              OpenGLMouseEnterCommand="{Binding PCBViewModel.MouseEnterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              OpenGLMouseDragDropCommand="{Binding PCBViewModel.MouseDragDropCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              OpenGLMouseDownCommand="{Binding PCBViewModel.MouseDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              OpenGLMouseUpCommand="{Binding PCBViewModel.MouseUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              OpenGLKeyDownCommand="{Binding PCBViewModel.KeyDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              OpenGLKeyUpCommand="{Binding PCBViewModel.KeyUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+
+                              >
 
             </local:OpenGLView>
         </Grid>
