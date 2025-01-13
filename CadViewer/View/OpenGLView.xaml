@@ -7,15 +7,12 @@
              xmlns:local="clr-namespace:CadViewer.View"
              xmlns:com="clr-namespace:CadViewer.Common"
              IsHitTestVisible="True"
-             MouseDown="OpenGLView_MouseDown"
-             MouseUp="OpenGLView_MouseUp"
-             MouseMove="OpenGLView_MouseMove"
              mc:Ignorable="d"
              IsTabStop="True"
              d:DesignHeight="640" d:DesignWidth="640">
 
     <Grid Style="{StaticResource ResourceKey=OpenGLViewStyle}">
-        <Border x:Name="OpenGLViewPanel" BorderBrush="Black" Background="#e6e7e8" BorderThickness="1" CornerRadius="5" Opacity="0.5" Focusable="True" >
+        <Border x:Name="OpenGLViewPanel" BorderBrush="Black" Background="#e6e7e8" BorderThickness="1" CornerRadius="5" Opacity="0.5" Focusable="True">
             <Border.FocusVisualStyle>
                 <Style TargetType="Control">
                     <Setter Property="BorderThickness" Value="1"/>
@@ -31,25 +28,25 @@
             </i:Interaction.Triggers>
             <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseMove">
-                        <i:InvokeCommandAction Command="{Binding OpenGLMouseMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        PassEventArgsToCommand="True">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
+
+                    <!--Mouse click events-->
                     <i:EventTrigger EventName="MouseEnter">
                         <i:InvokeCommandAction Command="{Binding OpenGLMouseEnterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                         PassEventArgsToCommand="True">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
-
-                    <!--Mouse click events-->
                     <i:EventTrigger EventName="MouseDown">
-                        <i:InvokeCommandAction Command="{Binding OpenGLMouseDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        <i:InvokeCommandAction Command="{Binding _MouseDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                            PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                     <i:EventTrigger EventName="MouseUp">
-                        <i:InvokeCommandAction Command="{Binding OpenGLMouseUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        <i:InvokeCommandAction Command="{Binding _MouseUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                            PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                        <i:InvokeCommandAction Command="{Binding _MouseMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        PassEventArgsToCommand="True">
+                        </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 

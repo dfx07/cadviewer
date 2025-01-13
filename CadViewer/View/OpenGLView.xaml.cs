@@ -1,5 +1,6 @@
 ﻿using CadViewer.Common;
 using CadViewer.Components;
+using CadViewer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,24 +26,38 @@ namespace CadViewer.View
 	{
 		private bool _isDragging = false;
 
+		public ICommand _MouseDownCommand { get; set; }
+		public ICommand _MouseUpCommand { get; set; }
+		public ICommand _MouseMoveCommand { get; set; }
+
 		public OpenGLView()
 		{
 			InitializeComponent();
+
+			_MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(OpenGLView_OnMouseDown);
+			_MouseUpCommand = new RelayCommand<MouseButtonEventArgs>(OpenGLView_OnMouseUp);
+			_MouseMoveCommand = new RelayCommand<MouseEventArgs>(OpenGLView_OnMouseMove);
 		}
 
-		private void OpenGLView_MouseDown(object sender, MouseButtonEventArgs e)
+		private void OpenGLView_OnMouseDown(MouseButtonEventArgs e)
 		{
-			if(IsUseDragDropFun())
+			var position = e.GetPosition((UIElement)e.Source);
+
+			if (IsUseDragDropFun())
 			{
 				_isDragging = true;
 				MouseDragDropEventArgs dragDropEventArgs = new MouseDragDropEventArgs(e, MouseDragDropState.Drag);
 				OpenGLMouseDragDropCommand.Execute(dragDropEventArgs);
-				Mouse.Capture(this);
+				Mouse.Capture((UIElement)e.Source);
 			}
+
+			OpenGLMouseDownCommand.Execute(e);
 		}
 
-		private void OpenGLView_MouseUp(object sender, MouseButtonEventArgs e)
+		private void OpenGLView_OnMouseUp(MouseButtonEventArgs e)
 		{
+			var position = e.GetPosition((UIElement)e.Source);
+
 			if (IsUseDragDropFun())
 			{
 				if (_isDragging)
@@ -50,13 +65,14 @@ namespace CadViewer.View
 					_isDragging = false;
 					MouseDragDropEventArgs dragDropEventArgs = new MouseDragDropEventArgs(e, MouseDragDropState.Drop);
 					OpenGLMouseDragDropCommand.Execute(dragDropEventArgs);
+					Mouse.Capture(null);
 				}
-
-				Mouse.Capture(null);
 			}
+
+			OpenGLMouseUpCommand.Execute(e);
 		}
 
-		private void OpenGLView_MouseMove(object sender, MouseEventArgs e)
+		private void OpenGLView_OnMouseMove(MouseEventArgs e)
 		{
 			if (IsUseDragDropFun())
 			{
@@ -66,24 +82,17 @@ namespace CadViewer.View
 					OpenGLMouseDragDropCommand.Execute(dragDropEventArgs);
 				}
 			}
+
+			OpenGLMouseMoveCommand.Execute(e);
 		}
 
 		public bool IsUseDragDropFun()
 		{
-			if (OpenGLMouseDragDropCommand != null && OpenGLMouseDragDropCommand.CanExecute(null))
-			{
+			if (OpenGLMouseDragDropCommand != null &&
+				OpenGLMouseDragDropCommand.CanExecute(null))
 				return true;
-			}
 
 			return false;
-		}
-
-		public void SendEventDragDrop(MouseDragDropEventArgs dragDropEventArgs)
-		{
-			if (OpenGLMouseDragDropCommand != null && OpenGLMouseDragDropCommand.CanExecute(null))
-			{
-				
-			}
 		}
 
 		public static readonly DependencyProperty OpenGLContentProperty =

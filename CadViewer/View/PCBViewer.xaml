@@ -36,7 +36,6 @@
                               OpenGLKeyUpCommand="{Binding PCBViewModel.KeyUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 
                               >
-
             </local:OpenGLView>
         </Grid>
     </Grid>

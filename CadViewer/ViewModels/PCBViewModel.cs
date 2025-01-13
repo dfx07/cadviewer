@@ -17,8 +17,6 @@ namespace CadViewer.ViewModels
 	{
 		public PCBViewModel()
 		{
-			//_pCBViewHandler = null;
-
 			OpenGLControl = new OpenGLHost();
 			MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMove);
 			MouseEnterCommand = new RelayCommand<MouseEventArgs>(OnMouseEnter);
@@ -69,13 +67,19 @@ namespace CadViewer.ViewModels
 
 		private void OnMouseMove(MouseEventArgs e)
 		{
-			var position = e.GetPosition((UIElement)e.Source);  // Lấy vị trí chuột
-			Logger.LogInfo("Mouse moved." + position.ToString());
+			var position = e.GetPosition((UIElement)e.Source);
+			if (_pCBViewHandler == null)
+				return;
+
+			_pCBViewHandler.OnMouseMove(position);
 		}
 
 		private void OnMouseEnter(MouseEventArgs e)
 		{
-			Logger.LogInfo("Mouse enterd.");
+			if (_pCBViewHandler == null)
+				return;
+
+			_pCBViewHandler.OnMouseEnter();
 		}
 		private void OnMouseDragDrop(MouseDragDropEventArgs e)
 		{

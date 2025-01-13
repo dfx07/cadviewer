@@ -22,7 +22,7 @@ namespace CadViewer.ViewModels
 			mainPCBViewHandler = new MainPCBViewHandler();
 
 			MainPCBViewModel = new PCBViewModel();
-			MainPCBViewModel.Name = "Chjange";
+			MainPCBViewModel.Name = "Start";
 			MainPCBViewModel.SetHandler(mainPCBViewHandler);
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
