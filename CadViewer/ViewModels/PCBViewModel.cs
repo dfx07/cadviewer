@@ -2,8 +2,10 @@
 using CadViewer.Common;
 using CadViewer.Components;
 using CadViewer.Interfaces;
+using CadViewer.View;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +20,13 @@ namespace CadViewer.ViewModels
 		public PCBViewModel()
 		{
 			OpenGLControl = new OpenGLHost();
+
 			MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMove);
 			MouseEnterCommand = new RelayCommand<MouseEventArgs>(OnMouseEnter);
 			MouseDragDropCommand = new RelayCommand<MouseDragDropEventArgs>(OnMouseDragDrop);
 			MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(OnMouseDown);
 			MouseUpCommand = new RelayCommand<MouseButtonEventArgs>(OnMouseUp);
+			MouseWheelCommand = new RelayCommand<MouseWheelEventArgs>(OnMouseWheel);
 
 			KeyDownCommand = new RelayCommand<KeyEventArgs>(OnKeyDown);
 			KeyUpCommand = new RelayCommand<KeyEventArgs>(OnKeyUp);
@@ -30,81 +34,80 @@ namespace CadViewer.ViewModels
 
 		~PCBViewModel()
 		{
-			PCBViewerAPI.DestroyPCBView(m_pViewModelBase);
+
 		}
 
 		public void InitContext()
 		{
-			if(OpenGLControl != null)
-			{
-				m_pViewModelBase = PCBViewerAPI.CreatePCBView(OpenGLControl.Hwnd);
-			}
+			if (_pCBViewHandler == null || OpenGLControl.Hwnd == IntPtr.Zero)
+				return;
 
-			PCBViewerAPI.SetCallbackFunctionNotifyUI(m_pViewModelBase, m_pCallbackUI);
-
-			ContextConfig ctxConfig = new ContextConfig
-			{
-				m_bUseContextExt = BaseAPI.TRUE,
-				m_nAntialiasingLevel = 8,
-			};
-
-			if(PCBViewerAPI.CreateContext(m_pViewModelBase, ctxConfig) != BaseAPI.TRUE)
-			{
-				MessageBox.Show("Create OpenGL context FAIL");
-			}
+			_pCBViewHandler.OnCreateContext(OpenGLControl);
 		}
 
 		public void OnViewChanged(int nWidth, int nHeight)
 		{
+			if (_pCBViewHandler is null)
+				return;
+
+			if(OpenGLControl != null)
+			{
+				OpenGLControl.Width = nWidth;
+				OpenGLControl.Height = nHeight;
+
+				OpenGLControl.UpdateLayout();
+			}
+
+			_pCBViewHandler.OnViewChanged(nWidth, nHeight);
+
 			Width = nWidth;
 			Height = nHeight;
-
-			PCBViewerAPI.SetView(m_pViewModelBase, (int)Width, (int)Height);
-
-			PCBViewerAPI.Clear(m_pViewModelBase);
-			PCBViewerAPI.Draw(m_pViewModelBase);
 		}
 
 		private void OnMouseMove(MouseEventArgs e)
 		{
-			var position = e.GetPosition((UIElement)e.Source);
-			if (_pCBViewHandler == null)
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_MOVE))
 				return;
 
+			if (e is null || _pCBViewHandler is null)
+				return;
+
+			var position = e.GetPosition((UIElement)e.Source);
 			_pCBViewHandler.OnMouseMove(position);
 		}
 
 		private void OnMouseEnter(MouseEventArgs e)
 		{
-			if (_pCBViewHandler == null)
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_ENTER))
+				return;
+
+			if (_pCBViewHandler is null)
 				return;
 
 			_pCBViewHandler.OnMouseEnter();
 		}
 		private void OnMouseDragDrop(MouseDragDropEventArgs e)
 		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DRAG))
+				return;
+
+			if (e is null || _pCBViewHandler is null)
+				return;
+
 			var position = e.GetPosition((UIElement)e.Source);
 
-			if(e.State == MouseDragDropState.Drag)
-			{
-				Logger.LogInfo("[Drag&Drop] drag. " + position.ToString());
-			}
-			else if(e.State == MouseDragDropState.Move)
-			{
-				Logger.LogInfo("[Drag&Drop] Move. " + position.ToString());
-			}
-			else if(e.State == MouseDragDropState.Drop)
-			{
-				Logger.LogInfo("[Drag&Drop] drop. " + position.ToString());
-			}
+			_pCBViewHandler.OnMouseDragDrop(e.State, position);
 		}
 
 		private void OnMouseDown(MouseButtonEventArgs e)
 		{
-			var position = e.GetPosition((UIElement)e.Source);
-
-			if (_pCBViewHandler == null)
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DOWN))
 				return;
+
+			if (e is null || _pCBViewHandler is null)
+				return;
+
+			var position = e.GetPosition((UIElement)e.Source);
 
 			if(e.ChangedButton == MouseButton.Left)
 			{
@@ -122,10 +125,13 @@ namespace CadViewer.ViewModels
 
 		private void OnMouseUp(MouseButtonEventArgs e)
 		{
-			var position = e.GetPosition((UIElement)e.Source);
-
-			if (_pCBViewHandler == null)
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_UP))
 				return;
+
+			if (e is null || _pCBViewHandler is null)
+				return;
+
+			var position = e.GetPosition((UIElement)e.Source);
 
 			if (e.ChangedButton == MouseButton.Left)
 			{
@@ -141,55 +147,101 @@ namespace CadViewer.ViewModels
 			}
 		}
 
+		private void OnMouseWheel(MouseWheelEventArgs e)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_WHEEL))
+				return;
+
+			if (e is null || _pCBViewHandler is null)
+				return;
+
+			var position = e.GetPosition((UIElement)e.Source);
+
+			_pCBViewHandler.OnMouseWheel(e.Delta, position);
+		}
+
 		/*Keyboard events*/
 		private void OnKeyDown(KeyEventArgs k)
 		{
-			// Kiểm tra nếu sự kiện chưa được xử lý
+			if (!CanExecuteEvents(EnumPCBViewEvent.KEY_DOWN))
+				return;
+
 			if (!_isKeyDownHandled)
 			{
-				// Xử lý sự kiện tại đây
-				Logger.LogInfo("Key down. " + k.Key);
-
-				// Đánh dấu sự kiện là đã được xử lý
+				_pCBViewHandler.OnKeyDown(k.Key);
 				_isKeyDownHandled = true;
 			}
 		}
-
 		private void OnKeyUp(KeyEventArgs k)
 		{
-			Logger.LogInfo("Key up. " + k.Key);
 			_isKeyDownHandled = false;
+
+			if (!CanExecuteEvents(EnumPCBViewEvent.KEY_UP))
+				return;
+
+			_pCBViewHandler.OnKeyUp(k.Key);
 		}
 
-		public void DrawLine()
+		#region /// [Internal handle]
+		// ------------------------------------------------------------------------------//
+
+		private bool CanExecuteEvents(EnumPCBViewEvent e)
 		{
-			PCBViewerAPI.SetView(m_pViewModelBase, (int)Width, (int)Height);
-			PCBViewerAPI.Clear(m_pViewModelBase);
-			PCBViewerAPI.Draw(m_pViewModelBase);
+			if(_excludeEvents == 0)
+				return true;
+
+			if ((_excludeEvents & (Int64)e) > 0L)
+				return false;
+
+			return true;
 		}
 
-		public override void OnNotifyUI(string message, int nParam, int nWaram)
+		private void SetDisableEvents(Int64 events)
 		{
-			switch (message)
-			{
-				case "DrawLine":
-					MessageBox.Show("User set : " + nParam);
-
-					break;
-
-				default:
-					break;
-			}
+			_excludeEvents &= events;
+		}
+		private void SetEnableEvents(Int64 events)
+		{
+			_excludeEvents |= ~events;
 		}
 
-		/// <summary>
-		/// Handle PCBview handler
-		/// </summary>
+		#endregion
+
+		#region [Handle PCBViewNotifier]
+		// ------------------------------------------------------------------------------//
 		public void SetTitle(string strTitle)
 		{
 			Name = strTitle;
 		}
 
+		public void SetVisibleTitle(bool bShow)
+		{
+			TitleVisibility = bShow ? Visibility.Visible : Visibility.Collapsed;
+		}
+		public int SendToUI(EnumPCBViewMsg msg, int lParam, int wParam)
+		{
+			switch(msg)
+			{
+				case EnumPCBViewMsg.SET_TITLE_MSG:
+					SetTitle(lParam.ToString());
+					break;
+
+				case EnumPCBViewMsg.DISABLE_EVENTS:
+					SetDisableEvents(lParam);
+					break;
+
+				case EnumPCBViewMsg.ENABLE_EVENTS:
+					SetEnableEvents(lParam);
+					break;
+			}
+
+			return 1;
+		}
+
+		#endregion
+
+		#region [Internal handle]
+		// ------------------------------------------------------------------------------//
 		public void SetHandler(PCBViewHandler handler)
 		{
 			_pCBViewHandler = handler;
@@ -201,6 +253,10 @@ namespace CadViewer.ViewModels
 			return _pCBViewHandler;
 		}
 
+		#endregion
+
+		private Int64 _excludeEvents = 0;
+
 		private PCBViewHandler _pCBViewHandler { get; set; }
 
 		public ICommand MouseMoveCommand { get; set; }
@@ -210,6 +266,7 @@ namespace CadViewer.ViewModels
 		public ICommand MouseDragDropCommand { get; set; }
 		public ICommand KeyDownCommand { get; set; }
 		public ICommand KeyUpCommand { get; set; }
+		public ICommand MouseWheelCommand { get; set; }
 
 		private bool _isKeyDownHandled = false;
 		private OpenGLHost _openGLControl; public OpenGLHost OpenGLControl { get => _openGLControl; set => SetProperty(ref _openGLControl, value); }

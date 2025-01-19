@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CadViewer.API;
 using CadViewer.Common;
+using CadViewer.Interfaces;
 
 namespace CadViewer.ViewModels
 {
@@ -15,29 +16,17 @@ namespace CadViewer.ViewModels
 	{
 		public ViewModelBase()
 		{
-			m_pBaseHandle = new GCHandleProvider(this);
-			m_pCallbackUI = new CallbackFunctionNotifyUI(this.OnNotifyUI);
+			m_pViewModelPtr = new GCHandleProvider(this);
 		}
 
-		public void SetCallbackUI(CallbackFunctionNotifyUI pcall)
+		public IntPtr GetPointer()
 		{
-			
-		}
-
-		public virtual void OnNotifyUI(string message, int nParam, int nWaram)
-		{
-			// TODO: Implement
-		}
-		public IntPtr GetHandlePointer()
-		{
-			if (m_pBaseHandle is null)
+			if (m_pViewModelPtr is null)
 				return IntPtr.Zero;
 
-			return m_pBaseHandle.Pointer;
+			return m_pViewModelPtr.Pointer;
 		}
 
-		protected GCHandleProvider m_pBaseHandle = null;
-		public CallbackFunctionNotifyUI m_pCallbackUI = null;
-		public IntPtr m_pViewModelBase = IntPtr.Zero;
+		protected GCHandleProvider m_pViewModelPtr = null;
 	}
 }

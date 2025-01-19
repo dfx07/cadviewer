@@ -10,7 +10,7 @@ using CadViewer.Implements;
 
 namespace CadViewer.ViewModels
 {
-	public class MainViewModel : ViewModelBase
+	public class MainViewModel : ViewModelCallback
 	{
 		public PCBViewModel MainPCBViewModel { get; set; }
 		public MainPCBViewHandler mainPCBViewHandler { get; set; }
@@ -19,22 +19,17 @@ namespace CadViewer.ViewModels
 
 		public MainViewModel()
 		{
+			MainPCBViewModel = new PCBViewModel();
 			mainPCBViewHandler = new MainPCBViewHandler();
 
-			MainPCBViewModel = new PCBViewModel();
-			MainPCBViewModel.Name = "Start";
 			MainPCBViewModel.SetHandler(mainPCBViewHandler);
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 		}
-		public override void OnNotifyUI(string message, int nParam, int nWaram)
-		{
-			return;
-		}
 
 		private void OnButtonRegisterClick()
 		{
-			MainPCBViewModel.DrawLine();
+			mainPCBViewHandler.DrawLine();
 		}
 	}
 }

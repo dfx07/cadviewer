@@ -12,7 +12,7 @@
              d:DesignHeight="640" d:DesignWidth="640">
 
     <Grid Style="{StaticResource ResourceKey=OpenGLViewStyle}">
-        <Border x:Name="OpenGLViewPanel" BorderBrush="Black" Background="#e6e7e8" BorderThickness="1" CornerRadius="5" Opacity="0.5" Focusable="True">
+        <Border x:Name="OpenGLViewPanel" BorderBrush="Black" Background="#e6e7e8" BorderThickness="1" Opacity="0.5" Focusable="True">
             <Border.FocusVisualStyle>
                 <Style TargetType="Control">
                     <Setter Property="BorderThickness" Value="1"/>
@@ -28,7 +28,6 @@
             </i:Interaction.Triggers>
             <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <i:Interaction.Triggers>
-
                     <!--Mouse click events-->
                     <i:EventTrigger EventName="MouseEnter">
                         <i:InvokeCommandAction Command="{Binding OpenGLMouseEnterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -48,8 +47,11 @@
                         PassEventArgsToCommand="True">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseWheel">
+                        <i:InvokeCommandAction Command="{Binding OpenGLMouseWheelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                         PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
-
                 <!--UI Handler-->
                 <Label.Style>
                     <Style TargetType="Label">
@@ -60,9 +62,8 @@
                         </Style.Triggers>
                     </Style>
                 </Label.Style>
-
                 <!--OpenGLView-->
-                <ContentPresenter Content="{Binding OpenGLContent, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <ContentPresenter x:Name="xOpenGLView" Margin="-5" Content="{Binding OpenGLContent, RelativeSource={RelativeSource AncestorType=UserControl}}">
                 </ContentPresenter>
             </Label>
         </Border>

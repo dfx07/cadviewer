@@ -26,7 +26,7 @@
             </TextBlock>
         </Grid>
         <Grid Grid.Row="1">
-            <local:OpenGLView OpenGLContent="{Binding PCBViewModel.OpenGLControl, RelativeSource={RelativeSource AncestorType=UserControl} }"
+            <local:OpenGLView x:Name="xOpenGLView" Grid.Row="1" OpenGLContent="{Binding PCBViewModel.OpenGLControl, RelativeSource={RelativeSource AncestorType=UserControl} }"
                               OpenGLMouseMoveCommand="{Binding PCBViewModel.MouseMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                               OpenGLMouseEnterCommand="{Binding PCBViewModel.MouseEnterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                               OpenGLMouseDragDropCommand="{Binding PCBViewModel.MouseDragDropCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -34,8 +34,8 @@
                               OpenGLMouseUpCommand="{Binding PCBViewModel.MouseUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                               OpenGLKeyDownCommand="{Binding PCBViewModel.KeyDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                               OpenGLKeyUpCommand="{Binding PCBViewModel.KeyUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-
-                              >
+                              OpenGLMouseWheelCommand="{Binding PCBViewModel.MouseWheelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             </local:OpenGLView>
         </Grid>
     </Grid>

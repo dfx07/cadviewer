@@ -13,4 +13,5 @@ namespace CadViewer.Common
 		Move,
 		Drop
 	}
+
 }

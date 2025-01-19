@@ -23,8 +23,10 @@ namespace CadViewer.Components
 		}
 		protected override HandleRef BuildWindowCore(HandleRef hwndParent)
 		{
-			Hwnd = CreateWindowEx(0, "STATIC", null, WS_CHILD | WS_VISIBLE,
-								0, 0, 100, 100, hwndParent.Handle,
+			uint style = (WS_CHILD | WS_VISIBLE);
+
+			Hwnd = CreateWindowEx(0, "STATIC", null, style,
+								0, 0, 200, 200, hwndParent.Handle,
 								IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
 
 			if (Hwnd == IntPtr.Zero)
@@ -44,18 +46,19 @@ namespace CadViewer.Components
 		// Windows API declarations
 		[DllImport("user32.dll", SetLastError = true)]
 		private static extern IntPtr CreateWindowEx(int exStyle, string lpClassName, string lpWindowName,
-			int dwStyle, int x, int y, int nWidth, int nHeight,
+			uint dwStyle, int x, int y, int nWidth, int nHeight,
 			IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
 
 		[DllImport("user32.dll", SetLastError = true)]
 		private static extern bool DestroyWindow(IntPtr hwnd);
 
-		private const int WS_CHILD				= 0x40000000;
-		private const int WS_VISIBLE			= 0x10000000;
+		private const uint WS_CHILD				= 0x40000000;
+		private const uint WS_POPUP				= 0x80000000;
+		private const uint WS_VISIBLE			= 0x10000000;
 
-		private const int PFD_DRAW_TO_WINDOW	= 0x00000004;
-		private const int PFD_SUPPORT_OPENGL	= 0x00000020;
-		private const int PFD_DOUBLEBUFFER		= 0x00000001;
+		private const uint PFD_DRAW_TO_WINDOW	= 0x00000004;
+		private const uint PFD_SUPPORT_OPENGL	= 0x00000020;
+		private const uint PFD_DOUBLEBUFFER	= 0x00000001;
 
 		private const uint GL_COLOR_BUFFER_BIT	= 0x00004000;
 	}

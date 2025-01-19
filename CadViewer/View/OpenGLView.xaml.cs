@@ -25,7 +25,6 @@ namespace CadViewer.View
 	public partial class OpenGLView : UserControl
 	{
 		private bool _isDragging = false;
-
 		public ICommand _MouseDownCommand { get; set; }
 		public ICommand _MouseUpCommand { get; set; }
 		public ICommand _MouseMoveCommand { get; set; }
@@ -152,6 +151,16 @@ namespace CadViewer.View
 			get { return (ICommand)GetValue(OpenGLMouseDragDropCommandProperty); }
 			set { SetValue(OpenGLMouseDragDropCommandProperty, value); }
 		}
+
+		public static readonly DependencyProperty OpenGLMouseWheelCommandProperty =
+		DependencyProperty.Register(nameof(OpenGLMouseWheelCommand), typeof(ICommand), typeof(OpenGLView), new PropertyMetadata(null));
+
+		public ICommand OpenGLMouseWheelCommand
+		{
+			get { return (ICommand)GetValue(OpenGLMouseWheelCommandProperty); }
+			set { SetValue(OpenGLMouseWheelCommandProperty, value); }
+		}
+
 		//------------------------------------------------------------------------------/
 		#endregion
 

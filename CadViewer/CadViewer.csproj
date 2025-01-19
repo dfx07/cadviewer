@@ -92,11 +92,13 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Components\OpenGLHost.cs" />
     <Compile Include="Implements\MainPCBViewHandler.cs" />
-    <Compile Include="Interfaces\PCBViewNotify.cs" />
-    <Compile Include="Interfaces\PCBViewHandler.cs" />
+    <Compile Include="Interfaces\NotificationHandler.cs" />
+    <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
+    <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PCBViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelCallback.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
