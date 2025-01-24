@@ -16,73 +16,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace CadViewer.View
 {
 	/// <summary>
 	/// Interaction logic for OpenGLView.xaml
 	/// </summary>
-	public partial class OpenGLView : UserControl
+	public partial class OpenGLView : UserControl, IWinformViewCtrlEventListener
 	{
 		private bool _isDragging = false;
-		public ICommand _MouseDownCommand { get; set; }
-		public ICommand _MouseUpCommand { get; set; }
-		public ICommand _MouseMoveCommand { get; set; }
+
 
 		public OpenGLView()
 		{
 			InitializeComponent();
-
-			_MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(OpenGLView_OnMouseDown);
-			_MouseUpCommand = new RelayCommand<MouseButtonEventArgs>(OpenGLView_OnMouseUp);
-			_MouseMoveCommand = new RelayCommand<MouseEventArgs>(OpenGLView_OnMouseMove);
-		}
-
-		private void OpenGLView_OnMouseDown(MouseButtonEventArgs e)
-		{
-			var position = e.GetPosition((UIElement)e.Source);
-
-			if (IsUseDragDropFun())
-			{
-				_isDragging = true;
-				MouseDragDropEventArgs dragDropEventArgs = new MouseDragDropEventArgs(e, MouseDragDropState.Drag);
-				OpenGLMouseDragDropCommand.Execute(dragDropEventArgs);
-				Mouse.Capture((UIElement)e.Source);
-			}
-
-			OpenGLMouseDownCommand.Execute(e);
-		}
-
-		private void OpenGLView_OnMouseUp(MouseButtonEventArgs e)
-		{
-			var position = e.GetPosition((UIElement)e.Source);
-
-			if (IsUseDragDropFun())
-			{
-				if (_isDragging)
-				{
-					_isDragging = false;
-					MouseDragDropEventArgs dragDropEventArgs = new MouseDragDropEventArgs(e, MouseDragDropState.Drop);
-					OpenGLMouseDragDropCommand.Execute(dragDropEventArgs);
-					Mouse.Capture(null);
-				}
-			}
-
-			OpenGLMouseUpCommand.Execute(e);
-		}
-
-		private void OpenGLView_OnMouseMove(MouseEventArgs e)
-		{
-			if (IsUseDragDropFun())
-			{
-				if (_isDragging)
-				{
-					MouseDragDropEventArgs dragDropEventArgs = new MouseDragDropEventArgs(e, MouseDragDropState.Move);
-					OpenGLMouseDragDropCommand.Execute(dragDropEventArgs);
-				}
-			}
-
-			OpenGLMouseMoveCommand.Execute(e);
 		}
 
 		public bool IsUseDragDropFun()
@@ -101,6 +49,16 @@ namespace CadViewer.View
 		{
 			get => (OpenGLHost)GetValue(OpenGLContentProperty);
 			set => SetValue(OpenGLContentProperty, value);
+		}
+
+
+		public static readonly DependencyProperty OpenGLControlProperty =
+		DependencyProperty.Register(nameof(OpenGLControl), typeof(OpenGLControl), typeof(OpenGLView), new PropertyMetadata(null));
+
+		public OpenGLControl OpenGLControl
+		{
+			get => (OpenGLControl)GetValue(OpenGLControlProperty);
+			set => SetValue(OpenGLControlProperty, value);
 		}
 
 		#region [Mouse Events]
@@ -180,6 +138,136 @@ namespace CadViewer.View
 		{
 			get { return (ICommand)GetValue(OpenGLKeyUpCommandProperty); }
 			set { SetValue(OpenGLKeyUpCommandProperty, value); }
+		}
+
+		public static readonly DependencyProperty OpenGLSizeChangedProperty =
+		DependencyProperty.Register(nameof(OpenGLSizeChanged), typeof(ICommand), typeof(OpenGLView), new PropertyMetadata(null));
+
+		public ICommand OpenGLSizeChanged
+		{
+			get => (ICommand)GetValue(OpenGLSizeChangedProperty);
+			set => SetValue(OpenGLSizeChangedProperty, value);
+		}
+
+		public void xOpenGLRender_OnCreated(IntPtr handle)
+		{
+
+		}
+
+		public void xOpenGLRender_ViewUpdate()
+		{
+
+		}
+
+		public void WinformViewCtrl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (IsUseDragDropFun())
+			{
+				if (_isDragging)
+				{
+					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Move);
+					OpenGLMouseDragDropCommand.Execute(evtArgs);
+				}
+			}
+
+			var evt = new XMouseEventArgs(new Point(e.X, e.Y));
+
+			OpenGLMouseMoveCommand.Execute(evt);
+		}
+
+		public void WinformViewCtrl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (IsUseDragDropFun())
+			{
+				_isDragging = true;
+				var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Drag);
+
+				OpenGLMouseDragDropCommand.Execute(evtArgs);
+			}
+
+			var evt = new XMouseButtonEventArgs(new Point(e.X, e.Y),
+				EventConverter.MouseWpf2WF(e.Button), MouseButtonState.Pressed);
+
+			OpenGLMouseDownCommand.Execute(evt);
+		}
+
+		public void WinformViewCtrl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (IsUseDragDropFun())
+			{
+				if (_isDragging)
+				{
+					_isDragging = false;
+					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Drop);
+					OpenGLMouseDragDropCommand.Execute(evtArgs);
+					Mouse.Capture(null);
+				}
+			}
+
+			var evt = new XMouseButtonEventArgs(new Point(e.X, e.Y),
+				EventConverter.MouseWpf2WF(e.Button), MouseButtonState.Pressed);
+
+			OpenGLMouseUpCommand.Execute(evt);
+		}
+
+		public void WinformViewCtrl_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			var evt = new XMouseWheelEventArgs(new Point(e.X, e.Y), e.Delta);
+
+			OpenGLMouseWheelCommand.Execute(evt);
+		}
+
+		public void WinformViewCtrl_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			try
+			{
+				Key key = EventConverter.KeyWF2Wpf(e.KeyCode);
+
+				var evt = new XKeyEventArgs(key, KeyStates.Down);
+
+				OpenGLKeyDownCommand.Execute(evt);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Console.WriteLine(ex.Message);
+				return;
+			}
+		}
+
+		public void WinformViewCtrl_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			try
+			{
+				Key key = EventConverter.KeyWF2Wpf(e.KeyCode);
+
+				var evt = new XKeyEventArgs(key, KeyStates.None);
+
+				OpenGLKeyUpCommand.Execute(evt);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Console.WriteLine(ex.Message);
+				return;
+			}
+		}
+
+		public void WinformViewCtrl_SizeChanged(object sender, System.Windows.Size newSize)
+		{
+			if (OpenGLSizeChanged != null)
+			{
+				OpenGLSizeChanged.Execute(newSize);
+			}
+		}
+
+
+		private void xWindowsFormsHost_Loaded(object sender, RoutedEventArgs e)
+		{
+			if(OpenGLControl != null)
+			{
+				OpenGLControl.Dock = System.Windows.Forms.DockStyle.Fill;
+				xWindowsFormsHost.Child  = OpenGLControl;
+				OpenGLControl.ViewControl = this;
+			}
 		}
 
 		/* Keyboard events*/

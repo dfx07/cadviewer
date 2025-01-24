@@ -19,9 +19,9 @@ namespace CadViewer.Interfaces
 			PCBViewerAPI.DestroyPCBView(m_pHandler);
 		}
 
-		public void OnCreateContext(OpenGLHost openGLView)
+		public void OnCreateContext(OpenGLControl openGLView)
 		{
-			m_pHandler = PCBViewerAPI.CreatePCBView(openGLView.Hwnd);
+			m_pHandler = PCBViewerAPI.CreatePCBView(openGLView.Handle);
 
 			PCBViewerAPI.SetCallbackFunctionNotifyUI(m_pHandler, m_pCallbackUI);
 

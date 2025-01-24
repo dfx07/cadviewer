@@ -35,22 +35,6 @@ namespace CadViewer.View
 			if(PCBViewModel != null)
 			{
 				PCBViewModel.InitContext();
-
-				double width = xOpenGLView.ActualWidth - 6;
-				double height = xOpenGLView.ActualHeight - 6;
-
-				PCBViewModel.OnViewChanged((int)width, (int)height);
-			}
-		}
-
-		private void OnPCBViewer_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			if (PCBViewModel != null)
-			{
-				double width = xOpenGLView.ActualWidth - 6;
-				double height = xOpenGLView.ActualHeight - 6;
-
-				PCBViewModel.OnViewChanged((int)width, (int)height);
 			}
 		}
 

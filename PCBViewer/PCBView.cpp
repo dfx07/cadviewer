@@ -71,7 +71,7 @@ bool PCBView::IsAlreadyContext() const
 
 void PCBView::MakeContext() const
 {
-	m_pContext->MakeCurrentContext();
+	bool c = m_pContext->MakeCurrentContext();
 }
 
 void PCBView::SetView(const int nWidth, const int nHeight)
@@ -100,6 +100,9 @@ void PCBView::Clear()
 
 void PCBView::Draw()
 {
+	glClearColor(1.0, 0.0, 1.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	MakeContext();
 
 	glPointSize(10.0);

@@ -74,6 +74,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -90,8 +91,12 @@
     <Compile Include="Common\MouseBehavior.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Components\OpenGLControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\OpenGLHost.cs" />
     <Compile Include="Implements\MainPCBViewHandler.cs" />
+    <Compile Include="Interfaces\ViewCtrlEventListener.cs" />
     <Compile Include="Interfaces\NotificationHandler.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />

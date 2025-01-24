@@ -99,7 +99,8 @@ namespace CadViewer.Implements
 		/*-----------------------------------------------------------------------------------*/
 		public void DrawLine()
 		{
-			PCBViewerAPI.DrawLine(m_pHandler, 12);
+			PCBViewerAPI.Clear(m_pHandler);
+			PCBViewerAPI.Draw(m_pHandler);
 		}
 	}
 }

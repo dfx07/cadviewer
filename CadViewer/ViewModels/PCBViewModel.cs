@@ -19,17 +19,18 @@ namespace CadViewer.ViewModels
 	{
 		public PCBViewModel()
 		{
-			OpenGLControl = new OpenGLHost();
+			OpenGLControl = new OpenGLControl();
 
-			MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMove);
-			MouseEnterCommand = new RelayCommand<MouseEventArgs>(OnMouseEnter);
-			MouseDragDropCommand = new RelayCommand<MouseDragDropEventArgs>(OnMouseDragDrop);
-			MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(OnMouseDown);
-			MouseUpCommand = new RelayCommand<MouseButtonEventArgs>(OnMouseUp);
-			MouseWheelCommand = new RelayCommand<MouseWheelEventArgs>(OnMouseWheel);
+			MouseMoveCommand = new RelayCommand<XMouseEventArgs>(OnMouseMove);
+			MouseEnterCommand = new RelayCommand<XMouseEventArgs>(OnMouseEnter);
+			MouseDragDropCommand = new RelayCommand<XMouseDragDropEventArgs>(OnMouseDragDrop);
+			MouseDownCommand = new RelayCommand<XMouseButtonEventArgs>(OnMouseDown);
+			MouseUpCommand = new RelayCommand<XMouseButtonEventArgs>(OnMouseUp);
+			MouseWheelCommand = new RelayCommand<XMouseWheelEventArgs>(OnMouseWheel);
 
-			KeyDownCommand = new RelayCommand<KeyEventArgs>(OnKeyDown);
-			KeyUpCommand = new RelayCommand<KeyEventArgs>(OnKeyUp);
+			KeyDownCommand = new RelayCommand<XKeyEventArgs>(OnKeyDown);
+			KeyUpCommand = new RelayCommand<XKeyEventArgs>(OnKeyUp);
+			ViewSizeChangedCommand = new RelayCommand<Size>(OnViewSizeChanged);
 		}
 
 		~PCBViewModel()
@@ -39,32 +40,13 @@ namespace CadViewer.ViewModels
 
 		public void InitContext()
 		{
-			if (_pCBViewHandler == null || OpenGLControl.Hwnd == IntPtr.Zero)
+			if (_pCBViewHandler == null || OpenGLControl.Handle == IntPtr.Zero)
 				return;
 
-			_pCBViewHandler.OnCreateContext(OpenGLControl);
+			//_pCBViewHandler.OnCreateContext(OpenGLControl);
 		}
 
-		public void OnViewChanged(int nWidth, int nHeight)
-		{
-			if (_pCBViewHandler is null)
-				return;
-
-			if(OpenGLControl != null)
-			{
-				OpenGLControl.Width = nWidth;
-				OpenGLControl.Height = nHeight;
-
-				OpenGLControl.UpdateLayout();
-			}
-
-			_pCBViewHandler.OnViewChanged(nWidth, nHeight);
-
-			Width = nWidth;
-			Height = nHeight;
-		}
-
-		private void OnMouseMove(MouseEventArgs e)
+		private void OnMouseMove(XMouseEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_MOVE))
 				return;
@@ -72,11 +54,10 @@ namespace CadViewer.ViewModels
 			if (e is null || _pCBViewHandler is null)
 				return;
 
-			var position = e.GetPosition((UIElement)e.Source);
-			_pCBViewHandler.OnMouseMove(position);
+			_pCBViewHandler.OnMouseMove(e.Pt);
 		}
 
-		private void OnMouseEnter(MouseEventArgs e)
+		private void OnMouseEnter(XMouseEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_ENTER))
 				return;
@@ -86,7 +67,7 @@ namespace CadViewer.ViewModels
 
 			_pCBViewHandler.OnMouseEnter();
 		}
-		private void OnMouseDragDrop(MouseDragDropEventArgs e)
+		private void OnMouseDragDrop(XMouseDragDropEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DRAG))
 				return;
@@ -94,12 +75,10 @@ namespace CadViewer.ViewModels
 			if (e is null || _pCBViewHandler is null)
 				return;
 
-			var position = e.GetPosition((UIElement)e.Source);
-
-			_pCBViewHandler.OnMouseDragDrop(e.State, position);
+			_pCBViewHandler.OnMouseDragDrop(e.State, e.Pt);
 		}
 
-		private void OnMouseDown(MouseButtonEventArgs e)
+		private void OnMouseDown(XMouseButtonEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DOWN))
 				return;
@@ -107,23 +86,21 @@ namespace CadViewer.ViewModels
 			if (e is null || _pCBViewHandler is null)
 				return;
 
-			var position = e.GetPosition((UIElement)e.Source);
-
-			if(e.ChangedButton == MouseButton.Left)
+			if(e.Button == MouseButton.Left)
 			{
-				_pCBViewHandler.OnMouseDown(MouseButton.Left, position);
+				_pCBViewHandler.OnMouseDown(MouseButton.Left, e.Pt);
 			}
-			else if(e.ChangedButton == MouseButton.Right)
+			else if(e.Button == MouseButton.Right)
 			{
-				_pCBViewHandler.OnMouseDown(MouseButton.Right, position);
+				_pCBViewHandler.OnMouseDown(MouseButton.Right, e.Pt);
 			}
-			else if(e.ChangedButton == MouseButton.Middle)
+			else if(e.Button == MouseButton.Middle)
 			{
-				_pCBViewHandler.OnMouseDown(MouseButton.Middle, position);
+				_pCBViewHandler.OnMouseDown(MouseButton.Middle, e.Pt);
 			}
 		}
 
-		private void OnMouseUp(MouseButtonEventArgs e)
+		private void OnMouseUp(XMouseButtonEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_UP))
 				return;
@@ -131,23 +108,21 @@ namespace CadViewer.ViewModels
 			if (e is null || _pCBViewHandler is null)
 				return;
 
-			var position = e.GetPosition((UIElement)e.Source);
-
-			if (e.ChangedButton == MouseButton.Left)
+			if (e.Button == MouseButton.Left)
 			{
-				_pCBViewHandler.OnMouseUp(MouseButton.Left, position);
+				_pCBViewHandler.OnMouseUp(MouseButton.Left, e.Pt);
 			}
-			else if (e.ChangedButton == MouseButton.Right)
+			else if (e.Button == MouseButton.Right)
 			{
-				_pCBViewHandler.OnMouseUp(MouseButton.Right, position);
+				_pCBViewHandler.OnMouseUp(MouseButton.Right, e.Pt);
 			}
-			else if (e.ChangedButton == MouseButton.Middle)
+			else if (e.Button == MouseButton.Middle)
 			{
-				_pCBViewHandler.OnMouseUp(MouseButton.Middle, position);
+				_pCBViewHandler.OnMouseUp(MouseButton.Middle, e.Pt);
 			}
 		}
 
-		private void OnMouseWheel(MouseWheelEventArgs e)
+		private void OnMouseWheel(XMouseWheelEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_WHEEL))
 				return;
@@ -155,13 +130,11 @@ namespace CadViewer.ViewModels
 			if (e is null || _pCBViewHandler is null)
 				return;
 
-			var position = e.GetPosition((UIElement)e.Source);
-
-			_pCBViewHandler.OnMouseWheel(e.Delta, position);
+			_pCBViewHandler.OnMouseWheel(e.Delta, e.Pt);
 		}
 
 		/*Keyboard events*/
-		private void OnKeyDown(KeyEventArgs k)
+		private void OnKeyDown(XKeyEventArgs k)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.KEY_DOWN))
 				return;
@@ -172,7 +145,7 @@ namespace CadViewer.ViewModels
 				_isKeyDownHandled = true;
 			}
 		}
-		private void OnKeyUp(KeyEventArgs k)
+		private void OnKeyUp(XKeyEventArgs k)
 		{
 			_isKeyDownHandled = false;
 
@@ -180,6 +153,16 @@ namespace CadViewer.ViewModels
 				return;
 
 			_pCBViewHandler.OnKeyUp(k.Key);
+		}
+
+		private void OnViewSizeChanged(Size newSize)
+		{
+			Width = newSize.Width;
+			Height = newSize.Height;
+
+			if (_pCBViewHandler is null)
+				return;
+			//_pCBViewHandler.OnViewChanged((int)newSize.Width, (int)newSize.Height);
 		}
 
 		#region /// [Internal handle]
@@ -267,9 +250,10 @@ namespace CadViewer.ViewModels
 		public ICommand KeyDownCommand { get; set; }
 		public ICommand KeyUpCommand { get; set; }
 		public ICommand MouseWheelCommand { get; set; }
+		public ICommand ViewSizeChangedCommand { get; set; }
 
 		private bool _isKeyDownHandled = false;
-		private OpenGLHost _openGLControl; public OpenGLHost OpenGLControl { get => _openGLControl; set => SetProperty(ref _openGLControl, value); }
+		private OpenGLControl _openGLControl; public OpenGLControl OpenGLControl { get => _openGLControl; set => SetProperty(ref _openGLControl, value); }
 		private string _name; public string Name { get => _name; set => SetProperty(ref _name, value); }
 		private Visibility _titleVisibility; public Visibility TitleVisibility { get => _titleVisibility; set => SetProperty(ref _titleVisibility, value); }
 		private double _width; public double Width { get => _width; set => SetProperty(ref _width, value); }

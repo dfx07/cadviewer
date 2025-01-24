@@ -51,11 +51,22 @@ LIBRARY_API void DrawLine(IntPtr pPCB, Int a)
 
 LIBRARY_API void Draw(IntPtr pPCB)
 {
-	PCBView* pView = reinterpret_cast<PCBView*>(pPCB);
+	//PCBView* pView = reinterpret_cast<PCBView*>(pPCB);
 
-	NULL_RETURN(pView);
+	//NULL_RETURN(pView);
 
-	pView->Draw();
+	//pView->Draw();
+
+	glClearColor(1.0, 0.0, 1.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//MakeContext();
+
+	glPointSize(10.0);
+	glColor3f(0, 1, 0);
+	glBegin(GL_POINTS);
+	glVertex2f(0.f, 0.f);
+	glEnd();
 }
 
 LIBRARY_API void SetView(IntPtr pPCB, Int nWidth, Int nHeight)
