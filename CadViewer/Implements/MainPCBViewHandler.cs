@@ -71,12 +71,15 @@ namespace CadViewer.Implements
 			PCBViewNotifier.SetTitle("Mouse Drag + Drop : " + pt);
 		}
 
+		public override void OnViewUpdate()
+		{
+			PCBViewerAPI.Clear(m_pHandler);
+			PCBViewerAPI.Draw(m_pHandler);
+		}
+
 		public override void OnViewChanged(int width, int height)
 		{
 			PCBViewerAPI.SetView(m_pHandler, width, height);
-
-			PCBViewerAPI.Clear(m_pHandler);
-			PCBViewerAPI.Draw(m_pHandler);
 		}
 
 		public override void OnKeyDown(Key key)

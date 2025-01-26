@@ -1,36 +1,45 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{127F2D72-F55A-4EDE-9EAC-14F619AA910C}"
-	ProjectSection(SolutionItems) = preProject
-		Common\apicom.cpp = Common\apicom.cpp
-		Common\apicom.h = Common\apicom.h
-		Common\apidef.h = Common\apidef.h
-		Common\dllexports.h = Common\dllexports.h
-		NotifyObject.h = NotifyObject.h
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Context", "Context", "{F327595D-EFBA-4D7C-AAB9-65BCDE64E878}"
-	ProjectSection(SolutionItems) = preProject
-		Common\xctx.h = Common\xctx.h
-		Common\xopenglctx.h = Common\xopenglctx.h
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{4C2ADDF9-B9D9-4543-9952-A2F5A074AF2D}"
-	ProjectSection(SolutionItems) = preProject
-		Common\GL\eglew.h = Common\GL\eglew.h
-		Common\GL\glew.h = Common\GL\glew.h
-		Common\GL\glxew.h = Common\GL\glxew.h
-		Common\GL\wglew.h = Common\GL\wglew.h
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cores", "Cores", "{127F2D72-F55A-4EDE-9EAC-14F619AA910C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadViewer", "CadViewer\CadViewer.csproj", "{92603D8B-7670-4357-8EAE-B2DFECE4AF1D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5} = {149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}
+		{5140F236-4A74-4D34-91FB-0F8187CCFDD9} = {5140F236-4A74-4D34-91FB-0F8187CCFDD9}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCBModelData", "PCBModelData\PCBModelData.vcxproj", "{149E22BA-42E6-4073-A3D4-68B2BD9C9DA5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCBView", "PCBViewer\PCBViewer.vcxproj", "{5140F236-4A74-4D34-91FB-0F8187CCFDD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graphics", "Graphics", "{396BA03F-C5CB-49FC-A7AF-BA41C7A2A5EA}"
+	ProjectSection(SolutionItems) = preProject
+		Core\Graphics\xctx.h = Core\Graphics\xctx.h
+		Core\Graphics\xopenglctx.h = Core\Graphics\xopenglctx.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{85334817-4ED8-4CE6-9BD8-4C62451FD372}"
+	ProjectSection(SolutionItems) = preProject
+		Core\Graphics\OpenGL\eglew.h = Core\Graphics\OpenGL\eglew.h
+		Core\Graphics\OpenGL\glew.h = Core\Graphics\OpenGL\glew.h
+		Core\Graphics\OpenGL\glxew.h = Core\Graphics\OpenGL\glxew.h
+		Core\Graphics\OpenGL\wglew.h = Core\Graphics\OpenGL\wglew.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{29F1CB42-7AEE-424A-AB07-4566718A6673}"
+	ProjectSection(SolutionItems) = preProject
+		Core\Modules\NotifyObject.h = Core\Modules\NotifyObject.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6559EAF7-9B23-4EEF-9BC1-A478EA9FEF71}"
+	ProjectSection(SolutionItems) = preProject
+		Core\Common\apicom.h = Core\Common\apicom.h
+		Core\Common\apidef.h = Core\Common\apidef.h
+		Core\Common\dllexports.h = Core\Common\dllexports.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,8 +92,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F327595D-EFBA-4D7C-AAB9-65BCDE64E878} = {127F2D72-F55A-4EDE-9EAC-14F619AA910C}
-		{4C2ADDF9-B9D9-4543-9952-A2F5A074AF2D} = {F327595D-EFBA-4D7C-AAB9-65BCDE64E878}
+		{396BA03F-C5CB-49FC-A7AF-BA41C7A2A5EA} = {127F2D72-F55A-4EDE-9EAC-14F619AA910C}
+		{85334817-4ED8-4CE6-9BD8-4C62451FD372} = {396BA03F-C5CB-49FC-A7AF-BA41C7A2A5EA}
+		{29F1CB42-7AEE-424A-AB07-4566718A6673} = {127F2D72-F55A-4EDE-9EAC-14F619AA910C}
+		{6559EAF7-9B23-4EEF-9BC1-A478EA9FEF71} = {127F2D72-F55A-4EDE-9EAC-14F619AA910C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A44E2BF-116A-4BB4-B1C8-8EC41CFF5058}

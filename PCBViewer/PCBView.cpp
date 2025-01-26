@@ -79,8 +79,6 @@ void PCBView::SetView(const int nWidth, const int nHeight)
 	m_nWidth = nWidth;
 	m_nHeight = nHeight;
 
-	MakeContext();
-
 	if (IsAlreadyContext())
 	{
 		glViewport(0, 0, m_nWidth, m_nHeight);
@@ -94,17 +92,14 @@ void PCBView::SetView(const int nWidth, const int nHeight)
 
 void PCBView::Clear()
 {
+	MakeContext();
+
 	glClearColor(1.0, 0.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void PCBView::Draw()
 {
-	glClearColor(1.0, 0.0, 1.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	MakeContext();
-
 	glPointSize(10.0);
 	glColor3f(0, 1, 0);
 	glBegin(GL_POINTS);

@@ -91,7 +91,7 @@
     <Compile Include="Common\MouseBehavior.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="Components\OpenGLControl.cs">
+    <Compile Include="Components\ViewPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Components\OpenGLHost.cs" />
@@ -179,16 +179,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PCBModelData\PCBModelData.vcxproj">
-      <Project>{149e22ba-42e6-4073-a3d4-68b2bd9c9da5}</Project>
-      <Name>PCBModelData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PCBViewer\PCBViewer.vcxproj">
-      <Project>{5140f236-4a74-4d34-91fb-0f8187ccfdd9}</Project>
-      <Name>PCBView</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

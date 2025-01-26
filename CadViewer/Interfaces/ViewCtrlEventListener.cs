@@ -12,6 +12,8 @@ namespace CadViewer.Interfaces
 {
 	public interface IWinformViewCtrlEventListener
 	{
+		void WinformViewCtrl_OnCreated(object sender, IntPtr handle);
+		void WinformViewCtrl_OnViewUpdate(object sender);
 		void WinformViewCtrl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e);
 		void WinformViewCtrl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e);
 		void WinformViewCtrl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e);

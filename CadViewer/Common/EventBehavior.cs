@@ -151,8 +151,6 @@ namespace CadViewer.Common
 				default:
 					throw new ArgumentOutOfRangeException($"Unsupported key: {keys}");
 			}
-
-			return Key.None;
 		}
 	}
 

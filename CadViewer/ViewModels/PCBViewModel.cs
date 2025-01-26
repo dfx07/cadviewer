@@ -19,7 +19,7 @@ namespace CadViewer.ViewModels
 	{
 		public PCBViewModel()
 		{
-			OpenGLControl = new OpenGLControl();
+			OpenGLViewPanel = new ViewPanel();
 
 			MouseMoveCommand = new RelayCommand<XMouseEventArgs>(OnMouseMove);
 			MouseEnterCommand = new RelayCommand<XMouseEventArgs>(OnMouseEnter);
@@ -30,7 +30,10 @@ namespace CadViewer.ViewModels
 
 			KeyDownCommand = new RelayCommand<XKeyEventArgs>(OnKeyDown);
 			KeyUpCommand = new RelayCommand<XKeyEventArgs>(OnKeyUp);
+
 			ViewSizeChangedCommand = new RelayCommand<Size>(OnViewSizeChanged);
+			ViewCreatedCommand = new RelayCommand<IntPtr>(OnViewCreated);
+			ViewUpdateCommand = new RelayCommand(OnViewUpdate);
 		}
 
 		~PCBViewModel()
@@ -38,12 +41,9 @@ namespace CadViewer.ViewModels
 
 		}
 
-		public void InitContext()
+		public void OnInitModel()
 		{
-			if (_pCBViewHandler == null || OpenGLControl.Handle == IntPtr.Zero)
-				return;
-
-			//_pCBViewHandler.OnCreateContext(OpenGLControl);
+			//TODO: Implement
 		}
 
 		private void OnMouseMove(XMouseEventArgs e)
@@ -99,7 +99,6 @@ namespace CadViewer.ViewModels
 				_pCBViewHandler.OnMouseDown(MouseButton.Middle, e.Pt);
 			}
 		}
-
 		private void OnMouseUp(XMouseButtonEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_UP))
@@ -121,7 +120,6 @@ namespace CadViewer.ViewModels
 				_pCBViewHandler.OnMouseUp(MouseButton.Middle, e.Pt);
 			}
 		}
-
 		private void OnMouseWheel(XMouseWheelEventArgs e)
 		{
 			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_WHEEL))
@@ -162,7 +160,24 @@ namespace CadViewer.ViewModels
 
 			if (_pCBViewHandler is null)
 				return;
-			//_pCBViewHandler.OnViewChanged((int)newSize.Width, (int)newSize.Height);
+
+			_pCBViewHandler.OnViewChanged((int)newSize.Width, (int)newSize.Height);
+		}
+
+		private void OnViewCreated(IntPtr handle)
+		{
+			if (_pCBViewHandler is null)
+				return;
+
+			_pCBViewHandler.OnCreateContext(handle);
+		}
+
+		private void OnViewUpdate()
+		{
+			if (_pCBViewHandler is null)
+				return;
+
+			_pCBViewHandler.OnViewUpdate();
 		}
 
 		#region /// [Internal handle]
@@ -251,9 +266,11 @@ namespace CadViewer.ViewModels
 		public ICommand KeyUpCommand { get; set; }
 		public ICommand MouseWheelCommand { get; set; }
 		public ICommand ViewSizeChangedCommand { get; set; }
+		public ICommand ViewCreatedCommand { get; set; }
+		public ICommand ViewUpdateCommand { get; set; }
 
 		private bool _isKeyDownHandled = false;
-		private OpenGLControl _openGLControl; public OpenGLControl OpenGLControl { get => _openGLControl; set => SetProperty(ref _openGLControl, value); }
+		private ViewPanel _openGLViewPanel; public ViewPanel OpenGLViewPanel { get => _openGLViewPanel; set => SetProperty(ref _openGLViewPanel, value); }
 		private string _name; public string Name { get => _name; set => SetProperty(ref _name, value); }
 		private Visibility _titleVisibility; public Visibility TitleVisibility { get => _titleVisibility; set => SetProperty(ref _titleVisibility, value); }
 		private double _width; public double Width { get => _width; set => SetProperty(ref _width, value); }

@@ -52,13 +52,13 @@ namespace CadViewer.View
 		}
 
 
-		public static readonly DependencyProperty OpenGLControlProperty =
-		DependencyProperty.Register(nameof(OpenGLControl), typeof(OpenGLControl), typeof(OpenGLView), new PropertyMetadata(null));
+		public static readonly DependencyProperty OpenGLViewPanelProperty =
+		DependencyProperty.Register(nameof(OpenGLViewPanel), typeof(ViewPanel), typeof(OpenGLView), new PropertyMetadata(null));
 
-		public OpenGLControl OpenGLControl
+		public ViewPanel OpenGLViewPanel
 		{
-			get => (OpenGLControl)GetValue(OpenGLControlProperty);
-			set => SetValue(OpenGLControlProperty, value);
+			get => (ViewPanel)GetValue(OpenGLViewPanelProperty);
+			set => SetValue(OpenGLViewPanelProperty, value);
 		}
 
 		#region [Mouse Events]
@@ -140,23 +140,48 @@ namespace CadViewer.View
 			set { SetValue(OpenGLKeyUpCommandProperty, value); }
 		}
 
-		public static readonly DependencyProperty OpenGLSizeChangedProperty =
-		DependencyProperty.Register(nameof(OpenGLSizeChanged), typeof(ICommand), typeof(OpenGLView), new PropertyMetadata(null));
+		#region [Other events]
+		/// /////////////////////////////////////////////////////////////////////////////
 
-		public ICommand OpenGLSizeChanged
+		public static readonly DependencyProperty OpenGLSizeChangedCommandProperty =
+		DependencyProperty.Register(nameof(OpenGLSizeChangedCommand), typeof(ICommand), typeof(OpenGLView), new PropertyMetadata(null));
+
+		public ICommand OpenGLSizeChangedCommand
 		{
-			get => (ICommand)GetValue(OpenGLSizeChangedProperty);
-			set => SetValue(OpenGLSizeChangedProperty, value);
+			get => (ICommand)GetValue(OpenGLSizeChangedCommandProperty);
+			set => SetValue(OpenGLSizeChangedCommandProperty, value);
 		}
 
-		public void xOpenGLRender_OnCreated(IntPtr handle)
-		{
+		public static readonly DependencyProperty OpenGLViewCreatedCommandProperty =
+		DependencyProperty.Register(nameof(OpenGLViewCreatedCommand), typeof(ICommand), typeof(OpenGLView), new PropertyMetadata(null));
 
+		public ICommand OpenGLViewCreatedCommand
+		{
+			get { return (ICommand)GetValue(OpenGLViewCreatedCommandProperty); }
+			set { SetValue(OpenGLViewCreatedCommandProperty, value); }
 		}
 
-		public void xOpenGLRender_ViewUpdate()
-		{
+		public static readonly DependencyProperty OpenGLViewUpdateCommandProperty =
+		DependencyProperty.Register(nameof(OpenGLViewUpdateCommand), typeof(ICommand), typeof(OpenGLView), new PropertyMetadata(null));
 
+		public ICommand OpenGLViewUpdateCommand
+		{
+			get { return (ICommand)GetValue(OpenGLViewUpdateCommandProperty); }
+			set { SetValue(OpenGLViewUpdateCommandProperty, value); }
+		}
+
+		//------------------------------------------------------------------------------/
+		#endregion
+
+
+		public void WinformViewCtrl_OnCreated(object sender, IntPtr handle)
+		{
+			OpenGLViewCreatedCommand.Execute(handle);
+		}
+
+		public void WinformViewCtrl_OnViewUpdate(object sender)
+		{
+			OpenGLViewUpdateCommand.Execute(null);
 		}
 
 		public void WinformViewCtrl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -253,20 +278,20 @@ namespace CadViewer.View
 
 		public void WinformViewCtrl_SizeChanged(object sender, System.Windows.Size newSize)
 		{
-			if (OpenGLSizeChanged != null)
+			if (OpenGLSizeChangedCommand != null)
 			{
-				OpenGLSizeChanged.Execute(newSize);
+				OpenGLSizeChangedCommand.Execute(newSize);
 			}
 		}
 
 
 		private void xWindowsFormsHost_Loaded(object sender, RoutedEventArgs e)
 		{
-			if(OpenGLControl != null)
+			if(OpenGLViewPanel != null)
 			{
-				OpenGLControl.Dock = System.Windows.Forms.DockStyle.Fill;
-				xWindowsFormsHost.Child  = OpenGLControl;
-				OpenGLControl.ViewControl = this;
+				OpenGLViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+				OpenGLViewPanel.ViewControl = this;
+				xWindowsFormsHost.Child  = OpenGLViewPanel;
 			}
 		}
 

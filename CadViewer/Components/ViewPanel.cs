@@ -9,14 +9,14 @@ using System.Windows.Input;
 
 namespace CadViewer.Components
 {
-	public class OpenGLControl : Control
+	public class ViewPanel : Control
 	{
 		private IntPtr _deviceContext = IntPtr.Zero;
 		private IntPtr _renderContext = IntPtr.Zero;
 
 		public IWinformViewCtrlEventListener ViewControl { get; set; } = null;
 
-		public OpenGLControl()
+		public ViewPanel()
 		{
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint |
 						  ControlStyles.Opaque |
@@ -30,56 +30,24 @@ namespace CadViewer.Components
 		{
 			base.OnHandleCreated(e);
 
-			// Lấy device context
-			_deviceContext = GetDC(this.Handle);
+			if (ViewControl is null)
+				return;
 
-			// Cấu hình định dạng pixel
-			var pfd = new PIXELFORMATDESCRIPTOR
-			{
-				nSize = (ushort)Marshal.SizeOf<PIXELFORMATDESCRIPTOR>(),
-				nVersion = 1,
-				dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
-				iPixelType = PFD_TYPE_RGBA,
-				cColorBits = 32,
-				cDepthBits = 24,
-				iLayerType = PFD_MAIN_PLANE
-			};
-
-			int pixelFormat = ChoosePixelFormat(_deviceContext, ref pfd);
-			SetPixelFormat(_deviceContext, pixelFormat, ref pfd);
-
-			// Tạo OpenGL rendering context
-			_renderContext = wglCreateContext(_deviceContext);
-			wglMakeCurrent(_deviceContext, _renderContext);
+			ViewControl.WinformViewCtrl_OnCreated(this, this.Handle);
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 
-			// Xóa màn hình với màu nền xanh
-			glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			if (ViewControl is null)
+				return;
 
-			SwapBuffers(_deviceContext);
+			ViewControl.WinformViewCtrl_OnViewUpdate(this);
 		}
 
 		protected override void OnHandleDestroyed(EventArgs e)
 		{
-			// Hủy ngữ cảnh OpenGL
-			wglMakeCurrent(IntPtr.Zero, IntPtr.Zero);
-			if (_renderContext != IntPtr.Zero)
-			{
-				wglDeleteContext(_renderContext);
-				_renderContext = IntPtr.Zero;
-			}
-
-			if (_deviceContext != IntPtr.Zero)
-			{
-				ReleaseDC(this.Handle, _deviceContext);
-				_deviceContext = IntPtr.Zero;
-			}
-
 			base.OnHandleDestroyed(e);
 		}
 
@@ -142,7 +110,6 @@ namespace CadViewer.Components
 
 			ViewControl.WinformViewCtrl_KeyUp(this, e);
 		}
-
 		protected override void OnSizeChanged(System.EventArgs e)
 		{
 			base.OnSizeChanged(e);
@@ -152,7 +119,6 @@ namespace CadViewer.Components
 
 			ViewControl.WinformViewCtrl_SizeChanged(this, new System.Windows.Size(ClientSize.Width, ClientSize.Height));
 		}
-
 
 		// Định nghĩa các hằng số OpenGL
 		private const int PFD_DRAW_TO_WINDOW = 0x00000004;

@@ -32,9 +32,9 @@ namespace CadViewer.View
 
 		private void OnPCBViewer_Loaded(object sender, RoutedEventArgs e)
 		{
-			if(PCBViewModel != null)
+			if (PCBViewModel != null)
 			{
-				PCBViewModel.InitContext();
+				PCBViewModel.OnInitModel();
 			}
 		}
 
