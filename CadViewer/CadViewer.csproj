@@ -100,6 +100,7 @@
     <Compile Include="Interfaces\NotificationHandler.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
+    <Compile Include="ViewModels\RibbonBarViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PCBViewModel.cs" />
@@ -112,6 +113,12 @@
     </Compile>
     <Compile Include="View\PCBViewer.xaml.cs">
       <DependentUpon>PCBViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RibbonBar.xaml.cs">
+      <DependentUpon>RibbonBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabBar.xaml.cs">
+      <DependentUpon>TabBar.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\uctrl.xaml">
       <SubType>Designer</SubType>
@@ -134,6 +141,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PCBViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RibbonBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

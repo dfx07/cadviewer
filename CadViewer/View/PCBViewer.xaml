@@ -15,9 +15,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MaxHeight="26"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MaxHeight="20"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#ccd5f0" Visibility="{Binding PCBViewModel.TitleVisibility, RelativeSource={RelativeSource AncestorType=UserControl} }">
-            <TextBlock Text="{Binding PCBViewModel.Name, UpdateSourceTrigger=PropertyChanged,
+        <Grid Grid.Row="0" x:Name="xTitleViewer" Background="#ccd5f0" Visibility="{Binding PCBViewModel.TitleVisibility, RelativeSource={RelativeSource AncestorType=UserControl} }">
+            <TextBlock Text="{Binding PCBViewModel.ViewTitle, UpdateSourceTrigger=PropertyChanged,
                               RelativeSource={RelativeSource AncestorType=UserControl}}"
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Center"
@@ -39,6 +40,14 @@
                               OpenGLViewUpdateCommand="{Binding PCBViewModel.ViewUpdateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             </local:OpenGLView>
+        </Grid>
+        <Grid Grid.Row="3" x:Name="xStatusViewer" Background="#ccd5f0" Visibility="{Binding PCBViewModel.TitleVisibility, RelativeSource={RelativeSource AncestorType=UserControl} }">
+            <TextBlock Text="{Binding PCBViewModel.ViewStatus, UpdateSourceTrigger=PropertyChanged,
+                              RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Center"
+                   Margin="5, 5, 5, 5">
+            </TextBlock>
         </Grid>
     </Grid>
 </UserControl>

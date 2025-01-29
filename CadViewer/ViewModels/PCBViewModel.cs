@@ -209,7 +209,7 @@ namespace CadViewer.ViewModels
 		// ------------------------------------------------------------------------------//
 		public void SetTitle(string strTitle)
 		{
-			Name = strTitle;
+			ViewTitle = strTitle;
 		}
 
 		public void SetVisibleTitle(bool bShow)
@@ -271,7 +271,8 @@ namespace CadViewer.ViewModels
 
 		private bool _isKeyDownHandled = false;
 		private ViewPanel _openGLViewPanel; public ViewPanel OpenGLViewPanel { get => _openGLViewPanel; set => SetProperty(ref _openGLViewPanel, value); }
-		private string _name; public string Name { get => _name; set => SetProperty(ref _name, value); }
+		private string _title; public string ViewTitle { get => _title; set => SetProperty(ref _title, value); }
+		private string _status; public string ViewStatus { get => _status; set => SetProperty(ref _status, value); }
 		private Visibility _titleVisibility; public Visibility TitleVisibility { get => _titleVisibility; set => SetProperty(ref _titleVisibility, value); }
 		private double _width; public double Width { get => _width; set => SetProperty(ref _width, value); }
 		private double _height; public double Height { get => _height; set => SetProperty(ref _height, value); }

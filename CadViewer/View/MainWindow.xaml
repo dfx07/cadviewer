@@ -8,20 +8,24 @@
         xmlns:vm="clr-namespace:CadViewer.ViewModels"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="CadViewer" Height="640" Width="680">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
-            <uctrl:PCBViewer PCBViewModel="{Binding MainPCBViewModel}">
-            </uctrl:PCBViewer>
+            <uctrl:BibbonBar></uctrl:BibbonBar>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
+            <uctrl:PCBViewer Padding="2" PCBViewModel="{Binding MainPCBViewModel}" />
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="0">
             <Button Name="btnGenOpenGL" Content="Click to gen OpenGL context" Margin=" 10 ,10 ,10, 10" Command="{Binding IBtnRegisterClickComand}">
             </Button>
         </Grid>
