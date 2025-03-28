@@ -85,17 +85,28 @@
     <Compile Include="API\BaseAPI.cs" />
     <Compile Include="API\GCHandleProvider.cs" />
     <Compile Include="API\PCBViewerAPI.cs" />
+    <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\EventBehavior.cs" />
     <Compile Include="Common\EventDef.cs" />
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\MouseBehavior.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Components\CButton.xaml.cs">
+      <DependentUpon>CButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\CPanelControl.cs" />
+    <Compile Include="Components\TButton.xaml.cs">
+      <DependentUpon>TButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Converter.cs" />
     <Compile Include="Components\ViewPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Components\OpenGLHost.cs" />
     <Compile Include="Implements\MainPCBViewHandler.cs" />
+    <Compile Include="Interfaces\TabBarEventListener.cs" />
+    <Compile Include="Interfaces\UserControlBase.cs" />
     <Compile Include="Interfaces\ViewCtrlEventListener.cs" />
     <Compile Include="Interfaces\NotificationHandler.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
@@ -108,18 +119,29 @@
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\OpenGLView.xaml.cs">
+    <Compile Include="View\PCBViewer\OpenGLView.xaml.cs">
       <DependentUpon>OpenGLView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PCBViewer.xaml.cs">
+    <Compile Include="View\PCBViewer\PCBViewer.xaml.cs">
       <DependentUpon>PCBViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RibbonBar.xaml.cs">
+    <Compile Include="View\Properties\PropertiesView.xaml.cs">
+      <DependentUpon>PropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HeaderBar\RibbonBar.xaml.cs">
       <DependentUpon>RibbonBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TabBar.xaml.cs">
+    <Compile Include="View\HeaderBar\TabBar.xaml.cs">
       <DependentUpon>TabBar.xaml</DependentUpon>
     </Compile>
+    <Page Include="Components\CButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\TButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\uctrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,19 +158,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\OpenGLView.xaml">
+    <Page Include="View\PCBViewer\OpenGLView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PCBViewer.xaml">
+    <Page Include="View\PCBViewer\PCBViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RibbonBar.xaml">
+    <Page Include="View\Properties\PropertiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TabBar.xaml">
+    <Page Include="View\HeaderBar\RibbonBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HeaderBar\TabBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

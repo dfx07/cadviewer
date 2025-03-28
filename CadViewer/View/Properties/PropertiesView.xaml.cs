@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace CadViewer.View
 {
 	/// <summary>
-	/// Interaction logic for BibbonBar.xaml
+	/// Interaction logic for PropertiesView.xaml
 	/// </summary>
-	public partial class BibbonBar : UserControl
+	public partial class PropertiesView : UserControl
 	{
-		public BibbonBar()
+		public PropertiesView()
 		{
 			InitializeComponent();
 		}

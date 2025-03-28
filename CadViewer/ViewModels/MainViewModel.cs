@@ -12,17 +12,21 @@ namespace CadViewer.ViewModels
 {
 	public class MainViewModel : ViewModelCallback
 	{
-		public PCBViewModel MainPCBViewModel { get; set; }
+		public PCBViewModel MainPCBViewVM { get; set; }
+		public RibbonBarViewModel RibbonBarVM { get; set; }
 		public MainPCBViewHandler mainPCBViewHandler { get; set; }
 
 		public ICommand IBtnRegisterClickComand { get; }
 
 		public MainViewModel()
 		{
-			MainPCBViewModel = new PCBViewModel();
+			MainPCBViewVM = new PCBViewModel();
+
+			RibbonBarVM = new RibbonBarViewModel();
+
 			mainPCBViewHandler = new MainPCBViewHandler();
 
-			MainPCBViewModel.SetHandler(mainPCBViewHandler);
+			MainPCBViewVM.SetHandler(mainPCBViewHandler);
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 		}

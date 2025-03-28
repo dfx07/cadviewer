@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CadViewer"
         xmlns:uctrl="clr-namespace:CadViewer.View"
         xmlns:vm="clr-namespace:CadViewer.ViewModels"
+        xmlns:ui="clr-namespace:CadViewer.Components"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -20,10 +21,28 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
-            <uctrl:BibbonBar></uctrl:BibbonBar>
+            <uctrl:BibbonBar ViewModel="{Binding RibbonBarVM}"></uctrl:BibbonBar>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
-            <uctrl:PCBViewer Padding="2" PCBViewModel="{Binding MainPCBViewModel}" />
+            <!--<uctrl:PCBViewer Padding="2" PCBViewModel="{Binding MainPCBViewVM}" />-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <!--Button layout-->
+            <Grid Grid.Row="0" Grid.Column="0">
+                <ui:CButton Width="70" Height="24"></ui:CButton>
+            </Grid>
+
+            <!--Label layout-->
+            <Grid Grid.Row="1" Grid.Column="0">
+                <!--<Button Name="xLabel" Content="click" Margin=" 10 ,10 ,10, 10"></Button>-->
+            </Grid>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
             <Button Name="btnGenOpenGL" Content="Click to gen OpenGL context" Margin=" 10 ,10 ,10, 10" Command="{Binding IBtnRegisterClickComand}">

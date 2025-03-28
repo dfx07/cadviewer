@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <Grid x:Name="xGridRibbonTabs" Grid.Row="0" Background="#222933">
             <Border BorderBrush="WhiteSmoke" BorderThickness="0,0,0,1"/>
-            <local:TabBar Padding="10,2,0,0"></local:TabBar>
+            <local:TabBar x:Name="xTabBar" Padding="10,2,0,0"></local:TabBar>
         </Grid>
         <Grid x:Name="xGridRibbonContents" Grid.Row="1" Background="#3b4453">
         </Grid>

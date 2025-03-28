@@ -1,0 +1,50 @@
+﻿<local:CPanelControl  x:Class="CadViewer.Components.CButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CadViewer.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <local:CPanelControl.Resources>
+        <local:CornerRadiusConverter x:Key="CornerRadiusConverter"/>
+        <local:InvertConverter x:Key="InvertConverter"/>
+    </local:CPanelControl.Resources>
+
+    <Border CornerRadius="{Binding PN_CornerRadius, RelativeSource={RelativeSource AncestorType=UserControl},
+    Converter={StaticResource CornerRadiusConverter}, ConverterParameter=1}">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0.0,0.0" EndPoint="0.0,1.0">
+                <GradientStop Color="#41484f" Offset="0.0"/>
+                <GradientStop Color="#272b31" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Border x:Name="xCButtonBorder" Grid.Row="0" Grid.Column="0"
+                CornerRadius="{Binding PN_CornerRadius, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="-1">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.0,0.0" EndPoint="0.0,1.0">
+                        <GradientStop Color="#41484f" Offset="0.0"/>
+                        <GradientStop Color="#272b31" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <TextBlock Text="123131" Foreground="White" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    </TextBlock> 
+                </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="0" BorderThickness="2"
+                CornerRadius="{Binding PN_CornerRadius, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Margin="{Binding PN_BorderThickness, RelativeSource={RelativeSource AncestorType=UserControl},
+                Converter={StaticResource InvertConverter}}">
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0.0,0.0" EndPoint="0.0,1.0">
+                        <GradientStop Color="#303030" Offset="0.0"/>
+                        <GradientStop Color="#303030" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+
+            </Border>
+        </Grid>
+    </Border>
+</local:CPanelControl>
