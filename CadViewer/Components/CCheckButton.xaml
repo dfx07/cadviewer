@@ -1,0 +1,46 @@
+﻿<local:CPanelControl x:Class="CadViewer.Components.CCheckButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CadViewer.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <local:CPanelControl.Resources>
+        <local:HeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter"/>
+    </local:CPanelControl.Resources>
+    <Grid>
+        <Border x:Name="xCCheckButtonRoundBorder" Grid.Row="0" Grid.Column="0"
+                IsEnabled="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                BorderThickness="0"
+                CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                               Path=Height, Converter={StaticResource HeightToCornerRadiusConverter}}">
+            <Border.Style>
+                <Style TargetType="Border">
+
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource  AncestorType=UserControl}}" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Checkbtn_BackgroundOnColor}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource Cmm_BackgroundColor}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource  AncestorType=UserControl}}" Value="False">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Checkbtn_BackgroundOffColor}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+    </Grid>
+</local:CPanelControl>

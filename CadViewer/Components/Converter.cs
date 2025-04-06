@@ -47,7 +47,7 @@ namespace CadViewer.Components
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 	}
 
-	public class InvertConverter : IValueConverter
+	public class AddConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
@@ -59,5 +59,20 @@ namespace CadViewer.Components
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+	}
+
+	public class HeightToCornerRadiusConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value is double height)
+			{
+				return new CornerRadius((height) / 2);
+			}
+			return new CornerRadius(0);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			=> throw new NotImplementedException();
 	}
 }

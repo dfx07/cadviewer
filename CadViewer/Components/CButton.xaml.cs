@@ -29,16 +29,6 @@ namespace CadViewer.Components
 		/// <summary>
 		/// ////////////////////////////////////////////////////////////////////////////////////
 		/// </summary>
-		public Brush TBorderColor
-		{
-			get { return (Brush)GetValue(TBorderColorProperty); }
-			set { SetValue(TBorderColorProperty, value); }
-		}
-
-		public static readonly DependencyProperty TBorderColorProperty =
-			DependencyProperty.Register(nameof(TBorderColor), typeof(Brush), typeof(TButton),
-				new PropertyMetadata());
-
 		//public CornerRadius TCornerRadius
 		//{
 		//	get { return (CornerRadius)GetValue(TCornerRadiusProperty); }

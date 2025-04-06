@@ -95,10 +95,10 @@
     <Compile Include="Components\CButton.xaml.cs">
       <DependentUpon>CButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\CPanelControl.cs" />
-    <Compile Include="Components\TButton.xaml.cs">
-      <DependentUpon>TButton.xaml</DependentUpon>
+    <Compile Include="Components\CCheckButton.xaml.cs">
+      <DependentUpon>CCheckButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\CPanelControl.cs" />
     <Compile Include="Components\Converter.cs" />
     <Compile Include="Components\ViewPanel.cs">
       <SubType>Component</SubType>
@@ -138,7 +138,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\TButton.xaml">
+    <Page Include="Components\CCheckButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

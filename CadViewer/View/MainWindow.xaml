@@ -11,7 +11,10 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="CadViewer" Height="640" Width="680">
-    <Grid Background="#f3f3f3">
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="{DynamicResource Cmm_BackgroundColor}"></SolidColorBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -22,7 +25,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
             <uctrl:BibbonBar ViewModel="{Binding RibbonBarVM}"></uctrl:BibbonBar>
-            <ui:CButton Width="70" Height="24"></ui:CButton>
+            <!--<ui:CButton Width="70" Height="24"></ui:CButton>-->
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <!--<uctrl:PCBViewer Padding="2" PCBViewModel="{Binding MainPCBViewVM}" />-->
@@ -37,7 +40,21 @@
             </Grid.RowDefinitions>
             <!--Button layout-->
             <Grid Grid.Row="0" Grid.Column="0">
-                <ui:CButton Width="70" Height="24"></ui:CButton>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource CompUI_TextColor}" Text="Button"></TextBlock>
+                <ui:CButton Grid.Row="0" Grid.Column="1" Width="70" Height="24" IsEnabled="True" ></ui:CButton>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource CompUI_TextColor}" Text="CheckBox" ></TextBlock>
+                <ui:CCheckButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="True" ></ui:CCheckButton>
             </Grid>
 
             <!--Label layout-->

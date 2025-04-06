@@ -7,32 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <local:CPanelControl.Resources>
-        <local:InvertConverter x:Key="InvertConverter"/>
+        <!--<local:InvertConverter x:Key="InvertConverter"/>-->
     </local:CPanelControl.Resources>
     <Grid>
-        <Border x:Name="xCButtonContentBorder" Grid.Row="0" Grid.Column="0"
-                CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
-            <Border.Background>
-                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"/>
-            </Border.Background>
-        </Border>
         <Border x:Name="xCButtonRoundBorder" Grid.Row="0" Grid.Column="0"
+                IsEnabled="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 BorderThickness="{DynamicResource CompUI_BorderThickness}"
                 CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}"
-                Margin="{Binding PN_BorderThickness, RelativeSource={RelativeSource AncestorType=UserControl},
-                Converter={StaticResource InvertConverter}}">
-            <Border.BorderBrush>
-                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"/>
-            </Border.BorderBrush>
-            <Border.Background>
-                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"/>
-            </Border.Background>
+                Margin="-1">
             <Border.Triggers>
                 <EventTrigger RoutedEvent="MouseEnter">
                     <BeginStoryboard>
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).Color"
-                                    To="{DynamicResource CompUI_Cmm_BorderClickColor}" Duration="0:0:0.2"/>
+                                    To="{DynamicResource CompUI_Cmm_BorderOverColor}" Duration="0:0:0.2"/>
                             <ColorAnimation Storyboard.TargetProperty="(Border.Background).Color"
                                     To="{DynamicResource CompUI_Cmm_BackgroundOverColor}" Duration="0:0:0.2"/>
                             <DoubleAnimation Storyboard.TargetName="xCButtonBottomBorder"
@@ -44,6 +32,8 @@
                 <EventTrigger RoutedEvent="MouseDown">
                     <BeginStoryboard>
                         <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).Color"
+                                    To="{DynamicResource CompUI_Cmm_BorderClickColor}" Duration="0:0:0.2"/>
                             <ColorAnimation Storyboard.TargetName="xCButtonTextbl" Storyboard.TargetProperty="(Foreground).Color"
                                     To="{DynamicResource CompUI_Cmm_TextClickColor}" Duration="0"/>
                             <DoubleAnimation Storyboard.TargetName="xCButtonBottomBorder"
@@ -55,6 +45,8 @@
                 <EventTrigger RoutedEvent="MouseUp">
                     <BeginStoryboard>
                         <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).Color"
+                                    To="{DynamicResource CompUI_Cmm_BorderOverColor}" Duration="0:0:0.2"/>
                             <ColorAnimation Storyboard.TargetName="xCButtonTextbl" Storyboard.TargetProperty="(Foreground).Color"
                                     To="{DynamicResource CompUI_Cmm_TextColor}" Duration="0:0:0.1"/>
                             <DoubleAnimation Storyboard.TargetName="xCButtonBottomBorder"
@@ -72,22 +64,62 @@
                                     To="{DynamicResource CompUI_Cmm_BackgroundColor}" Duration="0:0:0.2"/>
                             <DoubleAnimation Storyboard.TargetName="xCButtonBottomBorder"
                                                  Storyboard.TargetProperty="Opacity"
-                                                 To="0" Duration="0"/>
+                                                 To="0" Duration="0:0:0.2"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
             </Border.Triggers>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundDisableColor}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <Grid>
                 <TextBlock x:Name="xCButtonTextbl" Text="Button 1" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}"/>
-                    </TextBlock.Foreground>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextDisableColor}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
             </Grid>
         </Border>
-        <Rectangle x:Name="xCButtonBottomBorder" Grid.Row="0" Grid.Column="0"
+        <Border x:Name="xCButtonBottomBorder" Grid.Row="0" Grid.Column="0"
+                CornerRadius="0,0,4,4"
+                           Margin="0, 0, 0, 0"
                            Height="1"
-                           Fill="#e5e5e5"
+                           Background="#e5e5e5"
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Stretch"
                            Opacity="0"/>
