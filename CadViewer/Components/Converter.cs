@@ -32,13 +32,13 @@ namespace CadViewer.Components
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value is CornerRadius radius && parameter is string paramStr && double.TryParse(paramStr, out double subtractValue))
+			if (value is CornerRadius radius && parameter is string paramStr && double.TryParse(paramStr, out double addValue))
 			{
 				return new CornerRadius(
-					Math.Max(0, radius.TopLeft - subtractValue),
-					Math.Max(0, radius.TopRight - subtractValue),
-					Math.Max(0, radius.BottomRight - subtractValue),
-					Math.Max(0, radius.BottomLeft - subtractValue)
+					Math.Max(0, radius.TopLeft + addValue),
+					Math.Max(0, radius.TopRight + addValue),
+					Math.Max(0, radius.BottomRight + addValue),
+					Math.Max(0, radius.BottomLeft + addValue)
 				);
 			}
 			return value;

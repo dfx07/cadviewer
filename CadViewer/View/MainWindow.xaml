@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="CadViewer" Height="640" Width="680">
-    <Grid>
+    <Grid Background="#f3f3f3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -22,6 +22,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
             <uctrl:BibbonBar ViewModel="{Binding RibbonBarVM}"></uctrl:BibbonBar>
+            <ui:CButton Width="70" Height="24"></ui:CButton>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <!--<uctrl:PCBViewer Padding="2" PCBViewModel="{Binding MainPCBViewVM}" />-->

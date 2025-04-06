@@ -14,7 +14,7 @@ namespace CadViewer.Components
 		public CPanelControl()
 		{
 			SetCurrentValue(PN_BorderThicknessProperty, new Thickness(1));
-			SetCurrentValue(PN_CornerRadiusProperty, new CornerRadius(2));
+			SetCurrentValue(PN_CornerRadiusProperty, new CornerRadius(15));
 			SetCurrentValue(PN_BackgroundColorProperty, new SolidColorBrush(Color.FromRgb(120, 120, 120)));
 			SetCurrentValue(PN_BorderColorProperty, new SolidColorBrush(Color.FromRgb(255, 0, 0)));
 		}
