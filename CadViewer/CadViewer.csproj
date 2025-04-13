@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animations\CornerRadiusAnimation.cs" />
     <Compile Include="API\APIdef.cs" />
     <Compile Include="API\BaseAPI.cs" />
     <Compile Include="API\GCHandleProvider.cs" />
@@ -95,11 +96,11 @@
     <Compile Include="Components\CButton.xaml.cs">
       <DependentUpon>CButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\CCheckButton.xaml.cs">
-      <DependentUpon>CCheckButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Components\CPanelControl.cs" />
     <Compile Include="Components\Converter.cs" />
+    <Compile Include="Converters\CommonConverter.cs" />
+    <Compile Include="Converters\ToggleConverter.cs" />
+    <Compile Include="UIControls\CToggleButton.cs" />
     <Compile Include="Components\ViewPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -138,7 +139,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\CCheckButton.xaml">
+    <Page Include="UIResources\CToggleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

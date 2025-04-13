@@ -16,14 +16,16 @@
     <Color x:Key="CompUI_Cmm_TextClickColor">#919191</Color>
     <Color x:Key="CompUI_Cmm_TextDisableColor">#787878</Color>
 
-    <Color x:Key="CompUI_Checkbtn_BackgroundOnColor">#76b9ed</Color>
-    <Color x:Key="CompUI_Checkbtn_BackgroundOnOverColor">#6eaad9</Color>
-    <Color x:Key="CompUI_Checkbtn_OnCheckColor">#000000</Color>
-    <Color x:Key="CompUI_Checkbtn_BackgroundOffColor">#272727</Color>
-    <Color x:Key="CompUI_Checkbtn_BackgroundOffOverColor">#343434</Color>
-    <Color x:Key="CompUI_Checkbtn_OffCheckColor">#cecece</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOnColor">#76b9ed</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOnOverColor">#6eaad9</Color>
+    <Color x:Key="CompUI_ToggleBtn_ThumbOnColor">#000000</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOffColor">#272727</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOffOverColor">#343434</Color>
+    <Color x:Key="CompUI_ToggleBtn_ThumbOffColor">#cecece</Color>
+    <Color x:Key="CompUI_ToggleBtn_BorderColor">#a1a1a1</Color>
 
-
+    <SolidColorBrush x:Key="CompUI_ToggleBtn_IT_BackgroundOnColor"
+                     Color="{StaticResource CompUI_ToggleBtn_BackgroundOnColor}" />
     <SolidColorBrush x:Key="CompUI_Background" Color="#fbfbfb" />
     <SolidColorBrush x:Key="CompUI_BackgroundOver" Color="#f6f6f6" />
     <SolidColorBrush x:Key="CompUI_TextColor" Color="#ffffff" />

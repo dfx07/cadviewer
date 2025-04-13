@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Resources/fonts.xaml" />
                 <ResourceDictionary Source="Resources/uctrl.xaml" />
                 <ResourceDictionary Source="Resources/comp_dark_theme.xaml" />
+                <ResourceDictionary Source="UIResources/CToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
