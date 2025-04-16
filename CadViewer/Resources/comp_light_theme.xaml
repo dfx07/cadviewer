@@ -8,22 +8,22 @@
     <Color x:Key="CompUI_Cmm_BackgroundClickColor">#f8f8f8</Color>
     <Color x:Key="CompUI_Cmm_BackgroundDisableColor">#fbfbfb</Color>
 
-    <Color x:Key="CompUI_Cmm_BorderColor">#e5e5e5</Color>
+    <Color x:Key="CompUI_Cmm_BorderColor">#d2d2d2</Color>
+    <Color x:Key="CompUI_Cmm_BorderEndColor">#a6a6a6</Color>
     <Color x:Key="CompUI_Cmm_BorderOverColor">#99d1ff</Color>
     <Color x:Key="CompUI_Cmm_BorderClickColor">#dddddd</Color>
 
     <Color x:Key="CompUI_Cmm_TextColor">#000000</Color>
     <Color x:Key="CompUI_Cmm_TextClickColor">#aeaeae</Color>
     <Color x:Key="CompUI_Cmm_TextDisableColor">#aaaaaa</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOnColor">#005a9e</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOnOverColor">#1a6ba8</Color>
+    <Color x:Key="CompUI_ToggleBtn_ThumbOnColor">#ffffff</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOffColor">#f6f6f6</Color>
+    <Color x:Key="CompUI_ToggleBtn_BackgroundOffOverColor">#f3f3f3</Color>
+    <Color x:Key="CompUI_ToggleBtn_ThumbOffColor">#5c5c5c</Color>
+    <Color x:Key="CompUI_ToggleBtn_BorderColor">#5c5c5c</Color>
 
-
-    <SolidColorBrush x:Key="CompUI_Background" Color="#fbfbfb" />
-    <SolidColorBrush x:Key="CompUI_BackgroundOver" Color="#f6f6f6" />
-    <SolidColorBrush x:Key="CompUI_TextColor" Color="#000000" />
-
-    <SolidColorBrush x:Key="CompUI_TextColorClick" Color="DimGray" />
-    <SolidColorBrush x:Key="CompUI_BorderColor" Color="#e5e5e5" />
-    <SolidColorBrush x:Key="CompUI_BorderColorClick" Color="#dddddd" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>
     <CornerRadius x:Key="CompUI_Cmm_CornerRadius">3</CornerRadius>
 </ResourceDictionary>

@@ -9,11 +9,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using System.Windows.Input;
 using CadViewer.Animations;
 
-namespace CadViewer.Components
+namespace CadViewer.UIControls
 {
 	public class CToggleButton : ToggleButton
 	{

@@ -100,6 +100,7 @@
     <Compile Include="Components\Converter.cs" />
     <Compile Include="Converters\CommonConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />
+    <Compile Include="UIControls\CButton.cs" />
     <Compile Include="UIControls\CToggleButton.cs" />
     <Compile Include="Components\ViewPanel.cs">
       <SubType>Component</SubType>
@@ -138,6 +139,10 @@
     <Page Include="Components\CButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIResources\CButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CToggleButton.xaml">
       <SubType>Designer</SubType>

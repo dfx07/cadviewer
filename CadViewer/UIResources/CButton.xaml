@@ -1,0 +1,114 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CadViewer.UIControls"
+                    xmlns:cvt="clr-namespace:CadViewer.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <cvt:CommonColorKeyToColorConverter x:Key="ColorKeyToColorConverter" />
+    <cvt:ToggleButtonHeightToThumbWidthConverter x:Key="HeightToThumbWidthConverter" />
+    <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
+    <Style TargetType="{x:Type local:CButton}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CButton}">
+                    <Border x:Name="xCButtonRoundBorder"
+                            BorderThickness="{DynamicResource CompUI_BorderThickness}"
+                            CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}"
+                            Margin="-1">
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}"
+                                                      Offset="0.0" />
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}"
+                                                      Offset="0.9" />
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderEndColor}"
+                                                      Offset="1.0" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0"
+                                                      To="Pressed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.1"
+                                                      To="Normal" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="{DynamicResource CompUI_Cmm_TextColor}"
+                                                        Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="xCButtonRoundBorder"
+                                                        Storyboard.TargetProperty="(Background).Color"
+                                                        To="{DynamicResource CompUI_Cmm_BackgroundOverColor}"
+                                                        Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="xCButtonRoundBorder"
+                                                        Storyboard.TargetProperty="(Background).Color"
+                                                        To="{DynamicResource CompUI_Cmm_BackgroundClickColor}"
+                                                        Duration="0:0:0.1" />
+                                        <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="{DynamicResource CompUI_Cmm_TextClickColor}"
+                                                        Duration="0:0:0.1" />
+                                        <ColorAnimation Storyboard.TargetName="xCButtonRoundBorder"
+                                                        Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                        To="{DynamicResource CompUI_Cmm_BorderColor}"
+                                                        Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="xCButtonContent"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"></ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundDisableColor}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextDisableColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

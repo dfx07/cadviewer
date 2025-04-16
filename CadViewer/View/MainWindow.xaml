@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CadViewer"
         xmlns:uctrl="clr-namespace:CadViewer.View"
         xmlns:vm="clr-namespace:CadViewer.ViewModels"
-        xmlns:ui="clr-namespace:CadViewer.Components"
+        xmlns:ui="clr-namespace:CadViewer.UIControls"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -51,7 +51,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource CompUI_TextColor}" Text="Button"></TextBlock>
-                <ui:CButton Grid.Row="0" Grid.Column="1" Width="70" Height="24" IsEnabled="True" ></ui:CButton>
+                <ui:CButton Content="Button 1" Grid.Row="0" Grid.Column="1" Width="70" Height="24" FontSize="11" IsEnabled="True" ></ui:CButton>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource CompUI_TextColor}" Text="CheckBox" ></TextBlock>
                 <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False" ></ui:CToggleButton>

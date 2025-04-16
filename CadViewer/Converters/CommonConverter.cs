@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
+using System.Windows.Media;
 
 namespace CadViewer.Converters
 {
@@ -43,6 +44,19 @@ namespace CadViewer.Converters
 			return new CornerRadius(0);
 		}
 
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+	}
+
+	public class CommonColorKeyToColorConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value is string colorKey && Application.Current.Resources[colorKey] is Color color)
+			{
+				return color;
+			}
+			return Colors.Transparent;
+		}
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 	}
 }
