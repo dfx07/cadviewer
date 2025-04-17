@@ -59,4 +59,19 @@ namespace CadViewer.Converters
 		}
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 	}
+	public class CommonSetDoubleDefaultConverter : IMultiValueConverter
+	{
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			double dblValue = (double)values[0];
+			double dblDefValue = (double)values[1];
+
+			return !double.IsNaN(dblValue) ? dblValue : dblDefValue;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CadViewer"
+        xmlns:com="clr-namespace:CadViewer.Common"
         xmlns:uctrl="clr-namespace:CadViewer.View"
         xmlns:vm="clr-namespace:CadViewer.ViewModels"
         xmlns:ui="clr-namespace:CadViewer.UIControls"
@@ -51,7 +52,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource CompUI_TextColor}" Text="Button"></TextBlock>
-                <ui:CButton Content="Button 1" Grid.Row="0" Grid.Column="1" Width="70" Height="24" FontSize="11" IsEnabled="True" ></ui:CButton>
+                <ui:CButton Content="Button 1" Grid.Row="0" Grid.Column="1" Width="70" Height="24"
+                            FontSize="11"
+                            IsEnabled="True"
+                            ImageSource="{com:AssetImage Images/addbtn48.png}"
+                            ImagePlacement="Right"></ui:CButton>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource CompUI_TextColor}" Text="CheckBox" ></TextBlock>
                 <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False" ></ui:CToggleButton>

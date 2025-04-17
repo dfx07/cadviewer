@@ -93,6 +93,7 @@
     <Compile Include="Common\MouseBehavior.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\ResourceLocator.cs" />
     <Compile Include="Components\CButton.xaml.cs">
       <DependentUpon>CButton.xaml</DependentUpon>
     </Compile>
@@ -235,6 +236,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\addbtn48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

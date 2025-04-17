@@ -6,6 +6,8 @@
     <cvt:CommonColorKeyToColorConverter x:Key="ColorKeyToColorConverter" />
     <cvt:ToggleButtonHeightToThumbWidthConverter x:Key="HeightToThumbWidthConverter" />
     <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
+    <cvt:CommonSetDoubleDefaultConverter x:Key="SetDoubleDefaultConverter" />
+
     <Style TargetType="{x:Type local:CButton}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Template">
             <Setter.Value>
@@ -72,14 +74,69 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter x:Name="xCButtonContent"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"></ContentPresenter>
+                        <Grid Margin="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"
+                                                  x:Name="xCButtonColumn1" />
+                                <ColumnDefinition Width="*"
+                                                  x:Name="xCButtonColumn2" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Image -->
+                            <Image x:Name="xCButtonImage"
+                                   Grid.Column="0"
+                                   Margin="4,0"
+                                   Source="{TemplateBinding ImageSource}"
+                                   VerticalAlignment="Center">
+                                <Image.Width>
+                                    <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                 Path="ImageWidth" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                 Path="Height" />
+                                    </MultiBinding>
+                                </Image.Width>
+                            </Image>
+                            <!-- Content -->
+                            <ContentPresenter x:Name="xCButtonContent"
+                                              Grid.Column="1"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}"
+                                     Value="Left">
+                            <Setter TargetName="xCButtonImage"
+                                    Property="Grid.Column"
+                                    Value="0" />
+                            <Setter TargetName="xCButtonContent"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="xCButtonColumn1"
+                                    Property="Width"
+                                    Value="Auto" />
+                            <Setter TargetName="xCButtonColumn2"
+                                    Property="Width"
+                                    Value="*" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}"
+                                     Value="Right">
+                            <Setter TargetName="xCButtonImage"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="xCButtonContent"
+                                    Property="Grid.Column"
+                                    Value="0" />
+                            <Setter TargetName="xCButtonColumn1"
+                                    Property="Width"
+                                    Value="*" />
+                            <Setter TargetName="xCButtonColumn2"
+                                    Property="Width"
+                                    Value="Auto" />
+                        </DataTrigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter Property="Background">
