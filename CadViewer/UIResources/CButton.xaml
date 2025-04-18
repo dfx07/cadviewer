@@ -12,16 +12,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CButton}">
-                    <Border x:Name="xCButtonRoundBorder"
-                            BorderThickness="{DynamicResource CompUI_BorderThickness}"
-                            CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}"
-                            Margin="-1">
+                    <Border x:Name="xCButtonRoundBorder" BorderThickness="{DynamicResource CompUI_BorderThickness}"
+                            CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Margin="-1">
                         <Border.Background>
                             <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                         </Border.Background>
                         <Border.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0"
-                                                 EndPoint="0,1">
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <LinearGradientBrush.GradientStops>
                                     <GradientStopCollection>
                                         <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}"
@@ -37,10 +34,8 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Pressed" />
-                                    <VisualTransition GeneratedDuration="0:0:0.1"
-                                                      To="Normal" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.1" To="Normal" />
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
@@ -55,6 +50,10 @@
                                                         Storyboard.TargetProperty="(Background).Color"
                                                         To="{DynamicResource CompUI_Cmm_BackgroundOverColor}"
                                                         Duration="0:0:0.1" />
+                                        <DoubleAnimation Storyboard.TargetName="xCButtonImage"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.9"
+                                                         Duration="0:0:0.1" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -66,6 +65,10 @@
                                         <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
                                                         To="{DynamicResource CompUI_Cmm_TextClickColor}"
                                                         Duration="0:0:0.1" />
+                                        <DoubleAnimation Storyboard.TargetName="xCButtonImage"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.4"
+                                                        Duration="0:0:0.1" />
                                         <ColorAnimation Storyboard.TargetName="xCButtonRoundBorder"
                                                         Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)"
                                                         To="{DynamicResource CompUI_Cmm_BorderColor}"
@@ -74,89 +77,80 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid Margin="4">
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"
-                                                  x:Name="xCButtonColumn1" />
-                                <ColumnDefinition Width="*"
-                                                  x:Name="xCButtonColumn2" />
+                                <ColumnDefinition x:Name="xCButtonColumn1" Width="Auto" />
+                                <ColumnDefinition x:Name="xCButtonColumn2" Width="*" />
                             </Grid.ColumnDefinitions>
                             <!-- Image -->
-                            <Image x:Name="xCButtonImage"
-                                   Grid.Column="0"
-                                   Margin="4,0"
-                                   Source="{TemplateBinding ImageSource}"
-                                   VerticalAlignment="Center">
+                            <Image x:Name="xCButtonImage" Grid.Column="0" Margin="{TemplateBinding ImageMargin}" Source="{TemplateBinding ImageSource}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
                                 <Image.Width>
                                     <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="ImageWidth" />
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="Height" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Height" />
                                     </MultiBinding>
                                 </Image.Width>
                             </Image>
                             <!-- Content -->
-                            <ContentPresenter x:Name="xCButtonContent"
-                                              Grid.Column="1"
+                            <ContentPresenter x:Name="xCButtonContent" Grid.Column="1"
                                               Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.ContentTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   TextWrapping="NoWrap"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </ContentPresenter.ContentTemplate>
+                            </ContentPresenter>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}"
-                                     Value="Left">
-                            <Setter TargetName="xCButtonImage"
-                                    Property="Grid.Column"
-                                    Value="0" />
-                            <Setter TargetName="xCButtonContent"
-                                    Property="Grid.Column"
-                                    Value="1" />
-                            <Setter TargetName="xCButtonColumn1"
-                                    Property="Width"
-                                    Value="Auto" />
-                            <Setter TargetName="xCButtonColumn2"
-                                    Property="Width"
-                                    Value="*" />
+                        <DataTrigger Binding="{Binding ImageSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="xCButtonImage" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}"
-                                     Value="Right">
-                            <Setter TargetName="xCButtonImage"
-                                    Property="Grid.Column"
-                                    Value="1" />
-                            <Setter TargetName="xCButtonContent"
-                                    Property="Grid.Column"
-                                    Value="0" />
-                            <Setter TargetName="xCButtonColumn1"
-                                    Property="Width"
-                                    Value="*" />
-                            <Setter TargetName="xCButtonColumn2"
-                                    Property="Width"
-                                    Value="Auto" />
+                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
+                            <Setter TargetName="xCButtonImage" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="xCButtonContent" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="xCButtonContent" Property="Margin" Value="1,4,2,4" />
+                            <Setter TargetName="xCButtonColumn1" Property="Width" Value="Auto" />
+                            <Setter TargetName="xCButtonColumn2" Property="Width" Value="*" />
                         </DataTrigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
+                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Right">
+                            <Setter TargetName="xCButtonImage" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="xCButtonContent" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="xCButtonContent" Property="Margin" Value="4,4,2,4" />
+                            <Setter TargetName="xCButtonColumn1" Property="Width" Value="*" />
+                            <Setter TargetName="xCButtonColumn2" Property="Width" Value="Auto" />
+                        </DataTrigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="xCButtonImage" Property="Opacity" Value="0.6" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundDisableColor}" />
                                 </Setter.Value>
                             </Setter>
+                            <Setter TargetName="xCButtonImage" Property="Opacity" Value="0.4" />
                             <Setter Property="Foreground">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextDisableColor}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
+                        <Trigger Property="IsEnabled" Value="True">
                             <Setter Property="Background">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                                 </Setter.Value>
                             </Setter>
+                            <Setter TargetName="xCButtonImage" Property="Opacity" Value="1" />
                             <Setter Property="Foreground">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}" />

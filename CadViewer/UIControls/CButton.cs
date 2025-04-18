@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using CadViewer.Animations;
 using System.Diagnostics;
+using System.Drawing.Printing;
 
 namespace CadViewer.UIControls
 {
@@ -63,6 +64,15 @@ namespace CadViewer.UIControls
 		{
 			get => (ImagePlacement)GetValue(ImagePlacementProperty);
 			set => SetValue(ImagePlacementProperty, value);
+		}
+
+		public static readonly DependencyProperty ImageMarginProperty =
+		DependencyProperty.Register(nameof(ImageMargin), typeof(Thickness), typeof(CButton), new PropertyMetadata(new Thickness(1)));
+
+		public Thickness ImageMargin
+		{
+			get => (Thickness)GetValue(ImageMarginProperty);
+			set => SetValue(ImageMarginProperty, value);
 		}
 	}
 }

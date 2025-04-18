@@ -8,8 +8,8 @@
     <Color x:Key="CompUI_Cmm_BackgroundClickColor">#292929</Color>
     <Color x:Key="CompUI_Cmm_BackgroundDisableColor">#3b3b3b</Color>
 
-    <Color x:Key="CompUI_Cmm_BorderColor">#3f3f3f</Color>
-    <Color x:Key="CompUI_Cmm_BorderEndColor">#4c4c4c</Color>
+    <Color x:Key="CompUI_Cmm_BorderColor">#3a3a3a</Color>
+    <Color x:Key="CompUI_Cmm_BorderEndColor">#414141</Color>
     <Color x:Key="CompUI_Cmm_BorderOverColor">#353535</Color>
     <Color x:Key="CompUI_Cmm_BorderClickColor">#414141</Color>
 
@@ -24,6 +24,7 @@
     <Color x:Key="CompUI_ToggleBtn_ThumbOffColor">#cecece</Color>
     <Color x:Key="CompUI_ToggleBtn_BorderColor">#a1a1a1</Color>
 
+    <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>
     <CornerRadius x:Key="CompUI_Cmm_CornerRadius">3</CornerRadius>
 </ResourceDictionary>
