@@ -21,9 +21,7 @@
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                     <LinearGradientBrush.GradientStops>
                                         <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.45" />
                                         <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.5" />
-                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.65" />
                                         <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="1.0" />
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
@@ -79,10 +77,8 @@
                                     <Storyboard>
                                         <ThicknessAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="BorderThickness" To="0,0,0,2" Duration="0:0:0.2" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
-                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)" From="#8d8d8d" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.2" />
-                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" From="#8d8d8d" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.1" />
-                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[3].(GradientStop.Color)" From="#8d8d8d" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.2" />
-                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[4].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.1" />
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unfocused" />
