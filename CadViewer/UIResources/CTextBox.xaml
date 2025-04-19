@@ -1,0 +1,137 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CadViewer.UIControls"
+                    xmlns:cvt="clr-namespace:CadViewer.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <cvt:CommonColorKeyToColorConverter x:Key="ColorKeyToColorConverter" />
+    <cvt:ToggleButtonHeightToThumbWidthConverter x:Key="HeightToThumbWidthConverter" />
+    <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
+    <cvt:CommonSetDoubleDefaultConverter x:Key="SetDoubleDefaultConverter" />
+
+    <Style TargetType="{x:Type local:CTextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CTextBox}">
+                    <Grid>
+                        <Border x:Name="xCTextBoxBottomRoundBorder" Grid.Column="0" Grid.Row="0" BorderThickness="0, 0, 0, 1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Margin="-1">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.0" />
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.45" />
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.5" />
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="0.65" />
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="1.0" />
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                        </Border>
+                        <Border x:Name="xCTextBoxRoundBorder" Grid.Column="0" Grid.Row="0" BorderThickness="1,1,1,0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Background="Transparent" Margin="-1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderColor}" Offset="0.0" />
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderColor}" Offset="0.9" />
+                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="1.0" />
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="xCTextBoxColumn1" Width="Auto" />
+                                    <ColumnDefinition x:Name="xCTextBoxColumn2" Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image x:Name="xCTextBoxImage" Grid.Column="0" Margin="{TemplateBinding ImageMargin}" Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
+                                    <Image.Width>
+                                        <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Height" />
+                                        </MultiBinding>
+                                    </Image.Width>
+                                </Image>
+                                <ScrollViewer Grid.Column="1" x:Name="PART_ContentHost" Margin="4,2,4,2" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.1" To="Normal" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_Cmm_BackgroundOverColor}" Duration="0:0:0.1" />
+                                        <DoubleAnimation Storyboard.TargetName="xCTextBoxImage" Storyboard.TargetProperty="Opacity" To="0.9" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="ReadOnly">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="{DynamicResource CompUI_Cmm_TextDisableColor}" Duration="0:0:0.0">
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="BorderThickness" To="0,0,0,2" Duration="0:0:0.2" />
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)" From="#8d8d8d" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.2" />
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" From="#8d8d8d" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.1" />
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[3].(GradientStop.Color)" From="#8d8d8d" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.2" />
+                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[4].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ImageSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="xCTextBoxImage" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
+                            <Setter TargetName="xCTextBoxImage" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="xCTextBoxColumn1" Property="Width" Value="Auto" />
+                            <Setter TargetName="xCTextBoxColumn2" Property="Width" Value="*" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Right">
+                            <Setter TargetName="xCTextBoxImage" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="xCTextBoxColumn1" Property="Width" Value="*" />
+                            <Setter TargetName="xCTextBoxColumn2" Property="Width" Value="Auto" />
+                        </DataTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundDisableColor}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="xCTextBoxImage" Property="Opacity" Value="0.4" />
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextDisableColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="xCTextBoxImage" Property="Opacity" Value="1" />
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

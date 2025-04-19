@@ -35,7 +35,6 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="90" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
@@ -49,6 +48,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Button"></TextBlock>
@@ -60,6 +61,12 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="CheckBox" ></TextBlock>
                 <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False">
                 </ui:CToggleButton>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
+                <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="70" Height="24">
+                </ui:CTextBox>
+
+                <!--<TextBox Grid.Row="2" Grid.Column="1" Width="70" Height="20"></TextBox>-->
             </Grid>
 
             <!--Label layout-->

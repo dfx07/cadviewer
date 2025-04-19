@@ -24,6 +24,10 @@
     <Color x:Key="CompUI_ToggleBtn_ThumbOffColor">#5c5c5c</Color>
     <Color x:Key="CompUI_ToggleBtn_BorderColor">#5c5c5c</Color>
 
+    <Color x:Key="CompUI_TextBox_BorderColor">#e6e6e6</Color>
+    <Color x:Key="CompUI_TextBox_BorderEndColor">#8d8d8d</Color>
+    <Color x:Key="CompUI_TextBox_BorderClickEndColor">#005a9e</Color>
+
     <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>
     <CornerRadius x:Key="CompUI_Cmm_CornerRadius">3</CornerRadius>
