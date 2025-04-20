@@ -7,13 +7,15 @@
     <cvt:ToggleButtonHeightToThumbWidthConverter x:Key="HeightToThumbWidthConverter" />
     <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
     <cvt:CommonSetDoubleDefaultConverter x:Key="SetDoubleDefaultConverter" />
+    <cvt:TextBoxFocusMarginConverter x:Key="FocusMarginConverter" />
+    <cvt:CommonAddValueDoubleConverter x:Key="AddValueDoubleConverter" />
 
     <Style TargetType="{x:Type local:CTextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CTextBox}">
                     <Grid>
-                        <Border x:Name="xCTextBoxBottomRoundBorder" Grid.Column="0" Grid.Row="0" BorderThickness="0, 0, 0, 1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Margin="-1">
+                        <Border x:Name="xCTextBoxBottomRoundBorder" Grid.Column="0" Grid.Row="0" BorderThickness="0,0,0,1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Margin="0">
                             <Border.Background>
                                 <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                             </Border.Background>
@@ -27,7 +29,7 @@
                                 </LinearGradientBrush>
                             </Border.BorderBrush>
                         </Border>
-                        <Border x:Name="xCTextBoxRoundBorder" Grid.Column="0" Grid.Row="0" BorderThickness="1,1,1,0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Background="Transparent" Margin="-1">
+                        <Border x:Name="xCTextBoxRoundBorder" Grid.Column="0" Grid.Row="0" BorderThickness="1,1,1,0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Background="Transparent" Margin="0">
                             <Border.BorderBrush>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
@@ -37,20 +39,26 @@
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
                             </Border.BorderBrush>
-                            <Grid>
+                            <Grid Margin="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition x:Name="xCTextBoxColumn1" Width="Auto" />
                                     <ColumnDefinition x:Name="xCTextBoxColumn2" Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image x:Name="xCTextBoxImage" Grid.Column="0" Margin="{TemplateBinding ImageMargin}" Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
+                                <Image x:Name="xCTextBoxImage" Grid.Row="0" Grid.Column="0" Margin="{TemplateBinding ImageMargin}"
+                                       Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
                                     <Image.Width>
                                         <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Height" />
                                         </MultiBinding>
                                     </Image.Width>
+                                    <Image.RenderTransform>
+                                        <TranslateTransform x:Name="xCTextBoxImageTranslateTransform" />
+                                    </Image.RenderTransform>
                                 </Image>
-                                <ScrollViewer Grid.Column="1" x:Name="PART_ContentHost" Margin="4,2,4,2" VerticalAlignment="Center" />
+                                <ScrollViewer x:Name="PART_ContentHost" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" />
+                                <TextBlock x:Name="xCTextBoxPlaceholder" Grid.Row="0" Grid.Column="1" Text="{TemplateBinding Placeholder}" Foreground="Gray"
+                                           Margin="4,2,0,2" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="Collapsed" />
                             </Grid>
                         </Border>
                         <VisualStateManager.VisualStateGroups>
@@ -75,6 +83,7 @@
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xCTextBoxImageTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.2" />
                                         <ThicknessAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="BorderThickness" To="0,0,0,2" Duration="0:0:0.2" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.1" />
@@ -91,13 +100,17 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
                             <Setter TargetName="xCTextBoxImage" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="xCTextBoxColumn1" Property="Width" Value="Auto" />
                             <Setter TargetName="xCTextBoxColumn2" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentHost" Property="Margin" Value="0,2,4,2" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Right">
                             <Setter TargetName="xCTextBoxImage" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="0" />
                             <Setter TargetName="xCTextBoxColumn1" Property="Width" Value="*" />
                             <Setter TargetName="xCTextBoxColumn2" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentHost" Property="Margin" Value="4,2,0,2" />
                         </DataTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background">
@@ -124,6 +137,12 @@
                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}" />
                                 </Setter.Value>
                             </Setter>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="xCTextBoxPlaceholder" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="xCTextBoxPlaceholder" Property="Foreground" Value="#AAA" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -74,4 +74,38 @@ namespace CadViewer.Converters
 			throw new NotImplementedException();
 		}
 	}
+
+	public class CommonBoolToVisibilityConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			if (value is bool bVisible)
+			{
+				return bVisible ? Visibility.Visible : Visibility.Collapsed;
+			}
+			return Visibility.Collapsed;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class CommonAddValueDoubleConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			if (value is double dblValue && parameter is string paramStr && double.TryParse(paramStr, out double addValue))
+			{
+				return dblValue + addValue;
+			}
+			return value;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

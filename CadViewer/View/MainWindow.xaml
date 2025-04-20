@@ -42,7 +42,7 @@
             <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -63,10 +63,9 @@
                 </ui:CToggleButton>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
-                <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="70" Height="24">
+                <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="160" Height="24" Placeholder="Type to search..."
+                            ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:AssetImage Images/search26.png}" ImagePlacement="Left" >
                 </ui:CTextBox>
-
-                <!--<TextBox Grid.Row="2" Grid.Column="1" Width="70" Height="20"></TextBox>-->
             </Grid>
 
             <!--Label layout-->

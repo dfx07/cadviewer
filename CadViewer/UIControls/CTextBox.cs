@@ -68,5 +68,13 @@ namespace CadViewer.UIControls
 			get => (Thickness)GetValue(ImageMarginProperty);
 			set => SetValue(ImageMarginProperty, value);
 		}
+
+		public static readonly DependencyProperty PlaceholderProperty =
+		DependencyProperty.Register(nameof(Placeholder), typeof(string), typeof(CTextBox), new PropertyMetadata(string.Empty));
+		public string Placeholder
+		{
+			get => (string)GetValue(PlaceholderProperty);
+			set => SetValue(PlaceholderProperty, value);
+		}
 	}
 }
