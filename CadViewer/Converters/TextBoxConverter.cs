@@ -43,4 +43,23 @@ namespace CadViewer.Converters
 			throw new NotImplementedException();
 		}
 	}
+
+	public class TextBoxIsShowSuggestionListConverter : IMultiValueConverter
+	{
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (values.Length < 2)
+				return false;
+
+			bool useSuggestion = values[0] as bool? ?? false;
+			int suggestionCount = values[1] as int? ?? 0;
+
+			return useSuggestion && suggestionCount > 0;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotSupportedException();
+		}
+	}
 }

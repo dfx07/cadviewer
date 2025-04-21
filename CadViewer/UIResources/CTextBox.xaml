@@ -10,6 +10,7 @@
     <cvt:TextBoxFocusMarginConverter x:Key="FocusMarginConverter" />
     <cvt:CommonAddValueDoubleConverter x:Key="AddValueDoubleConverter" />
     <cvt:TextBoxSuggestionListVisibilityConverter x:Key="SuggestionListVisibilityConverter" />
+    <cvt:TextBoxIsShowSuggestionListConverter x:Key="IsShowSuggestionListConverter" />
 
     <Style TargetType="{x:Type local:CTextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Template">
@@ -62,17 +63,18 @@
                                            Background="Transparent" Foreground="Gray"
                                            Margin="5,2,0,2" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="Collapsed" />
 
-                                <!--<Popup IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SuggestionList.Count, Converter={StaticResource SuggestionListVisibilityConverter}}"
-                                        Placement="Bottom" StaysOpen="False" AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}">
-                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1">
-                                        <ListBox ItemsSource="{TemplateBinding SuggestList}" x:Name="PART_SuggestionList" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" />
-                                    </Border>
-                                </Popup>-->
-                                <Popup IsOpen="True" Focusable="True" HorizontalAlignment="Left" VerticalOffset="1" HorizontalOffset="-4" PopupAnimation="Slide" Placement="Bottom" StaysOpen="False" AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}">
-                                    <ListBox x:Name="PART_SuggestionList">
+                                <Popup Focusable="True" HorizontalAlignment="Left" VerticalOffset="1" HorizontalOffset="-6" Placement="Bottom" PopupAnimation="Slide"
+                                       StaysOpen="False" AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                       IsOpen="{TemplateBinding IsPopupOpen}">
+                                    <ListBox x:Name="PART_SuggestionList" 
+                                             Focusable="True"
+                                             IsSynchronizedWithCurrentItem="True"
+                                             KeyboardNavigation.TabNavigation="Continue"
+                                             KeyboardNavigation.DirectionalNavigation="Continue"
+                                             ItemsSource="{TemplateBinding SuggestionList}">
                                         <ListBox.MinWidth>
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth"
-                                                Converter="{StaticResource AddValueDoubleConverter}" ConverterParameter="8" />
+                                                Converter="{StaticResource AddValueDoubleConverter}" ConverterParameter="12" />
                                         </ListBox.MinWidth>
                                         <ListBox.Template>
                                             <ControlTemplate TargetType="{x:Type ListBox}">
@@ -94,19 +96,17 @@
                                         </ListBox.Template>
                                         <ListBox.ItemContainerStyle>
                                             <Style TargetType="{x:Type ListBoxItem}">
+                                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                                                 <Setter Property="Template">
                                                     <Setter.Value>
                                                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                                            <Border x:Name="xCTextBoxListBoxItemBorder" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}"
-                                                                    Padding="3" Margin="4,2,4,2" BorderThickness="0,0,0,1">
+                                                            <Border x:Name="xCTextBoxListBoxItemBorder" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Padding="3" Margin="4,2,4,2" BorderThickness="0,0,0,1">
                                                                 <Border.Background>
                                                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                                                                 </Border.Background>
                                                                 <Border.BorderBrush>
                                                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
                                                                 </Border.BorderBrush>
-                                                                <ContentPresenter VerticalAlignment="Center" />
-
                                                                 <VisualStateManager.VisualStateGroups>
                                                                     <VisualStateGroup x:Name="CommonStates">
                                                                         <VisualStateGroup.Transitions>
@@ -115,15 +115,33 @@
                                                                         <VisualState x:Name="Normal" />
                                                                         <VisualState x:Name="MouseOver">
                                                                             <Storyboard>
-                                                                                <ColorAnimation Storyboard.TargetName="xCTextBoxListBoxItemBorder" 
-                                                                                                Storyboard.TargetProperty="(Background).Color"
-                                                                                                To="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}"
-                                                                                                Duration="0:0:0.0" />
+                                                                                <ColorAnimation Storyboard.TargetName="xCTextBoxListBoxItemBorder" Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" Duration="0:0:0.0" />
                                                                             </Storyboard>
                                                                         </VisualState>
                                                                     </VisualStateGroup>
                                                                 </VisualStateManager.VisualStateGroups>
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="Auto"/>
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Border x:Name="xCTextBoxLeftIndicator" Grid.Column="0" Width="3" CornerRadius="2" Background="DodgerBlue" HorizontalAlignment="Left" Margin="1,0,4,0" />
+                                                                    <ContentPresenter x:Name="xCTextBoxContent" Grid.Column="1" VerticalAlignment="Center" />
+                                                                </Grid>
                                                             </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter TargetName="xCTextBoxListBoxItemBorder" Property="Background">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush Color="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="xCTextBoxLeftIndicator" Property="Visibility" Value="Visible" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="False">
+                                                                    <Setter TargetName="xCTextBoxLeftIndicator" Property="Visibility" Value="Collapsed" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
@@ -139,10 +157,6 @@
                                                 </Setter>
                                             </Style>
                                         </ListBox.ItemContainerStyle>
-                                        <ListBoxItem Content="Item 1ad fsdaf sdfsadfasdfsdfsdfsd " />
-                                        <ListBoxItem Content="Item 2" />
-                                        <ListBoxItem Content="Item 3" />
-                                        <ListBoxItem Content="Item 4" />
                                     </ListBox>
                                 </Popup>
                             </Grid>

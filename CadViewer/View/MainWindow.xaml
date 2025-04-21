@@ -63,7 +63,7 @@
                 </ui:CToggleButton>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
-                <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="160" Height="24" Placeholder="Type to search..."
+                <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="160" Height="24" Placeholder="Type to search..." UseSuggestion="True"
                             ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:AssetImage Images/search26.png}" ImagePlacement="Left" >
                 </ui:CTextBox>
             </Grid>

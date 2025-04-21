@@ -81,7 +81,7 @@ namespace CadViewer.Converters
 		{
 			if (value is bool bVisible)
 			{
-				return bVisible ? Visibility.Visible : Visibility.Collapsed;
+				return bVisible ? Visibility.Visible : Visibility.Hidden;
 			}
 			return Visibility.Collapsed;
 		}
@@ -106,6 +106,25 @@ namespace CadViewer.Converters
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			throw new NotImplementedException();
+		}
+	}
+
+	public class CommonIsDoubleBoolCheckConverter : IMultiValueConverter
+	{
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (values.Length < 2)
+				return false;
+
+			bool bCheck1 = values[0] as bool? ?? false;
+			bool bCheck2 = values[0] as bool? ?? false;
+
+			return bCheck1 && bCheck2;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotSupportedException();
 		}
 	}
 }
