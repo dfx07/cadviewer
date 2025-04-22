@@ -68,7 +68,7 @@
                 </ui:CTextBox>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="ComboBox"></TextBlock>
-                <ui:CComboBox Grid.Row="3" Grid.Column="1" Width="160" Height="24">
+                <ui:CComboBox Grid.Row="3" Grid.Column="1" Width="160" Height="24" SelectedIndex="0">
                 </ui:CComboBox>
             </Grid>
 

@@ -52,13 +52,17 @@
                                 <Image Grid.Row="0" Grid.Column="0">
 
                                 </Image>
-                                <ContentPresenter Grid.Row="0" Grid.Column="1"></ContentPresenter>
+                                <ContentPresenter Grid.Row="0" Grid.Column="1" Margin="4,2,2,2"
+                                                  Content="{TemplateBinding SelectedItem}"
+                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"></ContentPresenter>
 
-                                <ToggleButton Grid.Row="0" Grid.Column="2" Height="{TemplateBinding Height}">
+                                <ToggleButton x:Name="xComboBoxDropdownBtn" Grid.Row="0" Grid.Column="2" Height="{TemplateBinding Height}" IsHitTestVisible="False"
+                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                                             <Border Background="Transparent">
-                                                <Path x:Name="xComboBoxDropdownPath" Data="M 0 0 L 4 4 L 8 0" Stroke="Gray" Margin="5" StrokeThickness="2" HorizontalAlignment="Center"
+                                                <Path x:Name="xComboBoxDropdownPath" Data="M 0 0 L 4 4 L 8 0" Stroke="Gray" Margin="5,0,5,5" StrokeThickness="2" HorizontalAlignment="Center"
                                                       VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" SnapsToDevicePixels="True">
                                                     <Path.RenderTransform>
                                                         <RotateTransform x:Name="xComboBoxDropdownPathRotate" Angle="0" />
@@ -68,13 +72,13 @@
                                                     <VisualStateGroup x:Name="CheckStates">
                                                         <VisualState x:Name="Unchecked">
                                                             <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" To="0"
+                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" From="180" To="0"
                                                                                  Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="Checked">
                                                             <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" To="180"
+                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" From="0" To="180"
                                                                                  Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
                                                             </Storyboard>
                                                         </VisualState>
@@ -84,151 +88,12 @@
                                         </ControlTemplate>
                                     </ToggleButton.Template>
                                 </ToggleButton>
-
-                                <Popup Name="PART_Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" StaysOpen="True">
-                                    <Popup Focusable="True" HorizontalAlignment="Left" VerticalOffset="1" HorizontalOffset="-6" Placement="Bottom" PopupAnimation="Slide" StaysOpen="False"
-                                           AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" IsOpen="{TemplateBinding IsDropDownOpen}">
-                                        <ListBox x:Name="PART_DropdownList" Focusable="True" IsSynchronizedWithCurrentItem="True" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue" ItemsSource="{TemplateBinding SuggestionList}">
-                                            <ListBox.MinWidth>
-                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" Converter="{StaticResource AddValueDoubleConverter}" ConverterParameter="12" />
-                                            </ListBox.MinWidth>
-                                            <ListBox.Template>
-                                                <ControlTemplate TargetType="{x:Type ListBox}">
-                                                    <Border Background="Transparent" BorderThickness="0">
-                                                        <Border Margin="6,2,6,6" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
-                                                            <Border.Background>
-                                                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
-                                                            </Border.Background>
-                                                            <Border.BorderBrush>
-                                                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                                                            </Border.BorderBrush>
-                                                            <ItemsPresenter />
-                                                            <Border.Effect>
-                                                                <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
-                                                            </Border.Effect>
-                                                        </Border>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ListBox.Template>
-                                            <ListBox.ItemContainerStyle>
-                                                <Style TargetType="{x:Type ListBoxItem}">
-                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                                                <Border x:Name="xCTextBoxListBoxItemBorder" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Padding="3" Margin="4,2,4,2" BorderThickness="0,0,0,1">
-                                                                    <Border.Background>
-                                                                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
-                                                                    </Border.Background>
-                                                                    <Border.BorderBrush>
-                                                                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                                                                    </Border.BorderBrush>
-                                                                    <VisualStateManager.VisualStateGroups>
-                                                                        <VisualStateGroup x:Name="CommonStates">
-                                                                            <VisualStateGroup.Transitions>
-                                                                                <VisualTransition GeneratedDuration="0:0:0.1" To="Normal" />
-                                                                            </VisualStateGroup.Transitions>
-                                                                            <VisualState x:Name="Normal" />
-                                                                            <VisualState x:Name="MouseOver">
-                                                                                <Storyboard>
-                                                                                    <ColorAnimation Storyboard.TargetName="xCTextBoxListBoxItemBorder" Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" Duration="0:0:0.0" />
-                                                                                </Storyboard>
-                                                                            </VisualState>
-                                                                        </VisualStateGroup>
-                                                                    </VisualStateManager.VisualStateGroups>
-                                                                    <Grid>
-                                                                        <Grid.ColumnDefinitions>
-                                                                            <ColumnDefinition Width="Auto" />
-                                                                            <ColumnDefinition Width="*" />
-                                                                        </Grid.ColumnDefinitions>
-                                                                        <Border x:Name="xCTextBoxLeftIndicator" Grid.Column="0" Width="3" CornerRadius="2" Background="DodgerBlue" HorizontalAlignment="Left" Margin="1,0,4,0" />
-                                                                        <ContentPresenter x:Name="xCTextBoxContent" Grid.Column="1" VerticalAlignment="Center" />
-                                                                    </Grid>
-                                                                </Border>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsSelected" Value="True">
-                                                                        <Setter TargetName="xCTextBoxListBoxItemBorder" Property="Background">
-                                                                            <Setter.Value>
-                                                                                <SolidColorBrush Color="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" />
-                                                                            </Setter.Value>
-                                                                        </Setter>
-                                                                        <Setter TargetName="xCTextBoxLeftIndicator" Property="Visibility" Value="Visible" />
-                                                                    </Trigger>
-                                                                    <Trigger Property="IsSelected" Value="False">
-                                                                        <Setter TargetName="xCTextBoxLeftIndicator" Property="Visibility" Value="Collapsed" />
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <Setter Property="Background">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <Setter Property="BorderBrush">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Style>
-                                            </ListBox.ItemContainerStyle>
-                                            <ListBoxItem Content="Items1"></ListBoxItem>
-                                            <ListBoxItem Content="Items2"></ListBoxItem>
-                                            <ListBoxItem Content="Items3"></ListBoxItem>
-                                        </ListBox>
-                                    </Popup>
-                                </Popup>
-                            </Grid>
-                        </Border>
-                        <!--<Border x:Name="xCComboBoxRoundBorder" Grid.Column="0" Grid.Row="0" BorderThickness="1,1,1,0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Background="Transparent" Margin="0">
-                            <Border.BorderBrush>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <LinearGradientBrush.GradientStops>
-                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderColor}" Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderColor}" Offset="0.9" />
-                                        <GradientStop Color="{DynamicResource CompUI_TextBox_BorderEndColor}" Offset="1.0" />
-                                    </LinearGradientBrush.GradientStops>
-                                </LinearGradientBrush>
-                            </Border.BorderBrush>
-                            <Grid Margin="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition x:Name="xCComboBoxColumn1" Width="Auto" />
-                                    <ColumnDefinition x:Name="xCComboBoxColumn2" Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image x:Name="xCComboBoxImage" Grid.Row="0" Grid.Column="0" Margin="{TemplateBinding ImageMargin}"
-                                       Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
-                                    <Image.Width>
-                                        <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Height" />
-                                        </MultiBinding>
-                                    </Image.Width>
-                                    <Image.RenderTransform>
-                                        <TranslateTransform x:Name="xCComboBoxImageTranslateTransform" />
-                                    </Image.RenderTransform>
-                                </Image>
-                                <ScrollViewer x:Name="PART_ContentHost" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" />
-                                <TextBlock x:Name="xCComboBoxPlaceholder" Grid.Row="0" Grid.Column="1" Text="{TemplateBinding Placeholder}"
-                                           Background="Transparent" Foreground="Gray"
-                                           Margin="5,2,0,2" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="Collapsed">
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform x:Name="xCComboBoxPlaceholderTranslateTransform" />
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
-
-                                <Popup Focusable="True" HorizontalAlignment="Left" VerticalOffset="1" HorizontalOffset="-6" Placement="Bottom" PopupAnimation="Slide"
-                                       StaysOpen="False" AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                       IsOpen="{TemplateBinding IsPopupOpen}">
-                                    <ListBox x:Name="PART_SuggestionList" 
-                                             Focusable="True"
-                                             IsSynchronizedWithCurrentItem="True"
-                                             KeyboardNavigation.TabNavigation="Continue"
-                                             KeyboardNavigation.DirectionalNavigation="Continue"
-                                             ItemsSource="{TemplateBinding SuggestionList}">
+                                <Popup Name="xPART_Popup" Focusable="True" HorizontalAlignment="Left" HorizontalOffset="-6" Placement="Bottom" PopupAnimation="Slide" StaysOpen="False"
+                                        AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" IsOpen="{TemplateBinding IsDropDownOpen}">
+                                    <ListBox x:Name="PART_DropdownList" Focusable="True" IsSynchronizedWithCurrentItem="True"
+                                             KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue" ItemsSource="{TemplateBinding ItemsSource}" SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
                                         <ListBox.MinWidth>
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth"
-                                                Converter="{StaticResource AddValueDoubleConverter}" ConverterParameter="12" />
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" Converter="{StaticResource AddValueDoubleConverter}" ConverterParameter="12" />
                                         </ListBox.MinWidth>
                                         <ListBox.Template>
                                             <ControlTemplate TargetType="{x:Type ListBox}">
@@ -254,7 +119,7 @@
                                                 <Setter Property="Template">
                                                     <Setter.Value>
                                                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                                            <Border x:Name="xCComboBoxListBoxItemBorder" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Padding="3" Margin="4,2,4,2" BorderThickness="0,0,0,1">
+                                                            <Border x:Name="xCTextBoxListBoxItemBorder" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Padding="3" Margin="4,2,4,2" BorderThickness="0,0,0,1">
                                                                 <Border.Background>
                                                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                                                                 </Border.Background>
@@ -269,31 +134,31 @@
                                                                         <VisualState x:Name="Normal" />
                                                                         <VisualState x:Name="MouseOver">
                                                                             <Storyboard>
-                                                                                <ColorAnimation Storyboard.TargetName="xCComboBoxListBoxItemBorder" Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" Duration="0:0:0.0" />
+                                                                                <ColorAnimation Storyboard.TargetName="xCTextBoxListBoxItemBorder" Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" Duration="0:0:0.0" />
                                                                             </Storyboard>
                                                                         </VisualState>
                                                                     </VisualStateGroup>
                                                                 </VisualStateManager.VisualStateGroups>
                                                                 <Grid>
                                                                     <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="Auto"/>
+                                                                        <ColumnDefinition Width="Auto" />
                                                                         <ColumnDefinition Width="*" />
                                                                     </Grid.ColumnDefinitions>
-                                                                    <Border x:Name="xCComboBoxLeftIndicator" Grid.Column="0" Width="3" CornerRadius="2" Background="DodgerBlue" HorizontalAlignment="Left" Margin="1,0,4,0" />
-                                                                    <ContentPresenter x:Name="xCComboBoxContent" Grid.Column="1" VerticalAlignment="Center" />
+                                                                    <Border x:Name="xCTextBoxLeftIndicator" Grid.Column="0" Width="3" CornerRadius="2" Background="DodgerBlue" HorizontalAlignment="Left" Margin="1,0,4,0" />
+                                                                    <TextBlock x:Name="xCTextBoxContent" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" />
                                                                 </Grid>
                                                             </Border>
                                                             <ControlTemplate.Triggers>
                                                                 <Trigger Property="IsSelected" Value="True">
-                                                                    <Setter TargetName="xCComboBoxListBoxItemBorder" Property="Background">
+                                                                    <Setter TargetName="xCTextBoxListBoxItemBorder" Property="Background">
                                                                         <Setter.Value>
                                                                             <SolidColorBrush Color="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" />
                                                                         </Setter.Value>
                                                                     </Setter>
-                                                                    <Setter TargetName="xCComboBoxLeftIndicator" Property="Visibility" Value="Visible" />
+                                                                    <Setter TargetName="xCTextBoxLeftIndicator" Property="Visibility" Value="Visible" />
                                                                 </Trigger>
                                                                 <Trigger Property="IsSelected" Value="False">
-                                                                    <Setter TargetName="xCComboBoxLeftIndicator" Property="Visibility" Value="Collapsed" />
+                                                                    <Setter TargetName="xCTextBoxLeftIndicator" Property="Visibility" Value="Collapsed" />
                                                                 </Trigger>
                                                             </ControlTemplate.Triggers>
                                                         </ControlTemplate>
@@ -314,7 +179,7 @@
                                     </ListBox>
                                 </Popup>
                             </Grid>
-                        </Border>-->
+                        </Border>
                         <VisualStateManager.VisualStateGroups>
                             <!--<VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
