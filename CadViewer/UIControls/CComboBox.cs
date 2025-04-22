@@ -33,5 +33,13 @@ namespace CadViewer.UIControls
 
 			};
 		}
+
+		public static readonly DependencyProperty IsDropDownOpenProperty =
+		DependencyProperty.Register(nameof(IsDropDownOpen), typeof(bool), typeof(CComboBox), new PropertyMetadata(false));
+		public bool IsDropDownOpen
+		{
+			get => (bool)GetValue(IsDropDownOpenProperty);
+			set => SetValue(IsDropDownOpenProperty, value);
+		}
 	}
 }

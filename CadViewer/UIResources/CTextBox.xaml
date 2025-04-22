@@ -61,7 +61,11 @@
                                 <ScrollViewer x:Name="PART_ContentHost" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" />
                                 <TextBlock x:Name="xCTextBoxPlaceholder" Grid.Row="0" Grid.Column="1" Text="{TemplateBinding Placeholder}"
                                            Background="Transparent" Foreground="Gray"
-                                           Margin="5,2,0,2" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="Collapsed" />
+                                           Margin="5,2,0,2" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="Collapsed">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="xCTextBoxPlaceholderTranslateTransform" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
 
                                 <Popup Focusable="True" HorizontalAlignment="Left" VerticalOffset="1" HorizontalOffset="-6" Placement="Bottom" PopupAnimation="Slide"
                                        StaysOpen="False" AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
@@ -172,13 +176,6 @@
                                                         Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_Cmm_BackgroundColor}" Duration="0:0:0.1" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(Background).Color" 
-                                            To="{DynamicResource CompUI_Cmm_BackgroundOverColor}" Duration="0:0:0.1" />
-                                        <DoubleAnimation Storyboard.TargetName="xCTextBoxImage" Storyboard.TargetProperty="Opacity" To="0.9" Duration="0:0:0.1" />
-                                    </Storyboard>
-                                </VisualState>
                                 <VisualState x:Name="ReadOnly">
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="{DynamicResource CompUI_Cmm_TextDisableColor}" Duration="0:0:0.0">
@@ -189,7 +186,8 @@
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xCTextBoxImageTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.2" />
+                                        <DoubleAnimation Storyboard.TargetName="xCTextBoxImageTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.1" />
+                                        <DoubleAnimation Storyboard.TargetName="xCTextBoxPlaceholderTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.1" />
                                         <ThicknessAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="BorderThickness" To="0,0,0,2" Duration="0:0:0.2" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.1" />

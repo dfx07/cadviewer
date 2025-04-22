@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="UIResources/CToggleButton.xaml" />
                 <ResourceDictionary Source="UIResources/CButton.xaml" />
                 <ResourceDictionary Source="UIResources/CTextBox.xaml" />
+                <ResourceDictionary Source="UIResources/CComboBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

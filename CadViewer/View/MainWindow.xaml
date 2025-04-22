@@ -66,6 +66,10 @@
                 <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="160" Height="24" Placeholder="Type to search..." UseSuggestion="True"
                             ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:AssetImage Images/search26.png}" ImagePlacement="Left" >
                 </ui:CTextBox>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="ComboBox"></TextBlock>
+                <ui:CComboBox Grid.Row="3" Grid.Column="1" Width="160" Height="24">
+                </ui:CComboBox>
             </Grid>
 
             <!--Label layout-->
