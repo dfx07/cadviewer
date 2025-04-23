@@ -21,12 +21,14 @@ namespace CadViewer.UIControls
 	{
 		public string Name { get; set; }
 		public object Value { get; set; }
+		public string ImagePath { get; set; }
 
 		// Constructor
-		public CComboBoxItemData(string name, object value)
+		public CComboBoxItemData(string name, object value, string imagepath)
 		{
 			Name = name;
 			Value = value;
+			ImagePath = imagepath;
 		}
 
 		// Override ToString() để hiển thị thông tin dễ dàng
@@ -48,12 +50,10 @@ namespace CadViewer.UIControls
 			{
 				ItemsSource = new ObservableCollection<CComboBoxItemData>
 				{
-					new CComboBoxItemData("Apple", null),
-					new CComboBoxItemData("Banana", null),
-					new CComboBoxItemData("Cherry", null),
-					new CComboBoxItemData("Date", null),
-					new CComboBoxItemData("Grape", null),
-					new CComboBoxItemData("Mango", null)
+					new CComboBoxItemData("Apple", null, "Assets/Images/item26.png"),
+					new CComboBoxItemData("Banana", null,"Assets/Images/search26.png"),
+					new CComboBoxItemData("Cherry", null, "None"),
+					new CComboBoxItemData("Date", null, null),
 				};
 			}
 
@@ -76,14 +76,13 @@ namespace CadViewer.UIControls
 
 		private void CComboBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
-			// Kiểm tra nếu ComboBox không đang mở dropdown
 			if (!this.IsDropDownOpen)
 			{
-				this.IsDropDownOpen = true;  // Mở dropdown
+				this.IsDropDownOpen = true;
 			}
 			else
 			{
-				this.IsDropDownOpen = false; // Đóng dropdown
+				this.IsDropDownOpen = false;
 			}
 		}
 
@@ -114,6 +113,24 @@ namespace CadViewer.UIControls
 		{
 			get => (bool)GetValue(IsOpenDropDownProperty);
 			set => SetValue(IsOpenDropDownProperty, value);
+		}
+
+		public static readonly DependencyProperty ImageWidthProperty =
+		DependencyProperty.Register(nameof(ImageWidth), typeof(double), typeof(CComboBox), new PropertyMetadata(double.NaN));
+
+		public double ImageWidth
+		{
+			get => (double)GetValue(ImageWidthProperty);
+			set => SetValue(ImageWidthProperty, value);
+		}
+
+		public static readonly DependencyProperty ItemHeightProperty =
+		DependencyProperty.Register(nameof(ItemHeight), typeof(double), typeof(CComboBox), new PropertyMetadata(double.NaN));
+
+		public double ItemHeight
+		{
+			get => (double)GetValue(ItemHeightProperty);
+			set => SetValue(ItemHeightProperty, value);
 		}
 	}
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace CadViewer.Converters
 {
@@ -126,5 +127,40 @@ namespace CadViewer.Converters
 		{
 			throw new NotSupportedException();
 		}
+	}
+
+	public class CommonRelativeImagePathConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			string relativePath = value as string;
+			if (string.IsNullOrEmpty(relativePath)) return null;
+
+			string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+			return new BitmapImage(new Uri(fullPath));
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
+	public class CommonPackUriConverter : IValueConverter
+	{
+		private const string Prefix = "pack://application:,,,/";
+
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			string relativePath = value as string;
+			if (string.IsNullOrEmpty(relativePath)) return null;
+
+			if(relativePath == "None")
+				return null;
+
+			return $"{Prefix}{relativePath}";
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			=> throw new NotImplementedException();
 	}
 }

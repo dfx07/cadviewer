@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CadViewer.UIControls"
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:com="clr-namespace:CadViewer.Common">
     <cvt:CommonColorKeyToColorConverter x:Key="ColorKeyToColorConverter" />
     <cvt:ToggleButtonHeightToThumbWidthConverter x:Key="HeightToThumbWidthConverter" />
     <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
@@ -11,6 +12,7 @@
     <cvt:CommonAddValueDoubleConverter x:Key="AddValueDoubleConverter" />
     <cvt:TextBoxSuggestionListVisibilityConverter x:Key="SuggestionListVisibilityConverter" />
     <cvt:TextBoxIsShowSuggestionListConverter x:Key="IsShowSuggestionListConverter" />
+    <cvt:CommonPackUriConverter x:Key="PackUriConverter" />
 
     <Style TargetType="{x:Type local:CComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -37,8 +39,8 @@
                                     <ColumnDefinition x:Name="xCComboBoxColumn2" Width="*" />
                                     <ColumnDefinition x:Name="xCComboBoxColumn3" Width="20" />
                                 </Grid.ColumnDefinitions>
-                                <!--<Image x:Name="xCComboBoxImage" Grid.Row="0" Grid.Column="0" Margin="2"
-                                     VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
+                                <Image x:Name="xCComboBoxImage" Grid.Row="0" Grid.Column="0" Margin="2" Source="{Binding SelectedItem.ImagePath, RelativeSource={RelativeSource TemplatedParent}, 
+                                       Converter={StaticResource PackUriConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
                                     <Image.Width>
                                         <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
@@ -48,22 +50,13 @@
                                     <Image.RenderTransform>
                                         <TranslateTransform x:Name="xCComboBoxImageTranslateTransform" />
                                     </Image.RenderTransform>
-                                </Image>-->
-                                <Image Grid.Row="0" Grid.Column="0">
-
                                 </Image>
-                                <ContentPresenter Grid.Row="0" Grid.Column="1" Margin="4,2,2,2"
-                                                  Content="{TemplateBinding SelectedItem}"
-                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"></ContentPresenter>
-
-                                <ToggleButton x:Name="xComboBoxDropdownBtn" Grid.Row="0" Grid.Column="2" Height="{TemplateBinding Height}" IsHitTestVisible="False"
-                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ContentPresenter Grid.Row="0" Grid.Column="1" Margin="4,2,2,2" Content="{TemplateBinding SelectedItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"></ContentPresenter>
+                                <ToggleButton x:Name="xComboBoxDropdownBtn" Grid.Row="0" Grid.Column="2" Height="{TemplateBinding Height}" IsHitTestVisible="False" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                                             <Border Background="Transparent">
-                                                <Path x:Name="xComboBoxDropdownPath" Data="M 0 0 L 4 4 L 8 0" Stroke="Gray" Margin="5,0,5,5" StrokeThickness="2" HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" SnapsToDevicePixels="True">
+                                                <Path x:Name="xComboBoxDropdownPath" Data="M 0 0 L 4 4 L 8 0" Stroke="Gray" Margin="5,0,5,5" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" SnapsToDevicePixels="True">
                                                     <Path.RenderTransform>
                                                         <RotateTransform x:Name="xComboBoxDropdownPathRotate" Angle="0" />
                                                     </Path.RenderTransform>
@@ -72,14 +65,12 @@
                                                     <VisualStateGroup x:Name="CheckStates">
                                                         <VisualState x:Name="Unchecked">
                                                             <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" From="180" To="0"
-                                                                                 Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" From="180" To="0" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="Checked">
                                                             <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" From="0" To="180"
-                                                                                 Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                                                <DoubleAnimation Storyboard.TargetName="xComboBoxDropdownPathRotate" Storyboard.TargetProperty="Angle" From="0" To="180" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
                                                             </Storyboard>
                                                         </VisualState>
                                                     </VisualStateGroup>
@@ -88,10 +79,8 @@
                                         </ControlTemplate>
                                     </ToggleButton.Template>
                                 </ToggleButton>
-                                <Popup Name="xPART_Popup" Focusable="True" HorizontalAlignment="Left" HorizontalOffset="-6" Placement="Bottom" PopupAnimation="Slide" StaysOpen="False"
-                                        AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" IsOpen="{TemplateBinding IsDropDownOpen}">
-                                    <ListBox x:Name="PART_DropdownList" Focusable="True" IsSynchronizedWithCurrentItem="True"
-                                             KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue" ItemsSource="{TemplateBinding ItemsSource}" SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                                <Popup Name="xPART_Popup" Focusable="True" HorizontalAlignment="Left" HorizontalOffset="-6" Placement="Bottom" PopupAnimation="Slide" StaysOpen="False" AllowsTransparency="True" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" IsOpen="{TemplateBinding IsDropDownOpen}">
+                                    <ListBox x:Name="PART_DropdownList" Focusable="True" IsSynchronizedWithCurrentItem="True" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue" ItemsSource="{TemplateBinding ItemsSource}" SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
                                         <ListBox.MinWidth>
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" Converter="{StaticResource AddValueDoubleConverter}" ConverterParameter="12" />
                                         </ListBox.MinWidth>
@@ -120,6 +109,12 @@
                                                     <Setter.Value>
                                                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                                             <Border x:Name="xCTextBoxListBoxItemBorder" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Padding="3" Margin="4,2,4,2" BorderThickness="0,0,0,1">
+                                                                <Border.Height>
+                                                                    <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                                                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type local:CComboBox}}" Path="ItemHeight" />
+                                                                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type local:CComboBox}}" Path="Height" />
+                                                                    </MultiBinding>
+                                                                </Border.Height>
                                                                 <Border.Background>
                                                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                                                                 </Border.Background>
@@ -142,13 +137,33 @@
                                                                 <Grid>
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="Auto" />
+                                                                        <ColumnDefinition Width="Auto" />
                                                                         <ColumnDefinition Width="*" />
                                                                     </Grid.ColumnDefinitions>
-                                                                    <Border x:Name="xCTextBoxLeftIndicator" Grid.Column="0" Width="3" CornerRadius="2" Background="DodgerBlue" HorizontalAlignment="Left" Margin="1,0,4,0" />
-                                                                    <TextBlock x:Name="xCTextBoxContent" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" />
+                                                                    <Border x:Name="xCTextBoxLeftIndicator" Grid.Column="0" Width="3" CornerRadius="2" Margin="1,0,2,0" Background="DodgerBlue" HorizontalAlignment="Left" />
+                                                                    <Image x:Name="xCTextBoxImage" Grid.Column="1" Margin="0,1,0,1" Source="{Binding ImagePath, Converter={StaticResource PackUriConverter}}"
+                                                                            VerticalAlignment="Center" HorizontalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                                                                        <Image.Width>
+                                                                            <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type local:CComboBox}}" Path="ItemHeight" />
+                                                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type local:CComboBox}}" Path="Height" />
+                                                                            </MultiBinding>
+                                                                        </Image.Width>
+                                                                    </Image>
+                                                                    <TextBlock x:Name="xCTextBoxContent" Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" />
                                                                 </Grid>
                                                             </Border>
                                                             <ControlTemplate.Triggers>
+                                                                <DataTrigger Binding="{Binding ImagePath}" Value="{x:Null}">
+                                                                    <Setter TargetName="xCTextBoxImage" Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding ImagePath}" Value="None">
+                                                                    <Setter TargetName="xCTextBoxImage" Property="Source">
+                                                                        <Setter.Value>
+                                                                            <x:Null />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
                                                                 <Trigger Property="IsSelected" Value="True">
                                                                     <Setter TargetName="xCTextBoxListBoxItemBorder" Property="Background">
                                                                         <Setter.Value>
@@ -180,52 +195,27 @@
                                 </Popup>
                             </Grid>
                         </Border>
-                        <VisualStateManager.VisualStateGroups>
-                            <!--<VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.1" To="Normal" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Normal">
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="xCComboBoxBottomRoundBorder" 
-                                                        Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_Cmm_BackgroundColor}" Duration="0:0:0.1" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="ReadOnly">
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="{DynamicResource CompUI_Cmm_TextDisableColor}" Duration="0:0:0.0">
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xCComboBoxImageTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.1" />
-                                        <DoubleAnimation Storyboard.TargetName="xCComboBoxPlaceholderTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.1" />
-                                        <ThicknessAnimation Storyboard.TargetName="xCComboBoxBottomRoundBorder" Storyboard.TargetProperty="BorderThickness" To="0,0,0,2" Duration="0:0:0.2" />
-                                        <ColorAnimation Storyboard.TargetName="xCComboBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
-                                        <ColorAnimation Storyboard.TargetName="xCComboBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.1" />
-                                        <ColorAnimation Storyboard.TargetName="xCComboBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unfocused" />
-                            </VisualStateGroup>-->
-                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!--<DataTrigger Binding="{Binding ImageSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                        <DataTrigger Binding="{Binding SelectedItem.ImagePath, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
                             <Setter TargetName="xCComboBoxImage" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
+                        <DataTrigger Binding="{Binding SelectedItem.ImagePath, RelativeSource={RelativeSource Self}}" Value="None">
+                            <Setter TargetName="xCComboBoxImage" Property="Source">
+                                <Setter.Value>
+                                    <x:Null />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <!--<DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
                             <Setter TargetName="xCComboBoxImage" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="xCComboBoxPlaceholder" Property="Grid.Column" Value="1" />
                             <Setter TargetName="xCComboBoxColumn1" Property="Width" Value="Auto" />
                             <Setter TargetName="xCComboBoxColumn2" Property="Width" Value="*" />
                             <Setter TargetName="PART_ContentHost" Property="Margin" Value="0,2,4,2" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Right">
+                        </DataTrigger>-->
+                        <!--<DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Right">
                             <Setter TargetName="xCComboBoxImage" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="0" />
                             <Setter TargetName="xCComboBoxPlaceholder" Property="Grid.Column" Value="0" />

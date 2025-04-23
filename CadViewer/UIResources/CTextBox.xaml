@@ -47,7 +47,8 @@
                                     <ColumnDefinition x:Name="xCTextBoxColumn2" Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image x:Name="xCTextBoxImage" Grid.Row="0" Grid.Column="0" Margin="{TemplateBinding ImageMargin}"
-                                       Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform">
+                                       Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       UseLayoutRounding="True" SnapsToDevicePixels="True">
                                     <Image.Width>
                                         <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />

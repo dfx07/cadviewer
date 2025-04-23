@@ -52,10 +52,10 @@
                     <RowDefinition Height="40" />
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Button"></TextBlock>
 
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Button"></TextBlock>
                 <ui:CButton Content="Button" Grid.Row="0" Grid.Column="1" Width="70" Height="24" FontSize="11" IsEnabled="True"
-                            ImageMargin="2" ImageWidth="20" ImageSource="{com:AssetImage Images/addbtn48.png}" ImagePlacement="Right">
+                            ImageMargin="2" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/menu26.png}" ImagePlacement="Right">
                 </ui:CButton>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="CheckBox" ></TextBlock>
@@ -64,7 +64,7 @@
 
                 <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
                 <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="160" Height="24" Placeholder="Type to search..." UseSuggestion="True"
-                            ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:AssetImage Images/search26.png}" ImagePlacement="Left" >
+                            ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/search26.png}" ImagePlacement="Left" >
                 </ui:CTextBox>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="ComboBox"></TextBlock>
