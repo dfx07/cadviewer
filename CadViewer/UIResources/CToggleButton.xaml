@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:CadViewer.UIControls"
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <cvt:ToggleButtonHeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter" />
+    <cvt:CommonHeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter" />
     <cvt:ToggleButtonHeightToThumbWidthConverter x:Key="HeightToThumbWidthConverter" />
     <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
 

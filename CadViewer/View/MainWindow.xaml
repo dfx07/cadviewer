@@ -70,6 +70,10 @@
                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="ComboBox"></TextBlock>
                 <ui:CComboBox Grid.Row="3" Grid.Column="1" Width="160" Height="24" SelectedIndex="0">
                 </ui:CComboBox>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Slider"></TextBlock>
+                <ui:CSlider Grid.Row="4" ShowRangeLabel="False" Minimum="1" Maximum="100" Grid.Column="1" Width="160" Height="24">
+                </ui:CSlider>
             </Grid>
 
             <!--Label layout-->

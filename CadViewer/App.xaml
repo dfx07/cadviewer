@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="UIResources/CButton.xaml" />
                 <ResourceDictionary Source="UIResources/CTextBox.xaml" />
                 <ResourceDictionary Source="UIResources/CComboBox.xaml" />
+                <ResourceDictionary Source="UIResources/CSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -82,7 +82,7 @@ namespace CadViewer.Converters
 		{
 			if (value is bool bVisible)
 			{
-				return bVisible ? Visibility.Visible : Visibility.Hidden;
+				return bVisible ? Visibility.Visible : Visibility.Collapsed;
 			}
 			return Visibility.Collapsed;
 		}
@@ -108,6 +108,41 @@ namespace CadViewer.Converters
 		{
 			throw new NotImplementedException();
 		}
+	}
+
+	public class CommonDivValueDoubleConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			if (value is double dblValue && parameter is string paramStr && double.TryParse(paramStr, out double divValue))
+			{
+				if(divValue == 0)
+					return dblValue;
+
+				return dblValue / divValue;
+			}
+			return value;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class CommonHeightToCornerRadiusConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value is double height)
+			{
+				return new CornerRadius((height) / 2);
+			}
+			return new CornerRadius(0);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			=> throw new NotImplementedException();
 	}
 
 	public class CommonIsDoubleBoolCheckConverter : IMultiValueConverter

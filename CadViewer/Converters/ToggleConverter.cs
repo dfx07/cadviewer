@@ -10,21 +10,6 @@ using System.Windows;
 
 namespace CadViewer.Converters
 {
-	public class ToggleButtonHeightToCornerRadiusConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			if (value is double height)
-			{
-				return new CornerRadius((height) / 2);
-			}
-			return new CornerRadius(0);
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-			=> throw new NotImplementedException();
-	}
-
 	/**
 	 * Convert height to a circle radius for ToggleButton
 	 * */
