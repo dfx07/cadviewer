@@ -6,6 +6,7 @@
 
     <cvt:CommonHeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter" />
     <cvt:CommonBoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <cvt:CommonNumberToStringWithFormatConverter x:Key="NumberToStringWithFormatConverter" />
 
     <Style x:Key="xCSliderRangeLabelStyle" TargetType="{x:Type Label}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -148,7 +149,7 @@
                                 <RepeatButton Style="{StaticResource xCSliderTrackRangeValueStyle}" Command="Slider.DecreaseLarge" />
                             </Track.DecreaseRepeatButton>
                             <Track.Thumb>
-                                <Thumb VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource xCSliderThumbStyle}" />
+                                <Thumb x:Name="PART_Thumb" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource xCSliderThumbStyle}" />
                             </Track.Thumb>
                             <Track.IncreaseRepeatButton>
                                 <RepeatButton Style="{StaticResource xCSliderTrackRangeNormalStyle}" Command="Slider.IncreaseLarge" />
@@ -156,6 +157,35 @@
                         </Track>
                         <TickBar x:Name="BottomTick" Grid.Row="2" Grid.Column="1" SnapsToDevicePixels="True" Fill="{TemplateBinding Foreground}" Placement="Bottom" Height="4" Visibility="Collapsed" />
                         <Label Grid.Row="1" Grid.Column="2" Style="{StaticResource xCSliderRangeLabelStyle}" Content="{TemplateBinding Maximum}"></Label>
+                        <Popup x:Name="PART_Tooltip1" PlacementTarget="{Binding ElementName=PART_Thumb}" Placement="Top" StaysOpen="True" AllowsTransparency="True" PopupAnimation="Fade">
+                            <Grid Margin="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="6" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" x:Name="TooltipValue1" Background="White" CornerRadius="3" Padding="5" BorderThickness="1">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                    </Border.BorderBrush>
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="3" Direction="270" ShadowDepth="1" Opacity="0.2" />
+                                    </Border.Effect>
+                                    <TextBlock Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat='{}{0:F1}'}" Foreground="{DynamicResource Cmm_TextColor}" />
+                                </Border>
+                                <Canvas Grid.Row="1" Height="6" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Polygon Margin="0,-2,0,0" Points="-5,0,5,0,0,5" Fill="White" >
+                                    </Polygon>
+                                    <Polyline Points="-5,0,0,5,5,0" StrokeThickness="1">
+                                        <Polyline.Stroke>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                        </Polyline.Stroke>
+                                        <Polyline.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="1" Direction="270" ShadowDepth="1" Opacity="0.1" />
+                                        </Polyline.Effect>
+                                    </Polyline>
+                                </Canvas>
+                            </Grid>
+                        </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TickPlacement" Value="TopLeft">
