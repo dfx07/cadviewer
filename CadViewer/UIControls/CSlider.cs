@@ -24,9 +24,9 @@ namespace CadViewer.UIControls
 				new FrameworkPropertyMetadata(typeof(CSlider)));
 		}
 
-		Thumb thumb1 = null;
-		Popup toolTip1 = null;
-		Border valueTip1 = null;
+		Thumb _Thumb = null;
+		Popup _Tooltip = null;
+		Border _ValueTip = null;
 
 		public override void OnApplyTemplate()
 		{
@@ -35,8 +35,8 @@ namespace CadViewer.UIControls
 			Loaded += (s, e) =>
 			{
 				var thumb = GetTemplateChild("PART_Thumb") as Thumb;
-				var toolTip = GetTemplateChild("PART_Tooltip1") as Popup;
-				var valueTip = GetTemplateChild("TooltipValue1") as Border;
+				var toolTip = GetTemplateChild("PART_Tooltip") as Popup;
+				var valueTip = GetTemplateChild("TooltipValue") as Border;
 
 				if (thumb != null)
 				{
@@ -46,65 +46,64 @@ namespace CadViewer.UIControls
 					thumb.MouseEnter += Thumb_MouseEnter;
 					thumb.MouseLeave += Thumb_MouseLeave;
 
-					thumb1 = thumb;
-					toolTip1 = toolTip;
-					valueTip1 = valueTip;
+					_Thumb = thumb;
+					_Tooltip = toolTip;
+					_ValueTip = valueTip;
 				}
 			};
+		}
+		private void RecalTooltip()
+		{
+			if (_Thumb == null || _Tooltip == null)
+				return;
+
+			Dispatcher.BeginInvoke(new Action(() =>
+			{
+				double offsetX = (_Thumb.ActualWidth - _ValueTip.ActualWidth) / 2;
+
+				_Tooltip.HorizontalOffset = offsetX - 0.1;
+				_Tooltip.HorizontalOffset = offsetX;
+
+			}), System.Windows.Threading.DispatcherPriority.Loaded);
 		}
 
 		private void Thumb_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if(toolTip1.IsOpen)
-				toolTip1.IsOpen = false;
+			if(_Tooltip.IsOpen)
+				_Tooltip.IsOpen = false;
 		}
 
 		private async void Thumb_MouseEnter(object sender, MouseEventArgs e)
 		{
 			await Task.Delay(500);
 
-			if(!toolTip1.IsOpen)
+			if(!_Tooltip.IsOpen)
 			{
-				recalTooltip1();
-				toolTip1.IsOpen = true;
+				RecalTooltip();
+				_Tooltip.IsOpen = true;
 			}
-		}
-
-		private void recalTooltip1()
-		{
-			if (thumb1 == null || toolTip1 == null)
-				return;
-
-			toolTip1.Dispatcher.BeginInvoke(new Action(() =>
-			{
-				double offsetX = (thumb1.ActualWidth - valueTip1.ActualWidth) / 2;
-
-				toolTip1.HorizontalOffset = offsetX - 0.1;
-				toolTip1.HorizontalOffset = offsetX;
-
-			}), System.Windows.Threading.DispatcherPriority.Loaded);
 		}
 
 		private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
 		{
-			if (!toolTip1.IsOpen)
-				toolTip1.IsOpen = true;
+			if (!_Tooltip.IsOpen)
+				_Tooltip.IsOpen = true;
 
-			recalTooltip1();
+			RecalTooltip();
 		}
 
 		private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
 		{
-			if (!toolTip1.IsOpen)
-				toolTip1.IsOpen = true;
+			if (!_Tooltip.IsOpen)
+				_Tooltip.IsOpen = true;
 
-			recalTooltip1();
+			RecalTooltip();
 		}
 
 		private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
 		{
-			if (toolTip1.IsOpen)
-				toolTip1.IsOpen = false;
+			if (_Tooltip.IsOpen)
+				_Tooltip.IsOpen = false;
 		}
 
 		public static readonly DependencyProperty TrackHeightProperty =

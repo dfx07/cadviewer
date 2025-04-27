@@ -102,6 +102,7 @@
     <Compile Include="Converters\CommonConverter.cs" />
     <Compile Include="Converters\TextBoxConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />
+    <Compile Include="UIControls\CRangleSlider.cs" />
     <Compile Include="UIControls\CSlider.cs" />
     <Compile Include="UIControls\CTextBox.cs" />
     <Compile Include="UIControls\CComboBox.cs" />
@@ -144,6 +145,10 @@
     <Page Include="Components\CButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIResources\CRangeSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CSlider.xaml">
       <Generator>MSBuild:Compile</Generator>

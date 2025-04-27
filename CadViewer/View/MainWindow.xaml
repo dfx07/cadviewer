@@ -51,6 +51,7 @@
                     <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -73,8 +74,12 @@
                 </ui:CComboBox>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Slider"></TextBlock>
-                <ui:CSlider Grid.Row="4" ShowRangeLabel="False" Minimum="100" Maximum="120" Value="111" Grid.Column="1" Width="160" Height="24">
+                <ui:CSlider Grid.Row="4" Grid.Column="1" ShowRangeLabel="False" Minimum="100" Maximum="120" Value="111" Width="160" Height="24">
                 </ui:CSlider>
+
+                <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="RangeSlider"></TextBlock>
+                <ui:CRangeSlider Grid.Row="5" Grid.Column="1"  ShowRangeLabel="False" Minimum="0" Maximum="100" LowerValue="20" UpperValue="80" Width="160" Height="24">
+                </ui:CRangeSlider>
             </Grid>
 
             <!--Label layout-->
