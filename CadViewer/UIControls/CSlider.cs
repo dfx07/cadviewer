@@ -13,6 +13,7 @@ using System.Windows.Input;
 using CadViewer.Animations;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Windows.Threading;
 
 namespace CadViewer.UIControls
 {
@@ -27,6 +28,10 @@ namespace CadViewer.UIControls
 		Thumb _Thumb = null;
 		Popup _Tooltip = null;
 		Border _ValueTip = null;
+
+		private DispatcherTimer _tooltipTimer;
+
+		private DispatcherTimer _popupTimer;
 
 		public override void OnApplyTemplate()
 		{
@@ -52,6 +57,7 @@ namespace CadViewer.UIControls
 				}
 			};
 		}
+
 		private void RecalTooltip()
 		{
 			if (_Thumb == null || _Tooltip == null)
@@ -67,21 +73,35 @@ namespace CadViewer.UIControls
 			}), System.Windows.Threading.DispatcherPriority.Loaded);
 		}
 
-		private void Thumb_MouseLeave(object sender, MouseEventArgs e)
+		private void TooltipTimer_Tick(object sender, EventArgs e)
 		{
-			if(_Tooltip.IsOpen)
-				_Tooltip.IsOpen = false;
+			_tooltipTimer?.Stop();
+
+			if (_Tooltip != null)
+			{
+				_Tooltip.IsOpen = true;
+				RecalTooltip();
+			}
 		}
 
-		private async void Thumb_MouseEnter(object sender, MouseEventArgs e)
+		private void Thumb_MouseLeave(object sender, MouseEventArgs e)
 		{
-			await Task.Delay(500);
+			_Tooltip.IsOpen = false;
+			_tooltipTimer.Stop();
+		}
 
-			if(!_Tooltip.IsOpen)
+		private void Thumb_MouseEnter(object sender, MouseEventArgs e)
+		{
+			if (_tooltipTimer == null)
 			{
-				RecalTooltip();
-				_Tooltip.IsOpen = true;
+				_tooltipTimer = new DispatcherTimer
+				{
+					Interval = TimeSpan.FromMilliseconds(400),
+				};
+				_tooltipTimer.Tick += TooltipTimer_Tick;
 			}
+
+			_tooltipTimer.Start();
 		}
 
 		private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
@@ -102,8 +122,8 @@ namespace CadViewer.UIControls
 
 		private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
 		{
-			if (_Tooltip.IsOpen)
-				_Tooltip.IsOpen = false;
+			_Tooltip.IsOpen = false;
+			_tooltipTimer.Stop();
 		}
 
 		public static readonly DependencyProperty TrackHeightProperty =

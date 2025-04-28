@@ -17,7 +17,28 @@ using System.Windows.Threading;
 
 namespace CadViewer.UIControls
 {
-	public class CRangeSlider : RangeBase
+	public class CRangeSliderTickBar : TickBar
+	{
+		protected override void OnRender(DrawingContext dc)
+		{
+			if (TickFrequency <= 0 || Maximum <= Minimum)
+				return;
+
+			double range = Maximum - Minimum;
+			double tickCount = range / TickFrequency;
+			double tickSpacing = (this.ActualWidth) / tickCount;
+
+			for (int i = 0; i <= tickCount; i++)
+			{
+				double x = i * tickSpacing;
+				dc.DrawLine(new Pen(this.Fill, 1),
+					new Point(x, 0),
+					new Point(x, this.ActualHeight));
+			}
+		}
+	}
+
+	public class CRangeSlider : Slider
 	{
 		static CRangeSlider()
 		{
@@ -25,19 +46,19 @@ namespace CadViewer.UIControls
 				new FrameworkPropertyMetadata(typeof(CRangeSlider)));
 		}
 
-		Thumb _ThumbLower = null;
-		Popup _Tooltip = null;
-		Border _BorderValueTip = null;
-		TextBlock _ValueTip = null;
+		private Thumb _ThumbLower = null;
+		private Thumb _ThumbUpper = null;
 
-		TranslateTransform _LowerTranslateTranform = null;
+		private Popup _Tooltip = null;
+		private Border _BorderTrack = null;
+		private Border _BorderTooltip = null;
+		private TextBlock _ValueTip = null;
 
-		Thumb _ThumbUpper = null;
+		private TranslateTransform _LowerTranslateTranform = null;
+		private TranslateTransform _UpperTranslateTranform = null;
 
-		TranslateTransform _UpperTranslateTranform = null;
-
-		Border _SelectedRangle = null;
-		private DispatcherTimer _tooltipTimer;
+		private Border _SelectedRange = null;
+		private DispatcherTimer _TooltipTimer = null;
 
 		public override void OnApplyTemplate()
 		{
@@ -46,13 +67,12 @@ namespace CadViewer.UIControls
 			Loaded += (s, e) =>
 			{
 				var thumb1 = GetTemplateChild("PART_LowerThumb") as Thumb;
-				var toolTip = GetTemplateChild("xCRangeSliderTooltip") as Popup;
-				var valueTip = GetTemplateChild("BorderValueTip") as Border;
-				var valueTip1 = GetTemplateChild("ValueTip") as TextBlock;
+				var toolTip = GetTemplateChild("PART_Tooltip") as Popup;
+				var borderTrack = GetTemplateChild("xCRangeSliderTrackBackground") as Border;
+				var borderTooltip = GetTemplateChild("BorderTooltipValue") as Border;
+				var valueTip1 = GetTemplateChild("TooltipValue") as TextBlock;
 
 				var thumb2 = GetTemplateChild("PART_UpperThumb") as Thumb;
-				var toolTip2 = GetTemplateChild("PART_TooltipUpper") as Popup;
-				var valueTip2 = GetTemplateChild("UpperValueTip") as Border;
 
 				var tran1 = GetTemplateChild("LowerThumbTranslate") as TranslateTransform;
 				var tran2 = GetTemplateChild("UpperThumbTranslate") as TranslateTransform;
@@ -61,34 +81,31 @@ namespace CadViewer.UIControls
 
 				if (thumb1 != null)
 				{
-					thumb1.DragStarted += Thumb_DragStarted;
 					thumb1.DragDelta += Thumb_DragDelta;
 					thumb1.DragCompleted += Thumb_DragCompleted;
 					thumb1.MouseEnter += Thumb_MouseEnter;
 					thumb1.MouseLeave += Thumb_MouseLeave;
 
 					_ThumbLower = thumb1;
-					_Tooltip = toolTip;
-					_BorderValueTip = valueTip;
-					_ValueTip = valueTip1;
-
 					_LowerTranslateTranform = tran1;
 				}
 
 				if (thumb2 != null)
 				{
-					thumb2.DragStarted += Thumb_DragStarted;
 					thumb2.DragDelta += Thumb_DragDelta;
 					thumb2.DragCompleted += Thumb_DragCompleted;
 					thumb2.MouseEnter += Thumb_MouseEnter;
 					thumb2.MouseLeave += Thumb_MouseLeave;
 
 					_ThumbUpper = thumb2;
-
 					_UpperTranslateTranform = tran2;
 				}
 
-				_SelectedRangle = selectedrangle;
+				_Tooltip = toolTip;
+				_BorderTrack = borderTrack;
+				_ValueTip = valueTip1;
+				_BorderTooltip = borderTooltip;
+				_SelectedRange = selectedrangle;
 
 				UpdateThumbsPosition(false);
 				UpdateThumbsPosition(true);
@@ -104,9 +121,9 @@ namespace CadViewer.UIControls
 
 			Dispatcher.BeginInvoke(new Action(() =>
 			{
-				double offsetX = (thumb.ActualWidth - _BorderValueTip.ActualWidth) / 2;
+				double offsetX = (thumb.ActualWidth - _BorderTooltip.ActualWidth) / 2;
 
-				_Tooltip.HorizontalOffset = offsetX + 0.1;
+				_Tooltip.HorizontalOffset = offsetX - 0.1;
 				_Tooltip.HorizontalOffset = offsetX;
 
 			}), System.Windows.Threading.DispatcherPriority.Loaded);
@@ -129,7 +146,7 @@ namespace CadViewer.UIControls
 
 		private void UpdateThumbsPosition(bool lower)
 		{
-			var TrackLength = ActualWidth - _ThumbLower.ActualWidth;
+			var TrackLength = _BorderTrack.ActualWidth - _ThumbLower.ActualWidth;
 
 			if (lower)
 			{
@@ -165,7 +182,7 @@ namespace CadViewer.UIControls
 
 		private void UpdateSelectedRange()
 		{
-			if (_SelectedRangle != null)
+			if (_SelectedRange != null)
 			{
 				Dispatcher.BeginInvoke(new Action(() =>
 				{
@@ -173,30 +190,18 @@ namespace CadViewer.UIControls
 					double right = _UpperTranslateTranform.X + _ThumbUpper.ActualWidth / 2;
 					double width = right - left;
 
-					Canvas.SetLeft(_SelectedRangle, left);
-					_SelectedRangle.Width = width;
+					Canvas.SetLeft(_SelectedRange, left);
+					_SelectedRange.Width = Math.Abs(width);
 
 				}), System.Windows.Threading.DispatcherPriority.Loaded);
 			}
-		}
-
-		// Lower
-		private void ThumbLower_MouseLeave(object sender, MouseEventArgs e)
-		{
-			//if (_TooltipLower.IsOpen)
-			//	_TooltipLower.IsOpen = false;
-		}
-
-		private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
-		{
-
 		}
 
 		private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			if(sender is Thumb thumb)
 			{
-				var TrackLength = ActualWidth - thumb.ActualWidth;
+				var TrackLength = _BorderTrack.ActualWidth - thumb.ActualWidth;
 
 				double left = 0.0;
 
@@ -214,6 +219,8 @@ namespace CadViewer.UIControls
 				double ratio = left / TrackLength;
 
 				double newValue = Minimum + ratio * (Maximum - Minimum);
+
+				RecalTooltip(thumb);
 
 				if (thumb == _ThumbLower)
 				{
@@ -233,30 +240,23 @@ namespace CadViewer.UIControls
 				if (!_Tooltip.IsOpen)
 					_Tooltip.IsOpen = true;
 
-				RecalTooltip(thumb);
+				
 			}
 		}
 
 		private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
 		{
-
-		}
-
-		// Upper
-		private void Thumb_MouseLeave(object sender, MouseEventArgs e)
-		{
-			_tooltipTimer?.Stop();
-
+			_TooltipTimer?.Stop();
 			_Tooltip.IsOpen = false;
 		}
 
 		private void TooltipTimer_Tick(object sender, EventArgs e)
 		{
-			_tooltipTimer?.Stop();
+			_TooltipTimer?.Stop();
 
 			if (_Tooltip != null)
 			{
-				if ((bool)_tooltipTimer.Tag == true)
+				if ((bool)_TooltipTimer.Tag == true)
 				{
 					SetShowValue(true);
 					UpdateThumbsPosition(true);
@@ -273,21 +273,26 @@ namespace CadViewer.UIControls
 
 		private void Thumb_MouseEnter(object sender, MouseEventArgs e)
 		{
-			if (_tooltipTimer == null)
+			if (_TooltipTimer == null)
 			{
-				_tooltipTimer = new DispatcherTimer
+				_TooltipTimer = new DispatcherTimer
 				{
 					Interval = TimeSpan.FromMilliseconds(400),
 				};
-				_tooltipTimer.Tick += TooltipTimer_Tick;
+				_TooltipTimer.Tick += TooltipTimer_Tick;
 			}
 			
 			if(sender is Thumb thumb)
 			{
-				_tooltipTimer.Tag = (thumb == _ThumbLower) ? true : false;
+				_TooltipTimer.Tag = (thumb == _ThumbLower) ? true : false;
 			}
 
-			_tooltipTimer.Start();
+			_TooltipTimer.Start();
+		}
+		private void Thumb_MouseLeave(object sender, MouseEventArgs e)
+		{
+			_Tooltip.IsOpen = false;
+			_TooltipTimer?.Stop();
 		}
 
 		public static readonly DependencyProperty LowerValueProperty =
@@ -307,7 +312,6 @@ namespace CadViewer.UIControls
 			get => (double)GetValue(UpperValueProperty);
 			set => SetValue(UpperValueProperty, value);
 		}
-
 
 		public static readonly DependencyProperty TrackHeightProperty =
 		DependencyProperty.Register(nameof(TrackHeight), typeof(double), typeof(CRangeSlider), new PropertyMetadata(5.0));

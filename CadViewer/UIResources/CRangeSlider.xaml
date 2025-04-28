@@ -100,15 +100,6 @@
                                         <ThicknessAnimation Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="BorderThickness" To="2" Duration="0:0:0.3" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-
-                                    </Storyboard>
-                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Border>
@@ -126,83 +117,94 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource xCRangeSliderRangeLabelStyle}" Content="{TemplateBinding Minimum}"></Label>
-            <TickBar x:Name="TopTick" Grid.Row="0" Grid.Column="1" SnapsToDevicePixels="True" Placement="Top" Height="4" Visibility="Collapsed">
-                <TickBar.Fill>
-                    <SolidColorBrush Color="Green" />
-                </TickBar.Fill>
-            </TickBar>
+            <Border Grid.Row="0" Grid.Column="1" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1" Padding="3" CornerRadius="3">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                </Border.BorderBrush>
+                <Border.Background>
+                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                </Border.Background>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding LowerValue, RelativeSource={RelativeSource AncestorType=local:CRangeSlider}, StringFormat='{}{0:F0}'}"></TextBlock>
+                    <TextBlock Grid.Column="1" Padding="2,0,2,0" TextAlignment="Center" HorizontalAlignment="Center" Text=":"></TextBlock>
+                    <TextBlock Grid.Column="2" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding UpperValue, RelativeSource={RelativeSource AncestorType=local:CRangeSlider}, StringFormat='{}{0:F0}'}"></TextBlock>
+                </Grid>
+            </Border>
+            <Popup x:Name="PART_Tooltip" Placement="Top" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Fade">
+                <Grid Margin="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="6" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" x:Name="BorderTooltipValue" Background="White" CornerRadius="3" Padding="5" BorderThickness="1">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                        </Border.BorderBrush>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="3" Direction="270" ShadowDepth="1" Opacity="0.2" />
+                        </Border.Effect>
+                        <TextBlock x:Name="TooltipValue" Foreground="{DynamicResource Cmm_TextColor}" />
+                    </Border>
+                    <Canvas Grid.Row="1" Height="6" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Polygon Margin="0,-2,0,0" Points="-5,0,5,0,0,5" Fill="White">
+                        </Polygon>
+                        <Polyline Points="-5,0,0,5,5,0" StrokeThickness="1">
+                            <Polyline.Stroke>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                            </Polyline.Stroke>
+                            <Polyline.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="1" Direction="270" ShadowDepth="1" Opacity="0.1" />
+                            </Polyline.Effect>
+                        </Polyline>
+                    </Canvas>
+                </Grid>
+            </Popup>
+
+            <local:CRangeSliderTickBar x:Name="BottomTick" Grid.Row="2" Grid.Column="1" TickFrequency="10" SnapsToDevicePixels="True" Placement="Bottom" Height="4"
+                Visibility="Collapsed">
+                <local:CRangeSliderTickBar.Fill>
+                    <SolidColorBrush Color="{DynamicResource CompUI_Slider_TickBarColor}" />
+                </local:CRangeSliderTickBar.Fill>
+            </local:CRangeSliderTickBar>
+
+            <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{StaticResource xCRangeSliderRangeLabelStyle}" Content="{TemplateBinding Minimum}"></Label>
             <Border x:Name="xCRangeSliderTrackBackground" Grid.Row="1" Grid.Column="1" CornerRadius="{TemplateBinding TrackRadius}" Height="{TemplateBinding TrackHeight}">
                 <Border.Background>
                     <SolidColorBrush Color="{DynamicResource CompUI_Slider_TrackBackgroundColor}" />
                 </Border.Background>
+                <Canvas Grid.Row="1" Grid.Column="1" Height="{TemplateBinding TrackHeight}" Background="Transparent">
+                    <Border x:Name="SelectedRange" Height="{TemplateBinding TrackHeight}">
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Slider_TrackValueRangeColor}" />
+                        </Border.Background>
+                    </Border>
+                    <Thumb x:Name="PART_LowerThumb" Grid.Row="1" Grid.Column="1" Canvas.Top="-7" Style="{StaticResource xCRangeSliderThumbStyle}">
+                        <Thumb.RenderTransform>
+                            <TranslateTransform x:Name="LowerThumbTranslate" />
+                        </Thumb.RenderTransform>
+                    </Thumb>
+                    <Thumb x:Name="PART_UpperThumb" Grid.Row="1" Grid.Column="1" Canvas.Top="-7" Style="{StaticResource xCRangeSliderThumbStyle}">
+                        <Thumb.RenderTransform>
+                            <TranslateTransform x:Name="UpperThumbTranslate" />
+                        </Thumb.RenderTransform>
+                    </Thumb>
+                </Canvas>
             </Border>
-            <Canvas Grid.Row="1" Grid.Column="1" Height="{TemplateBinding TrackHeight}" Background="Transparent">
-                <Border x:Name="SelectedRange" Height="{TemplateBinding TrackHeight}">
-                    <Border.Background>
-                        <SolidColorBrush Color="{DynamicResource CompUI_Slider_TrackValueRangeColor}" />
-                    </Border.Background>
-                </Border>
-                <Thumb x:Name="PART_LowerThumb" Grid.Row="1" Grid.Column="1" Canvas.Top="-7" Style="{StaticResource xCRangeSliderThumbStyle}">
-                    <Thumb.RenderTransform>
-                        <TranslateTransform x:Name="LowerThumbTranslate" />
-                    </Thumb.RenderTransform>
-                </Thumb>
-                <Popup x:Name="xCRangeSliderTooltip" StaysOpen="True" Placement="Top" AllowsTransparency="True" PopupAnimation="Fade">
-                    <Grid Margin="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="6" />
-                        </Grid.RowDefinitions>
-                        <Border Grid.Row="0" x:Name="BorderValueTip" Background="White" CornerRadius="3" Padding="5" BorderThickness="1">
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                            </Border.BorderBrush>
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="2" Direction="270" ShadowDepth="1" Opacity="0.2" />
-                            </Border.Effect>
-                            <TextBlock x:Name="ValueTip" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat='{}{0:F1}'}" Foreground="{DynamicResource Cmm_TextColor}" />
-                        </Border>
-                        <Canvas Grid.Row="1" Height="6" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Polygon Margin="0,-2,0,0" Points="-5,0,5,0,0,5" Fill="White">
-                            </Polygon>
-                            <Polyline Points="-5,0,0,5,5,0" StrokeThickness="1">
-                                <Polyline.Stroke>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                                </Polyline.Stroke>
-                                <Polyline.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="1" Direction="270" ShadowDepth="1" Opacity="0.1" />
-                                </Polyline.Effect>
-                            </Polyline>
-                        </Canvas>
-                    </Grid>
-                </Popup>
-
-                <Thumb x:Name="PART_UpperThumb" Grid.Row="1" Grid.Column="1" Canvas.Top="-7" Style="{StaticResource xCRangeSliderThumbStyle}">
-                    <Thumb.RenderTransform>
-                        <TranslateTransform x:Name="UpperThumbTranslate" />
-                    </Thumb.RenderTransform>
-                </Thumb>
-            </Canvas>
-
-            <TickBar x:Name="BottomTick" Grid.Row="2" Grid.Column="1" SnapsToDevicePixels="True" Fill="{TemplateBinding Foreground}" Placement="Bottom" Height="4" Visibility="Collapsed" />
             <Label Grid.Row="1" Grid.Column="2" Style="{StaticResource xCRangeSliderRangeLabelStyle}" Content="{TemplateBinding Maximum}"></Label>
         </Grid>
-        <!--<ControlTemplate.Triggers>
-            <Trigger Property="TickPlacement" Value="TopLeft">
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
-            </Trigger>
+        <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="BottomRight">
                 <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
             </Trigger>
-            <Trigger Property="TickPlacement" Value="Both">
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
-                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
-            </Trigger>
-        </ControlTemplate.Triggers>-->
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="xCRangeSliderVerticalStyle" TargetType="{x:Type local:CRangeSlider}">
@@ -212,17 +214,17 @@
         <Style.Setters>
             <Setter Property="Template" Value="{StaticResource xCRangeSliderHorizontalStyle}" />
         </Style.Setters>
-        <!--<Style.Triggers>
+        <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinWidth" Value="104" />
-                <Setter Property="MinHeight" Value="21" />
+                <Setter Property="MinHeight" Value="40" />
                 <Setter Property="Template" Value="{StaticResource xCRangeSliderHorizontalStyle}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="MinWidth" Value="21" />
+                <Setter Property="MinWidth" Value="35" />
                 <Setter Property="MinHeight" Value="104" />
-                <Setter Property="Template" Value="{StaticResource xCRangeSliderHorizontalStyle}" />
+                <Setter Property="Template" Value="{StaticResource xCRangeSliderVerticalStyle}" />
             </Trigger>
-        </Style.Triggers>-->
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

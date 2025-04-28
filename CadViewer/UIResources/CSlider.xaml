@@ -130,11 +130,6 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource xCSliderRangeLabelStyle}" Content="{TemplateBinding Minimum}"></Label>
-            <TickBar x:Name="TopTick" Grid.Row="0" Grid.Column="1" SnapsToDevicePixels="True" Placement="Top" Height="4" Visibility="Collapsed">
-                <TickBar.Fill>
-                    <SolidColorBrush Color="Green" />
-                </TickBar.Fill>
-            </TickBar>
             <Border x:Name="xCSliderTrackBackground" Grid.Row="1" Grid.Column="1" CornerRadius="{TemplateBinding TrackRadius}" Height="{TemplateBinding TrackHeight}">
                 <Border.Background>
                     <SolidColorBrush Color="{DynamicResource CompUI_Slider_TrackBackgroundColor}" />
@@ -151,7 +146,11 @@
                     <RepeatButton Style="{StaticResource xCSliderTrackRangeNormalStyle}" Command="Slider.IncreaseLarge" />
                 </Track.IncreaseRepeatButton>
             </Track>
-            <TickBar x:Name="BottomTick" Grid.Row="2" Grid.Column="1" SnapsToDevicePixels="True" Fill="{TemplateBinding Foreground}" Placement="Bottom" Height="4" Visibility="Collapsed" />
+            <TickBar x:Name="BottomTick" Grid.Row="2" Grid.Column="1" TickFrequency="10" SnapsToDevicePixels="True" Placement="Bottom" Height="4" Visibility="Collapsed">
+                <TickBar.Fill>
+                    <SolidColorBrush Color="{DynamicResource CompUI_Slider_TickBarColor}" />
+                </TickBar.Fill>
+            </TickBar>
             <Label Grid.Row="1" Grid.Column="2" Style="{StaticResource xCSliderRangeLabelStyle}" Content="{TemplateBinding Maximum}"></Label>
             <Popup x:Name="PART_Tooltip" PlacementTarget="{Binding ElementName=PART_Thumb}" Placement="Top" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Fade">
                 <Grid Margin="1">
@@ -166,7 +165,7 @@
                         <Border.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="3" Direction="270" ShadowDepth="1" Opacity="0.2" />
                         </Border.Effect>
-                        <TextBlock Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat='{}{0:F1}'}" Foreground="{DynamicResource Cmm_TextColor}" />
+                        <TextBlock Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat='{}{0:F0}'}" Foreground="{DynamicResource Cmm_TextColor}" />
                     </Border>
                     <Canvas Grid.Row="1" Height="6" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Polygon Margin="0,-2,0,0" Points="-5,0,5,0,0,5" Fill="White">
@@ -184,14 +183,10 @@
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="TickPlacement" Value="TopLeft">
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
-            </Trigger>
             <Trigger Property="TickPlacement" Value="BottomRight">
                 <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="TickPlacement" Value="Both">
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
                 <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
             </Trigger>
         </ControlTemplate.Triggers>
