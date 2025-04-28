@@ -13,6 +13,7 @@ using System.Windows.Input;
 using CadViewer.Animations;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Windows.Threading;
 
 namespace CadViewer.UIControls
 {
@@ -25,21 +26,18 @@ namespace CadViewer.UIControls
 		}
 
 		Thumb _ThumbLower = null;
-		Popup _TooltipLower = null;
 		Popup _Tooltip = null;
-		Border _LowerValueTip = null;
 		Border _BorderValueTip = null;
 		TextBlock _ValueTip = null;
 
 		TranslateTransform _LowerTranslateTranform = null;
 
 		Thumb _ThumbUpper = null;
-		Popup _TooltipUpper = null;
-		Border _UpperValueTip = null;
 
 		TranslateTransform _UpperTranslateTranform = null;
 
 		Border _SelectedRangle = null;
+		private DispatcherTimer _tooltipTimer;
 
 		public override void OnApplyTemplate()
 		{
@@ -63,9 +61,9 @@ namespace CadViewer.UIControls
 
 				if (thumb1 != null)
 				{
-					thumb1.DragStarted += ThumbLower_DragStarted;
+					thumb1.DragStarted += Thumb_DragStarted;
 					thumb1.DragDelta += Thumb_DragDelta;
-					thumb1.DragCompleted += ThumbLower_DragCompleted;
+					thumb1.DragCompleted += Thumb_DragCompleted;
 					thumb1.MouseEnter += Thumb_MouseEnter;
 					thumb1.MouseLeave += Thumb_MouseLeave;
 
@@ -79,9 +77,9 @@ namespace CadViewer.UIControls
 
 				if (thumb2 != null)
 				{
-					thumb2.DragStarted += ThumbUpper_DragStarted;
+					thumb2.DragStarted += Thumb_DragStarted;
 					thumb2.DragDelta += Thumb_DragDelta;
-					thumb2.DragCompleted += ThumbUpper_DragCompleted;
+					thumb2.DragCompleted += Thumb_DragCompleted;
 					thumb2.MouseEnter += Thumb_MouseEnter;
 					thumb2.MouseLeave += Thumb_MouseLeave;
 
@@ -99,33 +97,32 @@ namespace CadViewer.UIControls
 			};
 		}
 
-		private void RecalTooltipLower()
+		private void RecalTooltip(Thumb thumb)
 		{
-			if (_ThumbLower == null || _TooltipLower == null)
+			if (thumb == null || _Tooltip == null)
 				return;
 
-			_TooltipLower.Dispatcher.BeginInvoke(new Action(() =>
+			Dispatcher.BeginInvoke(new Action(() =>
 			{
-				double offsetX = (_ThumbLower.ActualWidth - _LowerValueTip.ActualWidth) / 2;
+				double offsetX = (thumb.ActualWidth - _BorderValueTip.ActualWidth) / 2;
 
-				_TooltipLower.HorizontalOffset = offsetX - 0.1;
-				_TooltipLower.HorizontalOffset = offsetX;
+				_Tooltip.HorizontalOffset = offsetX + 0.1;
+				_Tooltip.HorizontalOffset = offsetX;
 
 			}), System.Windows.Threading.DispatcherPriority.Loaded);
 		}
+
 
 		private void SetShowValue(bool lower)
 		{
 			if (lower)
 			{
 				_Tooltip.PlacementTarget = _ThumbLower;
-
 				_ValueTip.Text = LowerValue.ToString("F0");
 			}
 			else
 			{
 				_Tooltip.PlacementTarget = _ThumbUpper;
-
 				_ValueTip.Text = UpperValue.ToString("F0");
 			}
 		}
@@ -189,24 +186,10 @@ namespace CadViewer.UIControls
 			//if (_TooltipLower.IsOpen)
 			//	_TooltipLower.IsOpen = false;
 		}
-		private async void ThumbLower_MouseEnter(object sender, MouseEventArgs e)
+
+		private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
 		{
-			await Task.Delay(500);
 
-			//if (!_TooltipLower.IsOpen)
-			//{
-			//	_TooltipLower.IsOpen = true;
-			//}
-		}
-
-		private void ThumbLower_DragStarted(object sender, DragStartedEventArgs e)
-		{
-			//if (!_TooltipLower.IsOpen)
-			//	_TooltipLower.IsOpen = true;
-
-			//UpdateThumbsPosition();
-
-			//_TooltipLower.CaptureMouse();
 		}
 
 		private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -249,70 +232,62 @@ namespace CadViewer.UIControls
 
 				if (!_Tooltip.IsOpen)
 					_Tooltip.IsOpen = true;
+
+				RecalTooltip(thumb);
 			}
 		}
 
-		private void ThumbLower_DragCompleted(object sender, DragCompletedEventArgs e)
+		private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
 		{
-			//if (_TooltipLower.IsOpen)
-			//	_TooltipLower.IsOpen = false;
+
 		}
 
 		// Upper
 		private void Thumb_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if (_Tooltip.IsOpen)
-				_Tooltip.IsOpen = false;
+			_tooltipTimer?.Stop();
+
+			_Tooltip.IsOpen = false;
 		}
 
-		private async void Thumb_MouseEnter(object sender, MouseEventArgs e)
+		private void TooltipTimer_Tick(object sender, EventArgs e)
 		{
-			await Task.Delay(500);
+			_tooltipTimer?.Stop();
 
-			if(_Tooltip != null && sender is Thumb thumb)
+			if (_Tooltip != null)
 			{
-				if (!_Tooltip.IsOpen)
+				if ((bool)_tooltipTimer.Tag == true)
 				{
-					if (_Tooltip != null && thumb != null)
-						_Tooltip.PlacementTarget = thumb;
-
-					if (thumb == _ThumbLower)
-					{
-						SetShowValue(true);
-						UpdateThumbsPosition(true);
-					}
-					else
-					{
-						SetShowValue(false);
-						UpdateThumbsPosition(false);
-					}
-
-					_Tooltip.IsOpen = true;
+					SetShowValue(true);
+					UpdateThumbsPosition(true);
 				}
+				else
+				{
+					SetShowValue(false);
+					UpdateThumbsPosition(false);
+				}
+
+				_Tooltip.IsOpen = true;
 			}
 		}
 
-		private void ThumbUpper_DragStarted(object sender, DragStartedEventArgs e)
+		private void Thumb_MouseEnter(object sender, MouseEventArgs e)
 		{
-			//if (!_TooltipUpper.IsOpen)
-			//	_TooltipUpper.IsOpen = true;
-			//UpdateThumbsPosition();
-		}
+			if (_tooltipTimer == null)
+			{
+				_tooltipTimer = new DispatcherTimer
+				{
+					Interval = TimeSpan.FromMilliseconds(400),
+				};
+				_tooltipTimer.Tick += TooltipTimer_Tick;
+			}
+			
+			if(sender is Thumb thumb)
+			{
+				_tooltipTimer.Tag = (thumb == _ThumbLower) ? true : false;
+			}
 
-		private void ThumbUpper_DragDelta(object sender, DragDeltaEventArgs e)
-		{
-			//if (!_TooltipUpper.IsOpen)
-			//	_TooltipUpper.IsOpen = true;
-
-			double a = e.HorizontalChange;
-
-			//UpdateThumbsPosition();
-		}
-
-		private void ThumbUpper_DragCompleted(object sender, DragCompletedEventArgs e)
-		{
-			//if (_TooltipUpper.IsOpen)
-			//	_TooltipUpper.IsOpen = false;
+			_tooltipTimer.Start();
 		}
 
 		public static readonly DependencyProperty LowerValueProperty =
