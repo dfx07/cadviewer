@@ -53,31 +53,30 @@ namespace CadViewer.UIControls
 			set => SetValue(ImagePlacementProperty, value);
 		}
 
-		//public static readonly DependencyProperty TrackHeightProperty =
-		//DependencyProperty.Register(nameof(TrackHeight), typeof(double), typeof(CSlider), new PropertyMetadata(5.0));
+		public static readonly DependencyProperty HeaderHeightProperty =
+		DependencyProperty.Register(nameof(HeaderHeight), typeof(double), typeof(CGroupBox), new PropertyMetadata(20.0));
 
-		//public double TrackHeight
-		//{
-		//	get => (double)GetValue(TrackHeightProperty);
-		//	set => SetValue(TrackHeightProperty, value);
-		//}
+		public double HeaderHeight
+		{
+			get => (double)GetValue(HeaderHeightProperty);
+			set => SetValue(HeaderHeightProperty, value);
+		}
 
-		//public static readonly DependencyProperty TrackRadiusProperty =
-		//DependencyProperty.Register(nameof(TrackRadius), typeof(CornerRadius), typeof(CSlider), new PropertyMetadata(new CornerRadius(3)));
+		public static readonly DependencyProperty ImageWidthProperty =
+		DependencyProperty.Register(nameof(ImageWidth), typeof(double), typeof(CGroupBox), new PropertyMetadata(double.NaN));
+		public double ImageWidth
+		{
+			get => (double)GetValue(ImageWidthProperty);
+			set => SetValue(ImageWidthProperty, value);
+		}
 
-		//public CornerRadius TrackRadius
-		//{
-		//	get => (CornerRadius)GetValue(TrackRadiusProperty);
-		//	set => SetValue(TrackRadiusProperty, value);
-		//}
+		public static readonly DependencyProperty ShowHeaderProperty =
+		DependencyProperty.Register(nameof(ShowHeader), typeof(bool), typeof(CGroupBox), new PropertyMetadata(true));
 
-		//public static readonly DependencyProperty ShowRangeLabelProperty =
-		//DependencyProperty.Register( nameof(ShowRangeLabel), typeof(bool), typeof(CSlider), new PropertyMetadata(true));
-
-		//public bool ShowRangeLabel
-		//{
-		//	get => (bool)GetValue(ShowRangeLabelProperty);
-		//	set => SetValue(ShowRangeLabelProperty, value);
-		//}
+		public bool ShowHeader
+		{
+			get => (bool)GetValue(ShowHeaderProperty);
+			set => SetValue(ShowHeaderProperty, value);
+		}
 	}
 }

@@ -35,31 +35,39 @@ namespace CadViewer.UIControls
 			};
 		}
 
-		public static readonly DependencyProperty TrackHeightProperty =
-		DependencyProperty.Register(nameof(TrackHeight), typeof(double), typeof(CSlider), new PropertyMetadata(5.0));
+		public static readonly DependencyProperty ImageSourceProperty =
+		DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(CExpander), new PropertyMetadata(null));
 
-		public double TrackHeight
+		public ImageSource ImageSource
 		{
-			get => (double)GetValue(TrackHeightProperty);
-			set => SetValue(TrackHeightProperty, value);
+			get => (ImageSource)GetValue(ImageSourceProperty);
+			set => SetValue(ImageSourceProperty, value);
 		}
 
-		public static readonly DependencyProperty TrackRadiusProperty =
-		DependencyProperty.Register(nameof(TrackRadius), typeof(CornerRadius), typeof(CSlider), new PropertyMetadata(new CornerRadius(3)));
+		public static readonly DependencyProperty ImagePlacementProperty =
+		DependencyProperty.Register(nameof(ImagePlacement), typeof(ImagePlacement), typeof(CExpander), new PropertyMetadata(ImagePlacement.Left));
 
-		public CornerRadius TrackRadius
+		public ImagePlacement ImagePlacement
 		{
-			get => (CornerRadius)GetValue(TrackRadiusProperty);
-			set => SetValue(TrackRadiusProperty, value);
+			get => (ImagePlacement)GetValue(ImagePlacementProperty);
+			set => SetValue(ImagePlacementProperty, value);
 		}
 
-		public static readonly DependencyProperty ShowRangeLabelProperty =
-		DependencyProperty.Register( nameof(ShowRangeLabel), typeof(bool), typeof(CSlider), new PropertyMetadata(true));
+		public static readonly DependencyProperty HeaderHeightProperty =
+		DependencyProperty.Register(nameof(HeaderHeight), typeof(double), typeof(CExpander), new PropertyMetadata(20.0));
 
-		public bool ShowRangeLabel
+		public double HeaderHeight
 		{
-			get => (bool)GetValue(ShowRangeLabelProperty);
-			set => SetValue(ShowRangeLabelProperty, value);
+			get => (double)GetValue(HeaderHeightProperty);
+			set => SetValue(HeaderHeightProperty, value);
+		}
+
+		public static readonly DependencyProperty ImageWidthProperty =
+		DependencyProperty.Register(nameof(ImageWidth), typeof(double), typeof(CExpander), new PropertyMetadata(double.NaN));
+		public double ImageWidth
+		{
+			get => (double)GetValue(ImageWidthProperty);
+			set => SetValue(ImageWidthProperty, value);
 		}
 	}
 }

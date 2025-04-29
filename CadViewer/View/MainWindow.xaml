@@ -94,25 +94,39 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3"
                                Foreground="{DynamicResource Cmm_TextColor}" Text="GroupBox"></TextBlock>
-                    <ui:CGroupBox Grid.Row="0" Grid.Column="1" Height="200" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                    <ui:CGroupBox Grid.Row="0" Grid.Column="1" Height="100" HeaderHeight="30" ImageWidth="15" ImagePlacement="Right" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
                         <ui:CGroupBox.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Thông tin cá nhân" FontWeight="Bold" />
+                                <TextBlock VerticalAlignment="Center" Text="GroupBox Header"/>
                             </StackPanel>
                         </ui:CGroupBox.Header>
-
                         <ui:CGroupBox.Content>
                             <StackPanel>
                                 <TextBlock Text="This is content and so many control contains here" />
                             </StackPanel>
                         </ui:CGroupBox.Content>
                     </ui:CGroupBox>
-                </Grid>
 
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Expander"></TextBlock>
+                    <ui:CExpander Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" Height="100" HeaderHeight="30" ImageWidth="15" 
+                                  ImagePlacement="Right" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                        <ui:CExpander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="Expander Header" />
+                            </StackPanel>
+                        </ui:CExpander.Header>
+                        <ui:CExpander.Content>
+                            <StackPanel>
+                                <TextBlock Text="This is content and so many control contains here" />
+                            </StackPanel>
+                        </ui:CExpander.Content>
+                    </ui:CExpander>
+                </Grid>
             </Grid>
 
             <!--Label layout-->
