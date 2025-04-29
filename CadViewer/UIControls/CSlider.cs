@@ -29,9 +29,7 @@ namespace CadViewer.UIControls
 		Popup _Tooltip = null;
 		Border _ValueTip = null;
 
-		private DispatcherTimer _tooltipTimer;
-
-		private DispatcherTimer _popupTimer;
+		private DispatcherTimer _TooltipTimer;
 
 		public override void OnApplyTemplate()
 		{
@@ -75,7 +73,7 @@ namespace CadViewer.UIControls
 
 		private void TooltipTimer_Tick(object sender, EventArgs e)
 		{
-			_tooltipTimer?.Stop();
+			_TooltipTimer?.Stop();
 
 			if (_Tooltip != null)
 			{
@@ -87,21 +85,21 @@ namespace CadViewer.UIControls
 		private void Thumb_MouseLeave(object sender, MouseEventArgs e)
 		{
 			_Tooltip.IsOpen = false;
-			_tooltipTimer.Stop();
+			_TooltipTimer.Stop();
 		}
 
 		private void Thumb_MouseEnter(object sender, MouseEventArgs e)
 		{
-			if (_tooltipTimer == null)
+			if (_TooltipTimer == null)
 			{
-				_tooltipTimer = new DispatcherTimer
+				_TooltipTimer = new DispatcherTimer
 				{
 					Interval = TimeSpan.FromMilliseconds(400),
 				};
-				_tooltipTimer.Tick += TooltipTimer_Tick;
+				_TooltipTimer.Tick += TooltipTimer_Tick;
 			}
 
-			_tooltipTimer.Start();
+			_TooltipTimer.Start();
 		}
 
 		private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
@@ -123,7 +121,7 @@ namespace CadViewer.UIControls
 		private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
 		{
 			_Tooltip.IsOpen = false;
-			_tooltipTimer.Stop();
+			_TooltipTimer.Stop();
 		}
 
 		public static readonly DependencyProperty TrackHeightProperty =

@@ -11,7 +11,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="CadViewer" Height="640" Width="680">
+        Title="CadViewer" Height="840" Width="860">
     <Grid>
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource Cmm_BackgroundColor}"></SolidColorBrush>
@@ -41,45 +41,78 @@
             <!--Button layout-->
             <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*" /> <!--Small controls-->
+                    <ColumnDefinition Width="*" /> <!--Large controls-->
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="70" />
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Button"></TextBlock>
-                <ui:CButton Content="Button" Grid.Row="0" Grid.Column="1" Width="70" Height="24" FontSize="11" IsEnabled="True"
-                            ImageMargin="2" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/menu26.png}" ImagePlacement="Right">
-                </ui:CButton>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="CheckBox" ></TextBlock>
-                <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False">
-                </ui:CToggleButton>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
-                <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="160" Height="24" Placeholder="Type to search..." UseSuggestion="True"
-                            ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/search26.png}" ImagePlacement="Left" >
-                </ui:CTextBox>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Button"></TextBlock>
+                    <ui:CButton Content="Button" Grid.Row="0" Grid.Column="1" Width="70" Height="24" FontSize="11" IsEnabled="True" ImageMargin="2" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/menu26.png}" ImagePlacement="Right">
+                    </ui:CButton>
 
-                <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="ComboBox"></TextBlock>
-                <ui:CComboBox Grid.Row="3" Grid.Column="1" Width="160" Height="24" SelectedIndex="0">
-                </ui:CComboBox>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="CheckBox"></TextBlock>
+                    <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False">
+                    </ui:CToggleButton>
 
-                <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Slider"></TextBlock>
-                <ui:CSlider Grid.Row="4" Grid.Column="1" ShowRangeLabel="False" Minimum="10" Maximum="120" Value="111" Width="160" Height="24" TickPlacement="BottomRight">
-                </ui:CSlider>
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
+                    <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="140" Height="24" Placeholder="Type to search..." UseSuggestion="True" ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/search26.png}" ImagePlacement="Left">
+                    </ui:CTextBox>
 
-                <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="RangeSlider"></TextBlock>
-                <ui:CRangeSlider Grid.Row="5" Grid.Column="1" ShowRangeLabel="False" Minimum="10" Maximum="120" LowerValue="20" UpperValue="80" Width="160" Height="60" TickPlacement="BottomRight">
-                </ui:CRangeSlider>
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="ComboBox"></TextBlock>
+                    <ui:CComboBox Grid.Row="3" Grid.Column="1" Width="140" Height="24" SelectedIndex="0">
+                    </ui:CComboBox>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Slider"></TextBlock>
+                    <ui:CSlider Grid.Row="4" Grid.Column="1" ShowRangeLabel="False" Minimum="10" Maximum="120" Value="111" Width="140" Height="24" TickPlacement="BottomRight">
+                    </ui:CSlider>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="RangeSlider"></TextBlock>
+                    <ui:CRangeSlider Grid.Row="5" Grid.Column="1" ShowRangeLabel="False" Minimum="10" Maximum="120" LowerValue="20" UpperValue="80" Width="140" Height="60" TickPlacement="BottomRight">
+                    </ui:CRangeSlider>
+
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3"
+                               Foreground="{DynamicResource Cmm_TextColor}" Text="GroupBox"></TextBlock>
+                    <ui:CGroupBox Grid.Row="0" Grid.Column="1" Height="200" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                        <ui:CGroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Thông tin cá nhân" FontWeight="Bold" />
+                            </StackPanel>
+                        </ui:CGroupBox.Header>
+
+                        <ui:CGroupBox.Content>
+                            <StackPanel>
+                                <TextBlock Text="This is content and so many control contains here" />
+                            </StackPanel>
+                        </ui:CGroupBox.Content>
+                    </ui:CGroupBox>
+                </Grid>
+
             </Grid>
 
             <!--Label layout-->

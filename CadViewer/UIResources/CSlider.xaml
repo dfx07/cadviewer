@@ -100,15 +100,6 @@
                                         <ThicknessAnimation Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="BorderThickness" To="2" Duration="0:0:0.3" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-
-                                    </Storyboard>
-                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Border>
