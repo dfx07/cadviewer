@@ -42,6 +42,7 @@
 
     <Color x:Key="CompUI_Expander_HeaderBackgroundColor">#fbfbfb</Color>
     <Color x:Key="CompUI_Expander_HeaderBackgroundOverColor">#f6f6f6</Color>
+    <CornerRadius x:Key="CompUI_Expander_CornerRadius">3</CornerRadius>
     <CornerRadius x:Key="CompUI_Expander_HeaderCornerRadius">3,3,0,0</CornerRadius>
     <CornerRadius x:Key="CompUI_Expander_ContentCornerRadius">0,0,3,3</CornerRadius>
 

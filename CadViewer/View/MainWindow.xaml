@@ -11,7 +11,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="CadViewer" Height="840" Width="860">
+        Title="CadViewer" Height="640" Width="860">
     <Grid>
         <Grid.Background>
             <SolidColorBrush Color="{DynamicResource Cmm_BackgroundColor}"></SolidColorBrush>
@@ -113,8 +113,8 @@
                     </ui:CGroupBox>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Expander"></TextBlock>
-                    <ui:CExpander Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" Height="100" HeaderHeight="30" ImageWidth="15" 
-                                  ImagePlacement="Right" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                    <ui:CExpander Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" HeaderHeight="30" ImageWidth="15" 
+                                  ImagePlacement="Left" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
                         <ui:CExpander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" Text="Expander Header" />
@@ -123,6 +123,10 @@
                         <ui:CExpander.Content>
                             <StackPanel>
                                 <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBox Text="This is content and so many control contains here" />
+                                <ComboBox Text="This is content and so many control contains here" />
                             </StackPanel>
                         </ui:CExpander.Content>
                     </ui:CExpander>

@@ -41,30 +41,41 @@
                                 <ColumnDefinition Width="19" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Ellipse x:Name="circle" Fill="{StaticResource Expander.Static.Circle.Fill}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource Expander.Static.Circle.Stroke}" VerticalAlignment="Center" Width="19" />
-                            <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center" />
+                            <Path x:Name="xExpanderArrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center"
+                                  Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false"
+                                  StrokeThickness="2" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="xExpanderArrowRotate" Angle="0" />
+                                </Path.RenderTransform>
+                            </Path>
                             <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center" />
                         </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate"
+                                                         Storyboard.TargetProperty="Angle" From="180" To="0" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" 
+                                                         Storyboard.TargetProperty="Angle" From="0" To="180" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Stroke}" />
-                            <Setter Property="StrokeThickness" TargetName="circle" Value="1.5" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -81,143 +92,37 @@
                                 <ColumnDefinition Width="19" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid>
-                                <Grid.LayoutTransform>
-                                    <TransformGroup>
-                                        <TransformGroup.Children>
-                                            <TransformCollection>
-                                                <RotateTransform Angle="180" />
-                                            </TransformCollection>
-                                        </TransformGroup.Children>
-                                    </TransformGroup>
-                                </Grid.LayoutTransform>
-                                <Ellipse x:Name="circle" Fill="{StaticResource Expander.Static.Circle.Fill}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource Expander.Static.Circle.Stroke}" VerticalAlignment="Center" Width="19" />
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center" />
-                            </Grid>
+                            <Path x:Name="xExpanderArrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="xExpanderArrowRotate" Angle="0" />
+                                </Path.RenderTransform>
+                            </Path>
                             <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center" />
                         </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle" From="180" To="0" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle" From="0" To="180" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Stroke}" />
-                            <Setter Property="StrokeThickness" TargetName="circle" Value="1.5" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="ExpanderLeftHeaderStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent" SnapsToDevicePixels="False">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="19" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid>
-                                <Grid.LayoutTransform>
-                                    <TransformGroup>
-                                        <TransformGroup.Children>
-                                            <TransformCollection>
-                                                <RotateTransform Angle="90" />
-                                            </TransformCollection>
-                                        </TransformGroup.Children>
-                                    </TransformGroup>
-                                </Grid.LayoutTransform>
-                                <Ellipse x:Name="circle" Fill="{StaticResource Expander.Static.Circle.Fill}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource Expander.Static.Circle.Stroke}" VerticalAlignment="Center" Width="19" />
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center" />
-                            </Grid>
-                            <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" RecognizesAccessKey="True" Grid.Row="1" SnapsToDevicePixels="True" VerticalAlignment="Top" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Stroke}" />
-                            <Setter Property="StrokeThickness" TargetName="circle" Value="1.5" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent" SnapsToDevicePixels="False">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="19" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid>
-                                <Grid.LayoutTransform>
-                                    <TransformGroup>
-                                        <TransformGroup.Children>
-                                            <TransformCollection>
-                                                <RotateTransform Angle="-90" />
-                                            </TransformCollection>
-                                        </TransformGroup.Children>
-                                    </TransformGroup>
-                                </Grid.LayoutTransform>
-                                <Ellipse x:Name="circle" Fill="{StaticResource Expander.Static.Circle.Fill}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource Expander.Static.Circle.Stroke}" VerticalAlignment="Center" Width="19" />
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center" />
-                            </Grid>
-                            <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" RecognizesAccessKey="True" Grid.Row="1" SnapsToDevicePixels="True" VerticalAlignment="Top" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.MouseOver.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Stroke}" />
-                            <Setter Property="StrokeThickness" TargetName="circle" Value="1.5" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Pressed.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Stroke" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Stroke}" />
-                            <Setter Property="Fill" TargetName="circle" Value="{StaticResource Expander.Disabled.Circle.Fill}" />
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -235,31 +140,46 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CExpander}">
                     <DockPanel>
-                        <Border x:Name="xExpanderHeaderBorder" DockPanel.Dock="Top" Height="{TemplateBinding HeaderHeight}" Padding="2"
-                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{DynamicResource CompUI_Expander_HeaderCornerRadius}" SnapsToDevicePixels="True">
+                        <Border x:Name="xExpanderHeaderBorder" DockPanel.Dock="Top" Height="{TemplateBinding HeaderHeight}" Padding="2" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" CornerRadius="{DynamicResource CompUI_Expander_CornerRadius}">
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="0.0" />
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="0.94" />
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="1.0" />
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
                             </Border.BorderBrush>
                             <Border.Background>
                                 <SolidColorBrush Color="{DynamicResource CompUI_Expander_HeaderBackgroundColor}"></SolidColorBrush>
                             </Border.Background>
+                            <Border.Triggers>
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_Expander_HeaderBackgroundOverColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderEndColor}" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_Expander_HeaderBackgroundColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderColor}" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Border.Triggers>
                             <DockPanel>
-                                <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" DockPanel.Dock="Right"
-                                                ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"  FontStretch="{TemplateBinding FontStretch}"
-                                                Foreground="{TemplateBinding Foreground}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" 
-                                                FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" 
-                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                                                Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" 
-                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" DockPanel.Dock="Right" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" FontStretch="{TemplateBinding FontStretch}" Foreground="{TemplateBinding Foreground}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                 </ToggleButton>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition x:Name="xExpanderHeaderColumn1" Width="Auto" />
                                         <ColumnDefinition x:Name="xExpanderHeaderColumn2" Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Image x:Name="xExpanderHeaderImage" Grid.Row="0" Grid.Column="0" Margin="4,2,4,2" Source="{TemplateBinding ImageSource}"
-                                            VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                                    <Image x:Name="xExpanderHeaderImage" Grid.Row="0" Grid.Column="0" Margin="4,2,4,2" Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True">
                                         <Image.Width>
                                             <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
                                                 <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
@@ -271,23 +191,66 @@
                                 </Grid>
                             </DockPanel>
                         </Border>
-                        <Border x:Name="xExpanderContentBorder" DockPanel.Dock="Bottom" Visibility="Visible" BorderThickness="1,0,1,1"
-                                CornerRadius="{DynamicResource CompUI_Expander_ContentCornerRadius}" SnapsToDevicePixels="True">
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
-                            </Border.BorderBrush>
-                            <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"></SolidColorBrush>
-                            </Border.Background>
-                            <ContentPresenter x:Name="ExpandSite" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-
+                        <Grid ClipToBounds="True" Background="Transparent">
+                            <Border x:Name="xExpanderContentBorder" DockPanel.Dock="Bottom" Visibility="Collapsed" BorderThickness="1,0,1,1" Padding="4" CornerRadius="{DynamicResource CompUI_Expander_ContentCornerRadius}" SnapsToDevicePixels="True">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
+                                </Border.BorderBrush>
+                                <Border.Background>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"></SolidColorBrush>
+                                </Border.Background>
+                                <Border.RenderTransform>
+                                    <TranslateTransform Y="-20" />
+                                </Border.RenderTransform>
+                                <ContentPresenter x:Name="ExpandSite" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ExpansionStates">
+                                <VisualState x:Name="Collapsed">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-20" Duration="0:0:0.2" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility" BeginTime="0:0:0.2">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Expanded">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" />
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="-20" To="0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </DockPanel>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded" Value="true">
-                            <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible" />
-                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsExpanded" Value="True" />
+                                <Condition Property="ExpandDirection" Value="Up" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="CornerRadius" TargetName="xExpanderHeaderBorder" Value="{DynamicResource CompUI_Expander_ContentCornerRadius}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsExpanded" Value="True" />
+                                <Condition Property="ExpandDirection" Value="Down" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="CornerRadius" TargetName="xExpanderHeaderBorder" Value="{DynamicResource CompUI_Expander_HeaderCornerRadius}" />
+                        </MultiTrigger>
                         <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
                             <Setter TargetName="xExpanderHeaderImage" Property="Grid.Column" Value="0" />
                             <Setter TargetName="xExpanderHeaderContent" Property="Grid.Column" Value="1" />
@@ -300,22 +263,14 @@
                             <Setter TargetName="xExpanderHeaderColumn1" Property="Width" Value="*" />
                             <Setter TargetName="xExpanderHeaderColumn2" Property="Width" Value="Auto" />
                         </DataTrigger>
-                        <!--<Trigger Property="ExpandDirection" Value="Right">
-                            <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right" />
-                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left" />
-                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderRightHeaderStyle}" />
-                        </Trigger>-->
                         <Trigger Property="ExpandDirection" Value="Up">
-                            <!--<Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top" />
-                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom" />-->
-                            <!--<Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderUpHeaderStyle}" />-->
+                            <Setter Property="DockPanel.Dock" TargetName="xExpanderHeaderBorder" Value="Bottom" />
+                            <Setter Property="BorderThickness" TargetName="xExpanderContentBorder" Value="1,1,1,0" />
+                            <Setter Property="CornerRadius" TargetName="xExpanderContentBorder" Value="{DynamicResource CompUI_Expander_HeaderCornerRadius}" />
+                            <Setter Property="DockPanel.Dock" TargetName="xExpanderContentBorder" Value="Top" />
+                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderUpHeaderStyle}" />
                         </Trigger>
-                        <!--<Trigger Property="ExpandDirection" Value="Left">
-                            <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left" />
-                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right" />
-                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderLeftHeaderStyle}" />
-                        </Trigger>-->
-                        <Trigger Property="IsEnabled" Value="false">
+                        <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -323,102 +278,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
-
-
-
-    <!--<Style TargetType="{x:Type local:CExpander}" BasedOn="{StaticResource {x:Type Expander}}">
-        <Setter Property="Foreground" Value="{DynamicResource Cmm_TextColor}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:CExpander}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        --><!--Header--><!--
-                        <Border x:Name="xExpanderBorderHeader" Grid.Row="0" BorderThickness="1" MinHeight="25" Height="{TemplateBinding HeaderHeight}" CornerRadius="{DynamicResource CompUI_GroupBox_HeaderCornerRadius}">
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
-                            </Border.BorderBrush>
-
-                            <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_GroupBox_HeaderBackgroundColor}"></SolidColorBrush>
-                            </Border.Background>
-                            <Border.Triggers>
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_GroupBox_HeaderBackgroundOverColor}" Duration="0:0:0.1" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_GroupBox_HeaderBackgroundColor}" Duration="0:0:0.1" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Border.Triggers>
-                            <Grid Margin="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition x:Name="xExpanderHeaderColumn1" Width="Auto" />
-                                    <ColumnDefinition x:Name="xExpanderHeaderColumn2" Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image x:Name="xExpanderHeaderImage" Grid.Row="0" Grid.Column="0" Margin="4,2,4,2" Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" UseLayoutRounding="True">
-                                    <Image.Width>
-                                        <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="HeaderHeight" />
-                                        </MultiBinding>
-                                    </Image.Width>
-                                </Image>
-                                <ContentPresenter x:Name="xExpanderHeaderContent" Grid.Row="0" Grid.Column="1" Margin="4,2,4,2" ContentSource="Header" RecognizesAccessKey="True" />
-                            </Grid>
-                        </Border>
-                        --><!--Content--><!--
-                        <Border x:Name="xExpanderBorderContent" Grid.Row="1" BorderThickness="1,0,1,1" CornerRadius="{DynamicResource CompUI_GroupBox_ContentCornerRadius}">
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
-                            </Border.BorderBrush>
-                            <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"></SolidColorBrush>
-                            </Border.Background>
-                            <ContentPresenter Margin="4" />
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ImageSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
-                            <Setter TargetName="xExpanderHeaderImage" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
-                            <Setter TargetName="xExpanderHeaderImage" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="xExpanderHeaderContent" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="xExpanderHeaderColumn1" Property="Width" Value="Auto" />
-                            <Setter TargetName="xExpanderHeaderColumn2" Property="Width" Value="*" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Right">
-                            <Setter TargetName="xExpanderHeaderImage" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="xExpanderHeaderContent" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="xExpanderHeaderColumn1" Property="Width" Value="*" />
-                            <Setter TargetName="xExpanderHeaderColumn2" Property="Width" Value="Auto" />
-                        </DataTrigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextDisableColor}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="xExpanderHeaderImage" Property="Opacity" Value="0.2" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
 </ResourceDictionary>

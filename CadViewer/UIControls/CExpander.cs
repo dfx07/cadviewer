@@ -14,6 +14,7 @@ using CadViewer.Animations;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Windows.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace CadViewer.UIControls
 {
@@ -25,13 +26,23 @@ namespace CadViewer.UIControls
 				new FrameworkPropertyMetadata(typeof(CExpander)));
 		}
 
+		private Border _HeaderBorder = null;
+		private ToggleButton _ToogleButton = null;
+
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 
 			Loaded += (s, e) =>
 			{
+				_HeaderBorder = GetTemplateChild("xExpanderHeaderBorder") as Border;
+				_ToogleButton = GetTemplateChild("HeaderSite") as ToggleButton;
 
+				_HeaderBorder.MouseLeftButtonUp += (sender, args) =>
+				{
+					IsExpanded = !IsExpanded;
+					e.Handled = true;
+				};
 			};
 		}
 
