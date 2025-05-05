@@ -103,6 +103,7 @@
     <Compile Include="Converters\TextBoxConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />
     <Compile Include="UIControls\CExpander.cs" />
+    <Compile Include="UIControls\CCheckBox.cs" />
     <Compile Include="UIControls\CRangleSlider.cs" />
     <Compile Include="UIControls\CGroupBox.cs" />
     <Compile Include="UIControls\CSlider.cs" />
@@ -149,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIResources\CExpander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CCheckBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

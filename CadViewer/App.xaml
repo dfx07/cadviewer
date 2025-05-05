@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="UIResources/CRangeSlider.xaml" />
                 <ResourceDictionary Source="UIResources/CGroupBox.xaml" />
                 <ResourceDictionary Source="UIResources/CExpander.xaml" />
+                <ResourceDictionary Source="UIResources/CCheckBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

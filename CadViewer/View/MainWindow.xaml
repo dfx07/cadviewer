@@ -59,6 +59,7 @@
                         <RowDefinition Height="40" />
                         <RowDefinition Height="40" />
                         <RowDefinition Height="70" />
+                        <RowDefinition Height="40" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -66,7 +67,7 @@
                     <ui:CButton Content="Button" Grid.Row="0" Grid.Column="1" Width="70" Height="24" FontSize="11" IsEnabled="True" ImageMargin="2" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/menu26.png}" ImagePlacement="Right">
                     </ui:CButton>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="CheckBox"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Toggle Button"></TextBlock>
                     <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False">
                     </ui:CToggleButton>
 
@@ -86,6 +87,10 @@
                     <ui:CRangeSlider Grid.Row="5" Grid.Column="1" ShowRangeLabel="False" Minimum="10" Maximum="120" LowerValue="20" UpperValue="80" Width="140" Height="60" TickPlacement="BottomRight">
                     </ui:CRangeSlider>
 
+                    <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Check Box"></TextBlock>
+                    <ui:CCheckBox Grid.Row="6" Grid.Column="1" Width="140" Height="24" CheckWidth="18" Content="Check box">
+
+                    </ui:CCheckBox>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.ColumnDefinitions>

@@ -4,7 +4,6 @@
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <cvt:CommonHeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter" />
     <cvt:CommonBoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <cvt:CommonNumberToStringWithFormatConverter x:Key="NumberToStringWithFormatConverter" />
 

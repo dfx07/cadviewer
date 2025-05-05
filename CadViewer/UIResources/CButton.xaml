@@ -13,7 +13,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CButton}">
                     <Border x:Name="xCButtonRoundBorder" BorderThickness="{DynamicResource CompUI_BorderThickness}"
-                            CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Margin="-1">
+                            CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Margin="-1" SnapsToDevicePixels="True">
                         <Border.Background>
                             <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                         </Border.Background>

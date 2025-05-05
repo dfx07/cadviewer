@@ -1,0 +1,114 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CadViewer.UIControls"
+                    xmlns:cvt="clr-namespace:CadViewer.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <cvt:CommonHeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter" />
+    <cvt:CommonBoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <cvt:CommonNumberToStringWithFormatConverter x:Key="NumberToStringWithFormatConverter" />
+    <cvt:CommonSetDoubleDefaultConverter x:Key="SetDoubleDefaultConverter" />
+
+    <Style TargetType="{x:Type local:CCheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+        <Setter Property="Foreground" Value="{DynamicResource Cmm_TextColor}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CCheckBox}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="xCheckBoxMarkBorder" Grid.Column="0" CornerRadius="4" Margin="1" SnapsToDevicePixels="True">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                            </Border.Background>
+                            <Border.Width>
+                                <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="CheckWidth" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
+                                </MultiBinding>
+                            </Border.Width>
+                            <Border.Height>
+                                <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="CheckWidth" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
+                                </MultiBinding>
+                            </Border.Height>
+                            <Path x:Name="xCheckBoxCheckMark" Data="M 0 5 L 4 9 L 10 1" Stroke="White" StrokeThickness="2" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <Border x:Name="xCheckBoxMarkRoundBorder" Grid.Column="0" Background="Transparent" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" BorderThickness="1" SnapsToDevicePixels="True">
+                            <Border.Width>
+                                <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="CheckWidth" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
+                                </MultiBinding>
+                            </Border.Width>
+                            <Border.Height>
+                                <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="CheckWidth" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
+                                </MultiBinding>
+                            </Border.Height>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CompUI_CheckBox_BorderColor}" />
+                            </Border.BorderBrush>
+                        </Border>
+                        <ContentPresenter Grid.Column="1" Margin="5,2,5,2" VerticalAlignment="Center"></ContentPresenter>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.0" To="Normal" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <!--<ColorAnimation Storyboard.TargetName="xCheckBoxMarkBorder" Storyboard.TargetProperty="(Background).Color"
+                                                        To="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" Duration="0:0:0.0" />-->
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xCheckBoxCheckMark" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xCheckBoxCheckMark" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="xCheckBoxMarkBorder" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_CheckBox_BackgroundCheckedColor}"></SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="xCheckBoxMarkRoundBorder" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_CheckBox_BackgroundCheckedColor}"></SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="ExpandDirection" Value="Up" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="CornerRadius" TargetName="xExpanderHeaderBorder" Value="{DynamicResource CompUI_Expander_ContentCornerRadius}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
