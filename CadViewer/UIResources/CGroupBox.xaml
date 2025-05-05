@@ -18,7 +18,13 @@
                         <Border x:Name="xGroupBoxHeaderBorder" DockPanel.Dock="Top" MinHeight="25" BorderThickness="1" Padding="5"
                                 Height="{TemplateBinding HeaderHeight}" CornerRadius="{DynamicResource CompUI_GroupBox_HeaderCornerRadius}" SnapsToDevicePixels="True">
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="0.0" />
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="0.94" />
+                                        <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="1.0" />
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
                             </Border.BorderBrush>
                             <Border.Background>
                                 <SolidColorBrush Color="{DynamicResource CompUI_GroupBox_HeaderBackgroundColor}"></SolidColorBrush>
@@ -28,6 +34,7 @@
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_GroupBox_HeaderBackgroundOverColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderEndColor}" Duration="0:0:0.1" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
@@ -35,6 +42,7 @@
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_GroupBox_HeaderBackgroundColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderColor}" Duration="0:0:0.1" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>

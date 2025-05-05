@@ -44,6 +44,37 @@ namespace CadViewer.UIControls
 					e.Handled = true;
 				};
 			};
+
+			UpdateExpansionState(false);
+		}
+
+		private void UpdateExpansionState(bool bUseTransitions)
+		{
+			var state = "";
+
+			if (!IsExpanded)
+			{
+				state = ExpandDirection == ExpandDirection.Up ? "CollapsedUp" : "CollapsedDown";
+			}
+			else
+			{
+				state = ExpandDirection == ExpandDirection.Up ? "ExpandedUp" : "ExpandedDown";
+			}
+
+			if(state != string.Empty)
+				VisualStateManager.GoToState(this, state, bUseTransitions);
+		}
+
+		protected override void OnExpanded()
+		{
+			base.OnExpanded();
+			UpdateExpansionState(true);
+		}
+
+		protected override void OnCollapsed()
+		{
+			base.OnCollapsed();
+			UpdateExpansionState(true);
 		}
 
 		public static readonly DependencyProperty ImageSourceProperty =

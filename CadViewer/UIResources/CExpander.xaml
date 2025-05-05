@@ -170,6 +170,20 @@
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseDown">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderColor}" Duration="0:0:0.0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseUp">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderEndColor}" Duration="0:0:0.0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
                             </Border.Triggers>
                             <DockPanel>
                                 <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" DockPanel.Dock="Right" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" FontStretch="{TemplateBinding FontStretch}" Foreground="{TemplateBinding Foreground}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
@@ -207,12 +221,12 @@
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="ExpansionStates">
-                                <VisualState x:Name="Collapsed">
+                                <VisualState x:Name="CollapsedDown">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-20" Duration="0:0:0.2" />
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility" BeginTime="0:0:0.2">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-100" Duration="0:0:0.2" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility" BeginTime="0:0:0.4">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Collapsed</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
@@ -220,7 +234,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Expanded">
+                                <VisualState x:Name="ExpandedDown">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0">
@@ -229,8 +243,44 @@
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" />
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="-20" To="0" Duration="0:0:0.2" />
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" />
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                         From="-100" To="0" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CollapsedUp">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="100" Duration="0:0:0.2" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility" BeginTime="0:0:0.4">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="ExpandedUp">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" />
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                         From="100" To="0" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

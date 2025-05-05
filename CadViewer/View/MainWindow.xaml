@@ -113,23 +113,43 @@
                     </ui:CGroupBox>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Expander"></TextBlock>
-                    <ui:CExpander Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" HeaderHeight="30" ImageWidth="15" 
-                                  ImagePlacement="Left" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
-                        <ui:CExpander.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock VerticalAlignment="Center" Text="Expander Header" />
-                            </StackPanel>
-                        </ui:CExpander.Header>
-                        <ui:CExpander.Content>
-                            <StackPanel>
-                                <TextBlock Text="This is content and so many control contains here" />
-                                <TextBlock Text="This is content and so many control contains here" />
-                                <TextBlock Text="This is content and so many control contains here" />
-                                <TextBox Text="This is content and so many control contains here" />
-                                <ComboBox Text="This is content and so many control contains here" />
-                            </StackPanel>
-                        </ui:CExpander.Content>
-                    </ui:CExpander>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,3,0,0">
+                        <ui:CExpander  Margin="0,0,0,0" HeaderHeight="30" ImageWidth="15" ImagePlacement="Left" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                            <ui:CExpander.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="Expander Header" />
+                                </StackPanel>
+                            </ui:CExpander.Header>
+                            <ui:CExpander.Content>
+                                <StackPanel>
+                                    <TextBlock Text="This is content and so many control contains here" />
+                                    <TextBlock Text="This is content and so many control contains here" />
+                                    <TextBlock Text="This is content and so many control contains here" />
+                                    <TextBox Text="This is content and so many control contains here" />
+                                    <ComboBox Text="This is content and so many control contains here" />
+                                </StackPanel>
+                            </ui:CExpander.Content>
+                        </ui:CExpander>
+
+                        <ui:CExpander Margin="0,1,0,0" HeaderHeight="30" ImageWidth="15" ImagePlacement="Left" ExpandDirection="Up" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                            <ui:CExpander.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="Expander Header" />
+                                </StackPanel>
+                            </ui:CExpander.Header>
+                            <ui:CExpander.Content>
+                                <StackPanel>
+                                    <TextBlock Text="This is content and so many control contains here" />
+                                    <TextBlock Text="This is content and so many control contains here" />
+                                    <TextBlock Text="This is content and so many control contains here" />
+                                    <TextBox Text="This is content and so many control contains here" />
+                                    <ComboBox Text="This is content and so many control contains here" />
+                                </StackPanel>
+                            </ui:CExpander.Content>
+                        </ui:CExpander>
+                    </StackPanel>
+
                 </Grid>
             </Grid>
 
