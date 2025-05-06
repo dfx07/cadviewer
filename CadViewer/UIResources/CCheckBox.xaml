@@ -19,9 +19,9 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="xCheckBoxMarkBorder" Grid.Column="0" CornerRadius="4" Margin="1" SnapsToDevicePixels="True">
+                        <Border x:Name="xCheckBoxMarkBorder" Grid.Column="0" MaxWidth="60" CornerRadius="4" Margin="1" SnapsToDevicePixels="True">
                             <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                                <SolidColorBrush Color="{DynamicResource CompUI_CheckBox_BackgroundColor}" />
                             </Border.Background>
                             <Border.Width>
                                 <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
@@ -35,7 +35,9 @@
                                     <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
                                 </MultiBinding>
                             </Border.Height>
-                            <Path x:Name="xCheckBoxCheckMark" Data="M 0 5 L 4 9 L 10 1" Stroke="White" StrokeThickness="2" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Path x:Name="xCheckBoxCheckMark" Grid.Column="0" Data="M 0 5 L 4 9 L 10 1" Stroke="White" StrokeThickness="2"
+                                  StrokeDashArray="25,25" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            </Path>
                         </Border>
                         <Border x:Name="xCheckBoxMarkRoundBorder" Grid.Column="0" Background="Transparent" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" BorderThickness="1" SnapsToDevicePixels="True">
                             <Border.Width>
@@ -57,20 +59,33 @@
                         <ContentPresenter Grid.Column="1" Margin="5,2,5,2" VerticalAlignment="Center"></ContentPresenter>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.0" To="Normal" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
+                                <VisualState x:Name="Normal_Unchecked" />
+                                <VisualState x:Name="Normal_Checked">
                                     <Storyboard>
-                                        <!--<ColorAnimation Storyboard.TargetName="xCheckBoxMarkBorder" Storyboard.TargetProperty="(Background).Color"
-                                                        To="{DynamicResource CompUI_TextBox_SuggestionItemBackgroundOverColor}" Duration="0:0:0.0" />-->
+                                        <ColorAnimation Storyboard.TargetName="xCheckBoxMarkBorder" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        To="{StaticResource CompUI_CheckBox_BackgroundCheckedColor}" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver_Unchecked">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="xCheckBoxMarkBorder" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        To="{DynamicResource CompUI_CheckBox_BackgroundOverColor}" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver_Checked">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="xCheckBoxMarkBorder" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        To="{DynamicResource CompUI_CheckBox_BackgroundCheckedOverColor}" Duration="0:0:0.1" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xCheckBoxCheckMark"  Storyboard.TargetProperty="StrokeDashOffset" From="25" To="0" Duration="0:0:1" RepeatBehavior="1x" />
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xCheckBoxCheckMark" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                         </ObjectAnimationUsingKeyFrames>
@@ -88,24 +103,19 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="xCheckBoxMarkBorder" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_CheckBox_BackgroundCheckedColor}"></SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
                             <Setter TargetName="xCheckBoxMarkRoundBorder" Property="BorderBrush">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource CompUI_CheckBox_BackgroundCheckedColor}"></SolidColorBrush>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsChecked" Value="True" />
-                                <Condition Property="ExpandDirection" Value="Up" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="CornerRadius" TargetName="xExpanderHeaderBorder" Value="{DynamicResource CompUI_Expander_ContentCornerRadius}" />
-                        </MultiTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="xCheckBoxMarkRoundBorder" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_CheckBox_BorderColor}"></SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

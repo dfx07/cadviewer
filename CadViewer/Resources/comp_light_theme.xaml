@@ -47,8 +47,10 @@
     <CornerRadius x:Key="CompUI_Expander_ContentCornerRadius">0,0,3,3</CornerRadius>
 
     <Color x:Key="CompUI_CheckBox_BorderColor">#898989</Color>
+    <Color x:Key="CompUI_CheckBox_BackgroundColor">#fbfbfb</Color>
     <Color x:Key="CompUI_CheckBox_BackgroundOverColor">#ededed</Color>
-    <Color x:Key="CompUI_CheckBox_BackgroundCheckedColor">#1a6ba8</Color>
+    <Color x:Key="CompUI_CheckBox_BackgroundCheckedColor">#005a9e</Color>
+    <Color x:Key="CompUI_CheckBox_BackgroundCheckedOverColor">#1a6ba8</Color>
 
     <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>
