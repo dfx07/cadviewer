@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="UIResources/CGroupBox.xaml" />
                 <ResourceDictionary Source="UIResources/CExpander.xaml" />
                 <ResourceDictionary Source="UIResources/CCheckBox.xaml" />
+                <ResourceDictionary Source="UIResources/CScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
