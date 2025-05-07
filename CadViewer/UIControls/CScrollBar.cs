@@ -44,11 +44,11 @@ namespace CadViewer.UIControls
 			{
 				state = "Pressed_VerticalDown";
 			}
-			else if (Direction == ScrollDirection.Vertical && ButtonType == LineButtonType.Up)
+			else if (Direction == ScrollDirection.Horizontal && ButtonType == LineButtonType.Up)
 			{
 				state = "Pressed_HorizontalLeft";
 			}
-			else if (Direction == ScrollDirection.Vertical && ButtonType == LineButtonType.Down)
+			else if (Direction == ScrollDirection.Horizontal && ButtonType == LineButtonType.Down)
 			{
 				state = "Pressed_HorizontalRight";
 			}
@@ -95,7 +95,7 @@ namespace CadViewer.UIControls
 		}
 
 		public static readonly DependencyProperty LineButtonWidthProperty =
-		DependencyProperty.Register(nameof(LineButtonWidth), typeof(double), typeof(CScrollBar), new PropertyMetadata(15.0));
+		DependencyProperty.Register(nameof(LineButtonWidth), typeof(double), typeof(CScrollBar), new PropertyMetadata(10.0));
 
 		public double LineButtonWidth
 		{
