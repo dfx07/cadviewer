@@ -164,7 +164,7 @@
                             <TextBox Text="This is content and so many control contains here" />
                             <ComboBox Text="This is content and so many control contains here" />
                         </StackPanel>-->
-                        <ui:CScrollBar Height="120" Orientation="Vertical" HorizontalAlignment="Right">
+                        <ui:CScrollBar Height="120" Width="12" Orientation="Vertical" HorizontalAlignment="Right">
 
                         </ui:CScrollBar>
                     </StackPanel>

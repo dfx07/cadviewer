@@ -66,7 +66,7 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <Style x:Key="ScrollBarLineButton" TargetType="{x:Type local:CScrollBarRepeatButton_}" BasedOn="{StaticResource {x:Type RepeatButton}}">
+    <Style x:Key="xScrollBarLineButton" TargetType="{x:Type local:CScrollBarRepeatButton_}" BasedOn="{StaticResource {x:Type RepeatButton}}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Focusable" Value="false" />
@@ -128,7 +128,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="xScrollBarPageButton" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="IsTabStop" Value="false" />
@@ -142,7 +142,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+    <Style x:Key="xScrollBarThumb" TargetType="{x:Type Thumb}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="IsTabStop" Value="false" />
@@ -150,7 +150,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" />
+                    <Border x:Name="xScrollBarThumb_Border" CornerRadius="3" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Width" Value="3">
+                            <Setter TargetName="xScrollBarThumb_Border" Property="CornerRadius" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -163,50 +168,91 @@
                 <RowDefinition Height="0.00001*" />
                 <RowDefinition MaxHeight="18" />
             </Grid.RowDefinitions>
-            <Border Grid.RowSpan="3" CornerRadius="5">
+            <Border x:Name="PART_Border" Grid.RowSpan="3" CornerRadius="5" BorderThickness="1" Opacity="0">
                 <Border.Background>
                     <SolidColorBrush Color="{DynamicResource CompUI_ScrollBar_BackgroundColor}" />
                 </Border.Background>
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                </Border.BorderBrush>
             </Border>
-            <local:CScrollBarRepeatButton_ Grid.Row="0" Style="{StaticResource ScrollBarLineButton}" Direction="Vertical" ButtonType="Up"
-                                           Height="{Binding LineButtonWidth, RelativeSource={RelativeSource AncestorType=local:CScrollBar}}" 
-                                           Command="ScrollBar.LineUpCommand" Content="M 0 4 L 8 4 L 4 0 Z" />
+            <local:CScrollBarRepeatButton_ x:Name="PART_RepeatButtonUp" Grid.Row="0" Style="{StaticResource xScrollBarLineButton}" Direction="Vertical" ButtonType="Up"
+                                            Height="{Binding LineButtonWidth, RelativeSource={RelativeSource AncestorType=local:CScrollBar}}" 
+                                            Command="ScrollBar.LineUpCommand" Content="M 0 4 L 8 4 L 4 0 Z" Opacity="0"/>
             <Track x:Name="PART_Track" Grid.Row="1" IsDirectionReversed="true">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
+                    <RepeatButton Style="{StaticResource xScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0">
+                    <Thumb x:Name="PART_Thumb" Style="{StaticResource xScrollBarThumb}" Width="3" Margin="2,0,2,0" HorizontalAlignment="Right">
                         <Thumb.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
                         </Thumb.BorderBrush>
                         <Thumb.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
+                            <SolidColorBrush Color="{DynamicResource CompUI_ScrollBar_TrackBackgroundColor}" />
                         </Thumb.Background>
                     </Thumb>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
+                    <RepeatButton Style="{StaticResource xScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
                 </Track.IncreaseRepeatButton>
             </Track>
-            <local:CScrollBarRepeatButton_ Grid.Row="2" Style="{StaticResource ScrollBarLineButton}" Direction="Vertical" ButtonType="Down"
-                                           Height="{Binding LineButtonWidth, RelativeSource={RelativeSource AncestorType=local:CScrollBar}}"
-                                           Command="ScrollBar.LineDownCommand" Content="M 0 0 L 4 4 L 8 0 Z" />
+            <local:CScrollBarRepeatButton_ x:Name="PART_RepeatButtonDown" Grid.Row="2" Style="{StaticResource xScrollBarLineButton}" Direction="Vertical" ButtonType="Down"
+                                            Height="{Binding LineButtonWidth, RelativeSource={RelativeSource AncestorType=local:CScrollBar}}"
+                                            Command="ScrollBar.LineDownCommand" Content="M 0 0 L 4 4 L 8 0 Z"  Opacity="0" />
+            <!--<VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4"/>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.4" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>-->
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.5" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonUp" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.5" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonDown" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.5" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="Width" To="7" Duration="0:0:0.2" />
+                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="HorizontalAlignment">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <HorizontalAlignment>Stretch</HorizontalAlignment>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>-->
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonUp" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonDown" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="Width" To="3" Duration="0:0:0.2" />
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="HorizontalAlignment">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <HorizontalAlignment>Right</HorizontalAlignment>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="xScrollBarHorizontal" TargetType="{x:Type ScrollBar}">
@@ -221,27 +267,14 @@
                     <SolidColorBrush Color="{DynamicResource CompUI_ScrollBar_BackgroundColor}" />
                 </Border.Background>
             </Border>
-            <local:CScrollBarRepeatButton_ Grid.Column="0" Style="{StaticResource ScrollBarLineButton}" Direction="Horizontal" ButtonType="Up"
+            <local:CScrollBarRepeatButton_ Grid.Column="0" Style="{StaticResource xScrollBarLineButton}" Direction="Horizontal" ButtonType="Up"
                                            Width="18" Command="ScrollBar.LineLeftCommand" Content="M 4 0 L 4 8 L 0 4 Z" />
             <Track x:Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
+                    <RepeatButton Style="{StaticResource xScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb Style="{StaticResource ScrollBarThumb}" Margin="0,1,0,1">
-
-                        <Thumb.BorderBrush>
-
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-
-                        </Thumb.BorderBrush>
                         <Thumb.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <LinearGradientBrush.GradientStops>
@@ -255,10 +288,10 @@
                     </Thumb>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
+                    <RepeatButton Style="{StaticResource xScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
                 </Track.IncreaseRepeatButton>
             </Track>
-            <local:CScrollBarRepeatButton_ Grid.Column="2" Style="{StaticResource ScrollBarLineButton}" Direction="Horizontal" ButtonType="Down"
+            <local:CScrollBarRepeatButton_ Grid.Column="2" Style="{StaticResource xScrollBarLineButton}" Direction="Horizontal" ButtonType="Down"
                                            Width="18" Command="ScrollBar.LineRightCommand" Content="M 0 0 L 4 4 L 0 8 Z" />
         </Grid>
     </ControlTemplate>
