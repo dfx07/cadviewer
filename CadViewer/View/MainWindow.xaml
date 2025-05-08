@@ -101,6 +101,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3"
@@ -162,10 +163,22 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <!--<ui:CScrollBar Grid.Row="0" Height="20" Width="150" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
+                        <ui:CScrollBar Grid.Row="0" Height="20" Width="150" Orientation="Horizontal" HorizontalAlignment="Center"/>
                         <ui:CScrollBar Grid.Row="1" Height="120" Orientation="Vertical" HorizontalAlignment="Center" />
                     </Grid>
 
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="ScrollViewer"></TextBlock>
+                    <ui:CScrollViewer Grid.Row="3" Height="100" Grid.Column="1" Margin="0,3,0,0">
+                        <StackPanel>
+                            <TextBlock Text="This is content and so many control contains here" />
+                            <TextBlock Text="This is content and so many control contains here" />
+                            <TextBlock Text="This is content and so many control contains here" />
+                            <TextBlock Text="This is content and so many control contains here" />
+                            <TextBlock Text="This is content and so many control contains here" />
+                            <TextBox Text="This is content and so many control contains here" />
+                            <ComboBox Text="This is content and so many control contains here" />
+                        </StackPanel>
+                    </ui:CScrollViewer>
                 </Grid>
             </Grid>
 
