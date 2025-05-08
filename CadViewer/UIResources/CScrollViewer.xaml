@@ -11,8 +11,8 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                    <Grid>
+                <ControlTemplate TargetType="{x:Type local:CScrollViewer}">
+                    <Grid Margin="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
@@ -21,17 +21,27 @@
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Column="0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Padding="5" BorderThickness="1">
+                        <Border Grid.Column="0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" BorderThickness="1" SnapsToDevicePixels="True">
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
+                                <SolidColorBrush Color="{DynamicResource BorderMediumColor}" Opacity="0.2"/>
                             </Border.BorderBrush>
                             <Border.Background>
                                 <SolidColorBrush Color="{DynamicResource CompUI_ScrollViewer_BackgroundColor}" />
                             </Border.Background>
-                            <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" />
+                            <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                    Margin="{TemplateBinding Padding}"/>
                         </Border>
-                        <local:CScrollBar Grid.Row="0" Grid.Column="1" x:Name="PART_VerticalScrollBar" Orientation="Vertical" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
-                        <local:CScrollBar Grid.Row="1" Grid.Column="0" x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" Value="{TemplateBinding HorizontalOffset}" Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+                        <local:CScrollBar Margin="-3,0,0,0" Grid.Row="0" Grid.Column="1" x:Name="PART_VerticalScrollBar" Orientation="Vertical"
+                                          Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}"
+                                          ViewportSize="{TemplateBinding ViewportHeight}"
+                                          Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                        <local:CScrollBar Margin="0,-3,0,0" Grid.Row="1" Grid.Column="0" x:Name="PART_HorizontalScrollBar" Orientation="Horizontal"
+                                          Value="{TemplateBinding HorizontalOffset}" Maximum="{TemplateBinding ScrollableWidth}"
+                                          ViewportSize="{TemplateBinding ViewportWidth}"
+                                          Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

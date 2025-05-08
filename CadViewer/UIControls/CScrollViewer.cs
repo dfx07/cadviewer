@@ -19,15 +19,52 @@ namespace CadViewer.UIControls
 {
 	public class CScrollViewer : ScrollViewer
 	{
+		private double _targetOffset;
+		private double _animationSpeed = 0.3;
+		private bool _isAnimating;
+
 		static CScrollViewer()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(CScrollViewer),
 				new FrameworkPropertyMetadata(typeof(CScrollViewer)));
 		}
 
+		public CScrollViewer()
+		{
+			PreviewMouseWheel += OnPreviewMouseWheel;
+			CompositionTarget.Rendering += AnimateScroll;
+		}
+
+		private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+		{
+			e.Handled = true;
+			_targetOffset = Math.Max(0, Math.Min(this.ScrollableHeight, _targetOffset - e.Delta));
+			_isAnimating = true;
+		}
+
+		private void AnimateScroll(object sender, EventArgs e)
+		{
+			if (!_isAnimating) return;
+
+			double currentOffset = this.VerticalOffset;
+			double delta = _targetOffset - currentOffset;
+
+			if (Math.Abs(delta) < 0.5)
+			{
+				this.ScrollToVerticalOffset(_targetOffset);
+				_isAnimating = false;
+				return;
+			}
+
+			this.ScrollToVerticalOffset(currentOffset + delta * _animationSpeed);
+		}
+
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
+
+			var hScrollBar = GetTemplateChild("PART_HorizontalScrollBar") as ScrollBar;
+			Debug.WriteLine($"Horizontal ScrollBar: {(hScrollBar != null ? "Found" : "Missing")}");
 
 			Loaded += (s, e) =>
 			{

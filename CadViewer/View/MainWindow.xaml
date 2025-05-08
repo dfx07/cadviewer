@@ -168,7 +168,7 @@
                     </Grid>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="ScrollViewer"></TextBlock>
-                    <ui:CScrollViewer Grid.Row="3" Height="100" Grid.Column="1" Margin="0,3,0,0">
+                    <ui:CScrollViewer Grid.Row="3" Height="100" Grid.Column="1" Margin="0,3,0,0" Padding="5" HorizontalScrollBarVisibility="Auto">
                         <StackPanel>
                             <TextBlock Text="This is content and so many control contains here" />
                             <TextBlock Text="This is content and so many control contains here" />
