@@ -121,7 +121,7 @@
 
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Expander"></TextBlock>
                     <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,3,0,0">
-                        <ui:CExpander  Margin="0,0,0,0" HeaderHeight="30" ImageWidth="15" ImagePlacement="Left" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                        <ui:CExpander Margin="0,0,0,0" HeaderHeight="30" ImageWidth="15" ImagePlacement="Left" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
                             <ui:CExpander.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock VerticalAlignment="Center" Text="Expander Header" />
@@ -156,19 +156,9 @@
                         </ui:CExpander>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="ScrollBar"></TextBlock>
-                    <Grid Grid.Row="2" Grid.Column="1" Margin="0,3,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <ui:CScrollBar Grid.Row="0" Height="20" Width="150" Orientation="Horizontal" HorizontalAlignment="Center"/>
-                        <ui:CScrollBar Grid.Row="1" Height="120" Orientation="Vertical" HorizontalAlignment="Center" />
-                    </Grid>
-
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="ScrollViewer"></TextBlock>
-                    <ui:CScrollViewer Grid.Row="3" Height="100" Grid.Column="1" Margin="0,3,0,0" Padding="5" HorizontalScrollBarVisibility="Auto">
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="ScrollViewer"></TextBlock>
+                    <ui:CScrollViewer Grid.Row="2" Grid.Column="1" Height="100" Margin="0,3,0,0" Padding="5"
+                                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
                             <TextBlock Text="This is content and so many control contains here" />
                             <TextBlock Text="This is content and so many control contains here" />
@@ -179,6 +169,25 @@
                             <ComboBox Text="This is content and so many control contains here" />
                         </StackPanel>
                     </ui:CScrollViewer>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="TabControl"></TextBlock>
+                    <ui:CTabControl Grid.Row="3" Grid.Column="1" Height="120">
+                        <TabItem Header="Tab 1">
+                            <TextBlock Text="Nội dung của Tab 1" />
+                        </TabItem>
+                        <TabItem Header="Tab 2">
+                            <StackPanel>
+                                <TextBlock Text="Nội dung của Tab 2" />
+                                <Button Content="Nhấn vào tôi!" />
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Tab 3">
+                            <StackPanel>
+                                <TextBlock Text="Nội dung của Tab 2" />
+                                <Button Content="Nhấn vào tôi!" />
+                            </StackPanel>
+                        </TabItem>
+                    </ui:CTabControl>
                 </Grid>
             </Grid>
 

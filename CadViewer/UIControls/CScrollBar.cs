@@ -102,5 +102,14 @@ namespace CadViewer.UIControls
 			get => (double)GetValue(LineButtonWidthProperty);
 			set => SetValue(LineButtonWidthProperty, value);
 		}
+
+		public static readonly DependencyProperty AutomaticallyHideProperty =
+		DependencyProperty.Register(nameof(AutomaticallyHide), typeof(bool), typeof(CScrollBar), new PropertyMetadata(true));
+
+		public bool AutomaticallyHide
+		{
+			get => (bool)GetValue(AutomaticallyHideProperty);
+			set => SetValue(AutomaticallyHideProperty, value);
+		}
 	}
 }

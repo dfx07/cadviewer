@@ -59,6 +59,11 @@
 
     <Color x:Key="CompUI_ScrollViewer_BackgroundColor">#f9f9f9</Color>
 
+    <Color x:Key="CompUI_TabControl_BackgroundColor">#fbfbfb</Color>
+    <Color x:Key="CompUI_TabControl_TabItemBackgroundColor">#efefef</Color>
+    <Color x:Key="CompUI_TabControl_TabItemActivedBackgroundColor">#fbfbfb</Color>
+    <Color x:Key="CompUI_TabControl_TabItemDisableBackgroundColor">#fbfbfb</Color>
+
     <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>
     <CornerRadius x:Key="CompUI_Cmm_CornerRadius">3</CornerRadius>

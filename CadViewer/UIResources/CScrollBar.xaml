@@ -193,7 +193,7 @@
                                 <SolidColorBrush Color="{DynamicResource CompUI_ScrollBar_TrackBackgroundColor}" />
                             </Thumb.Background>
                             <Thumb.RenderTransform>
-                                <TranslateTransform x:Name="ThumbRenderTransform" X="0"/>
+                                <TranslateTransform x:Name="xScrollBarThumbRenderTransform" X="0"/>
                             </Thumb.RenderTransform>
                         </Thumb>
                     </Track.Thumb>
@@ -207,8 +207,12 @@
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Trigger.EnterActions>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="local:CScrollBar.AutomaticallyHide" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard BeginTime="0:0:0.2">
                             <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0.1" Duration="0:0:0.2" />
@@ -216,11 +220,11 @@
                             <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonDown" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
                             <DoubleAnimation Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="Width" To="6" Duration="0:0:0.2" />
                             <DoubleAnimation Storyboard.TargetName="xScrollBarVertical_Grid" Storyboard.TargetProperty="Width" To="12" Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="ThumbRenderTransform" Storyboard.TargetProperty="X" To="-3" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="xScrollBarThumbRenderTransform" Storyboard.TargetProperty="X" To="-3" Duration="0:0:0.2" />
                         </Storyboard>
                     </BeginStoryboard>
-                </Trigger.EnterActions>
-                <Trigger.ExitActions>
+                </MultiTrigger.EnterActions>
+                <MultiTrigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard BeginTime="0:0:0.5">
                             <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
@@ -228,11 +232,25 @@
                             <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonDown" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
                             <DoubleAnimation Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="Width" To="3" Duration="0:0:0.2" />
                             <DoubleAnimation Storyboard.TargetName="xScrollBarVertical_Grid" Storyboard.TargetProperty="Width" To="4" Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="ThumbRenderTransform" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="xScrollBarThumbRenderTransform" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.2" />
                         </Storyboard>
                     </BeginStoryboard>
-                </Trigger.ExitActions>
-            </Trigger>
+                </MultiTrigger.ExitActions>
+            </MultiTrigger>
+            <DataTrigger Binding="{Binding AutomaticallyHide, RelativeSource={RelativeSource Self}}" Value="False">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0.1" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonUp" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonDown" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="Width" To="6" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="xScrollBarVertical_Grid" Storyboard.TargetProperty="Width" To="12" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="xScrollBarThumbRenderTransform" Storyboard.TargetProperty="X" To="-3" Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -277,8 +295,12 @@
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Trigger.EnterActions>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="local:CScrollBar.AutomaticallyHide" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard BeginTime="0:0:0.2">
                             <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0.1" Duration="0:0:0.2" />
@@ -289,8 +311,8 @@
                             <DoubleAnimation Storyboard.TargetName="ThumbRenderTransform" Storyboard.TargetProperty="Y" To="-3" Duration="0:0:0.2" />
                         </Storyboard>
                     </BeginStoryboard>
-                </Trigger.EnterActions>
-                <Trigger.ExitActions>
+                </MultiTrigger.EnterActions>
+                <MultiTrigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard BeginTime="0:0:0.5">
                             <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
@@ -301,8 +323,22 @@
                             <DoubleAnimation Storyboard.TargetName="ThumbRenderTransform" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.2" />
                         </Storyboard>
                     </BeginStoryboard>
-                </Trigger.ExitActions>
-            </Trigger>
+                </MultiTrigger.ExitActions>
+            </MultiTrigger>
+            <DataTrigger Binding="{Binding AutomaticallyHide, RelativeSource={RelativeSource Self}}" Value="False">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="Opacity" To="0.1" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonLeft" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_RepeatButtonRight" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Thumb" Storyboard.TargetProperty="Height" To="6" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="xScrollBarVertical_Grid" Storyboard.TargetProperty="Height" To="12" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="ThumbRenderTransform" Storyboard.TargetProperty="Y" To="-3" Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 

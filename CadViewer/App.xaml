@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="UIResources/CCheckBox.xaml" />
                 <ResourceDictionary Source="UIResources/CScrollBar.xaml" />
                 <ResourceDictionary Source="UIResources/CScrollViewer.xaml" />
+                <ResourceDictionary Source="UIResources/CTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
