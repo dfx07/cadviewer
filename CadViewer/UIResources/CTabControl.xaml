@@ -73,7 +73,7 @@
                     <Grid x:Name="Root">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="5" />
+                            <RowDefinition Height="6" />
                         </Grid.RowDefinitions>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SelectionStates">
@@ -113,7 +113,7 @@
                             </Border.Background>
                             <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="12,2,12,-3" RecognizesAccessKey="True" />
                         </Border>
-                        <Border x:Name="xBorderBottomNormal" BorderThickness="1,0,1,1" Grid.Row="1" Margin="0,0,-2,0" ClipToBounds="True" Visibility="Visible">
+                        <Border x:Name="xBorderBottomNormal" Grid.Row="1" BorderThickness="1,0,1,1"  Margin="0,0,-2,0" ClipToBounds="True" Visibility="Visible">
                             <Border.Background>
                                 <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemBackgroundColor}" />
                             </Border.Background>
@@ -121,78 +121,78 @@
                                 <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
                             </Border.BorderBrush>
                         </Border>
-
-                        <Border x:Name="xBorderBottomSelected" Grid.Row="1" Margin="-5,0,-7,0" ClipToBounds="True" Visibility="Collapsed" Background="Transparent">
-                            <!--<Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
-                            </Border.Background>
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                            </Border.BorderBrush>-->
+                        <Border x:Name="xBorderBottomSelected" Grid.Row="1" Margin="-6,0,-8,0" ClipToBounds="True" Visibility="Collapsed" Background="Transparent">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Border x:Name="xBorderBTLeft" Grid.Column="0" Width="6" CornerRadius="0,0,5,0" Background="Transparent"
-                                        VerticalAlignment="Stretch" ClipToBounds="True">
-                                    <Canvas Background="Transparent">
-                                        <Path StrokeThickness="1">
-                                            <Path.Stroke>
-                                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                                            </Path.Stroke>
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
-                                            </Path.Fill>
-                                            <Path.Data>
-                                                <CombinedGeometry GeometryCombineMode="Exclude">
-                                                    <CombinedGeometry.Geometry1>
-                                                        <RectangleGeometry Rect="-3,-3,9,9" />
-                                                    </CombinedGeometry.Geometry1>
-                                                    <CombinedGeometry.Geometry2>
-                                                        <EllipseGeometry Center="-3,-3" RadiusX="8" RadiusY="8" />
-                                                    </CombinedGeometry.Geometry2>
-                                                </CombinedGeometry>
-                                            </Path.Data>
-                                        </Path>
-                                    </Canvas>
-                                </Border>
-                                <Border x:Name="xBorderBTMid" Grid.Column="1" CornerRadius="0,0,0,0" VerticalAlignment="Stretch">
-                                    <Border.Background>
-                                        <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
-                                    </Border.Background>
-                                </Border>
-                                <Border x:Name="xBorderBTRight" Grid.Column="2" Width="6" CornerRadius="0" Background="Transparent"
-                                        VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
-                                    <Canvas Background="Transparent">
-                                        <Path StrokeThickness="1">
-                                            <Path.Stroke>
-                                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                                            </Path.Stroke>
-                                            <Path.Fill>
-                                                <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
-                                            </Path.Fill>
-                                            <Path.Data>
-                                                <CombinedGeometry GeometryCombineMode="Exclude">
-                                                    <CombinedGeometry.Geometry1>
-                                                        <RectangleGeometry Rect="-3,-3,9,9" />
-                                                    </CombinedGeometry.Geometry1>
-                                                    <CombinedGeometry.Geometry2>
-                                                        <EllipseGeometry Center="7,-3" RadiusX="8" RadiusY="8" />
-                                                    </CombinedGeometry.Geometry2>
-                                                </CombinedGeometry>
-                                            </Path.Data>
-                                        </Path>
-                                    </Canvas>
-                                </Border>
 
+                                <Border x:Name="xBorderBTMid" Background="Yellow" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                    </Border.BorderBrush>
+                                    <!--<Border.Background>
+                                        <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
+                                    </Border.Background>-->
+                                </Border>
+                                <Grid x:Name="xBorderBTRight" Grid.Column="2" Width="9" Background="Transparent" VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
+                                    <Path StrokeThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Path.Stroke>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                        </Path.Stroke>
+                                        <Path.Fill>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
+                                        </Path.Fill>
+                                        <Path.Data>
+                                            <CombinedGeometry GeometryCombineMode="Exclude">
+                                                <CombinedGeometry.Geometry1>
+                                                    <RectangleGeometry Rect="0,0,20,20" />
+                                                </CombinedGeometry.Geometry1>
+                                                <CombinedGeometry.Geometry2>
+                                                    <EllipseGeometry Center="0,0" RadiusX="5" RadiusY="5" />
+                                                </CombinedGeometry.Geometry2>
+                                            </CombinedGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                    <Border Margin="2,-4,-2,0" BorderThickness="1,0,0,1" Background="Transparent" CornerRadius="10">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                        </Border.BorderBrush>
+                                    </Border>
+                                </Grid>
+                                <Grid x:Name="xBorderBTLeft" Grid.Column="0" Width="9" Background="Transparent" VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
+                                    <Path StrokeThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Path.Stroke>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                        </Path.Stroke>
+                                        <Path.Fill>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
+                                        </Path.Fill>
+                                        <Path.Data>
+                                            <CombinedGeometry GeometryCombineMode="Exclude">
+                                                <CombinedGeometry.Geometry1>
+                                                    <RectangleGeometry Rect="0,0,20,20" />
+                                                </CombinedGeometry.Geometry1>
+                                                <CombinedGeometry.Geometry2>
+                                                    <EllipseGeometry Center="0,0" RadiusX="5" RadiusY="5" />
+                                                </CombinedGeometry.Geometry2>
+                                            </CombinedGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                    <Border Margin="-9,-9,2,0" BorderThickness="0,0,1,1" Background="Transparent" CornerRadius="10">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                        </Border.BorderBrush>
+                                    </Border>
+                                </Grid>
                             </Grid>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Panel.ZIndex" Value="100" />
+                            <Setter Property="Panel.ZIndex" Value="110" />
                             <Setter TargetName="xBorderBottomNormal" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="xBorderBottomSelected" Property="Visibility" Value="Visible" />
                         </Trigger>

@@ -192,22 +192,11 @@
             </Grid>
 
             <!--Label layout-->
-            <Grid Grid.Row="1" Grid.Column="0">
-                <Border x:Name="TestBorder" Width="70" Height="23" Background="Red">
-                    <Border.Triggers>
-                        <EventTrigger RoutedEvent="MouseDown">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="TestBorder"
-                                                         Storyboard.TargetProperty="Background.Color"
-                                                         To="#ffffff"
-                                                         Duration="0" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                    </Border.Triggers>
+            <Grid Grid.Row="1" Grid.Column="0" Width="5" Height="5">
+                <Border Margin="0,-5,-5,0" BorderThickness="1" Background="Transparent" CornerRadius="10">
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                    </Border.BorderBrush>
                 </Border>
             </Grid>
         </Grid>
