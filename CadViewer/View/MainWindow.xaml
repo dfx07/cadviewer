@@ -203,14 +203,18 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Waiting"></TextBlock>
                     <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-
-                        <ui:CWaiting Height="100" Width="100" LoadIconWidth="40" Message="Waiting...">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ui:CWaiting Grid.Column="0" Height="100" Width="70" LoadIconWidth="40">
+                        </ui:CWaiting>
+                        <ui:CWaiting Grid.Column="1" Height="100" Width="70" LoadIconWidth="40" LoadIconType="Line">
                         </ui:CWaiting>
                     </Grid>
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Progress"></TextBlock>
                     <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <ui:CWaiting Height="100" Width="100" LoadIconWidth="40" Message="Waiting...">
-                        </ui:CWaiting>
+                        <ui:CProgressBar Width="120" Height="18" Value="100" Minimum="0" Maximum="100" IsIndeterminate="False" ></ui:CProgressBar>
                     </Grid>
                 </Grid>
             </Grid>

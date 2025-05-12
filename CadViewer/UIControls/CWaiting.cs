@@ -17,7 +17,7 @@ using System.Windows.Threading;
 
 namespace CadViewer.UIControls
 {
-	public enum CWaitingMessageDirection
+	public enum CWaitingMessagePosition
 	{
 		Top,
 		Bottom
@@ -55,7 +55,55 @@ namespace CadViewer.UIControls
 			};
 		}
 
-		private void CreateLoadingVisual()
+		private void CreateLoadingDot()
+		{
+			if (_canvas == null)
+				return;
+
+			double dbCanvasWidth = _canvas.Width;
+			double dbCanvasHeight = _canvas.Width;
+
+			int dotCount = 10;
+			double radius = dbCanvasWidth / 2;
+			double centerX = dbCanvasWidth / 2;
+			double centerY = dbCanvasHeight / 2;
+
+			double dbOpacityStart = 0.2;
+
+			double dbCircleWidth = radius * 0.3;
+			double dbRadiusToCircle = radius * 0.7;
+
+			for (int i = 0; i < dotCount; i++)
+			{
+				double angle = i * 360.0 / dotCount;
+				double rad = angle * Math.PI / 180;
+				double x = centerX + Math.Cos(rad) * dbRadiusToCircle;
+				double y = centerY + Math.Sin(rad) * dbRadiusToCircle;
+				var dot = new Ellipse
+				{
+					Width = dbCircleWidth,
+					Height = dbCircleWidth,
+					Fill = Brushes.Gray,
+					Opacity = dbOpacityStart
+				};
+				Canvas.SetLeft(dot, x - dbCircleWidth / 2);
+				Canvas.SetTop(dot, y - dbCircleWidth / 2);
+				var animation = new DoubleAnimation
+				{
+					From = dbOpacityStart,
+					To = 1,
+					Duration = TimeSpan.FromMilliseconds(620),
+					BeginTime = TimeSpan.FromMilliseconds(i * 100),
+					AutoReverse = true,
+					RepeatBehavior = RepeatBehavior.Forever
+				};
+
+				dot.BeginAnimation(UIElement.OpacityProperty, animation);
+				_canvas.Children.Add(dot);
+			}
+		}
+
+		private void CreateLoadingLine()
 		{
 			if (_canvas == null)
 				return;
@@ -108,6 +156,21 @@ namespace CadViewer.UIControls
 			}
 		}
 
+		private void CreateLoadingVisual()
+		{
+			if (_canvas == null)
+				return;
+
+			if(LoadIconType == CWaitingIconStyle.Line)
+			{
+				CreateLoadingLine();
+			}
+			else
+			{
+				CreateLoadingDot();
+			}
+		}
+
 		private static void OnLoadIconWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			if (d is CWaiting control)
@@ -134,14 +197,22 @@ namespace CadViewer.UIControls
 			set => SetValue(LoadIconWidthProperty, value);
 		}
 
-
 		public static readonly DependencyProperty LoadIconTypeProperty =
-		DependencyProperty.Register(nameof(LoadIconWidth), typeof(double), typeof(CWaiting), new PropertyMetadata(20.0, OnLoadIconWidthChanged));
+		DependencyProperty.Register(nameof(LoadIconType), typeof(CWaitingIconStyle), typeof(CWaiting), new PropertyMetadata(CWaitingIconStyle.Circle));
 
-		public double LoadIconTypeWidth
+		public CWaitingIconStyle LoadIconType
 		{
-			get => (double)GetValue(LoadIconTypeProperty);
+			get => (CWaitingIconStyle)GetValue(LoadIconTypeProperty);
 			set => SetValue(LoadIconTypeProperty, value);
+		}
+
+		public static readonly DependencyProperty MessagePositionProperty =
+		DependencyProperty.Register(nameof(MessagePosition), typeof(CWaitingMessagePosition), typeof(CWaiting), new PropertyMetadata(CWaitingMessagePosition.Bottom));
+
+		public CWaitingMessagePosition MessagePosition
+		{
+			get => (CWaitingMessagePosition)GetValue(MessagePositionProperty);
+			set => SetValue(MessagePositionProperty, value);
 		}
 	}
 }
