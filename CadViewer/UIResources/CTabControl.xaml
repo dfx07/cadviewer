@@ -66,10 +66,10 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <Style TargetType="{x:Type TabItem}">
+    <Style TargetType="{x:Type local:CTabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabItem}">
+                <ControlTemplate TargetType="{x:Type local:CTabItem}">
                     <Grid x:Name="Root">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -113,7 +113,7 @@
                             </Border.Background>
                             <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="12,2,12,-3" RecognizesAccessKey="True" />
                         </Border>
-                        <Border x:Name="xBorderBottomNormal" Grid.Row="1" BorderThickness="1,0,1,1"  Margin="0,0,-2,0" ClipToBounds="True" Visibility="Visible">
+                        <Border x:Name="xBorderBottomNormal" Grid.Row="1" BorderThickness="1,0,1,1" Margin="0,0,-2,0" ClipToBounds="True" Visibility="Visible">
                             <Border.Background>
                                 <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemBackgroundColor}" />
                             </Border.Background>
@@ -121,21 +121,36 @@
                                 <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
                             </Border.BorderBrush>
                         </Border>
-                        <Border x:Name="xBorderBottomSelected" Grid.Row="1" Margin="-6,0,-8,0" ClipToBounds="True" Visibility="Collapsed" Background="Transparent">
+                        <Border x:Name="xBorderBottomCheck" Grid.Row="1" Margin="-6,0,-8,-1" ClipToBounds="True" Visibility="Visible" Opacity="0.01" Background="Transparent">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-
-                                <Border x:Name="xBorderBTMid" Background="Yellow" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid x:Name="xBorderBTCheck_Right" Grid.Column="2" Width="9" VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
+                                </Grid>
+                                <Grid x:Name="xBorderBTCheck_Left" Grid.Column="0" Width="9" VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Border x:Name="xBorderBottomSelected" Grid.Row="1" Margin="-6,0,-8,-1" ClipToBounds="True" Visibility="Collapsed" Background="Transparent">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                            </Border.BorderBrush>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="xBorderBTMid" Margin="-1,0,-1,-1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <Border.BorderBrush>
                                         <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
                                     </Border.BorderBrush>
-                                    <!--<Border.Background>
+                                    <Border.Background>
                                         <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemActivedBackgroundColor}" />
-                                    </Border.Background>-->
+                                    </Border.Background>
                                 </Border>
                                 <Grid x:Name="xBorderBTRight" Grid.Column="2" Width="9" Background="Transparent" VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
                                     <Path StrokeThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -151,18 +166,18 @@
                                                     <RectangleGeometry Rect="0,0,20,20" />
                                                 </CombinedGeometry.Geometry1>
                                                 <CombinedGeometry.Geometry2>
-                                                    <EllipseGeometry Center="0,0" RadiusX="5" RadiusY="5" />
+                                                    <EllipseGeometry Center="8,0" RadiusX="5" RadiusY="5" />
                                                 </CombinedGeometry.Geometry2>
                                             </CombinedGeometry>
                                         </Path.Data>
                                     </Path>
-                                    <Border Margin="2,-4,-2,0" BorderThickness="1,0,0,1" Background="Transparent" CornerRadius="10">
+                                    <Border Margin="2,-5,-3,1" BorderThickness="1,0,0,1" Background="Transparent" CornerRadius="10">
                                         <Border.BorderBrush>
                                             <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
                                         </Border.BorderBrush>
                                     </Border>
                                 </Grid>
-                                <Grid x:Name="xBorderBTLeft" Grid.Column="0" Width="9" Background="Transparent" VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
+                                <Grid x:Name="xBorderBTLeft" Grid.Column="0" Width="9" Background="Transparent"  VerticalAlignment="Stretch" SnapsToDevicePixels="True" ClipToBounds="True">
                                     <Path StrokeThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                         <Path.Stroke>
                                             <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
@@ -176,12 +191,12 @@
                                                     <RectangleGeometry Rect="0,0,20,20" />
                                                 </CombinedGeometry.Geometry1>
                                                 <CombinedGeometry.Geometry2>
-                                                    <EllipseGeometry Center="0,0" RadiusX="5" RadiusY="5" />
+                                                    <EllipseGeometry Center="0,0" RadiusX="6" RadiusY="6" />
                                                 </CombinedGeometry.Geometry2>
                                             </CombinedGeometry>
                                         </Path.Data>
                                     </Path>
-                                    <Border Margin="-9,-9,2,0" BorderThickness="0,0,1,1" Background="Transparent" CornerRadius="10">
+                                    <Border Margin="-3,-5,2,1" BorderThickness="0,0,1,1" Background="Transparent" CornerRadius="10">
                                         <Border.BorderBrush>
                                             <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
                                         </Border.BorderBrush>
@@ -197,17 +212,8 @@
                             <Setter TargetName="xBorderBottomSelected" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
-                            <Setter TargetName="xBorderBottomSelected" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="xBorderBottomNormal" Property="Visibility" Value="Visible" />
-                            <!--<Setter TargetName="xBorderBTRight" Property="Background" Value="Transparent" />
-                            <Setter TargetName="xBorderBTRight" Property="BorderThickness" Value="0" />
-                            <Setter TargetName="xBorderBTLeft" Property="Background" Value="Transparent" />
-                            <Setter TargetName="xBorderBTLeft" Property="BorderThickness" Value="0" />
-                            <Setter TargetName="xBorderBottomSelected" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_TabControl_TabItemBackgroundColor}" />
-                                </Setter.Value>
-                            </Setter>-->
+                            <Setter TargetName="xBorderBottomSelected" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -221,7 +227,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabControl}">
+                <ControlTemplate TargetType="{x:Type local:CTabControl}">
                     <Grid KeyboardNavigation.TabNavigation="Local">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

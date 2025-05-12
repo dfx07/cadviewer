@@ -17,6 +17,15 @@ using System.Windows.Threading;
 
 namespace CadViewer.UIControls
 {
+	public class CTabItem : TabItem
+	{
+		static CTabItem()
+		{
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(CTabItem),
+				new FrameworkPropertyMetadata(typeof(CTabItem)));
+		}
+	}
+
 	public class CTabControl : TabControl
 	{
 		static CTabControl()
@@ -50,63 +59,85 @@ namespace CadViewer.UIControls
 
 		private void CheckBordersInside()
 		{
-			//if (this.SelectedItem is TabItem selectedTab)
-			//{
-			//	selectedTab.ApplyTemplate();
+			if (this.SelectedItem is TabItem selectedTab)
+			{
+				selectedTab.ApplyTemplate();
 
-			//	var borderBottom = selectedTab.Template.FindName("xBorderBottomSelected", selectedTab) as FrameworkElement;
-			//	var borderMid = selectedTab.Template.FindName("xBorderBTMid", selectedTab) as Border;
-			//	var borderRight = selectedTab.Template.FindName("xBorderBTRight", selectedTab) as FrameworkElement;
-			//	var borderLeft = selectedTab.Template.FindName("xBorderBTLeft", selectedTab) as FrameworkElement;
+				var borderSel = selectedTab.Template.FindName("xBorderBottomSelected", selectedTab) as FrameworkElement;
+				var borderM = selectedTab.Template.FindName("xBorderBTMid", selectedTab) as Border;
+				var borderR = selectedTab.Template.FindName("xBorderBTRight", selectedTab) as FrameworkElement;
+				var borderL = selectedTab.Template.FindName("xBorderBTLeft", selectedTab) as FrameworkElement;
+				var borderRight = selectedTab.Template.FindName("xBorderBTCheck_Right", selectedTab) as FrameworkElement;
+				var borderLeft = selectedTab.Template.FindName("xBorderBTCheck_Left", selectedTab) as FrameworkElement;
 
-			//	borderRight.Visibility = Visibility.Visible;
-			//	borderLeft.Visibility = Visibility.Visible;
+				if (borderRight == null || borderLeft == null)
+					return;
 
-			//	if (borderRight == null || borderLeft == null)
-			//		return;
+				bool bRightVisible = IsElementInside(borderRight, this);
+				bool bLeftVisible = IsElementInside(borderLeft, this);
 
-			//	bool bRightVisible = IsElementInside(borderRight, this);
-			//	bool bLeftVisible = IsElementInside(borderLeft, this);
+				bool bOldLeftVib = borderL.Visibility == Visibility.Visible;
+				bool bOldRightVib = borderR.Visibility == Visibility.Visible;
 
-			//	// Nếu cả hai đều nằm trong
-			//	if (bRightVisible && bLeftVisible)
-			//	{
-			//		borderBottom.Margin = new Thickness(-6, 0, -8, 0);
-			//		borderMid.BorderThickness = new Thickness(0);
-			//	}
-			//	else if (bRightVisible)
-			//	{
-			//		borderLeft.Visibility = Visibility.Collapsed;
-			//		borderBottom.Margin = new Thickness(0, 0, -8, 0);
-			//		borderMid.BorderThickness = new Thickness(1, 0, 0, 0);
-			//	}
-			//	else if (bLeftVisible)
-			//	{
-			//		borderRight.Visibility = Visibility.Collapsed;
-			//		borderBottom.Margin = new Thickness(-6, 0, -3, 0);
-			//		borderMid.BorderThickness = new Thickness(0, 0, 1, 0);
-			//	}
-			//	else
-			//	{
-			//		borderLeft.Visibility = Visibility.Collapsed;
-			//		borderRight.Visibility = Visibility.Collapsed;
-			//		borderBottom.Margin = new Thickness(-6, 0, -8,0);
-			//		borderMid.BorderThickness = new Thickness(1, 0, 1, 0);
-			//	}
-			//}
+				if (bLeftVisible && bRightVisible)
+				{
+					borderSel.Margin = new Thickness(-6, 0, -8, -1);
+					borderM.BorderThickness = new Thickness(0);
+					borderM.Margin = new Thickness(-1, 0, -1, -1);
+
+					if (!bOldLeftVib)
+						borderL.Visibility = Visibility.Visible;
+					if (!bOldRightVib)
+						borderR.Visibility = Visibility.Visible;
+				}
+				else if(bLeftVisible)
+				{
+					if (!bOldLeftVib)
+						borderL.Visibility = Visibility.Visible;
+
+					if(bOldRightVib)
+						borderR.Visibility = Visibility.Collapsed;
+
+					borderSel.Margin = new Thickness(-6, 0, -2, -1);
+					borderM.BorderThickness = new Thickness(0, 0, 1, 0);
+					borderM.Margin = new Thickness(-1, 0, 0, -1);
+				}
+				else if (bRightVisible)
+				{
+					if (!bOldRightVib)
+						borderR.Visibility = Visibility.Visible;
+
+					if(bOldLeftVib)
+						borderL.Visibility = Visibility.Collapsed;
+
+					borderSel.Margin = new Thickness(0, 0, -8, -1);
+					borderM.BorderThickness = new Thickness(1, 0, 0, 0);
+					borderM.Margin = new Thickness(0, 0, -1, -2);
+				}
+				else
+				{
+					borderSel.Margin = new Thickness(0, 0, -2, -1);
+					borderM.Margin = new Thickness(0, 0, 0, 0);
+					borderM.BorderThickness = new Thickness(1, 0, 1, 0);
+
+					if (bOldLeftVib)
+						borderL.Visibility = Visibility.Collapsed;
+					if (bOldRightVib)
+						borderR.Visibility = Visibility.Collapsed;
+				}
+			}
 		}
 
 
 		private bool IsElementInside(UIElement child, FrameworkElement container)
 		{
-			// Lấy bounds của phần tử con (xBorderBTRight) so với container (TabControl)
-			Rect childBounds = child.TransformToAncestor(container)
-									 .TransformBounds(new Rect(0, 0, child.RenderSize.Width, child.RenderSize.Height));
+			if (!child.IsVisible || child.RenderSize.Width == 0 || child.RenderSize.Height == 0)
+				return false;
 
-			// Kích thước của container
+			Rect childBounds = child.TransformToAncestor(container)
+						.TransformBounds(new Rect(0, 0, child.RenderSize.Width, child.RenderSize.Height));
 			Rect containerBounds = new Rect(0, 0, container.ActualWidth, container.ActualHeight);
 
-			// Kiểm tra xem childBounds có nằm trong containerBounds không
 			return containerBounds.Contains(childBounds.TopLeft) && containerBounds.Contains(childBounds.BottomRight);
 		}
 	}
