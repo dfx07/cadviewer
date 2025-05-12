@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="UIResources/CScrollBar.xaml" />
                 <ResourceDictionary Source="UIResources/CScrollViewer.xaml" />
                 <ResourceDictionary Source="UIResources/CTabControl.xaml" />
+                <ResourceDictionary Source="UIResources/CWaiting.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

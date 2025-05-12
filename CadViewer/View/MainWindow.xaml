@@ -189,6 +189,30 @@
                         </ui:CTabItem>
                     </ui:CTabControl>
                 </Grid>
+                <Grid Grid.Row="0" Grid.Column="2" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Waiting"></TextBlock>
+                    <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                        <ui:CWaiting Height="100" Width="100" LoadIconWidth="40" Message="Waiting...">
+                        </ui:CWaiting>
+                    </Grid>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Progress"></TextBlock>
+                    <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <ui:CWaiting Height="100" Width="100" LoadIconWidth="40" Message="Waiting...">
+                        </ui:CWaiting>
+                    </Grid>
+                </Grid>
             </Grid>
 
             <!--Label layout 0,0,-3,-6-->
