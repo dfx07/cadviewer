@@ -76,6 +76,15 @@ namespace CadViewer.Converters
 		}
 	}
 
+	public class CommonBooleanNegationConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+			=> !(bool)(value ?? false);
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			=> !(bool)(value ?? false);
+	}
+
 	public class CommonBoolToVisibilityConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

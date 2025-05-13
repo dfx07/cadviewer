@@ -106,6 +106,7 @@
     <Compile Include="Converters\ToggleConverter.cs" />
     <Compile Include="UIControls\CExpander.cs" />
     <Compile Include="UIControls\CCheckBox.cs" />
+    <Compile Include="UIControls\CNavSlider.cs" />
     <Compile Include="UIControls\CProgressBar.cs" />
     <Compile Include="UIControls\CWaiting.cs" />
     <Compile Include="UIControls\CTabControl.cs" />
@@ -161,6 +162,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CCheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CNavSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

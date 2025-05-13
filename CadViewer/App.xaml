@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="UIResources/CTabControl.xaml" />
                 <ResourceDictionary Source="UIResources/CWaiting.xaml" />
                 <ResourceDictionary Source="UIResources/CProgressBar.xaml" />
+                <ResourceDictionary Source="UIResources/CNavSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
