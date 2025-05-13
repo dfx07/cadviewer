@@ -32,4 +32,25 @@ namespace CadViewer.Converters
 		}
 	}
 
+	public class ProgressBarDisplayConverter : IMultiValueConverter
+	{
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (values.Length < 3 || values[0] == DependencyProperty.UnsetValue || values[1] == DependencyProperty.UnsetValue)
+				return "";
+
+			double val = System.Convert.ToDouble(values[0]);
+			double min = System.Convert.ToDouble(values[1]);
+			double max = System.Convert.ToDouble(values[2]);
+			string format = values[3]?.ToString() ?? "_val_";
+
+			return format
+						.Replace("_val_", val.ToString("F0", culture))
+						.Replace("_min_", min.ToString("F0", culture))
+						.Replace("_max_", max.ToString("F0", culture));
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) =>
+			throw new NotImplementedException();
+	}
 }

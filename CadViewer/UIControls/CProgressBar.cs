@@ -136,5 +136,14 @@ namespace CadViewer.UIControls
 			get => (bool)GetValue(ShowProgressCountProperty);
 			set => SetValue(ShowProgressCountProperty, value);
 		}
+
+		public static readonly DependencyProperty DisplayFormatProperty =
+		DependencyProperty.Register(nameof(DisplayFormat), typeof(string), typeof(CProgressBar), new PropertyMetadata("_val_"));
+
+		public string DisplayFormat
+		{
+			get => (string)GetValue(DisplayFormatProperty);
+			set => SetValue(DisplayFormatProperty, value);
+		}
 	}
 }

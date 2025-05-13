@@ -5,7 +5,7 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <cvt:ProgressBarWidthConverter x:Key="ProgressBarWidthConverter" />
-    <cvt:CommonHeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter" />
+    <cvt:ProgressBarDisplayConverter x:Key="ProgressBarDisplayConverter" />
 
     <VisualBrush x:Key="DiagonalStripes" TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
         <VisualBrush.Visual>
@@ -91,8 +91,8 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="xProgressBarCircle" TargetType="{x:Type local:CProgressBar}">
-        <Grid >
-            <Grid Grid.Column="0" Width="{Binding ProgressBarHeight, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding ProgressBarHeight, RelativeSource={RelativeSource TemplatedParent}}"
+        <DockPanel Background="Transparent" VerticalAlignment="Center" >
+            <Grid DockPanel.Dock="Top" Width="{Binding ProgressBarHeight, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding ProgressBarHeight, RelativeSource={RelativeSource TemplatedParent}}"
                   VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Ellipse x:Name="PART_Circle" StrokeThickness="7" SnapsToDevicePixels="True">
                     <Ellipse.Stroke>
@@ -121,10 +121,21 @@
                         </LinearGradientBrush>
                     </Path.Stroke>
                 </Path>
-                <TextBlock x:Name="PART_Percentage" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat='{}{0:F0}%'}" FontSize="11" HorizontalAlignment="Center" 
-                           UseLayoutRounding="False" RenderOptions.EdgeMode="Unspecified" VerticalAlignment="Center" />
+                <TextBlock x:Name="PART_Percentage" FontSize="11" HorizontalAlignment="Center" UseLayoutRounding="False" RenderOptions.EdgeMode="Unspecified" VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource ProgressBarDisplayConverter}">
+                            <Binding Path="Value" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="Minimum" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="Maximum" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DisplayFormat" RelativeSource="{RelativeSource TemplatedParent}" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
             </Grid>
-        </Grid>
+            <TextBlock x:Name="PART_Message" FontSize="11" Padding="2" MaxWidth="{TemplateBinding MaxWidth}" Background="Transparent"
+                        Foreground="{DynamicResource Cmm_NotifyTextColor}" Text="{Binding Message, RelativeSource={RelativeSource TemplatedParent}}" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" xml:space="preserve" />
+        </DockPanel>
         <ControlTemplate.Triggers>
             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                 <BeginStoryboard>
@@ -133,32 +144,30 @@
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
-            <!--<DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Error">
-                <Setter TargetName="PART_ProgressArc" Property="Stroke">
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" MappingMode="RelativeToBoundingBox">
-                            <GradientStop Color="#e15967" Offset="0.01" />
-                            <GradientStop Color="#dc3545" Offset="0.5" />
-                            <LinearGradientBrush.RelativeTransform>
-                                <RotateTransform x:Name="GradientRotate" Angle="0" CenterX="0.5" CenterY="0.5" />
-                            </LinearGradientBrush.RelativeTransform>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
+            <DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Error">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="PART_ProgressArc" 
+                                            Storyboard.TargetProperty="(Path.Stroke).(LinearGradientBrush.GradientStops)[0].Color" To="#dc3545" Duration="0:0:0.1" />
+                            <ColorAnimation Storyboard.TargetName="PART_ProgressArc" 
+                                            Storyboard.TargetProperty="(Path.Stroke).(LinearGradientBrush.GradientStops)[1].Color" To="#ff646a" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
             </DataTrigger>
-            <DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Warn">
-                <Setter TargetName="PART_ProgressArc" Property="Stroke">
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" MappingMode="RelativeToBoundingBox">
-                            <GradientStop Color="#ffc107" Offset="0.01" />
-                            <GradientStop Color="#ffd629" Offset="0.5" />
-                            <LinearGradientBrush.RelativeTransform>
-                                <RotateTransform x:Name="GradientRotate" Angle="0" CenterX="0.5" CenterY="0.5" />
-                            </LinearGradientBrush.RelativeTransform>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>-->
+            <DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Error">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="PART_ProgressArc" 
+                                            Storyboard.TargetProperty="(Path.Stroke).(LinearGradientBrush.GradientStops)[0].Color" To="#ffe428" Duration="0:0:0.1" />
+                            <ColorAnimation Storyboard.TargetName="PART_ProgressArc" 
+                                            Storyboard.TargetProperty="(Path.Stroke).(LinearGradientBrush.GradientStops)[1].Color" To="#ffc107" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
