@@ -7,74 +7,6 @@
     <cvt:ProgressBarWidthConverter x:Key="ProgressBarWidthConverter" />
     <cvt:CommonHeightToCornerRadiusConverter x:Key="HeightToCornerRadiusConverter" />
 
-    <VisualBrush x:Key="DiagonalStripeBrush" TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
-        <VisualBrush.Visual>
-            <Canvas Width="20" Height="20">
-                <Rectangle Width="20" Height="20" Fill="Transparent" />
-                <Path Stroke="LightBlue" StrokeThickness="4" Data="M 0 20 L 20 0" />
-            </Canvas>
-        </VisualBrush.Visual>
-    </VisualBrush>
-
-    <Color x:Key="WindowColor">#FFE8EDF9</Color>
-    <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
-    <Color x:Key="ContentAreaColorDark">#FF7381F9</Color>
-
-    <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
-    <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
-    <Color x:Key="DisabledForegroundColor">#FF888888</Color>
-
-    <Color x:Key="SelectedBackgroundColor">#FFC5CBF9</Color>
-    <Color x:Key="SelectedUnfocusedColor">#FFDDDDDD</Color>
-
-    <Color x:Key="ControlLightColor">White</Color>
-    <Color x:Key="ControlMediumColor">#FF7381F9</Color>
-    <Color x:Key="ControlDarkColor">#FF211AA9</Color>
-
-    <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
-    <Color x:Key="ControlPressedColor">#FF211AA9</Color>
-
-
-    <Color x:Key="GlyphColor">#FF444444</Color>
-    <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
-
-    <!--Border colors-->
-    <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
-    <Color x:Key="BorderMediumColor">#FF888888</Color>
-    <Color x:Key="BorderDarkColor">#FF444444</Color>
-
-    <Color x:Key="PressedBorderLightColor">#FF888888</Color>
-    <Color x:Key="PressedBorderDarkColor">#FF444444</Color>
-
-    <Color x:Key="DisabledBorderLightColor">#FFAAAAAA</Color>
-    <Color x:Key="DisabledBorderDarkColor">#FF888888</Color>
-
-    <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
-
-    <!--Control-specific resources.-->
-    <Color x:Key="HeaderTopColor">#FFC5CBF9</Color>
-    <Color x:Key="DatagridCurrentCellBorderColor">Black</Color>
-    <Color x:Key="SliderTrackDarkColor">#FFC5CBF9</Color>
-
-    <Color x:Key="NavButtonFrameColor">#FF3843C4</Color>
-
-    <LinearGradientBrush x:Key="MenuPopupBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0" />
-        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="0.5" />
-        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="1" />
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill" StartPoint="0,0" EndPoint="1,0">
-        <LinearGradientBrush.GradientStops>
-            <GradientStopCollection>
-                <GradientStop Color="#000000FF" Offset="0" />
-                <GradientStop Color="#600000FF" Offset="0.4" />
-                <GradientStop Color="#600000FF" Offset="0.6" />
-                <GradientStop Color="#000000FF" Offset="1" />
-            </GradientStopCollection>
-        </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-
     <VisualBrush x:Key="DiagonalStripes" TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
         <VisualBrush.Visual>
             <Canvas Width="20" Height="20">
@@ -84,95 +16,169 @@
         </VisualBrush.Visual>
     </VisualBrush>
 
+    <ControlTemplate x:Key="xProgressBarLine" TargetType="{x:Type local:CProgressBar}">
+        <DockPanel Background="Transparent" VerticalAlignment="Center">
+            <Border x:Name="PART_Bound" DockPanel.Dock="Top" Padding="2" Height="{Binding ProgressBarHeight, RelativeSource={RelativeSource TemplatedParent}}" BorderThickness="1" CornerRadius="10">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                </Border.BorderBrush>
+                <Grid x:Name="PART_Track" Background="Transparent">
+                    <Border x:Name="PART_Indicator" CornerRadius="7" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Left" ClipToBounds="True">
+                        <Border.Background>
+                            <VisualBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
+                                <VisualBrush.Visual>
+                                    <Canvas x:Name="PART_Indicator_Canvas" Width="20" Height="20" Background="#3493d2">
+                                        <Path x:Name="PART_Indicator_Canvas_Dot" Stroke="#4d9fd6" StrokeThickness="9" Data="M 5 30 L 15 -5" />
+                                    </Canvas>
+                                </VisualBrush.Visual>
+                                <VisualBrush.Transform>
+                                    <TranslateTransform x:Name="StripeTransform" X="0" />
+                                </VisualBrush.Transform>
+                            </VisualBrush>
+                        </Border.Background>
+                    </Border>
+                    <TextBlock x:Name="PART_Percentage" Visibility="Visible" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat='{}{0:F0}%'}" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.7">
+                    </TextBlock>
+                </Grid>
+            </Border>
+            <TextBlock x:Name="PART_Message" FontSize="11" Padding="2" MaxWidth="{TemplateBinding MaxWidth}" Background="Transparent" Foreground="{DynamicResource Cmm_NotifyTextColor}" Text="{Binding Message, RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" xml:space="preserve" />
+        </DockPanel>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsIndeterminate" Value="True">
+                <Setter TargetName="PART_Indicator" Property="Width">
+                    <Setter.Value>
+                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
+                    </Setter.Value>
+                </Setter>
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation Storyboard.TargetName="StripeTransform" Storyboard.TargetProperty="X" From="0" To="-20" Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+            <Trigger Property="IsIndeterminate" Value="False">
+                <Setter TargetName="PART_Indicator" Property="Width">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource ProgressBarWidthConverter}">
+                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Value" />
+                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Maximum" />
+                            <Binding ElementName="PART_Track" Path="ActualWidth" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <DoubleAnimation Storyboard.TargetName="StripeTransform" Storyboard.TargetProperty="X" From="0" To="-20" Duration="0:0:0.5" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <DataTrigger Binding="{Binding ShowProgressCount, RelativeSource={RelativeSource Self}}" Value="False">
+                <Setter TargetName="PART_Percentage" Property="Visibility" Value="Hidden" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Error">
+                <Setter TargetName="PART_Indicator_Canvas" Property="Background" Value="#dc3545" />
+                <Setter TargetName="PART_Indicator_Canvas_Dot" Property="Stroke" Value="#e15967" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Warn">
+                <Setter TargetName="PART_Indicator_Canvas" Property="Background" Value="#ffc107" />
+                <Setter TargetName="PART_Indicator_Canvas_Dot" Property="Stroke" Value="#ffd629" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="xProgressBarCircle" TargetType="{x:Type local:CProgressBar}">
+        <Grid >
+            <Grid Grid.Column="0" Width="{Binding ProgressBarHeight, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding ProgressBarHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                  VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Ellipse x:Name="PART_Circle" StrokeThickness="7" SnapsToDevicePixels="True">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="Transparent" />
+                    </Ellipse.Stroke>
+                </Ellipse>
+                <Ellipse x:Name="PART_Circle1" StrokeThickness="1" SnapsToDevicePixels="True">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                    </Ellipse.Stroke>
+                </Ellipse>
+                <Ellipse x:Name="PART_Circle2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="36" Height="36" StrokeThickness="1" SnapsToDevicePixels="True">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                    </Ellipse.Stroke>
+                </Ellipse>
+                <Path x:Name="PART_ProgressArc" StrokeThickness="6" StrokeStartLineCap="Round" StrokeEndLineCap="Round" SnapsToDevicePixels="True"
+                      RenderOptions.BitmapScalingMode="HighQuality">
+                    <Path.Stroke>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" MappingMode="RelativeToBoundingBox">
+                            <GradientStop Color="#6bb9ff" Offset="0.01" />
+                            <GradientStop Color="#3493d2" Offset="0.5" />
+                            <LinearGradientBrush.RelativeTransform>
+                                <RotateTransform x:Name="GradientRotate" Angle="0" CenterX="0.5" CenterY="0.5" />
+                            </LinearGradientBrush.RelativeTransform>
+                        </LinearGradientBrush>
+                    </Path.Stroke>
+                </Path>
+                <TextBlock x:Name="PART_Percentage" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat='{}{0:F0}%'}" FontSize="11" HorizontalAlignment="Center" 
+                           UseLayoutRounding="False" RenderOptions.EdgeMode="Unspecified" VerticalAlignment="Center" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <DoubleAnimation Storyboard.TargetName="GradientRotate" Storyboard.TargetProperty="Angle" From="0" To="360" Duration="0:0:1.9" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <!--<DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Error">
+                <Setter TargetName="PART_ProgressArc" Property="Stroke">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" MappingMode="RelativeToBoundingBox">
+                            <GradientStop Color="#e15967" Offset="0.01" />
+                            <GradientStop Color="#dc3545" Offset="0.5" />
+                            <LinearGradientBrush.RelativeTransform>
+                                <RotateTransform x:Name="GradientRotate" Angle="0" CenterX="0.5" CenterY="0.5" />
+                            </LinearGradientBrush.RelativeTransform>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ProgressStatus, RelativeSource={RelativeSource Self}}" Value="Warn">
+                <Setter TargetName="PART_ProgressArc" Property="Stroke">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" MappingMode="RelativeToBoundingBox">
+                            <GradientStop Color="#ffc107" Offset="0.01" />
+                            <GradientStop Color="#ffd629" Offset="0.5" />
+                            <LinearGradientBrush.RelativeTransform>
+                                <RotateTransform x:Name="GradientRotate" Angle="0" CenterX="0.5" CenterY="0.5" />
+                            </LinearGradientBrush.RelativeTransform>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>-->
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <Style TargetType="{x:Type local:CProgressBar}" BasedOn="{StaticResource {x:Type ProgressBar}}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:CProgressBar}">
-                    <Grid Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" MinHeight="15" MinWidth="50" Background="{TemplateBinding Background}">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Determinate">
-                                </VisualState>
-                                <VisualState x:Name="Indeterminate">
-                                    <!--<Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Indicator" Storyboard.TargetProperty="{TemplateBinding ActualWidth}" To="50" Duration="0:0:0.5" />
-                                    </Storyboard>-->
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="PART_Track" Padding="2" CornerRadius="7" BorderThickness="1">
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                            </Border.BorderBrush>
-                            <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
-                            </Border.Background>
-
-                            <!---->
-                            <Border CornerRadius="6">
-                                <Border x:Name="PART_Indicator" Width="114" CornerRadius="6" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ClipToBounds="True" BorderThickness="1" BorderBrush="Red">
-                                    <!--<Border.Background>
-                                        <VisualBrush x:Name="StripeBrush" TileMode="Tile" Viewbox="0,0,20,20" Viewport="0,0,20,20" ViewboxUnits="Absolute" ViewportUnits="Absolute">
-                                            <VisualBrush.Visual>
-                                                <Canvas Width="20" Height="20" Background="#3493d2">
-                                                    <Path Stroke="#4d9fd6" StrokeThickness="9" Data="M 5 25 L 14 0" />
-                                                </Canvas>
-                                            </VisualBrush.Visual>
-                                            <VisualBrush.Transform>
-                                                <TranslateTransform x:Name="StripeTransform" X="0" />
-                                            </VisualBrush.Transform>
-                                        </VisualBrush>
-                                    </Border.Background>-->
-
-                                    <Border BorderThickness="1" CornerRadius="6" Background="Transparent">
-                                        <Border.BorderBrush>
-                                            <SolidColorBrush Color="#4d9fd6" />
-                                        </Border.BorderBrush>
-                                    </Border>
-
-                                </Border>
-                            </Border>
-                        </Border>
-
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <!--<Trigger Property="IsIndeterminate" Value="True">
-                            <Setter TargetName="PART_Indicator" Property="Width">
-                                <Setter.Value>
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
-                                </Setter.Value>
-                            </Setter>
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard RepeatBehavior="Forever">
-                                        <DoubleAnimation Storyboard.TargetName="StripeTransform" Storyboard.TargetProperty="X" From="0" To="-20" Duration="0:0:0.5" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
- 
-                        </Trigger>-->
-                        <Trigger Property="IsIndeterminate" Value="False">
-                            <!--<Setter TargetName="PART_Indicator" Property="Width">
-                                <Setter.Value>
-                                    <MultiBinding Converter="{StaticResource ProgressBarWidthConverter}">
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Value" />
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Maximum" />
-                                        <Binding ElementName="PART_Track" Path="ActualWidth" />
-                                    </MultiBinding>
-                                </Setter.Value>
-                            </Setter>-->
-                        </Trigger>
-                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                            <!--<BeginStoryboard>
-                                <Storyboard RepeatBehavior="Forever">
-                                    <DoubleAnimation Storyboard.TargetName="StripeTransform" Storyboard.TargetProperty="X" From="0" To="-20" Duration="0:0:0.5" />
-                                </Storyboard>
-                            </BeginStoryboard>-->
-                        </EventTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Style.Setters>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template" Value="{StaticResource xProgressBarLine}" />
+            <Setter Property="Foreground" Value="{DynamicResource Cmm_TextColor}" />
+        </Style.Setters>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ProgressStyle, RelativeSource={RelativeSource Self}}" Value="Line">
+                <Setter Property="MinWidth" Value="110" />
+                <Setter Property="MinHeight" Value="15" />
+                <Setter Property="Template" Value="{StaticResource xProgressBarLine}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ProgressStyle, RelativeSource={RelativeSource Self}}" Value="Circle">
+                <Setter Property="MinWidth" Value="35" />
+                <Setter Property="MinHeight" Value="35" />
+                <Setter Property="Template" Value="{StaticResource xProgressBarCircle}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

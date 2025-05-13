@@ -17,12 +17,13 @@ namespace CadViewer.Converters
 		{
 			double value = System.Convert.ToDouble(values[0]);
 			double max = System.Convert.ToDouble(values[1]);
-			double width = 110;
+			double trackWidth = System.Convert.ToDouble(values[2]);
 
-			if (width <= 0)
-				width = 1;
+			if (trackWidth <= 0)
+				trackWidth = 1;
 
-			return (value / max) * width;
+			double ratio = Math.Min(value / max, 1.0); // hạn chế tối đa 100%
+			return ratio * trackWidth;
 		}
 
 		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
