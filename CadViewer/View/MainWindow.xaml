@@ -73,6 +73,7 @@
                         <RowDefinition Height="70" />
                         <RowDefinition Height="40" />
                         <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -107,6 +108,13 @@
                     <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="DropDown Button"></TextBlock>
                     <ui:CDropDownButton Grid.Row="7" Grid.Column="1" Width="140" Height="24" Content="DropDown button">
                     </ui:CDropDownButton>
+
+                    <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Soft Popup"></TextBlock>
+                    <ToggleButton x:Name="xSoftPopupToggle" Grid.Row="8" Grid.Column="1" Width="140" Height="24" Content="Show popup">
+                    </ToggleButton>
+                    <ui:CSoftPopup PlacementTarget="{Binding ElementName=xSoftPopupToggle}" IsOpen="True">
+                        <TextBlock Text="This is a custom popup." />
+                    </ui:CSoftPopup>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.ColumnDefinitions>
