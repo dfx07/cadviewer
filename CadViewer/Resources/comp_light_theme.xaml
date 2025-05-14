@@ -15,7 +15,7 @@
 
     <Color x:Key="CompUI_Cmm_TextColor">#000000</Color>
     <Color x:Key="CompUI_Cmm_NotifyTextColor">#484848</Color>
-    <Color x:Key="CompUI_Cmm_TextClickColor">#aeaeae</Color>
+    <Color x:Key="CompUI_Cmm_TextClickColor">#7b7b7b</Color>
     <Color x:Key="CompUI_Cmm_TextDisableColor">#aaaaaa</Color>
     <Color x:Key="CompUI_ToggleBtn_BackgroundOnColor">#005a9e</Color>
     <Color x:Key="CompUI_ToggleBtn_BackgroundOnOverColor">#1a6ba8</Color>
@@ -64,6 +64,12 @@
     <Color x:Key="CompUI_TabControl_TabItemBackgroundColor">#efefef</Color>
     <Color x:Key="CompUI_TabControl_TabItemActivedBackgroundColor">#fbfbfb</Color>
     <Color x:Key="CompUI_TabControl_TabItemDisableBackgroundColor">#fbfbfb</Color>
+
+    <Color x:Key="CompUI_DropDown_BorderColor">#e6e6e6</Color>
+    <Color x:Key="CompUI_DropDown_ButtonBackgroundOverColor">#f2f2f2</Color>
+    <Color x:Key="CompUI_DropDown_BackgroundClickColor">#e1e1e1</Color>
+    <Color x:Key="CompUI_DropDown_ButtonBackgroundCheckedColor">#ececec</Color>
+    <Color x:Key="CompUI_DropDown_BorderEndColor">#8d8d8d</Color>
 
     <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
     <SolidColorBrush x:Key="Cmm_NotifyTextColor" Color="{DynamicResource CompUI_Cmm_NotifyTextColor}" />

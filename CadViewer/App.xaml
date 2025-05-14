@@ -24,6 +24,8 @@
                 <ResourceDictionary Source="UIResources/CWaiting.xaml" />
                 <ResourceDictionary Source="UIResources/CProgressBar.xaml" />
                 <ResourceDictionary Source="UIResources/CNavSlider.xaml" />
+                <ResourceDictionary Source="UIResources/CDropDownButton.xaml" />
+                <ResourceDictionary Source="UIResources/CSoftPopup.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

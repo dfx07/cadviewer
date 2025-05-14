@@ -72,6 +72,7 @@
                         <RowDefinition Height="40" />
                         <RowDefinition Height="70" />
                         <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -101,8 +102,11 @@
 
                     <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Check Box"></TextBlock>
                     <ui:CCheckBox Grid.Row="6" Grid.Column="1" Width="140" Height="24" CheckWidth="18" Content="Check box">
-
                     </ui:CCheckBox>
+
+                    <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="DropDown Button"></TextBlock>
+                    <ui:CDropDownButton Grid.Row="7" Grid.Column="1" Width="140" Height="24" Content="DropDown button">
+                    </ui:CDropDownButton>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.ColumnDefinitions>
@@ -183,7 +187,7 @@
                     </ui:CScrollViewer>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="TabControl"></TextBlock>
-                    <ui:CTabControl Grid.Row="3" Grid.Column="1" Height="120">
+                    <ui:CTabControl Grid.Row="3" Margin="0,5,0,0" Grid.Column="1" Height="120">
                         <ui:CTabItem Header="Tab 1">
                             <TextBlock Text="Nội dung của Tab 1" />
                         </ui:CTabItem>
@@ -246,7 +250,7 @@
 
             <!--Label layout 0,0,-3,-6-->
             <Grid Grid.Row="1" Margin="0,0,0,-1" Grid.Column="0">
-                <Border CornerRadius="7" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Left" ClipToBounds="True" Width="120" Height="30">
+                <!--<Border CornerRadius="7" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Left" ClipToBounds="True" Width="120" Height="30">
                     <Border.Background>
                         <VisualBrush TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
                             <VisualBrush.Visual>
@@ -259,7 +263,7 @@
                             </VisualBrush.Transform>
                         </VisualBrush>
                     </Border.Background>
-                </Border>
+                </Border>-->
             </Grid>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">

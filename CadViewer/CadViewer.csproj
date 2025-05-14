@@ -104,8 +104,10 @@
     <Compile Include="Converters\TextBoxConverter.cs" />
     <Compile Include="Converters\TabControlConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />
+    <Compile Include="UIControls\CDropDownButton.cs" />
     <Compile Include="UIControls\CExpander.cs" />
     <Compile Include="UIControls\CCheckBox.cs" />
+    <Compile Include="UIControls\CSoftPopup.cs" />
     <Compile Include="UIControls\CNavSlider.cs" />
     <Compile Include="UIControls\CProgressBar.cs" />
     <Compile Include="UIControls\CWaiting.cs" />
@@ -157,11 +159,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIResources\CDropDownButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIResources\CExpander.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CCheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CSoftPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
