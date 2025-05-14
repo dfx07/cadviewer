@@ -110,11 +110,28 @@
                     </ui:CDropDownButton>
 
                     <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Soft Popup"></TextBlock>
-                    <ToggleButton x:Name="xSoftPopupToggle" Grid.Row="8" Grid.Column="1" Width="140" Height="24" Content="Show popup">
+                    <ToggleButton x:Name="ToggleBtn" Grid.Row="8" Grid.Column="1" Width="140" Height="24" Content="Show popup">
                     </ToggleButton>
-                    <ui:CSoftPopup PlacementTarget="{Binding ElementName=xSoftPopupToggle}" IsOpen="True">
-                        <TextBlock Text="This is a custom popup." />
-                    </ui:CSoftPopup>
+                    <!--<Border x:Name="PopupContent" Background="Transparent" BorderThickness="0" Width="120" Height="30">
+                        <Border Margin="6,2,6,6" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                            </Border.BorderBrush>
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
+                            </Border.Effect>
+                            <Button Content="Abc" Click="Button_Click"></Button>
+                        </Border>
+                    </Border>-->
+                    <!--<ui:CSoftPopup x:Name="MyPopup" PlacementTarget="{Binding ElementName=ToggleBtn}" IsOpen="{Binding IsChecked, ElementName=ToggleBtn}" HorizontalOffset="10" VerticalOffset="40">
+                        <Border Background="LightYellow" Padding="8" BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Lo cc!" FontWeight="Bold" />
+                        </Border>
+                        <Button Width="40" Height="20" Content="Click day"></Button>
+                    </ui:CSoftPopup>-->
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.ColumnDefinitions>

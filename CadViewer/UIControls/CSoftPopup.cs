@@ -15,72 +15,71 @@ using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Windows.Threading;
 using System.Windows.Documents;
+using System.IO;
+using System.Xml;
+using System.Windows.Markup;
 
 namespace CadViewer.UIControls
 {
 	public class PopupAdorner : Adorner
 	{
 		private readonly VisualCollection _visuals;
-		private readonly UIElement _child;
+		private UIElement _contentControl;
+		private Point _offset;
 
-		public PopupAdorner(UIElement adornedElement, UIElement popupContent)
+		public PopupAdorner(UIElement adornedElement, UIElement content, Point offset)
 			: base(adornedElement)
 		{
 			_visuals = new VisualCollection(this);
-			_child = popupContent;
-			_visuals.Add(_child);
+			_offset = offset;
+
+			_contentControl = content;
+
+			_visuals.Add(_contentControl);
 		}
 
-		protected override int VisualChildrenCount => 1;
-		protected override Visual GetVisualChild(int index) => _child;
+		protected override int VisualChildrenCount => _visuals.Count;
+		protected override Visual GetVisualChild(int index) => _visuals[index];
 
 		protected override Size MeasureOverride(Size constraint)
 		{
-			_child.Measure(constraint);
-			return _child.DesiredSize;
+			_contentControl.Measure(constraint);
+			return _contentControl.DesiredSize;
 		}
 
 		protected override Size ArrangeOverride(Size finalSize)
 		{
-			var offset = new Point(0, AdornedElement.RenderSize.Height);
-			_child.Arrange(new Rect(offset, _child.DesiredSize));
+			_contentControl.Arrange(new Rect(_offset, _contentControl.DesiredSize));
 			return finalSize;
 		}
-	}
 
+		public void SetOffset(Point offset)
+		{
+			_offset = offset;
+			InvalidateArrange();
+		}
+
+		public UIElement ContentControl => _contentControl;
+	}
 	public class CSoftPopup : ContentControl
 	{
-		private AdornerLayer _adornerLayer;
 		private PopupAdorner _adorner;
 
 		static CSoftPopup()
 		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(CSoftPopup),
-				new FrameworkPropertyMetadata(typeof(CSoftPopup)));
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(CSoftPopup), new FrameworkPropertyMetadata(typeof(CSoftPopup)));
 		}
 
-		public override void OnApplyTemplate()
+		public CSoftPopup()
 		{
-			base.OnApplyTemplate();
-
-			Loaded += (s, e) =>
-			{
-				if (IsOpen)
-				{
-					Show();
-				}
-			};
+			Loaded += CSoftPopup_Loaded;
+			Unloaded += CSoftPopup_Unloaded;
 		}
 
-		public UIElement PlacementTarget
-		{
-			get => (UIElement)GetValue(PlacementTargetProperty);
-			set => SetValue(PlacementTargetProperty, value);
-		}
+		#region Dependency Properties
 
-		public static readonly DependencyProperty PlacementTargetProperty =
-			DependencyProperty.Register(nameof(PlacementTarget), typeof(UIElement), typeof(CSoftPopup),
-				new FrameworkPropertyMetadata(null));
+		public static readonly DependencyProperty IsOpenProperty =
+			DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(CSoftPopup), new PropertyMetadata(false, OnIsOpenChanged));
 
 		public bool IsOpen
 		{
@@ -88,51 +87,98 @@ namespace CadViewer.UIControls
 			set => SetValue(IsOpenProperty, value);
 		}
 
-		public static readonly DependencyProperty IsOpenProperty =
-			DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(CSoftPopup),
-				new FrameworkPropertyMetadata(false, OnIsOpenChanged));
-
 		private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var popup = (CSoftPopup)d;
-			if ((bool)e.NewValue)
-				popup.Show();
-			else
-				popup.Close();
+			popup.UpdatePopup();
 		}
 
-		private void Show()
+		public static readonly DependencyProperty PlacementTargetProperty =
+			DependencyProperty.Register(nameof(PlacementTarget), typeof(UIElement), typeof(CSoftPopup), new PropertyMetadata(null));
+
+		public UIElement PlacementTarget
 		{
+			get => (UIElement)GetValue(PlacementTargetProperty);
+			set => SetValue(PlacementTargetProperty, value);
+		}
+
+		public static readonly DependencyProperty HorizontalOffsetProperty =
+			DependencyProperty.Register(nameof(HorizontalOffset), typeof(double), typeof(CSoftPopup), new PropertyMetadata(0.0));
+
+		public double HorizontalOffset
+		{
+			get => (double)GetValue(HorizontalOffsetProperty);
+			set => SetValue(HorizontalOffsetProperty, value);
+		}
+
+		public static readonly DependencyProperty VerticalOffsetProperty =
+			DependencyProperty.Register(nameof(VerticalOffset), typeof(double), typeof(CSoftPopup), new PropertyMetadata(0.0));
+
+		public double VerticalOffset
+		{
+			get => (double)GetValue(VerticalOffsetProperty);
+			set => SetValue(VerticalOffsetProperty, value);
+		}
+
+		#endregion
+
+		private void CSoftPopup_Loaded(object sender, RoutedEventArgs e)
+		{
+			if (IsOpen)
+			{
+				ShowPopup();
+			}
+		}
+
+		private void CSoftPopup_Unloaded(object sender, RoutedEventArgs e)
+		{
+			RemoveAdorner();
+		}
+
+		private void UpdatePopup()
+		{
+			if (!IsLoaded) return;
+
+			if (IsOpen)
+				ShowPopup();
+			else
+				RemoveAdorner();
+		}
+
+		private UIElement CloneCSoftPopup(CSoftPopup original)
+		{
+			string xaml = XamlWriter.Save(original);
+			StringReader stringReader = new StringReader(xaml);
+			XmlReader xmlReader = XmlReader.Create(stringReader);
+			UIElement clonedElement = (UIElement)XamlReader.Load(xmlReader);
+			return clonedElement;
+		}
+		private void ShowPopup()
+		{
+			RemoveAdorner();
+
 			if (PlacementTarget == null || Content == null)
 				return;
 
-			if (_adornerLayer != null)
+			var layer = AdornerLayer.GetAdornerLayer(PlacementTarget);
+			if (layer == null)
 				return;
 
-			if (PlacementTarget is FrameworkElement fe && !fe.IsLoaded)
-			{
-				fe.Loaded += (_, __) => Show(); // Delay hiển thị cho đến khi đã render xong
-				return;
-			}
+			var clonedPopup = CloneCSoftPopup(this);
 
-			_adornerLayer = AdornerLayer.GetAdornerLayer(PlacementTarget);
-			if (_adornerLayer == null)
-				return;
+			var offset = new Point(HorizontalOffset, VerticalOffset);
 
-			if (Content is UIElement contentElement)
-			{
-				_adorner = new PopupAdorner(PlacementTarget, contentElement);
-				_adornerLayer.Add(_adorner);
-			}
+			_adorner = new PopupAdorner(PlacementTarget, clonedPopup, offset);
+			layer.Add(_adorner);
 		}
 
-		private void Close()
+		private void RemoveAdorner()
 		{
-			if (_adorner != null && _adornerLayer != null)
+			if (_adorner != null)
 			{
-				_adornerLayer.Remove(_adorner);
+				var layer = AdornerLayer.GetAdornerLayer(PlacementTarget);
+				layer?.Remove(_adorner);
 				_adorner = null;
-				_adornerLayer = null;
 			}
 		}
 	}
