@@ -26,6 +26,7 @@
                 <ResourceDictionary Source="UIResources/CNavSlider.xaml" />
                 <ResourceDictionary Source="UIResources/CDropDownButton.xaml" />
                 <ResourceDictionary Source="UIResources/CSoftPopup.xaml" />
+                <ResourceDictionary Source="UIResources/CFlexPopup.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

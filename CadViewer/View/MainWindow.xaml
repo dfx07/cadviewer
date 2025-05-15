@@ -107,6 +107,16 @@
 
                     <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="DropDown Button"></TextBlock>
                     <ui:CDropDownButton Grid.Row="7" Grid.Column="1" Width="140" Height="24" Content="DropDown button">
+                        <ui:CDropDownButton.DropDownContent>
+                            <StackPanel Background="White">
+                                <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                </ui:CCheckBox>
+                                <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                </ui:CCheckBox>
+                                <ui:CTextBox Width="140" Height="24" Placeholder="Type to search..." UseSuggestion="True" ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/search26.png}" ImagePlacement="Left">
+                                </ui:CTextBox>
+                            </StackPanel>
+                        </ui:CDropDownButton.DropDownContent>
                     </ui:CDropDownButton>
 
                     <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Soft Popup"></TextBlock>

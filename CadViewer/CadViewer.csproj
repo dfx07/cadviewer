@@ -107,6 +107,7 @@
     <Compile Include="UIControls\CDropDownButton.cs" />
     <Compile Include="UIControls\CExpander.cs" />
     <Compile Include="UIControls\CCheckBox.cs" />
+    <Compile Include="UIControls\CFlexPopup.cs" />
     <Compile Include="UIControls\CSoftPopup.cs" />
     <Compile Include="UIControls\CNavSlider.cs" />
     <Compile Include="UIControls\CProgressBar.cs" />
@@ -168,6 +169,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CCheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CFlexPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

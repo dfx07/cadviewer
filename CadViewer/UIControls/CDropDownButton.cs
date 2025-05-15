@@ -32,8 +32,7 @@ namespace CadViewer.UIControls
 
 		private ToggleButton _DropDownButton = null;
 		private Border _ContentBound = null;
-		private Popup _Popup = null;
-		private Window _ParentWindow = null;
+		private CFlexPopup _Popup = null;
 
 		public override void OnApplyTemplate()
 		{
@@ -41,48 +40,15 @@ namespace CadViewer.UIControls
 
 			_DropDownButton = GetTemplateChild("PART_DropDownButton") as ToggleButton;
 			_ContentBound = GetTemplateChild("PART_Content_Bound") as Border;
-			_Popup = GetTemplateChild("PART_Popup") as Popup;
+			_Popup = GetTemplateChild("PART_Popup") as CFlexPopup;
 
 			if (_Popup != null)
 			{
-				_Popup.Opened += (s, e) =>
-				{
-					_ParentWindow = Window.GetWindow(this);
-					if (_ParentWindow != null)
-					{
-						_ParentWindow.LocationChanged += OnWindowChanged;
-						_ParentWindow.SizeChanged += OnWindowChanged;
-						_ParentWindow.StateChanged += OnWindowChanged;
-					}
-				};
-
 				_Popup.Closed += (s, e) =>
 				{
 					UpdateVisualState();
-
-					if (_ParentWindow != null)
-					{
-						_ParentWindow.LocationChanged -= OnWindowChanged;
-						_ParentWindow.SizeChanged -= OnWindowChanged;
-						_ParentWindow.StateChanged -= OnWindowChanged;
-						_ParentWindow = null;
-					}
 				};
 			}
-
-			Application.Current.Deactivated += (s, e) =>
-			{
-				if (_Popup.IsOpen)
-					_Popup.IsOpen = false;
-			};
-
-			Application.Current.MainWindow.PreviewMouseLeftButtonDown += (s, e) =>
-			{
-				if (_Popup.IsOpen && !IsClickInside(_Popup, e))
-				{
-					_Popup.IsOpen = false;
-				}
-			};
 
 			Loaded += (s, e) =>
 			{
@@ -90,28 +56,6 @@ namespace CadViewer.UIControls
 				_ContentBound.MouseEnter += ContentBound_MouseEnter;
 				_ContentBound.MouseLeave += ContentBound_MouseLeave;
 			};
-		}
-
-		private void OnWindowChanged(object sender, EventArgs e)
-		{
-			if (_Popup != null && _Popup.IsOpen)
-			{
-				_Popup.IsOpen = false;
-			}
-		}
-
-		private bool IsClickInside(Popup popup, MouseButtonEventArgs e)
-		{
-			var clickedElement = Mouse.DirectlyOver as DependencyObject;
-			while (clickedElement != null)
-			{
-				if (clickedElement == popup.Child)
-					return true;
-
-				clickedElement = VisualTreeHelper.GetParent(clickedElement);
-			}
-
-			return false;
 		}
 
 		private void UpdateVisualState()
@@ -158,6 +102,14 @@ namespace CadViewer.UIControls
 		{
 			get => (bool)GetValue(IsDropDownOpenProperty);
 			set => SetValue(IsDropDownOpenProperty, value);
+		}
+
+		public static readonly DependencyProperty DropDownContentProperty =
+		DependencyProperty.Register(nameof(DropDownContent), typeof(object), typeof(CDropDownButton));
+		public object DropDownContent
+		{
+			get => GetValue(DropDownContentProperty);
+			set => SetValue(DropDownContentProperty, value);
 		}
 	}
 }

@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CadViewer.UIControls"
+                    xmlns:cvt="clr-namespace:CadViewer.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <cvt:CommonBoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <cvt:CommonNumberToStringWithFormatConverter x:Key="NumberToStringWithFormatConverter" />
+    
+    <Style TargetType="{x:Type local:CFlexPopup}">
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="PopupAnimation" Value="Fade" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Child">
+            <Setter.Value>
+                <Border Background="Transparent" BorderThickness="0">
+                    <Border Margin="6,2,6,6" Padding="2" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                        </Border.BorderBrush>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
+                        </Border.Effect>
+                        <ContentPresenter Content="{Binding PopupContent, RelativeSource={RelativeSource AncestorType={x:Type local:CFlexPopup}}}" />
+                    </Border>
+                </Border>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
