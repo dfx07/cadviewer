@@ -29,7 +29,6 @@ namespace CadViewer.UIControls
 		AutoClose_AllowEvent
 	}
 
-	[ContentProperty(nameof(PopupContent))]
 	public class CFlexPopup : Popup
 	{
 		private Window _ParentWindow = null;
@@ -57,7 +56,7 @@ namespace CadViewer.UIControls
 			{
 				StaysOpen = false;
 			}
-			else if(OpenMode == EFlexPopupOpenMode.AlwaysOpen)
+			else if (OpenMode == EFlexPopupOpenMode.AlwaysOpen)
 			{
 				StaysOpen = true;
 			}
@@ -158,16 +157,6 @@ namespace CadViewer.UIControls
 		{
 			get => (EFlexPopupOpenMode)GetValue(OpenModeProperty);
 			set => SetValue(OpenModeProperty, value);
-		}
-
-
-		public static readonly DependencyProperty PopupContentProperty =
-		DependencyProperty.Register(nameof(PopupContent), typeof(object), typeof(CFlexPopup), new PropertyMetadata(null));
-
-		public object PopupContent
-		{
-			get => GetValue(PopupContentProperty);
-			set => SetValue(PopupContentProperty, value);
 		}
 	}
 }

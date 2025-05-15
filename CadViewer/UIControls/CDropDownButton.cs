@@ -17,6 +17,12 @@ using System.Collections.ObjectModel;
 
 namespace CadViewer.UIControls
 {
+	public enum EDropDownButtonFlowDirection
+	{
+		Horizontal = 0,
+		Vertical = 1
+	}
+
 	public class CDropDownButton : ToggleButton
 	{
 		static CDropDownButton()
@@ -27,7 +33,7 @@ namespace CadViewer.UIControls
 
 		public CDropDownButton()
 		{
-
+			
 		}
 
 		private ToggleButton _DropDownButton = null;
@@ -56,6 +62,11 @@ namespace CadViewer.UIControls
 				_ContentBound.MouseEnter += ContentBound_MouseEnter;
 				_ContentBound.MouseLeave += ContentBound_MouseLeave;
 			};
+
+			if (ButtonFlowDirection == EDropDownButtonFlowDirection.Vertical)
+			{
+				DropDownButtonSize = 15;
+			}
 		}
 
 		private void UpdateVisualState()
@@ -110,6 +121,24 @@ namespace CadViewer.UIControls
 		{
 			get => GetValue(DropDownContentProperty);
 			set => SetValue(DropDownContentProperty, value);
+		}
+
+		public static readonly DependencyProperty ButtonFlowDirectionProperty =
+		DependencyProperty.Register(nameof(ButtonFlowDirection), typeof(EDropDownButtonFlowDirection), typeof(CDropDownButton),
+			new PropertyMetadata(EDropDownButtonFlowDirection.Horizontal));
+
+		public EDropDownButtonFlowDirection ButtonFlowDirection
+		{
+			get => (EDropDownButtonFlowDirection)GetValue(ButtonFlowDirectionProperty);
+			set => SetValue(ButtonFlowDirectionProperty, value);
+		}
+
+		public static readonly DependencyProperty DropDownButtonSizeProperty =
+		DependencyProperty.Register(nameof(DropDownButtonSize), typeof(double), typeof(CDropDownButton), new PropertyMetadata(20.0));
+		public double DropDownButtonSize
+		{
+			get => (double)GetValue(DropDownButtonSizeProperty);
+			set => SetValue(DropDownButtonSizeProperty, value);
 		}
 	}
 }

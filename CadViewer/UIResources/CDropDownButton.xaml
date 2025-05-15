@@ -28,20 +28,34 @@
                         </Border.BorderBrush>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="PART_DropDownButton" Grid.Column="0" Width="20" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Border x:Name="PART_Content_Bound" Grid.Column="0" Background="Transparent">
+                                <ContentPresenter x:Name="PART_Content" Margin ="3"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                            <ToggleButton x:Name="PART_DropDownButton" Grid.Column="1" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                        <Border x:Name="PART_DropDownButton_Bound" CornerRadius="2,0,0,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderThickness="0,0,1,0">
+                                        <Border x:Name="PART_DropDownButton_Bound" CornerRadius="0,2,2,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                                BorderThickness="1,0,0,0" Padding="4">
                                             <Border.Background>
                                                 <SolidColorBrush Color="Transparent" />
                                             </Border.Background>
                                             <Border.BorderBrush>
                                                 <SolidColorBrush Color="{DynamicResource CompUI_DropDown_BorderColor}" />
                                             </Border.BorderBrush>
-                                            <Path x:Name="PART_DropDownButton_Path" Data="M 0 0 L 4 4 L 8 0" Stroke="Gray" Margin="5" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" SnapsToDevicePixels="True">
+                                            <Path x:Name="PART_DropDownButton_Path" Data="M 0 0 L 4 4 L 8 0" Stroke="Gray"
+                                                  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                  RenderTransformOrigin="0.5,0.5" Stretch="Uniform" SnapsToDevicePixels="True">
                                                 <Path.RenderTransform>
                                                     <RotateTransform x:Name="xComboBoxDropdownPathRotate" Angle="0" />
                                                 </Path.RenderTransform>
@@ -95,21 +109,36 @@
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
                                         </Border>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding ButtonFlowDirection, RelativeSource={RelativeSource AncestorType={x:Type local:CDropDownButton}}}" Value="Vertical">
+                                                <Setter TargetName="PART_DropDownButton_Bound" Property="BorderThickness" Value="0,1,0,0" />
+                                                <Setter TargetName="PART_DropDownButton_Bound" Property="CornerRadius" Value="0,0,2,2" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ButtonFlowDirection, RelativeSource={RelativeSource AncestorType={x:Type local:CDropDownButton}}}" Value="Horizontal">
+                                                <Setter TargetName="PART_DropDownButton_Bound" Property="BorderThickness" Value="1,0,0,0" />
+                                                <Setter TargetName="PART_DropDownButton_Bound" Property="CornerRadius" Value="0,2,2,0" />
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
-                            <Border x:Name="PART_Content_Bound" Grid.Column="1" Background="Transparent">
-                                <ContentPresenter x:Name="PART_Content" Margin ="2"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Border>
-
-                            <local:CFlexPopup x:Name="PART_Popup" Focusable="True" HorizontalAlignment="Left" HorizontalOffset="-6" Placement="Bottom"
-                                   AllowsTransparency="True" PlacementTarget="{Binding ElementName=PART_DropDownButton_Bound}" OpenMode="AutoClose"
-                                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Height="100">
-                                <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+                            <local:CFlexPopup x:Name="PART_Popup" Focusable="True" HorizontalAlignment="Left" HorizontalOffset="-6" Placement="Bottom" 
+                                              AllowsTransparency="True" PlacementTarget="{Binding ElementName=PART_DropDownButton_Bound}" OpenMode="AutoClose" 
+                                              IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Border Background="Transparent" BorderThickness="0">
+                                    <Border Margin="6,2,6,6" Padding="2" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                                        </Border.Background>
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                        </Border.BorderBrush>
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
+                                        </Border.Effect>
+                                        <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+                                    </Border>
+                                </Border>
                             </local:CFlexPopup>
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
@@ -139,6 +168,21 @@
                         </VisualStateManager.VisualStateGroups>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ButtonFlowDirection, RelativeSource={RelativeSource Self}}" Value="Vertical">
+                            <Setter TargetName="PART_Content_Bound" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_DropDownButton" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_Content_Bound" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_DropDownButton" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="PART_DropDownButton" Property="Height" Value="{Binding DropDownButtonSize, RelativeSource={RelativeSource AncestorType={x:Type local:CDropDownButton}}}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ButtonFlowDirection, RelativeSource={RelativeSource Self}}" Value="Horizontal">
+                            <Setter TargetName="PART_Content_Bound" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_DropDownButton" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_Content_Bound" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_DropDownButton" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_DropDownButton" Property="Width" Value="{Binding DropDownButtonSize, RelativeSource={RelativeSource AncestorType={x:Type local:CDropDownButton}}}" />
+                            <Setter TargetName="PART_DropDownButton" Property="HorizontalAlignment" Value="Stretch" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
