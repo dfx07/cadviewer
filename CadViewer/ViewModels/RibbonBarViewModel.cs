@@ -8,34 +8,41 @@ using System.Threading.Tasks;
 
 namespace CadViewer.ViewModels
 {
-	public class RibbonBarViewModel : TabBarEventListener
+	public class RibbonBarViewModel : ViewModelBase
 	{
-		public ObservableCollection<TabBarItemInfo> tabBarInfos;
+		private ObservableCollection<TabBarItemInfo> _tabBarInfos;
+		public ObservableCollection<TabBarItemInfo> TabBarInfos
+		{
+			get => _tabBarInfos;
+			set
+			{
+				_tabBarInfos = value;
+				OnPropertyChanged(nameof(TabBarInfos));
+			}
+		}
+
+		private TabBarItemInfo _selectedTab;
+		public TabBarItemInfo SelectedTab
+		{
+			get => _selectedTab;
+			set
+			{
+				_selectedTab = value;
+				OnPropertyChanged(nameof(SelectedTab));
+			}
+		}
 
 		public RibbonBarViewModel()
 		{
-			// Initialize the RibbonBarViewModel
-			//tabBarInfos.Add(new TabBarItemInfo { strTabName = "FILE", nTabIdx = 0, bVisible = true});
-			//tabBarInfos.Add(new TabBarItemInfo { strTabName = "EDIT", nTabIdx = 1 });
-			//tabBarInfos.Add(new TabBarItemInfo { strTabName = "VIEW", nTabIdx = 2 });
-			//tabBarInfos.Add(new TabBarItemInfo { strTabName = "VIEW", nTabIdx = 3 });
-		}
+			TabBarInfos = new ObservableCollection<TabBarItemInfo>()
+			{
+				new TabBarItemInfo { strTabName = "FILE", nTabIdx = 0 },
+				new TabBarItemInfo { strTabName = "EDIT", nTabIdx = 1 },
+				new TabBarItemInfo { strTabName = "VIEW", nTabIdx = 2 },
+				new TabBarItemInfo { strTabName = "PROJ", nTabIdx = 3 }
+			};
 
-		public void OnInitModel()
-		{
-			tabBarInfos = new ObservableCollection<TabBarItemInfo>();
-
-			// Initialize the RibbonBarViewModel
-			tabBarInfos.Add(new TabBarItemInfo { strTabName = "FILE", nTabIdx = 0 });
-			tabBarInfos.Add(new TabBarItemInfo { strTabName = "EDIT", nTabIdx = 1 });
-			tabBarInfos.Add(new TabBarItemInfo { strTabName = "VIEW", nTabIdx = 2 });
-			tabBarInfos.Add(new TabBarItemInfo { strTabName = "VIEW", nTabIdx = 3 });
-		}
-
-		public void TabBar_OnTabChanged(TabBarItemInfo _tabinfo)
-		{
-			//TODO : implement
-			tabBarInfos.First(x => x.strTabName == _tabinfo.strTabName).bVisible = false;
+			SelectedTab = TabBarInfos.FirstOrDefault();
 		}
 	}
 }

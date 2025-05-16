@@ -104,6 +104,10 @@
     <Compile Include="Converters\TextBoxConverter.cs" />
     <Compile Include="Converters\TabControlConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />
+    <Compile Include="Dialogs\DlgSetting.xaml.cs">
+      <DependentUpon>DlgSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="UIControls\CDropDownButton.cs" />
     <Compile Include="UIControls\CExpander.cs" />
     <Compile Include="UIControls\CCheckBox.cs" />
@@ -111,6 +115,7 @@
     <Compile Include="UIControls\CSoftPopup.cs" />
     <Compile Include="UIControls\CNavSlider.cs" />
     <Compile Include="UIControls\CProgressBar.cs" />
+    <Compile Include="UIControls\CDialogContainer.cs" />
     <Compile Include="UIControls\CWaiting.cs" />
     <Compile Include="UIControls\CTabControl.cs" />
     <Compile Include="UIControls\CScrollViewer.cs" />
@@ -134,29 +139,34 @@
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
     <Compile Include="ViewModels\RibbonBarViewModel.cs" />
+    <Compile Include="ViewModels\BaseModalDialogViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PCBViewModel.cs" />
     <Compile Include="ViewModels\ViewModelCallback.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
+    <Compile Include="Views\.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PCBViewer\OpenGLView.xaml.cs">
+    <Compile Include="Views\PCBViewer\OpenGLView.xaml.cs">
       <DependentUpon>OpenGLView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PCBViewer\PCBViewer.xaml.cs">
+    <Compile Include="Views\PCBViewer\PCBViewer.xaml.cs">
       <DependentUpon>PCBViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Properties\PropertiesView.xaml.cs">
+    <Compile Include="Views\Properties\PropertiesView.xaml.cs">
       <DependentUpon>PropertiesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HeaderBar\RibbonBar.xaml.cs">
+    <Compile Include="Views\HeaderBar\RibbonBar.xaml.cs">
       <DependentUpon>RibbonBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HeaderBar\TabBar.xaml.cs">
+    <Compile Include="Views\HeaderBar\TabBar.xaml.cs">
       <DependentUpon>TabBar.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\CButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -185,6 +195,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CDialogContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -248,7 +262,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -256,23 +270,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\PCBViewer\OpenGLView.xaml">
+    <Page Include="Views\PCBViewer\OpenGLView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PCBViewer\PCBViewer.xaml">
+    <Page Include="Views\PCBViewer\PCBViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Properties\PropertiesView.xaml">
+    <Page Include="Views\Properties\PropertiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HeaderBar\RibbonBar.xaml">
+    <Page Include="Views\HeaderBar\RibbonBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HeaderBar\TabBar.xaml">
+    <Page Include="Views\HeaderBar\TabBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

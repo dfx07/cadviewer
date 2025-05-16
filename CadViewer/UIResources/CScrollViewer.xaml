@@ -6,9 +6,11 @@
 
     <cvt:CommonBoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <cvt:CommonNumberToStringWithFormatConverter x:Key="NumberToStringWithFormatConverter" />
+    <SolidColorBrush x:Key="CompUI_ScrollViewer_BackgroundBrush" Color="{StaticResource CompUI_ScrollViewer_BackgroundColor}" />
 
     <Style TargetType="{x:Type local:CScrollViewer}" BasedOn="{StaticResource {x:Type ScrollViewer}}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource CompUI_ScrollViewer_BackgroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CScrollViewer}">
@@ -21,13 +23,12 @@
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Column="0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" BorderThickness="1" SnapsToDevicePixels="True">
+                        <Border Grid.Column="0" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" SnapsToDevicePixels="True" 
+                                BorderThickness="{TemplateBinding ViewThickness}"
+                                Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}">
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource BorderMediumColor}" Opacity="0.2"/>
+                                <SolidColorBrush Color="{DynamicResource BorderMediumColor}" Opacity="0.2" />
                             </Border.BorderBrush>
-                            <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_ScrollViewer_BackgroundColor}" />
-                            </Border.Background>
                             <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}"
                                                     Content="{TemplateBinding Content}"
                                                     ContentTemplate="{TemplateBinding ContentTemplate}"

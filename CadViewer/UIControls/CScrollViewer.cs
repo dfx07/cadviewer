@@ -96,5 +96,14 @@ namespace CadViewer.UIControls
 			get => (bool)GetValue(AutoHideScrollBarProperty);
 			set => SetValue(AutoHideScrollBarProperty, value);
 		}
+
+		public static readonly DependencyProperty ViewThicknessProperty =
+		DependencyProperty.Register(nameof(ViewThickness), typeof(Thickness), typeof(CScrollViewer), new PropertyMetadata(new Thickness(0)));
+
+		public Thickness ViewThickness
+		{
+			get => (Thickness)GetValue(ViewThicknessProperty);
+			set => SetValue(ViewThicknessProperty, value);
+		}
 	}
 }

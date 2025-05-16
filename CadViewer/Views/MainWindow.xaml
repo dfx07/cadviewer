@@ -1,0 +1,337 @@
+﻿<Window x:Class="CadViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CadViewer"
+        xmlns:com="clr-namespace:CadViewer.Common"
+        xmlns:uctrl="clr-namespace:CadViewer.View"
+        xmlns:vm="clr-namespace:CadViewer.ViewModels"
+        xmlns:ui="clr-namespace:CadViewer.UIControls"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:cvt="clr-namespace:CadViewer.Converters" mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="CadViewer" Height="640" Width="860">
+
+    <Window.Resources>
+        <cvt:CommonBooleanNegationConverter x:Key="CommonBooleanNegationConverter" />
+    </Window.Resources>
+
+    <Grid x:Name="PART_MainGrid">
+        <Grid x:Name="PART_MainContent">
+            <Grid.Background>
+                <SolidColorBrush Color="{DynamicResource Cmm_BackgroundColor}"></SolidColorBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <uctrl:BibbonBar DataContext="{Binding RibbonBarVM}"></uctrl:BibbonBar>
+                <!--<ui:CButton Width="70" Height="24"></ui:CButton>-->
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" ClipToBounds="True">
+                    <ToggleButton x:Name="NavToggle" Content="☰ NavSlider" />
+                    <ui:CNavSlider x:Name="NavSlider" Width="200" Orientation="Horizontal" IsOpen="{Binding IsChecked, ElementName=NavToggle}">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Home" Foreground="White" FontSize="16" Margin="0 10" />
+                            <TextBlock Text="Settings" Foreground="White" FontSize="16" Margin="0 10" />
+                            <TextBlock Text="About" Foreground="White" FontSize="16" Margin="0 10" />
+                        </StackPanel>
+                    </ui:CNavSlider>
+                </StackPanel>
+                <!--Button layout-->
+                <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" /> <!--Small controls-->
+                        <ColumnDefinition Width="*" /> <!--Large controls-->
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Button"></TextBlock>
+                        <ui:CButton Content="Button" Grid.Row="0" Grid.Column="1" Width="70" Height="24" FontSize="11" IsEnabled="True" ImageMargin="2" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/menu26.png}" ImagePlacement="Right">
+                        </ui:CButton>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Toggle Button"></TextBlock>
+                        <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False">
+                        </ui:CToggleButton>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
+                        <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="140" Height="24" Placeholder="Type to search..." UseSuggestion="True" ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/search26.png}" ImagePlacement="Left">
+                        </ui:CTextBox>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="ComboBox"></TextBlock>
+                        <ui:CComboBox Grid.Row="3" Grid.Column="1" Width="140" Height="24" SelectedIndex="0">
+                        </ui:CComboBox>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Slider"></TextBlock>
+                        <ui:CSlider Grid.Row="4" Grid.Column="1" ShowRangeLabel="False" Minimum="10" Maximum="120" Value="111" Width="140" Height="24" TickPlacement="BottomRight">
+                        </ui:CSlider>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="RangeSlider"></TextBlock>
+                        <ui:CRangeSlider Grid.Row="5" Grid.Column="1" ShowRangeLabel="False" Minimum="10" Maximum="120" LowerValue="20" UpperValue="80" Width="140" Height="60" TickPlacement="BottomRight">
+                        </ui:CRangeSlider>
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Check Box"></TextBlock>
+                        <ui:CCheckBox Grid.Row="6" Grid.Column="1" Width="140" Height="24" CheckWidth="18" Content="Check box">
+                        </ui:CCheckBox>
+
+                        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="DropDownButton 1"></TextBlock>
+                        <ui:CDropDownButton Grid.Row="7" Grid.Column="1" Width="140" Height="24" Content="DropDown 1">
+                            <ui:CDropDownButton.DropDownContent>
+                                <StackPanel Background="White">
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                    <ui:CTextBox Width="140" Height="24" Placeholder="Type to search..." UseSuggestion="True" ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/search26.png}" ImagePlacement="Left">
+                                    </ui:CTextBox>
+                                </StackPanel>
+                            </ui:CDropDownButton.DropDownContent>
+                        </ui:CDropDownButton>
+
+                        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="DropDownButton 2"></TextBlock>
+                        <ui:CDropDownButton Grid.Row="8" Grid.Column="1" Width="50" Height="60" ButtonFlowDirection="Vertical">
+                            <ui:CDropDownButton.Content>
+                                <Border Padding="6">
+                                    <Image Source="{com:PackImage Path=Assets/Images/search26.png}" />
+                                </Border>
+
+                            </ui:CDropDownButton.Content>
+                            <ui:CDropDownButton.DropDownContent>
+                                <StackPanel Background="White">
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                </StackPanel>
+                            </ui:CDropDownButton.DropDownContent>
+                        </ui:CDropDownButton>
+
+                        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Soft Popup"></TextBlock>
+                        <ToggleButton x:Name="ToggleBtn" Margin="0,3,0,0" Grid.Row="9" Grid.Column="1" Width="140" Height="24" Content="Show popup">
+                        </ToggleButton>
+                        <!--<Border x:Name="PopupContent" Background="Transparent" BorderThickness="0" Width="120" Height="30">
+                            <Border Margin="6,2,6,6" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                                </Border.Background>
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                </Border.BorderBrush>
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
+                                </Border.Effect>
+                                <Button Content="Abc" Click="Button_Click"></Button>
+                            </Border>
+                        </Border>-->
+                        <!--<ui:CSoftPopup x:Name="MyPopup" PlacementTarget="{Binding ElementName=ToggleBtn}" IsOpen="{Binding IsChecked, ElementName=ToggleBtn}" HorizontalOffset="10" VerticalOffset="40">
+                            <Border Background="LightYellow" Padding="8" BorderBrush="Black" BorderThickness="1">
+                                <TextBlock Text="Lo cc!" FontWeight="Bold" />
+                            </Border>
+                            <Button Width="40" Height="20" Content="Click day"></Button>
+                        </ui:CSoftPopup>-->
+                        <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="DoModal"></TextBlock>
+                        <Button Margin="0,3,0,0" Click="DoModal_Click" Grid.Row="10" Grid.Column="1" Width="140" Height="24" Content="DoModal">
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3"
+                                   Foreground="{DynamicResource Cmm_TextColor}" Text="GroupBox"></TextBlock>
+                        <ui:CGroupBox Grid.Row="0" Grid.Column="1" Height="100" HeaderHeight="30" ImageWidth="15" ImagePlacement="Right" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                            <ui:CGroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="GroupBox Header"/>
+                                </StackPanel>
+                            </ui:CGroupBox.Header>
+                            <ui:CGroupBox.Content>
+                                <StackPanel>
+                                    <TextBlock Text="This is content and so many control contains here" />
+                                </StackPanel>
+                            </ui:CGroupBox.Content>
+                        </ui:CGroupBox>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Expander"></TextBlock>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,3,0,0">
+                            <ui:CExpander Margin="0,0,0,0" HeaderHeight="30" ImageWidth="15" ImagePlacement="Left" ExpandDirection="Down" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                                <ui:CExpander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="Expander Header" />
+                                    </StackPanel>
+                                </ui:CExpander.Header>
+                                <ui:CExpander.Content>
+                                    <StackPanel>
+                                        <TextBlock Text="This is content and so many control contains here" />
+                                        <TextBlock Text="This is content and so many control contains here" />
+                                        <TextBlock Text="This is content and so many control contains here" />
+                                        <TextBox Text="This is content and so many control contains here" />
+                                        <ComboBox Text="This is content and so many control contains here" />
+                                    </StackPanel>
+                                </ui:CExpander.Content>
+                            </ui:CExpander>
+
+                            <ui:CExpander Margin="0,1,0,0" HeaderHeight="30" ImageWidth="15" ImagePlacement="Left" ExpandDirection="Up" ImageSource="{com:PackImage Path=Assets/Images/search26.png}">
+                                <ui:CExpander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="Expander Header" />
+                                    </StackPanel>
+                                </ui:CExpander.Header>
+                                <ui:CExpander.Content>
+                                    <StackPanel>
+                                        <TextBlock Text="This is content and so many control contains here" />
+                                        <TextBlock Text="This is content and so many control contains here" />
+                                        <TextBlock Text="This is content and so many control contains here" />
+                                        <TextBox Text="This is content and so many control contains here" />
+                                        <ComboBox Text="This is content and so many control contains here" />
+                                    </StackPanel>
+                                </ui:CExpander.Content>
+                            </ui:CExpander>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="ScrollViewer"></TextBlock>
+                        <ui:CScrollViewer Grid.Row="2" Grid.Column="1" Height="100" Margin="0,3,0,0" Padding="5" ViewThickness="1"
+                                          HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                            <StackPanel>
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBox Text="This is content and so many control contains here" />
+                                <ComboBox Text="This is content and so many control contains here" />
+                            </StackPanel>
+                        </ui:CScrollViewer>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="TabControl"></TextBlock>
+                        <ui:CTabControl Grid.Row="3" Margin="0,5,0,0" Grid.Column="1" Height="120">
+                            <ui:CTabItem Header="Tab 1">
+                                <TextBlock Text="Nội dung của Tab 1" />
+                            </ui:CTabItem>
+                            <ui:CTabItem Header="Tab 2">
+                                <StackPanel>
+                                    <TextBlock Text="Nội dung của Tab 2" />
+                                    <Button Content="Nhấn vào tôi!" />
+                                </StackPanel>
+                            </ui:CTabItem>
+                            <ui:CTabItem Header="Tab 3">
+                                <StackPanel>
+                                    <TextBlock Text="Nội dung của Tab 2" />
+                                    <Button Content="Nhấn vào tôi!" />
+                                </StackPanel>
+                            </ui:CTabItem>
+                        </ui:CTabControl>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Waiting"></TextBlock>
+                        <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:CWaiting Grid.Column="0" Height="100" Width="70" LoadIconWidth="40">
+                            </ui:CWaiting>
+                            <ui:CWaiting Grid.Column="1" Height="100" Width="70" LoadIconWidth="40" LoadIconType="Line">
+                            </ui:CWaiting>
+                        </Grid>
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" Foreground="{DynamicResource Cmm_TextColor}" Text="Progress"></TextBlock>
+                        <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ui:CProgressBar Grid.Row="0" Width="160" Value="70" ProgressBarHeight="20" Minimum="0" Maximum="100" 
+                                             IsIndeterminate="True" Message="" ShowProgressCount="False" ProgressStatus="Info"></ui:CProgressBar>
+                            <ui:CProgressBar Grid.Row="1" Width="160" Value="30" ProgressBarHeight="20" Minimum="0" Maximum="100" 
+                                             IsIndeterminate="False" Message="Loading data... 10|100" ShowProgressCount="True" ProgressStatus="Warn"></ui:CProgressBar>
+                            <ui:CProgressBar Grid.Row="2" Width="160" Value="80" ProgressBarHeight="20" Minimum="0" Maximum="100" 
+                                             IsIndeterminate="False" Message="Error data... 10|100" ShowProgressCount="True" ProgressStatus="Error"></ui:CProgressBar>
+                            <ui:CProgressBar Margin="0,10,0,0" Grid.Row="3" Value="80" ProgressBarHeight="50" Minimum="0" Maximum="100" IsIndeterminate="False"
+                                             Message="Error data... 10|100" DisplayFormat="_val_/_max_" ShowProgressCount="True" ProgressStatus="Info" ProgressStyle="Circle"></ui:CProgressBar>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <!--Label layout 0,0,-3,-6-->
+                <Grid Grid.Row="1" Margin="0,0,0,-1" Grid.Column="0">
+                    <!--<Border CornerRadius="7" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Left" ClipToBounds="True" Width="120" Height="30">
+                        <Border.Background>
+                            <VisualBrush TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
+                                <VisualBrush.Visual>
+                                    <Canvas x:Name="PART_Indicator_Canvas" Width="20" Height="20" Background="Red">
+                                        <Path Stroke="#4d9fd6" StrokeThickness="9" Data="M 5 30 L 13 -5" />
+                                    </Canvas>
+                                </VisualBrush.Visual>
+                                <VisualBrush.Transform>
+                                    <TranslateTransform x:Name="StripeTransform" X="0" />
+                                </VisualBrush.Transform>
+                            </VisualBrush>
+                        </Border.Background>
+                    </Border>-->
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Button Name="btnGenOpenGL" Content="Click to gen OpenGL context" Margin=" 10 ,10 ,10, 10" Command="{Binding IBtnRegisterClickComand}">
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid x:Name="PART_ModalOverlay" Background="#80000000" Visibility="Collapsed"
+              Panel.ZIndex="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </Grid>
+    </Grid>
+</Window>
