@@ -19,9 +19,10 @@ namespace CadViewer.Dialogs
 	/// <summary>
 	/// Interaction logic for DlgSetting.xaml
 	/// </summary>
-	public partial class DlgSetting : UserControl, IModalDialog
+	public partial class DlgSetting : ModalDialog
 	{
-		public DlgSetting()
+		public DlgSetting(IDialogService dlgService):
+			base(dlgService)
 		{
 			InitializeComponent();
 		}

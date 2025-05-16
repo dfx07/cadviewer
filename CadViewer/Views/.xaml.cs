@@ -50,7 +50,7 @@ namespace CadViewer
 
 		private void DoModal_Click(object sender, RoutedEventArgs e)
 		{
-			DlgSetting setting = new DlgSetting();
+			DlgSetting setting = new DlgSetting(this);
 
 			ShowModal(setting);
 		}

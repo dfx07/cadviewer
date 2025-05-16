@@ -108,6 +108,7 @@
       <DependentUpon>DlgSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Interfaces\ModalDialog.cs" />
     <Compile Include="UIControls\CDropDownButton.cs" />
     <Compile Include="UIControls\CExpander.cs" />
     <Compile Include="UIControls\CCheckBox.cs" />

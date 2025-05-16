@@ -14,11 +14,18 @@ using CadViewer.Animations;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Windows.Threading;
+using CadViewer.Interfaces;
+using System.Windows.Media.Effects;
 
 namespace CadViewer.UIControls
 {
 	public class CDialogContainer : ContentControl
 	{
+		private Point _dragStartPoint;
+		private bool _isDragging = false;
+		private TranslateTransform _translateDlg = null;
+		private DropShadowEffect _effectDlg = null;
+
 		static CDialogContainer()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(CDialogContainer),
@@ -29,19 +36,74 @@ namespace CadViewer.UIControls
 		{
 			base.OnApplyTemplate();
 
+			if (GetTemplateChild("PART_CloseBtn") is Button closeBtn)
+			{
+				closeBtn.Click += (s, e) =>
+				{
+					if (DialogListener != null)
+					{
+						DialogListener.OnClose();
+					}
+				};
+			}
+
+			if (GetTemplateChild("PART_Translate") is TranslateTransform translate)
+			{
+				_translateDlg = translate;
+			}
+
+			if (GetTemplateChild("PART_DropShadow") is DropShadowEffect effect)
+			{
+				_effectDlg = effect;
+			}
+
+			if (GetTemplateChild("PART_TitleDlg") is Border titleBorder)
+			{
+				titleBorder.MouseLeftButtonDown += (s, e) =>
+				{
+					_dragStartPoint = e.GetPosition(null);
+					_isDragging = true;
+					_effectDlg.Opacity = 0;
+
+					titleBorder.CaptureMouse();
+				};
+
+				titleBorder.MouseLeftButtonUp += (s, e) =>
+				{
+					_effectDlg.Opacity = 0.2;
+					_isDragging = false;
+					titleBorder.ReleaseMouseCapture();
+				};
+
+				titleBorder.MouseMove += (s, e) =>
+				{
+					if (_isDragging)
+					{
+						Point currentPosition = e.GetPosition(null);
+						double offsetX = currentPosition.X - _dragStartPoint.X;
+						double offsetY = currentPosition.Y - _dragStartPoint.Y;
+
+						_translateDlg.X = Math.Round(_translateDlg.X + offsetX);
+						_translateDlg.Y = Math.Round(_translateDlg.Y + offsetY);
+
+						_dragStartPoint = currentPosition;
+					}
+				};
+			}
+
 			Loaded += (s, e) =>
 			{
 
 			};
 		}
 
-		public static readonly DependencyProperty CloseHandlerProperty =
-		DependencyProperty.Register(nameof(CloseHandler), typeof(Action<object, RoutedEventArgs>), typeof(CDialogContainer), new PropertyMetadata(null));
+		public static readonly DependencyProperty DialogListenerProperty =
+		DependencyProperty.Register(nameof(DialogListener), typeof(IModalDialog), typeof(CDialogContainer), new PropertyMetadata(null));
 
-		public Action<object, RoutedEventArgs>? CloseHandler
+		public IModalDialog DialogListener
 		{
-			get => (Action<object, RoutedEventArgs>?)GetValue(CloseHandlerProperty);
-			set => SetValue(CloseHandlerProperty, value);
+			get => (IModalDialog)GetValue(DialogListenerProperty);
+			set => SetValue(DialogListenerProperty, value);
 		}
 	}
 }
