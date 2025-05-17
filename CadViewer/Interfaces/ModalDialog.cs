@@ -18,7 +18,7 @@ namespace CadViewer.Interfaces
 		public void OnClose()
 		{
 			if(_dlgService != null)
-				_dlgService.CloseModal();
+				_dlgService.CloseModal(this);
 		}
 		public void OnOpen()
 		{

@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.Dialogs"
              xmlns:ui="clr-namespace:CadViewer.UIControls"
-             mc:Ignorable="d" 
+             xmlns:com="clr-namespace:CadViewer.Common" mc:Ignorable="d" 
              Width="500"
              d:DesignWidth="800">
-    <ui:CDialogContainer DialogListener="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <ui:CDialogContainer DialogListener="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
+                         Title="Setting" IconSource="{com:PackImage Path=Assets/Images/settings26.png}">
         <Border>
             <Border.Background>
                 <SolidColorBrush Color="{DynamicResource Cmm_BackgroundColor}" />

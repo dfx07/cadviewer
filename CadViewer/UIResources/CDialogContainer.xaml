@@ -29,14 +29,15 @@
                         </Border>
                         <Border Margin="6,2,6,6" Background="Transparent" >
                             <DockPanel>
-                                <Border Margin="0" x:Name="PART_TitleDlg" Padding="5,2,1,0" Background="#3b4453" Height="24" CornerRadius="5,5,0,0" 
+                                <Border Margin="0" x:Name="PART_TitleDlg" Padding="1" Background="#3b4453" Height="24" CornerRadius="5,5,0,0" 
                                         DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                     <DockPanel FlowDirection="LeftToRight">
                                         <StackPanel DockPanel.Dock="Right" FlowDirection="LeftToRight" Orientation="Horizontal">
-                                            <Button Content="_" Width="20"></Button>
                                             <Button x:Name="PART_CloseBtn" Content="X" Width="20"></Button>
                                         </StackPanel>
-                                        <TextBlock Foreground="White" Text="Setting dialog"></TextBlock>
+                                        <Image x:Name="PART_Icon" Margin="1,0,1,1" Source="{TemplateBinding IconSource}" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        </Image>
+                                        <TextBlock Foreground="White" Margin="5,0,1,1" Text="{TemplateBinding Title}" VerticalAlignment="Center"></TextBlock>
                                     </DockPanel>
                                 </Border>
                                 <Border Padding="10">
@@ -54,6 +55,12 @@
                             <Setter TargetName="PART_Canvas" Property="DockPanel.Dock" Value="Top" />
                             <Setter TargetName="PART_Message" Property="DockPanel.Dock" Value="Bottom" />
                         </DataTrigger>-->
+                        <DataTrigger Binding="{Binding IconSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsFreeze, RelativeSource={RelativeSource Self}}" Value="True">
+                            <Setter TargetName="PART_CloseBtn" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -27,6 +27,8 @@ namespace CadViewer
 	/// </summary>
 	public partial class MainWindow : Window, IDialogService
 	{
+		DlgProgress dlgProgress = null;
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -50,9 +52,31 @@ namespace CadViewer
 
 		private void DoModal_Click(object sender, RoutedEventArgs e)
 		{
-			DlgSetting setting = new DlgSetting(this);
+			//DlgSetting setting = new DlgSetting(this);
 
-			ShowModal(setting);
+			//ShowModal(setting);
+
+			ShowProgress("Loading...");
+		}
+
+		public void ShowProgress(string progressMsg)
+		{
+			PART_ModalOverlay.Visibility = Visibility.Visible;
+
+			if(dlgProgress == null)
+			{
+				dlgProgress = new DlgProgress(this);
+			}
+
+			dlgProgress.HorizontalAlignment = HorizontalAlignment.Center;
+			dlgProgress.VerticalAlignment = VerticalAlignment.Center;
+
+			dlgProgress.ProcessMessage = progressMsg;
+
+			if (!PART_ModalOverlay.Children.Contains(dlgProgress))
+			{
+				PART_ModalOverlay.Children.Add(dlgProgress);
+			}
 		}
 
 		public int ShowModal(IModalDialog dialog)
@@ -72,10 +96,21 @@ namespace CadViewer
 			return 1;
 		}
 
-		public void CloseModal()
+		public void CloseModal(IModalDialog dialog)
 		{
-			PART_ModalOverlay.Children.RemoveAt(0);
 			PART_ModalOverlay.Visibility = Visibility.Collapsed;
+
+			UserControl dlg = dialog as UserControl;
+
+			if (dlg is null)
+				return;
+
+			PART_ModalOverlay.Children.Remove(dlg);
+
+			if(dlgProgress == dlg)
+			{
+				dlgProgress = null;
+			}
 		}
 	}
 }

@@ -15,7 +15,8 @@ namespace CadViewer.Interfaces
 
 	public interface IDialogService
 	{
+		void ShowProgress(string progressMsg);
 		int ShowModal(IModalDialog dialog);
-		void CloseModal();
+		void CloseModal(IModalDialog dialog);
 	}
 }

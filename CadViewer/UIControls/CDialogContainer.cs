@@ -61,6 +61,9 @@ namespace CadViewer.UIControls
 			{
 				titleBorder.MouseLeftButtonDown += (s, e) =>
 				{
+					if(IsFreeze)
+						return;
+
 					_dragStartPoint = e.GetPosition(null);
 					_isDragging = true;
 					_effectDlg.Opacity = 0;
@@ -70,6 +73,9 @@ namespace CadViewer.UIControls
 
 				titleBorder.MouseLeftButtonUp += (s, e) =>
 				{
+					if (IsFreeze)
+						return;
+
 					_effectDlg.Opacity = 0.2;
 					_isDragging = false;
 					titleBorder.ReleaseMouseCapture();
@@ -77,6 +83,9 @@ namespace CadViewer.UIControls
 
 				titleBorder.MouseMove += (s, e) =>
 				{
+					if (IsFreeze)
+						return;
+
 					if (_isDragging)
 					{
 						Point currentPosition = e.GetPosition(null);
@@ -104,6 +113,32 @@ namespace CadViewer.UIControls
 		{
 			get => (IModalDialog)GetValue(DialogListenerProperty);
 			set => SetValue(DialogListenerProperty, value);
+		}
+
+		public static readonly DependencyProperty TitleProperty =
+		DependencyProperty.Register(nameof(Title), typeof(string), typeof(CDialogContainer), new PropertyMetadata(""));
+
+		public string Title
+		{
+			get => (string)GetValue(TitleProperty);
+			set => SetValue(TitleProperty, value);
+		}
+
+		public static readonly DependencyProperty IconSourceProperty =
+		DependencyProperty.Register(nameof(IconSource), typeof(ImageSource), typeof(CDialogContainer), new PropertyMetadata(null));
+
+		public ImageSource IconSource
+		{
+			get => (ImageSource)GetValue(IconSourceProperty);
+			set => SetValue(IconSourceProperty, value);
+		}
+
+		public static readonly DependencyProperty IsFreezeProperty =
+		DependencyProperty.Register(nameof(IsFreeze), typeof(bool), typeof(CDialogContainer), new PropertyMetadata(false));
+		public bool IsFreeze
+		{
+			get => (bool)GetValue(IsFreezeProperty);
+			set => SetValue(IsFreezeProperty, value);
 		}
 	}
 }

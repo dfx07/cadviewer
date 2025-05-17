@@ -104,6 +104,9 @@
     <Compile Include="Converters\TextBoxConverter.cs" />
     <Compile Include="Converters\TabControlConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />
+    <Compile Include="Dialogs\DlgProgress.xaml.cs">
+      <DependentUpon>DlgProgress.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgSetting.xaml.cs">
       <DependentUpon>DlgSetting.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,10 @@
     <Page Include="Components\CButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgProgress.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\DlgSetting.xaml">
       <SubType>Designer</SubType>
@@ -349,6 +356,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\menu26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\settings26.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
