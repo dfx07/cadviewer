@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\ModalDialog.cs" />
+    <Compile Include="UIControls\CWindow.cs" />
     <Compile Include="UIControls\CDropDownButton.cs" />
     <Compile Include="UIControls\CExpander.cs" />
     <Compile Include="UIControls\CCheckBox.cs" />
@@ -177,6 +178,10 @@
     <Page Include="Dialogs\DlgSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIResources\CWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CDropDownButton.xaml">
       <Generator>MSBuild:Compile</Generator>

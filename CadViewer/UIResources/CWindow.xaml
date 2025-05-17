@@ -1,0 +1,100 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CadViewer.UIControls">
+    <Style x:Key="xButtonWindowStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_BtnBound" Width="{TemplateBinding Width}" CornerRadius="5" Height="30" Background="#3b4453" 
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" ></ContentPresenter>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.0" To="Normal" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="PART_BtnBound" 
+                                                        Storyboard.TargetProperty="Background.Color"
+                                                        To="#3b4453" Duration="0:0:0.0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="PART_BtnBound" 
+                                                        Storyboard.TargetProperty="Background.Color"
+                                                        To="#71829f" Duration="0:0:0.0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="PART_BtnBound"
+                                                        Storyboard.TargetProperty="Background.Color"
+                                                        To="#566379" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:CWindow}" BasedOn="{StaticResource {x:Type Window}}">
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="MinWidth" Value="200" />
+        <Setter Property="MinHeight" Value="200" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CWindow}">
+                    <Grid Background="Transparent">
+                        <Border x:Name="PART_WindowDropShadow" Margin="10" CornerRadius="5" BorderThickness="1">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#3b4453" />
+                            </Border.BorderBrush>
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="PART_DropShadow" BlurRadius="10" Direction="0" ShadowDepth="0" Opacity="0.5" />
+                            </Border.Effect>
+                        </Border>
+                        <Border x:Name="PART_WindowContainer" Margin="10" Background="Transparent">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Border x:Name="PART_TitleBar" Grid.Row="0" Padding="1" Background="#3b4453" Height="30" CornerRadius="5,5,0,0" DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                    <DockPanel FlowDirection="LeftToRight">
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                            <Button x:Name="PART_MinimizeButton" Foreground="White" Style="{StaticResource xButtonWindowStyle}" Content="_" Width="30" />
+                                            <Button x:Name="PART_MaximizeButton" Foreground="White" Style="{StaticResource xButtonWindowStyle}" Content="🗖" Width="30" />
+                                            <Button x:Name="PART_CloseButton" Foreground="White" Style="{StaticResource xButtonWindowStyle}" Content="✕" Width="30" />
+                                        </StackPanel>
+                                        <TextBlock Text="{TemplateBinding Title}" Foreground="White" VerticalAlignment="Center" Margin="10,0" />
+                                    </DockPanel>
+                                </Border>
+                                <Border Grid.Row="1" Padding="10">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="PART_WindowContainer" Property="Margin" Value="7" />
+                            <Setter TargetName="PART_WindowDropShadow" Property="Margin" Value="7" />
+                            <Setter TargetName="PART_WindowDropShadow" Property="CornerRadius" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

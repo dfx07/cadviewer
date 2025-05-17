@@ -56,7 +56,18 @@ namespace CadViewer
 
 			//ShowModal(setting);
 
-			ShowProgress("Loading...");
+			//ShowProgress("Loading...");
+
+			CWindow win = new CWindow();
+
+
+			win.Width = 800;
+			win.Width = 600;
+			win.Owner = this;
+			win.Title = "Window";
+			win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+			win.ShowDialog();
 		}
 
 		public void ShowProgress(string progressMsg)
