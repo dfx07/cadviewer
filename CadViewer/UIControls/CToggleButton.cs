@@ -14,6 +14,12 @@ using CadViewer.Animations;
 
 namespace CadViewer.UIControls
 {
+	public enum EToggleButtonStyle
+	{
+		Normal,
+		Switch
+	}
+
 	public class CToggleButton : ToggleButton
 	{
 		private Border _Thumb;
@@ -29,9 +35,12 @@ namespace CadViewer.UIControls
 		{
 			base.OnApplyTemplate();
 
-			_Thumb = GetTemplateChild("xCToggleButtonThumb") as Border;
+			if(ButtonStyle == EToggleButtonStyle.Switch)
+			{
+				_Thumb = GetTemplateChild("xCToggleButtonThumb") as Border;
 
-			_ThumbWidth = _Thumb.ActualWidth;
+				_ThumbWidth = _Thumb.ActualWidth;
+			}
 
 			Loaded += (s, e) =>
 			{
@@ -123,6 +132,34 @@ namespace CadViewer.UIControls
 				EasingFunction = new CubicEase { EasingMode = EasingMode.EaseInOut }
 			};
 			refThumb.BeginAnimation(Border.WidthProperty, widthAnim);
+		}
+
+		public static readonly DependencyProperty ButtonStyleProperty =
+		DependencyProperty.Register(nameof(ButtonStyle), typeof(EToggleButtonStyle), typeof(CToggleButton), new PropertyMetadata(EToggleButtonStyle.Switch));
+
+		public EToggleButtonStyle ButtonStyle
+		{
+			get => (EToggleButtonStyle)GetValue(ButtonStyleProperty);
+			set => SetValue(ButtonStyleProperty, value);
+		}
+
+		// Only support normal button style
+		public static readonly DependencyProperty ImageSourceProperty =
+		DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(CToggleButton), new PropertyMetadata(null));
+
+		public ImageSource ImageSource
+		{
+			get => (ImageSource)GetValue(ImageSourceProperty);
+			set => SetValue(ImageSourceProperty, value);
+		}
+
+		public static readonly DependencyProperty ImageWidthProperty =
+		DependencyProperty.Register(nameof(ImageWidth), typeof(double), typeof(CToggleButton), new PropertyMetadata(double.NaN));
+
+		public double ImageWidth
+		{
+			get => (double)GetValue(ImageWidthProperty);
+			set => SetValue(ImageWidthProperty, value);
 		}
 	}
 }

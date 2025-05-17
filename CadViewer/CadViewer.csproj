@@ -94,9 +94,6 @@
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ResourceLocator.cs" />
-    <Compile Include="Components\CButton.xaml.cs">
-      <DependentUpon>CButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Components\CPanelControl.cs" />
     <Compile Include="Components\Converter.cs" />
     <Compile Include="Converters\CommonConverter.cs" />
@@ -167,10 +164,6 @@
     <Compile Include="Views\HeaderBar\TabBar.xaml.cs">
       <DependentUpon>TabBar.xaml</DependentUpon>
     </Compile>
-    <Page Include="Components\CButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dialogs\DlgProgress.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -364,6 +357,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\settings26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\light26.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

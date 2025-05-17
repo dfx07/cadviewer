@@ -85,8 +85,15 @@
                         </ui:CButton>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Toggle Button"></TextBlock>
-                        <ui:CToggleButton Grid.Row="1" Grid.Column="1" Width="40" Height="20" IsChecked="False">
-                        </ui:CToggleButton>
+                        <Grid Grid.Row="1" Grid.Column="1" Width="140">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:CToggleButton Grid.Column="0" Width="40" Height="20" IsChecked="False" />
+                            <ui:CToggleButton Grid.Column="1" Width="70" Height="24" IsChecked="True" ButtonStyle="Normal" ImageWidth="24"
+                                              ImageSource="{com:PackImage Path=Assets/Images/light26.png}" Content="Toggle" />
+                        </Grid>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
                         <ui:CTextBox Grid.Row="2" Grid.Column="1" Width="140" Height="24" Placeholder="Type to search..." UseSuggestion="True" ImageMargin="2,5,0,5" ImageWidth="20" ImageSource="{com:PackImage Path=Assets/Images/search26.png}" ImagePlacement="Left">
