@@ -101,6 +101,9 @@
     <Compile Include="Converters\TextBoxConverter.cs" />
     <Compile Include="Converters\TabControlConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />
+    <Compile Include="Dialogs\ToastMessage.xaml.cs">
+      <DependentUpon>ToastMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgProgress.xaml.cs">
       <DependentUpon>DlgProgress.xaml</DependentUpon>
     </Compile>
@@ -109,6 +112,8 @@
     </Compile>
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\ModalDialog.cs" />
+    <Compile Include="Interfaces\ToastControl.cs" />
+    <Compile Include="UIControls\CToastContainer.cs" />
     <Compile Include="UIControls\CWindow.cs" />
     <Compile Include="UIControls\CDropDownButton.cs" />
     <Compile Include="UIControls\CExpander.cs" />
@@ -164,6 +169,10 @@
     <Compile Include="Views\HeaderBar\TabBar.xaml.cs">
       <DependentUpon>TabBar.xaml</DependentUpon>
     </Compile>
+    <Page Include="Dialogs\ToastMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\DlgProgress.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -171,6 +180,10 @@
     <Page Include="Dialogs\DlgSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIResources\CToastContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

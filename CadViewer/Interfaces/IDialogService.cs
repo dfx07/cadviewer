@@ -7,6 +7,27 @@ using System.Windows.Input;
 
 namespace CadViewer.Interfaces
 {
+	public enum EToastMessageType
+	{
+		None,
+		Info,
+		Warning,
+		Error
+	}
+	public enum EToastMessagePosition
+	{
+		TopLeft,
+		TopRight,
+		BottomLeft,
+		BottomRight
+	}
+
+	public interface IToast
+	{
+		void ShowToast(string title, string msg, EToastMessageType type, EToastMessagePosition position, int duration = 3000);
+		void CloseToast();
+	}
+
 	public interface IModalDialog
 	{
 		void OnClose();
@@ -15,6 +36,8 @@ namespace CadViewer.Interfaces
 
 	public interface IDialogService
 	{
+		void ShowToast(IToast toast);
+		void CloseToast(IToast toast);
 		void ShowProgress(string progressMsg);
 		int ShowModal(IModalDialog dialog);
 		void CloseModal(IModalDialog dialog);

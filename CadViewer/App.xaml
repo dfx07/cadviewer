@@ -29,6 +29,7 @@
                 <ResourceDictionary Source="UIResources/CFlexPopup.xaml" />
                 <ResourceDictionary Source="UIResources/CDialogContainer.xaml" />
                 <ResourceDictionary Source="UIResources/CWindow.xaml" />
+                <ResourceDictionary Source="UIResources/CToastContainer.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

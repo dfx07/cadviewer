@@ -340,5 +340,12 @@
         <Grid x:Name="PART_ModalOverlay" Background="#80000000" Visibility="Collapsed"
               Panel.ZIndex="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         </Grid>
+
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" Panel.ZIndex="100" Margin="0,0,20,20">
+            <StackPanel x:Name="PART_RightBottomToastStack"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        Background="Transparent" Visibility="Collapsed" Orientation="Vertical">
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

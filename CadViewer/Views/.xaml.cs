@@ -1,4 +1,5 @@
-﻿using CadViewer.Dialogs;
+﻿using CadViewer.API;
+using CadViewer.Dialogs;
 using CadViewer.Interfaces;
 using CadViewer.UIControls;
 using CadViewer.ViewModels;
@@ -18,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml;
 
 namespace CadViewer
@@ -29,12 +31,16 @@ namespace CadViewer
 	{
 		DlgProgress dlgProgress = null;
 
+		ToastManager toastManager = new ToastManager();
+
 		public MainWindow()
 		{
 			InitializeComponent();
 
 			_MainViewModel = new MainViewModel();
 			this.DataContext = _MainViewModel;
+
+			toastManager.BeginToastEvent(OnBeginToast);
 		}
 
 		public MainViewModel _MainViewModel;
@@ -61,13 +67,48 @@ namespace CadViewer
 			CWindow win = new CWindow();
 
 
-			win.Width = 800;
-			win.Width = 600;
-			win.Owner = this;
-			win.Title = "Window";
-			win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+			//win.Width = 800;
+			//win.Width = 600;
+			//win.Owner = this;
+			//win.Title = "Window";
+			//win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-			win.ShowDialog();
+			//win.ShowDialog();
+
+			ToastMessage toastMsg = new ToastMessage(this);
+			toastMsg.ShowToast("Hehe", "This is toast message", EToastMessageType.Error, EToastMessagePosition.BottomRight, 6000);
+		}
+
+		private void OnBeginToast(IToast toast)
+		{
+			PART_RightBottomToastStack.Visibility = Visibility.Visible;
+
+			ToastMessage toastMessage = toast as ToastMessage;
+
+			if(toastMessage == null)
+				return;
+
+			PART_RightBottomToastStack.Children.Add(toastMessage);
+		}
+
+		public void ShowToast(IToast toast)
+		{
+			toastManager.Push(toast);
+		}
+
+		public void CloseToast(IToast toast)
+		{
+			ToastMessage toastMessage = toast as ToastMessage;
+
+			if (toastMessage == null)
+				return;
+
+			PART_RightBottomToastStack.Children.Remove(toastMessage);
+
+			if (PART_RightBottomToastStack.Children.Count == 0)
+			{
+				PART_RightBottomToastStack.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		public void ShowProgress(string progressMsg)
