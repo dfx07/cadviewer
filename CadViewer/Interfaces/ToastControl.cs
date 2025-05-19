@@ -23,6 +23,12 @@ namespace CadViewer.Interfaces
 			return true;
 		}
 
+		protected virtual void OnClickedToast()
+		{
+			// This method can be overridden in derived classes to provide custom behavior when the toast is shown.
+			return;
+		}
+
 		public bool OnCreateToast(ToastData _tastData)
 		{
 			return OnCreateToast(ref _tastData);
@@ -33,25 +39,41 @@ namespace CadViewer.Interfaces
 			if (_toastService != null)
 				_toastService.CloseToast(this);
 		}
+
+		public void OnClickedToBoard()
+		{
+			OnClickedToast();
+		}
 	}
 
 	public delegate void ToastEventHandler(ToastData toast);
 
 	public class ToastManager
 	{
-		private readonly Queue<(ToastData Data, ToastEventHandler Callback)> _toastQueues = new Queue<(ToastData Data, ToastEventHandler Callback)>();
-		private readonly DispatcherTimer _timer;
+		private Queue<(ToastData Data, ToastEventHandler Callback)> _toastQueues = null;
+		private DispatcherTimer _timer;
 		public ToastManager()
 		{
+			_toastQueues = new Queue<(ToastData Data, ToastEventHandler Callback)>();
+
 			_timer = new DispatcherTimer();
 			_timer.Interval = TimeSpan.FromMilliseconds(100);
 			_timer.Tick += InternalTimer_Tick;
 		}
 
+		public void Plush()
+		{
+			_timer.Stop();
+			_timer.Tick -= InternalTimer_Tick;
+		}
+
 		private void InternalTimer_Tick(object sender, EventArgs e)
 		{
 			if (IsEmpty())
+			{
+				_timer.Stop();
 				return;
+			}
 
 			var itToast = Pop();
 

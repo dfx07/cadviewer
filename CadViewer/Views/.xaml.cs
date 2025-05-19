@@ -31,18 +31,19 @@ namespace CadViewer
 	{
 		DlgProgress dlgProgress = null;
 
-		ToastManager toastManager = new ToastManager();
+		ToastManager toastManager = null;
 
 		public MainWindow()
 		{
 			InitializeComponent();
 
 			_MainViewModel = new MainViewModel();
+			toastManager = new ToastManager();
+
 			this.DataContext = _MainViewModel;
 		}
 
 		public MainViewModel _MainViewModel;
-
 
 		private void ToggleButton_Checked(object sender, RoutedEventArgs e)
 		{
@@ -64,7 +65,7 @@ namespace CadViewer
 
 			//ShowProgress("Loading...");
 
-			CWindow win = new CWindow();
+			//CWindow win = new CWindow();
 
 			//win.Width = 800;
 			//win.Width = 600;
@@ -118,9 +119,18 @@ namespace CadViewer
 			}
 		}
 
+		private void OnToastClicked(IToast toast)
+		{
+			ToastMessage toastMessage = toast as ToastMessage;
+
+			if (toastMessage == null)
+				return;
+
+			MessageBox.Show($"You clicked to toast: {toastMessage.Title}");
+		}
 		public void ShowToast(ToastData tData)
 		{
-			toastManager.Push(tData, (data)=>
+			toastManager.Push(tData, (data) =>
 			{
 				if (data == null)
 					return;
@@ -128,6 +138,8 @@ namespace CadViewer
 				PART_RightBottomToastStack.Visibility = Visibility.Visible;
 
 				ToastMessage toastMessage = new ToastMessage(this);
+				toastMessage.ToastClicked += OnToastClicked;
+
 				toastMessage.OnCreateToast(data);
 
 				PART_RightBottomToastStack.Children.Add(toastMessage);

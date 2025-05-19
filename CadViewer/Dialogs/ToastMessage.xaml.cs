@@ -20,6 +20,8 @@ namespace CadViewer.Dialogs
 {
 	public partial class ToastMessage : ToastControl
 	{
+		public event Action<IToast> ToastClicked = null;
+
 		public ToastMessage(IToastService toastService):
 			base(toastService)
 		{
@@ -62,13 +64,13 @@ namespace CadViewer.Dialogs
 				EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
 			};
 
-			transAnim.Completed += (s, e) =>
-			{
-
-			};
-
 			PART_Translate.BeginAnimation(TranslateTransform.XProperty, transAnim);
 			return true;
+		}
+
+		protected override void OnClickedToast()
+		{
+			ToastClicked?.Invoke(this);
 		}
 
 		public static readonly DependencyProperty MessageProperty =

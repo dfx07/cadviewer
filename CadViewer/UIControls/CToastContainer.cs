@@ -59,6 +59,21 @@ namespace CadViewer.UIControls
 			};
 		}
 
+		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+		{
+			base.OnMouseLeftButtonDown(e);
+			VisualStateManager.GoToState(this, "Pressed", true);
+		}
+		protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+		{
+			base.OnMouseLeftButtonUp(e);
+			VisualStateManager.GoToState(this, "Normal", true);
+			if (ToastListener != null)
+			{
+				ToastListener.OnClickedToBoard();
+			}
+		}
+
 		public void SmoothMove(bool bUse)
 		{
 			_SmoothMove = bUse;

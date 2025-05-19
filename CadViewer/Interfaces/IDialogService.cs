@@ -35,6 +35,7 @@ namespace CadViewer.Interfaces
 	{
 		bool OnCreateToast(ToastData _tastData);
 		void OnCloseToast();
+		void OnClickedToBoard();
 	}
 
 	public interface IModalDialog
