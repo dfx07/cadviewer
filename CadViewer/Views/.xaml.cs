@@ -45,36 +45,30 @@ namespace CadViewer
 
 		public MainViewModel _MainViewModel;
 
-		private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+		private void ShowProgress_Click(object sender, RoutedEventArgs e)
 		{
+			//DlgSetting setting = new DlgSetting(this);
+			//ShowModal(setting);
 
+			ShowProgress("Loading...");
 		}
 
-		private void ToggleBtn_Unchecked(object sender, RoutedEventArgs e)
+		private void ShowWindow_Click(object sender, RoutedEventArgs e)
 		{
+			CWindow win = new CWindow();
 
+			win.Width = 800;
+			win.Width = 600;
+			win.Owner = this;
+			win.Title = "Window";
+			win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+			win.ShowDialog();
 		}
 
 		int a = 0;
-
-		private void DoModal_Click(object sender, RoutedEventArgs e)
+		private void ShowToast_Click(object sender, RoutedEventArgs e)
 		{
-			//DlgSetting setting = new DlgSetting(this);
-
-			//ShowModal(setting);
-
-			//ShowProgress("Loading...");
-
-			//CWindow win = new CWindow();
-
-			//win.Width = 800;
-			//win.Width = 600;
-			//win.Owner = this;
-			//win.Title = "Window";
-			//win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-			//win.ShowDialog();
-
 			a++;
 			if (a % 4 == 0)
 			{
@@ -86,8 +80,8 @@ namespace CadViewer
 					Duration = TimeSpan.FromSeconds(10)
 				});
 			}
-			
-			else if(a % 3 == 0)
+
+			else if (a % 3 == 0)
 			{
 				ShowToast(new ToastData
 				{

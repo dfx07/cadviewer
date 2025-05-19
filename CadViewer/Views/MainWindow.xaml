@@ -77,6 +77,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
@@ -170,8 +172,17 @@
                             </Border>
                             <Button Width="40" Height="20" Content="Click day"></Button>
                         </ui:CSoftPopup>-->
-                        <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="DoModal"></TextBlock>
-                        <Button Margin="0,3,0,0" Click="DoModal_Click" Grid.Row="10" Grid.Column="1" Width="140" Height="24" Content="DoModal">
+
+                        <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Show Progress"></TextBlock>
+                        <Button Margin="0,5,0,0" Click="ShowProgress_Click" Grid.Row="10" Grid.Column="1" Width="140" Height="24" Content="Show Progress">
+                        </Button>
+
+                        <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Show Window"></TextBlock>
+                        <Button Margin="0,5,0,0" Click="ShowWindow_Click" Grid.Row="11" Grid.Column="1" Width="140" Height="24" Content="Show Window">
+                        </Button>
+
+                        <TextBlock Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Show Toast"></TextBlock>
+                        <Button Margin="0,5,0,0" Click="ShowToast_Click" Grid.Row="12" Grid.Column="1" Width="140" Height="24" Content="Show Toast">
                         </Button>
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1" Margin="10">
