@@ -3,6 +3,40 @@
                     xmlns:local="clr-namespace:CadViewer.UIControls"
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <Style x:Key="xButtonToastStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_BtnBound" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" CornerRadius="5" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.0" To="Normal" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="PART_BtnBound" Storyboard.TargetProperty="Background.Color" To="Transparent" Duration="0:0:0.0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="PART_BtnBound" Storyboard.TargetProperty="Background.Color" To="#d2d2d2" Duration="0:0:0.0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="PART_BtnBound" Storyboard.TargetProperty="Background.Color" To="#566379" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type local:CToastContainer}" BasedOn="{StaticResource {x:Type ContentControl}}">
         <Setter Property="Foreground" Value="{DynamicResource Cmm_TextColor}" />
@@ -11,49 +45,43 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CToastContainer}">
                     <Grid Background="Transparent">
-                        <Border Margin="3" CornerRadius="5" BorderThickness="1" Width="{TemplateBinding Width}">
+                        <Border Margin="5" CornerRadius="5" BorderThickness="1">
                             <Border.Background>
                                 <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
                             </Border.Background>
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="#3b4453" />
+                                <SolidColorBrush Color="#8296b7" />
                             </Border.BorderBrush>
                             <Border.Effect>
-                                <DropShadowEffect x:Name="PART_DropShadow" Color="Black" BlurRadius="2" Direction="0" ShadowDepth="0" Opacity="0.2" />
+                                <DropShadowEffect x:Name="PART_DropShadow" Color="Black" BlurRadius="5" Direction="270" ShadowDepth="3" Opacity="0.2" />
                             </Border.Effect>
                         </Border>
-                        <Border Margin="3" Background="Transparent" Width="{TemplateBinding Width}" >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition MaxWidth="50" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="20" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <ContentPresenter Content="{TemplateBinding LeftContent}" />
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Foreground="Black" Margin="5,0,1,1" Text="{TemplateBinding Title}" HorizontalAlignment="Left"></TextBlock>
-                                    <Border Grid.Row="1" Padding="5">
-                                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Column="2">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                        <Button x:Name="PART_CloseBtn" Content="X" Width="20"></Button>
-                                    </StackPanel>
-                                </Grid>
+                        <Grid Margin="10" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" MaxWidth="50" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <ContentPresenter Content="{TemplateBinding LeftContent}" />
                             </Grid>
-                        </Border>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" FontWeight="Bold" Foreground="Black" Margin="5,0,1,1" Text="{TemplateBinding Title}" HorizontalAlignment="Left"></TextBlock>
+                                <Border Grid.Row="1" Padding="5">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </Border>
+                            </Grid>
+                            <StackPanel Grid.Column="2">
+                                <Button x:Name="PART_CloseBtn" Style="{StaticResource xButtonToastStyle}" 
+                                        Foreground="Black" Content="✕" Width="20" Height="20" Background="Transparent" />
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsFreeze, RelativeSource={RelativeSource Self}}" Value="True">
-                            <Setter TargetName="PART_CloseBtn" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

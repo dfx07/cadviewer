@@ -316,20 +316,7 @@
 
                 <!--Label layout 0,0,-3,-6-->
                 <Grid Grid.Row="1" Margin="0,0,0,-1" Grid.Column="0">
-                    <!--<Border CornerRadius="7" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Left" ClipToBounds="True" Width="120" Height="30">
-                        <Border.Background>
-                            <VisualBrush TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
-                                <VisualBrush.Visual>
-                                    <Canvas x:Name="PART_Indicator_Canvas" Width="20" Height="20" Background="Red">
-                                        <Path Stroke="#4d9fd6" StrokeThickness="9" Data="M 5 30 L 13 -5" />
-                                    </Canvas>
-                                </VisualBrush.Visual>
-                                <VisualBrush.Transform>
-                                    <TranslateTransform x:Name="StripeTransform" X="0" />
-                                </VisualBrush.Transform>
-                            </VisualBrush>
-                        </Border.Background>
-                    </Border>-->
+
                 </Grid>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">

@@ -11,8 +11,9 @@ namespace CadViewer.Interfaces
 	{
 		None,
 		Info,
-		Warning,
-		Error
+		Warn,
+		Error,
+		Success,
 	}
 	public enum EToastMessagePosition
 	{
@@ -22,10 +23,18 @@ namespace CadViewer.Interfaces
 		BottomRight
 	}
 
+	public class ToastData
+	{
+		public string Title { get; set; }
+		public string Message { get; set; }
+		public EToastMessageType ToastType { get; set; } // Info, Success, Error, etc.
+		public TimeSpan Duration { get; set; } = TimeSpan.FromSeconds(3);
+	}
+
 	public interface IToast
 	{
-		void ShowToast(string title, string msg, EToastMessageType type, EToastMessagePosition position, int duration = 3000);
-		void CloseToast();
+		bool OnCreateToast(ToastData _tastData);
+		void OnCloseToast();
 	}
 
 	public interface IModalDialog
@@ -34,10 +43,14 @@ namespace CadViewer.Interfaces
 		void OnOpen();
 	}
 
+	public interface IToastService
+	{
+		void ShowToast(ToastData tData);
+		void CloseToast(IToast toast);
+	}
+
 	public interface IDialogService
 	{
-		void ShowToast(IToast toast);
-		void CloseToast(IToast toast);
 		void ShowProgress(string progressMsg);
 		int ShowModal(IModalDialog dialog);
 		void CloseModal(IModalDialog dialog);

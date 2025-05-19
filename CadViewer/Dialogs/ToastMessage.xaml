@@ -5,35 +5,75 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.Dialogs"
              xmlns:ui="clr-namespace:CadViewer.UIControls"
+             xmlns:com="clr-namespace:CadViewer.Common"
              mc:Ignorable="d" d:DesignWidth="800">
-    <ui:CToastContainer x:Name="PART_Container" DialogListener="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
+    <interfaces:ToastControl.Resources>
+        <BitmapImage x:Key="ToastIconInfo" UriSource="pack://application:,,,/Assets/Images/info48.png" />
+        <BitmapImage x:Key="ToastIconWarn" UriSource="pack://application:,,,/Assets/Images/warn48.png" />
+        <BitmapImage x:Key="ToastIconError" UriSource="pack://application:,,,/Assets/Images/error48.png" />
+        <BitmapImage x:Key="ToastIconSuccess" UriSource="pack://application:,,,/Assets/Images/success48.png" />
+    </interfaces:ToastControl.Resources>
+    
+    <ui:CToastContainer x:Name="PART_Container" ToastListener="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
                         Width="300" IsFreeze="True" Title="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <ui:CToastContainer.RenderTransform>
             <TranslateTransform x:Name="PART_Translate" />
         </ui:CToastContainer.RenderTransform>
         <ui:CToastContainer.LeftContent>
-            <DockPanel Width="30">
-                <Border DockPanel.Dock="Left" Height="30" Width="6" Background="Yellow">
+            <Grid MaxWidth="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="PART_ToastType" Margin="5" Grid.Column="0" Height="30" Width="6" CornerRadius="3">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Info">
+                                    <Setter Property="Background" Value="#1288bf" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Warn">
+                                    <Setter Property="Background" Value="#f5ab23" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Error">
+                                    <Setter Property="Background" Value="#e3322d" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Success">
+                                    <Setter Property="Background" Value="#399b35" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
                 </Border>
-                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                </Grid>
-                <!--<Image x:Name="PART_Icon" Margin=" 1,0,1,1" Visibility="Visible"
-                        Source="{Binding IconSource, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                </Image>-->
-
-                <DockPanel.Style>
-                    <Style TargetType="DockPanel">
-                        <!--<Style.Triggers>
-                            <DataTrigger Binding="{Binding IconSource, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Null}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>-->
-                    </Style>
-                </DockPanel.Style>
-            </DockPanel>
+                <Image x:Name="PART_Icon" Grid.Column="1" Margin="1,0,1,1" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Info">
+                                    <Setter Property="Source" Value="{StaticResource ToastIconInfo}" />
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Warn">
+                                    <Setter Property="Source" Value="{StaticResource ToastIconWarn}" />
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Error">
+                                    <Setter Property="Source" Value="{StaticResource ToastIconError}" />
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ToastType, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Success">
+                                    <Setter Property="Source" Value="{StaticResource ToastIconSuccess}" />
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Grid>
         </ui:CToastContainer.LeftContent>
         <ui:CToastContainer.Content>
-            <TextBlock Text="{Binding Message, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <TextBlock TextWrapping="Wrap" Text="{Binding Message, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            </TextBlock>
         </ui:CToastContainer.Content>
     </ui:CToastContainer>
 </interfaces:ToastControl>

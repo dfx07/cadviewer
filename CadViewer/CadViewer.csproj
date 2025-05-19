@@ -374,5 +374,11 @@
   <ItemGroup>
     <Resource Include="Assets\Images\light26.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\warn48.png" />
+    <Resource Include="Assets\Images\error48.png" />
+    <Resource Include="Assets\Images\info48.png" />
+    <Resource Include="Assets\Images\success48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

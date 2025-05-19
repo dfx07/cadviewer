@@ -8,61 +8,54 @@ using System.Windows.Threading;
 
 namespace CadViewer.Interfaces
 {
-	public class ToastControl : UserControl, IToast
+	public partial class ToastControl : UserControl, IToast
 	{
-		private IDialogService _dlgService = null;
+		private IToastService _toastService = null;
 
-		public ToastControl(IDialogService dlgService)
+		public ToastControl(IToastService toastService)
 		{
-			_dlgService = dlgService;
+			_toastService = toastService;
 		}
 
-		protected virtual bool OnShowToast(string title, string msg, EToastMessageType type, EToastMessagePosition position, int duration)
+		protected virtual bool OnCreateToast(ref ToastData _toastData)
 		{
 			// This method can be overridden in derived classes to provide custom behavior when the toast is shown.
 			return true;
 		}
 
-		public void ShowToast(string title, string msg, EToastMessageType type, EToastMessagePosition position, int duration)
+		public bool OnCreateToast(ToastData _tastData)
 		{
-			if(OnShowToast(title, msg, type, position, duration) == false)
-				return;
-
-			if (_dlgService != null)
-				_dlgService.ShowToast(this);
+			return OnCreateToast(ref _tastData);
 		}
 
-		public void CloseToast()
+		public void OnCloseToast()
 		{
-			if (_dlgService != null)
-				_dlgService.CloseToast(this);
+			if (_toastService != null)
+				_toastService.CloseToast(this);
 		}
 	}
 
-	public delegate void ToastEventHandler(IToast toast);
+	public delegate void ToastEventHandler(ToastData toast);
 
 	public class ToastManager
 	{
-		private readonly Queue<IToast> _toastQueues = new Queue<IToast>();
+		private readonly Queue<(ToastData Data, ToastEventHandler Callback)> _toastQueues = new Queue<(ToastData Data, ToastEventHandler Callback)>();
 		private readonly DispatcherTimer _timer;
-		public event ToastEventHandler _beginToastHandler;
-		public event ToastEventHandler _endToastHandler;
 		public ToastManager()
 		{
 			_timer = new DispatcherTimer();
-			_timer.Interval = TimeSpan.FromMilliseconds(300);
+			_timer.Interval = TimeSpan.FromMilliseconds(100);
 			_timer.Tick += InternalTimer_Tick;
 		}
 
-		public void BeginToastEvent(ToastEventHandler _event) { _beginToastHandler = _event; }
 		private void InternalTimer_Tick(object sender, EventArgs e)
 		{
 			if (IsEmpty())
 				return;
 
-			IToast toast = Pop();
+			var itToast = Pop();
 
-			_beginToastHandler?.Invoke(toast);
+			itToast.Callback?.Invoke(itToast.Data);
 		}
 
 		public bool IsEmpty()
@@ -70,23 +63,23 @@ namespace CadViewer.Interfaces
 			return _toastQueues.Count == 0;
 		}
 
-		public void Push(IToast toast)
+		public void Push(ToastData data, ToastEventHandler callback)
 		{
-			_toastQueues.Enqueue(toast);
+			_toastQueues.Enqueue((data, callback));
 			if(!_timer.IsEnabled)
 			{
 				_timer.Start();
 			}
 		}
 
-		public IToast Pop()
+		public (ToastData Data, ToastEventHandler Callback) Pop()
 		{
 			if (_toastQueues.Count > 0)
 			{
 				return _toastQueues.Dequeue();
 			}
 
-			return null;
+			return (null, null);
 		}
 	};
 }

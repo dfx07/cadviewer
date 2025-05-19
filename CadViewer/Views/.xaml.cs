@@ -27,7 +27,7 @@ namespace CadViewer
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window, IDialogService
+	public partial class MainWindow : Window, IDialogService, IToastService
 	{
 		DlgProgress dlgProgress = null;
 
@@ -39,8 +39,6 @@ namespace CadViewer
 
 			_MainViewModel = new MainViewModel();
 			this.DataContext = _MainViewModel;
-
-			toastManager.BeginToastEvent(OnBeginToast);
 		}
 
 		public MainViewModel _MainViewModel;
@@ -56,6 +54,8 @@ namespace CadViewer
 
 		}
 
+		int a = 0;
+
 		private void DoModal_Click(object sender, RoutedEventArgs e)
 		{
 			//DlgSetting setting = new DlgSetting(this);
@@ -66,7 +66,6 @@ namespace CadViewer
 
 			CWindow win = new CWindow();
 
-
 			//win.Width = 800;
 			//win.Width = 600;
 			//win.Owner = this;
@@ -75,25 +74,64 @@ namespace CadViewer
 
 			//win.ShowDialog();
 
-			ToastMessage toastMsg = new ToastMessage(this);
-			toastMsg.ShowToast("Hehe", "This is toast message", EToastMessageType.Error, EToastMessagePosition.BottomRight, 6000);
+			a++;
+			if (a % 4 == 0)
+			{
+				ShowToast(new ToastData
+				{
+					Title = "Warn",
+					Message = "This is toast message",
+					ToastType = EToastMessageType.Warn,
+					Duration = TimeSpan.FromSeconds(10)
+				});
+			}
+			
+			else if(a % 3 == 0)
+			{
+				ShowToast(new ToastData
+				{
+					Title = "Success",
+					Message = "This is toast message",
+					ToastType = EToastMessageType.Success,
+					Duration = TimeSpan.FromSeconds(10)
+				});
+			}
+			else if (a % 2 == 0)
+			{
+				ShowToast(new ToastData
+				{
+					Title = "Hehe",
+					Message = "This is toast message",
+					ToastType = EToastMessageType.Error,
+					Duration = TimeSpan.FromSeconds(10)
+				});
+			}
+			else
+			{
+				ShowToast(new ToastData
+				{
+					Title = "Info",
+					Message = "This is toast message",
+					ToastType = EToastMessageType.Info,
+					Duration = TimeSpan.FromSeconds(10)
+				});
+			}
 		}
 
-		private void OnBeginToast(IToast toast)
+		public void ShowToast(ToastData tData)
 		{
-			PART_RightBottomToastStack.Visibility = Visibility.Visible;
+			toastManager.Push(tData, (data)=>
+			{
+				if (data == null)
+					return;
 
-			ToastMessage toastMessage = toast as ToastMessage;
+				PART_RightBottomToastStack.Visibility = Visibility.Visible;
 
-			if(toastMessage == null)
-				return;
+				ToastMessage toastMessage = new ToastMessage(this);
+				toastMessage.OnCreateToast(data);
 
-			PART_RightBottomToastStack.Children.Add(toastMessage);
-		}
-
-		public void ShowToast(IToast toast)
-		{
-			toastManager.Push(toast);
+				PART_RightBottomToastStack.Children.Add(toastMessage);
+			});
 		}
 
 		public void CloseToast(IToast toast)

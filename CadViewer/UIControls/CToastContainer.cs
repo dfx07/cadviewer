@@ -21,11 +21,8 @@ namespace CadViewer.UIControls
 {
 	public class CToastContainer : ContentControl
 	{
-		private Point _dragStartPoint;
-		private bool _isDragging = false;
-		private DropShadowEffect _effectDlg = null;
-
-		public TranslateTransform TranslateTransform = null;
+		public DropShadowEffect ToastDropShadowEffect = null;
+		private bool _SmoothMove = false;
 
 		static CToastContainer()
 		{
@@ -41,11 +38,19 @@ namespace CadViewer.UIControls
 			{
 				closeBtn.Click += (s, e) =>
 				{
-					if (DialogListener != null)
+					if (ToastListener != null)
 					{
-						DialogListener.OnClose();
+						ToastListener.OnCloseToast();
 					}
 				};
+			}
+
+			if (GetTemplateChild("PART_DropShadow") is DropShadowEffect sd)
+			{
+				ToastDropShadowEffect = sd;
+
+				if (_SmoothMove)
+					ToastDropShadowEffect.Opacity = 0.0;
 			}
 
 			Loaded += (s, e) =>
@@ -54,13 +59,30 @@ namespace CadViewer.UIControls
 			};
 		}
 
-		public static readonly DependencyProperty DialogListenerProperty =
-		DependencyProperty.Register(nameof(DialogListener), typeof(IModalDialog), typeof(CToastContainer), new PropertyMetadata(null));
-
-		public IModalDialog DialogListener
+		public void SmoothMove(bool bUse)
 		{
-			get => (IModalDialog)GetValue(DialogListenerProperty);
-			set => SetValue(DialogListenerProperty, value);
+			_SmoothMove = bUse;
+		}
+
+		public void HideDropShadow()
+		{
+			if(ToastDropShadowEffect != null)
+				ToastDropShadowEffect.Opacity = 0.0;
+		}
+
+		public void RestoreDropShadow()
+		{
+			if (ToastDropShadowEffect != null)
+				ToastDropShadowEffect.Opacity = 0.2;
+		}
+
+		public static readonly DependencyProperty ToastListenerProperty =
+		DependencyProperty.Register(nameof(ToastListener), typeof(IToast), typeof(CToastContainer), new PropertyMetadata(null));
+
+		public IToast ToastListener
+		{
+			get => (IToast)GetValue(ToastListenerProperty);
+			set => SetValue(ToastListenerProperty, value);
 		}
 
 		public static readonly DependencyProperty TitleProperty =
@@ -73,12 +95,22 @@ namespace CadViewer.UIControls
 		}
 
 		public static readonly DependencyProperty LeftContentProperty =
-		DependencyProperty.Register(nameof(LeftContent), typeof(object), typeof(CToastContainer));
+		DependencyProperty.Register(nameof(LeftContent), typeof(object), typeof(CToastContainer), null);
+
 		public object LeftContent
 		{
 			get => GetValue(LeftContentProperty);
 			set => SetValue(LeftContentProperty, value);
 		}
+
+		//public static readonly DependencyProperty ContentProperty =
+		//DependencyProperty.Register(nameof(Content), typeof(object), typeof(CToastContainer), null);
+
+		//public object Content
+		//{
+		//	get => GetValue(ContentProperty);
+		//	set => SetValue(ContentProperty, value);
+		//}
 
 		public static readonly DependencyProperty IsFreezeProperty =
 		DependencyProperty.Register(nameof(IsFreeze), typeof(bool), typeof(CToastContainer), new PropertyMetadata(false));
