@@ -30,6 +30,7 @@
                 <ResourceDictionary Source="UIResources/CDialogContainer.xaml" />
                 <ResourceDictionary Source="UIResources/CWindow.xaml" />
                 <ResourceDictionary Source="UIResources/CToastContainer.xaml" />
+                <ResourceDictionary Source="UIResources/CMenuItem.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

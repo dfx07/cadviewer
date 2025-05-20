@@ -208,5 +208,12 @@ namespace CadViewer
 				dlgProgress = null;
 			}
 		}
+
+		private void ShowMenu_Click(object sender, RoutedEventArgs e)
+		{
+			//btnMenu.ContextMenu.PlacementTarget = btnMenu;
+			//btnMenu.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+			//btnMenu.ContextMenu.IsOpen = true;
+		}
 	}
 }

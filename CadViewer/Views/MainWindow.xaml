@@ -79,6 +79,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
@@ -149,9 +150,17 @@
                             </ui:CDropDownButton.DropDownContent>
                         </ui:CDropDownButton>
 
-                        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Soft Popup"></TextBlock>
-                        <ToggleButton x:Name="ToggleBtn" Margin="0,3,0,0" Grid.Row="9" Grid.Column="1" Width="140" Height="24" Content="Show popup">
-                        </ToggleButton>
+                        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Show Menu"></TextBlock>
+                        <ui:CMenu Grid.Row="9" Grid.Column="1" Width="140" Height="24">
+                            <ui:CMenuItem Header="File">
+                                <ui:CMenuItem Header="New" />
+                                <ui:CMenuItem Header="Open">
+                                    <ui:CMenuItem Header="12" />
+                                    <ui:CMenuItem Header="13" />
+                                </ui:CMenuItem>
+                                <ui:CMenuItem Header="Exit" />
+                            </ui:CMenuItem>
+                        </ui:CMenu>
                         <!--<Border x:Name="PopupContent" Background="Transparent" BorderThickness="0" Width="120" Height="30">
                             <Border Margin="6,2,6,6" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
                                 <Border.Background>
@@ -184,6 +193,11 @@
                         <TextBlock Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Show Toast"></TextBlock>
                         <Button Margin="0,5,0,0" Click="ShowToast_Click" Grid.Row="12" Grid.Column="1" Width="140" Height="24" Content="Show Toast">
                         </Button>
+
+                        <TextBlock Grid.Row="13" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Soft Popup"></TextBlock>
+                        <ToggleButton x:Name="ToggleBtn" Margin="0,5,0,0" Grid.Row="13" Grid.Column="1" Width="140" Height="24" Content="Show popup">
+                        </ToggleButton>
+
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                         <Grid.ColumnDefinitions>
