@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CadViewer.UIControls"
+                    xmlns:cvt="clr-namespace:CadViewer.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Style x:Key="CContextMenuStyle" TargetType="{x:Type ContextMenu}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Border Background="Transparent" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                        <Border x:Name="SubMenuBorder" Margin="5"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource CompUI_MenuItem_CornerRadius}" Padding="2">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_ContextMenu_BackgroundColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CompUI_ContextMenu_BorderColor}" />
+                            </Border.BorderBrush>
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="PART_DropShadow" Color="Black" BlurRadius="3" Direction="-50" ShadowDepth="2" Opacity="0.2" />
+                            </Border.Effect>
+                            <StackPanel IsItemsHost="True" />
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+  
+</ResourceDictionary>

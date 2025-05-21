@@ -17,6 +17,15 @@ using System.Windows.Threading;
 
 namespace CadViewer.UIControls
 {
+	public class CSeparator : Separator
+	{
+		static CSeparator()
+		{
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(CSeparator),
+				new FrameworkPropertyMetadata(typeof(CSeparator)));
+		}
+	}
+
 	public class CMenu : Menu
 	{
 		static CMenu()

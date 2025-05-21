@@ -15,6 +15,16 @@
 
     <Window.Resources>
         <cvt:CommonBooleanNegationConverter x:Key="CommonBooleanNegationConverter" />
+
+        <Style TargetType="Separator">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Separator">
+                        <Border Margin="10" Height="3" Background="Red" HorizontalAlignment="Stretch" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid x:Name="PART_MainGrid">
@@ -151,16 +161,9 @@
                         </ui:CDropDownButton>
 
                         <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Show Menu"></TextBlock>
-                        <ui:CMenu Grid.Row="9" Grid.Column="1" Width="140" Height="24">
-                            <ui:CMenuItem Header="File">
-                                <ui:CMenuItem Header="New" />
-                                <ui:CMenuItem Header="Open">
-                                    <ui:CMenuItem Header="12" />
-                                    <ui:CMenuItem Header="13" />
-                                </ui:CMenuItem>
-                                <ui:CMenuItem Header="Exit" />
-                            </ui:CMenuItem>
-                        </ui:CMenu>
+                        <Button x:Name="MenuButton" Content="Button" Grid.Row="9" Grid.Column="1" Width="70" Height="24" Click="ShowMenu_Click">
+                        </Button>
+
                         <!--<Border x:Name="PopupContent" Background="Transparent" BorderThickness="0" Width="120" Height="30">
                             <Border Margin="6,2,6,6" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
                                 <Border.Background>

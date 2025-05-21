@@ -1,16 +1,19 @@
 ﻿using CadViewer.API;
+using CadViewer.Common;
 using CadViewer.Dialogs;
 using CadViewer.Interfaces;
 using CadViewer.UIControls;
 using CadViewer.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -209,11 +212,97 @@ namespace CadViewer
 			}
 		}
 
+		private CMenuItem CreateMenuItemContent(MenuItemData data)
+		{
+			var menuItem = new CMenuItem
+			{
+				Header = data.Header,
+				Command = data.Command,
+				CommandParameter = data.CommandParameter,
+				IsEnabled = data.IsEnabled,
+				Visibility = data.Visibility,
+				IsCheckable = data.IsCheckable,
+				IsChecked = data.IsChecked
+
+			};
+
+			if (data.Icon != null)
+			{
+				menuItem.Icon = new Image
+				{
+					Source = data.Icon,
+					Width = 16,
+					Height = 16
+				};
+			}
+
+			return menuItem;
+		}
+
+		private CMenuItem CreateMenu(MenuItemData menuItem)
+		{
+			CMenuItem item = CreateMenuItemContent(menuItem);
+
+			foreach (var child in menuItem.Children)
+			{
+				CMenuItem ChildItem = CreateMenu(child);
+
+				item.Items.Add(ChildItem);
+			}
+
+			return item;
+		}
+		private void OpenFile()
+		{
+			MessageBox.Show("OpenFile được gọi!");
+		}
+
 		private void ShowMenu_Click(object sender, RoutedEventArgs e)
 		{
-			//btnMenu.ContextMenu.PlacementTarget = btnMenu;
-			//btnMenu.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-			//btnMenu.ContextMenu.IsOpen = true;
+			var iconUri = new Uri("pack://application:,,,/Assets/Images/search26.png");
+			var iconImage = new BitmapImage(iconUri);
+
+			ObservableCollection<MenuItemData> MenuItems = new ObservableCollection<MenuItemData>()
+			{
+				new MenuItemData
+				{
+					Header = "File",
+					Children = new List<MenuItemData>
+					{
+						new MenuItemData
+						{
+							Header = "New",
+							Command = new RelayCommand(OpenFile),
+							Icon = iconImage
+						},
+						new MenuItemData
+						{
+							Header = "Open",
+							Command = new RelayCommand(OpenFile),
+							IsCheckable = true,
+							IsChecked = true
+						}
+					}
+				},
+				new MenuItemData
+				{
+					Header = "Edit",
+				},
+			};
+
+			var menu = new ContextMenu();
+			menu.Style = (Style)FindResource("CContextMenuStyle");
+
+			foreach (var itemData in MenuItems)
+			{
+				CMenuItem items = CreateMenu(itemData);
+
+				menu.Items.Add(items);
+			}
+
+			menu.PlacementTarget = MenuButton;
+			menu.Placement = PlacementMode.Bottom;
+			menu.IsOpen = true;
 		}
 	}
 }

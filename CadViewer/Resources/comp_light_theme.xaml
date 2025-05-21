@@ -72,6 +72,12 @@
     <Color x:Key="CompUI_DropDown_ButtonBackgroundCheckedColor">#ececec</Color>
     <Color x:Key="CompUI_DropDown_BorderEndColor">#8d8d8d</Color>
 
+    <Color x:Key="CompUI_MenuItem_BackgroundOverColor">#c8d5eb</Color>
+    <CornerRadius x:Key="CompUI_MenuItem_CornerRadius">3</CornerRadius>
+
+    <Color x:Key="CompUI_ContextMenu_BackgroundColor">#fbfbfb</Color>
+    <Color x:Key="CompUI_ContextMenu_BorderColor">#d2d2d2</Color>
+
     <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
     <SolidColorBrush x:Key="Cmm_NotifyTextColor" Color="{DynamicResource CompUI_Cmm_NotifyTextColor}" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>

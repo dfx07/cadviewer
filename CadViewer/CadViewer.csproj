@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\ModalDialog.cs" />
+    <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
     <Compile Include="UIControls\CMenuItem.cs" />
     <Compile Include="UIControls\CToastContainer.cs" />
@@ -187,6 +188,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CToastContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CEtc.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
