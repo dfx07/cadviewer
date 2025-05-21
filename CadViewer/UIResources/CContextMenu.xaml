@@ -4,13 +4,13 @@
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!--<Style x:Key="CContextMenuStyle" TargetType="{x:Type ContextMenu}">
+    <Style TargetType="{x:Type local:CContextMenu}" BasedOn="{StaticResource {x:Type ContextMenu}}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="HasDropShadow" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ContextMenu">
+                <ControlTemplate TargetType="{x:Type local:CContextMenu}">
                     <Border Background="Transparent" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
                         <Border x:Name="SubMenuBorder" Margin="5"
                                 BorderThickness="1"
@@ -30,6 +30,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
   
 </ResourceDictionary>

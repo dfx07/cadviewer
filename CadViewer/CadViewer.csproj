@@ -114,6 +114,7 @@
     <Compile Include="Interfaces\ModalDialog.cs" />
     <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
+    <Compile Include="UIControls\CContextMenu.cs" />
     <Compile Include="UIControls\CMenuItem.cs" />
     <Compile Include="UIControls\CToastContainer.cs" />
     <Compile Include="UIControls\CWindow.cs" />
@@ -182,6 +183,10 @@
     <Page Include="Dialogs\DlgSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIResources\CContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CMenuItem.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -14,6 +14,8 @@ using CadViewer.Animations;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Windows.Threading;
+using CadViewer.Interfaces;
+using System.Windows.Data;
 
 namespace CadViewer.UIControls
 {
@@ -60,48 +62,47 @@ namespace CadViewer.UIControls
 			};
 		}
 
-		//public static readonly DependencyProperty ImageSourceProperty =
-		//DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(CMenuItem), new PropertyMetadata(null));
+		public static object CreateMenuItem(MenuItemData data, bool bCreateChild = true)
+		{
+			if (data.IsSeparator)
+			{
+				var separator = new CSeparator
+				{
+					Style = (Style)Application.Current.FindResource("CSeparatorStyle"),
+				};
 
-		//public ImageSource ImageSource
-		//{
-		//	get => (ImageSource)GetValue(ImageSourceProperty);
-		//	set => SetValue(ImageSourceProperty, value);
-		//}
+				return separator;
+			}
 
-		//public static readonly DependencyProperty ImagePlacementProperty =
-		//DependencyProperty.Register(nameof(ImagePlacement), typeof(ImagePlacement), typeof(CMenuItem), new PropertyMetadata(ImagePlacement.Left));
+			var menuItem = new CMenuItem
+			{
+				DataContext = data,
+			};
 
-		//public ImagePlacement ImagePlacement
-		//{
-		//	get => (ImagePlacement)GetValue(ImagePlacementProperty);
-		//	set => SetValue(ImagePlacementProperty, value);
-		//}
+			menuItem.SetBinding(CMenuItem.HeaderProperty, new Binding(nameof(MenuItemData.Header)));
+			menuItem.SetBinding(CMenuItem.IconProperty, new Binding(nameof(MenuItemData.Icon)));
+			menuItem.SetBinding(CMenuItem.IsEnabledProperty, new Binding(nameof(MenuItemData.IsEnabled)));
+			menuItem.SetBinding(CMenuItem.IsCheckedProperty, new Binding(nameof(MenuItemData.IsChecked)));
+			menuItem.SetBinding(CMenuItem.IsCheckableProperty, new Binding(nameof(MenuItemData.IsCheckable)));
+			menuItem.SetBinding(CMenuItem.CommandProperty, new Binding(nameof(MenuItemData.Command)));
+			menuItem.SetBinding(CMenuItem.CommandParameterProperty, new Binding(nameof(MenuItemData.CommandParameter)));
+			menuItem.SetBinding(CMenuItem.VisibilityProperty, new Binding(nameof(MenuItemData.IsVisible))
+			{
+				Converter = new BooleanToVisibilityConverter()
+			});
 
-		//public static readonly DependencyProperty HeaderHeightProperty =
-		//DependencyProperty.Register(nameof(HeaderHeight), typeof(double), typeof(CMenuItem), new PropertyMetadata(20.0));
+			if(bCreateChild)
+			{
+				if (data.Children != null && data.Children.Any())
+				{
+					foreach (var child in data.Children)
+					{
+						menuItem.Items.Add(CreateMenuItem(child));
+					}
+				}
+			}
 
-		//public double HeaderHeight
-		//{
-		//	get => (double)GetValue(HeaderHeightProperty);
-		//	set => SetValue(HeaderHeightProperty, value);
-		//}
-
-		//public static readonly DependencyProperty ImageWidthProperty =
-		//DependencyProperty.Register(nameof(ImageWidth), typeof(double), typeof(CMenuItem), new PropertyMetadata(double.NaN));
-		//public double ImageWidth
-		//{
-		//	get => (double)GetValue(ImageWidthProperty);
-		//	set => SetValue(ImageWidthProperty, value);
-		//}
-
-		//public static readonly DependencyProperty ShowHeaderProperty =
-		//DependencyProperty.Register(nameof(ShowHeader), typeof(bool), typeof(CMenuItem), new PropertyMetadata(true));
-
-		//public bool ShowHeader
-		//{
-		//	get => (bool)GetValue(ShowHeaderProperty);
-		//	set => SetValue(ShowHeaderProperty, value);
-		//}
+			return menuItem;
+		}
 	}
 }

@@ -32,6 +32,7 @@
                 <ResourceDictionary Source="UIResources/CToastContainer.xaml" />
                 <ResourceDictionary Source="UIResources/CMenuItem.xaml" />
                 <ResourceDictionary Source="UIResources/CEtc.xaml" />
+                <ResourceDictionary Source="UIResources/CContextMenu.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
