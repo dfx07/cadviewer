@@ -25,6 +25,7 @@
     <Color x:Key="CompUI_ToggleBtn_BackgroundOffOver2Color">#e5e5e5</Color>
     <Color x:Key="CompUI_ToggleBtn_ThumbOffColor">#5c5c5c</Color>
     <Color x:Key="CompUI_ToggleBtn_BorderColor">#5c5c5c</Color>
+    <Color x:Key="CompUI_ToggleBtn_OnTextColor">#f6f6f6</Color>
 
     <Color x:Key="CompUI_TextBox_BorderColor">#e6e6e6</Color>
     <Color x:Key="CompUI_TextBox_BorderEndColor">#8d8d8d</Color>

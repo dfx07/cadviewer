@@ -17,7 +17,8 @@ namespace CadViewer.UIControls
 	public enum EToggleButtonStyle
 	{
 		Normal,
-		Switch
+		Switch,
+		Square
 	}
 
 	public class CToggleButton : ToggleButton

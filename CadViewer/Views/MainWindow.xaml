@@ -104,8 +104,9 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <ui:CToggleButton Grid.Column="0" Width="40" Height="20" IsChecked="False" />
-                            <ui:CToggleButton Grid.Column="1" Width="70" Height="24" IsChecked="True" ButtonStyle="Normal" ImageWidth="24"
-                                              ImageSource="{com:PackImage Path=Assets/Images/light26.png}" Content="Toggle" />
+                            <!--<ui:CToggleButton Grid.Column="1" Width="70" Height="24" IsChecked="True" ButtonStyle="Normal" ImageWidth="24"
+                                              ImageSource="{com:PackImage Path=Assets/Images/light26.png}" Content="Toggle" />-->
+                            <ui:CToggleButton Grid.Column="1" Width="70" Height="24" ButtonStyle="Square" IsChecked="False" />
                         </Grid>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>
