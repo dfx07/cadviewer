@@ -66,14 +66,14 @@
                 <!--Button layout-->
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" /> <!--Small controls-->
-                        <ColumnDefinition Width="*" /> <!--Large controls-->
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" /> <!--Small controls-->
+                        <ColumnDefinition Width="Auto" /> <!--Large controls-->
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Row="0" Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />
@@ -98,15 +98,17 @@
                         </ui:CButton>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Toggle Button"></TextBlock>
-                        <Grid Grid.Row="1" Grid.Column="1" Width="140">
+                        <Grid Grid.Row="1" Grid.Column="1" Width="210">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <ui:CToggleButton Grid.Column="0" Width="40" Height="20" IsChecked="False" />
-                            <!--<ui:CToggleButton Grid.Column="1" Width="70" Height="24" IsChecked="True" ButtonStyle="Normal" ImageWidth="24"
-                                              ImageSource="{com:PackImage Path=Assets/Images/light26.png}" Content="Toggle" />-->
-                            <ui:CToggleButton Grid.Column="1" Width="70" Height="24" ButtonStyle="Square" IsChecked="False" />
+                            <ui:CToggleButton Grid.Column="0" Margin="2" Width="40" Height="18" IsChecked="False" />
+                            <ui:CToggleButton Grid.Column="1" Margin="2" Width="65" Height="22" IsChecked="True" ButtonStyle="Normal" ImageWidth="24"
+                                              ImageSource="{com:PackImage Path=Assets/Images/light26.png}" Content="Toggle" />
+                            <ui:CToggleButton Grid.Column="2" Margin="2" FontSize="9" Width="60" Height="20" ButtonStyle="Square" IsChecked="False"
+                                              OffText="Off" OnText="On"/>
                         </Grid>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="TextBox"></TextBlock>

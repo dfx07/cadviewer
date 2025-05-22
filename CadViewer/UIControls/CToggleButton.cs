@@ -162,5 +162,23 @@ namespace CadViewer.UIControls
 			get => (double)GetValue(ImageWidthProperty);
 			set => SetValue(ImageWidthProperty, value);
 		}
+
+		public static readonly DependencyProperty OnTextProperty =
+		DependencyProperty.Register(nameof(OnText), typeof(string), typeof(CToggleButton), new PropertyMetadata("On"));
+
+		public string OnText
+		{
+			get => (string)GetValue(OnTextProperty);
+			set => SetValue(OnTextProperty, value);
+		}
+
+		public static readonly DependencyProperty OffTextProperty =
+		DependencyProperty.Register(nameof(OffText), typeof(string), typeof(CToggleButton), new PropertyMetadata("Off"));
+
+		public string OffText
+		{
+			get => (string)GetValue(OffTextProperty);
+			set => SetValue(OffTextProperty, value);
+		}
 	}
 }

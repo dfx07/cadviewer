@@ -18,7 +18,7 @@
                 <SolidColorBrush Color="Transparent" />
             </Border.BorderBrush>
             <Grid>
-                <Border x:Name="xCToggleButtonThumb" Margin="3" Width="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent},
+                <Border x:Name="xCToggleButtonThumb" Margin="2" Width="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent},
                                              Converter={StaticResource HeightToThumbWidthConverter}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent},
                                              Converter={StaticResource HeightToThumbWidthConverter}}" CornerRadius="{Binding Height, RelativeSource={RelativeSource Self}, Converter={StaticResource HeightToCornerRadiusConverter}}">
                     <Border.Background>
@@ -135,71 +135,70 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="xToggleButtonSquareStyle" TargetType="{x:Type local:CToggleButton}">
-        <Border x:Name="xCToggleButtonBorder" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Height="{TemplateBinding Height}">
-            <Border.Background>
-                <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOffColor}" />
-            </Border.Background>
-            <Border.BorderBrush>
-                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-            </Border.BorderBrush>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Border x:Name="PART_UnCheckBound" Grid.Column="0" Background="Transparent"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="2,0,0,2">
-                    <TextBlock Text="Val1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                </Border>
-                <Border x:Name="PART_CheckBound" Grid.Column="1" Background="Transparent" 
-                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,2,2,0">
-                    <TextBlock Text="Val2" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
-                </Border>
-            </Grid>
-        </Border>
+        <Grid>
+            <Border x:Name="xCToggleButtonBorder" Height="{TemplateBinding Height}">
+                <Border.Background>
+                    <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOffColor}" />
+                </Border.Background>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="PART_UnCheckBound" Grid.Column="0" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="4,0,0,4">
+                        <TextBlock x:Name="PART_UnCheckText" FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding OffText}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    </Border>
+                    <Border x:Name="PART_CheckBound" Grid.Column="1" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,4,4,0">
+                        <TextBlock x:Name="PART_CheckText" FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding OnText}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" Height="{TemplateBinding Height}" SnapsToDevicePixels="True">
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BorderColor}" />
+                </Border.BorderBrush>
+            </Border>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="CheckStatus">
+                    <VisualState x:Name="Unchecked">
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="PART_UnCheckBound"
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" Duration="0:0:0.1" />
+                            <ColorAnimation Storyboard.TargetName="PART_UnCheckText"
+                                            Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_ToggleBtn_OnTextColor}" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Checked">
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="PART_CheckBound" 
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" Duration="0:0:0.1" />
+                            <ColorAnimation Storyboard.TargetName="PART_CheckText"
+                                            Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_ToggleBtn_OnTextColor}" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+
         <ControlTemplate.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter TargetName="PART_CheckBound" Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" />
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="PART_CheckBound" Property="TextElement.Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_OnTextColor}" />
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsChecked" Value="False">
-                <Setter TargetName="PART_UnCheckBound" Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" />
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="PART_UnCheckBound" Property="TextElement.Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_OnTextColor}" />
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="xToggleButtonNormalStyle" TargetType="{x:Type local:CToggleButton}">
-        <Border x:Name="xCToggleButtonBorder" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}" BorderThickness="1" SnapsToDevicePixels="True">
+        <Border x:Name="PART_BorderBound" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}"
+                BorderThickness="1" SnapsToDevicePixels="True">
             <Border.Background>
                 <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" />
             </Border.Background>
             <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <LinearGradientBrush.GradientStops>
-                        <GradientStopCollection>
-                            <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="0.0" />
-                            <GradientStop Color="{DynamicResource CompUI_Cmm_BorderColor}" Offset="0.9" />
-                            <GradientStop Color="{DynamicResource CompUI_Cmm_BorderEndColor}" Offset="1.0" />
-                        </GradientStopCollection>
-                    </LinearGradientBrush.GradientStops>
-                </LinearGradientBrush>
+                <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BorderColor}" />
             </Border.BorderBrush>
             <DockPanel Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Image DockPanel.Dock="Left" x:Name="PART_Image" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{TemplateBinding ImageSource}">
@@ -210,18 +209,20 @@
                         </MultiBinding>
                     </Image.Width>
                 </Image>
-                <Border x:Name="PART_Content" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <ContentPresenter Margin="0,-1,0,0" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}"/>
-                </Border>
+                 <ContentPresenter x:Name="PART_ContentText" Margin="1,-1,1,1" Content="{TemplateBinding Content}" VerticalAlignment="Center"
+                         HorizontalAlignment="Left" />
+                <!--<Border x:Name="PART_Content" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                </Border>-->
             </DockPanel>
             <Border.Triggers>
                 <EventTrigger RoutedEvent="MouseEnter">
                     <EventTrigger.Actions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Storyboard.TargetName="xCToggleButtonBorder"
+                                <ColorAnimation Storyboard.TargetName="PART_BorderBound"
                                                 Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                Duration="0:0:0.2">
+                                                Duration="0:0:0.1">
                                     <ColorAnimation.To>
                                         <MultiBinding Converter="{StaticResource ToggleButtonCheckNSelectColorConverter}">
                                             <Binding Path="IsChecked" RelativeSource="{RelativeSource TemplatedParent}" />
@@ -246,9 +247,9 @@
                     <EventTrigger.Actions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Storyboard.TargetName="xCToggleButtonBorder" 
+                                <ColorAnimation Storyboard.TargetName="PART_BorderBound" 
                                                 Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                Duration="0:0:0.2">
+                                                Duration="0:0:0.1">
                                     <ColorAnimation.To>
                                         <MultiBinding Converter="{StaticResource ToggleButtonCheckNSelectColorConverter}">
                                             <Binding Path="IsChecked" RelativeSource="{RelativeSource TemplatedParent}" />
@@ -277,16 +278,22 @@
                 <VisualStateGroup x:Name="CheckStatus">
                     <VisualState x:Name="Unchecked">
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
-                                            To="{DynamicResource CompUI_Cmm_TextColor}"
-                                            Duration="0:0:0.2" />
+                            <ColorAnimation Storyboard.TargetName="PART_BorderBound"
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOffColor}" Duration="0:0:0.1" />
+                            <ColorAnimation Storyboard.TargetName="PART_ContentText"
+                                            Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_Cmm_TextColor}" Duration="0:0:0.1"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Checked">
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
-                                            To="White"
-                                            Duration="0:0:0.2" />
+                            <ColorAnimation Storyboard.TargetName="PART_BorderBound"
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" Duration="0:0:0.1" />
+                            <ColorAnimation Storyboard.TargetName="PART_ContentText"
+                                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                            To="{DynamicResource CompUI_ToggleBtn_OnTextColor}" Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
@@ -294,30 +301,10 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter TargetName="xCToggleButtonBorder" Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" />
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="xCToggleButtonBorder" Property="BorderThickness" Value="0" />
-                <Setter TargetName="xCToggleButtonBorder" Property="BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush Color="Transparent" />
-                    </Setter.Value>
-                </Setter>
+                <Setter TargetName="PART_BorderBound" Property="BorderThickness" Value="0" />
             </Trigger>
             <Trigger Property="IsChecked" Value="False">
-                <Setter TargetName="xCToggleButtonBorder" Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOffColor}" />
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="xCToggleButtonBorder" Property="BorderThickness" Value="1" />
-                <Setter TargetName="xCToggleButtonBorder" Property="BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BorderColor}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter TargetName="PART_BorderBound" Property="BorderThickness" Value="1" />
             </Trigger>
             <DataTrigger Binding="{Binding ImageSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
                 <Setter TargetName="PART_Image" Property="Visibility" Value="Collapsed" />
@@ -326,6 +313,7 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type local:CToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" Value="Switch">
                 <Setter Property="Template" Value="{StaticResource xToggleButtonSwitchStyle}" />
