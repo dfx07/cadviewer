@@ -53,22 +53,25 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="1" Grid.Column="0" Background="#3b4453" ClipToBounds="True">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <ToggleButton x:Name="NavToggle" Grid.Row="0" Height="30" Content="☰ NavSlider" />
-                    <ui:CNavSlider x:Name="NavSlider" Grid.Row="1" Width="200" Orientation="Horizontal"
-                                   IsOpen="{Binding IsChecked, ElementName=NavToggle}">
-                        <ui:CNavSlider.Content>
-                            <StackPanel Margin="10">
-                                <TextBlock Text="Home" Foreground="White" FontSize="16" Margin="0 10" />
-                                <TextBlock Text="Settings" Foreground="White" FontSize="16" Margin="0 10" />
-                                <TextBlock Text="About" Foreground="White" FontSize="16" Margin="0 10" />
-                            </StackPanel>
-                        </ui:CNavSlider.Content>
-                    </ui:CNavSlider>
+
+                <ui:CNavSlider x:Name="NavSlider" Grid.Row="0" Margin="0,1,0,0" Width="200" Background="#3b4453"
+                             Orientation="Horizontal" IsOpen="{Binding IsChecked, ElementName=NavToggle1}">
+                    <ui:CNavSlider.HeaderContent>
+                        <DockPanel>
+                            <ToggleButton x:Name="NavToggle" DockPanel.Dock="Right" Background="#3b4453" Width="30" Height="30" Grid.Row="0" IsChecked="True" Content="☰" />
+                            <TextBlock Foreground="White" FontSize="16" Text="Nav Bar" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30"></TextBlock>
+                        </DockPanel>
+                    </ui:CNavSlider.HeaderContent>
+                    <ui:CNavSlider.Content>
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Home" Foreground="White" FontSize="16" Margin="0 10" />
+                            <TextBlock Text="Settings" Foreground="White" FontSize="16" Margin="0 10" />
+                            <TextBlock Text="About" Foreground="White" FontSize="16" Margin="0 10" />
+                        </StackPanel>
+                    </ui:CNavSlider.Content>
+                </ui:CNavSlider>
+                <Grid x:Name="NavSliderButton" Grid.Row="0" Margin="0,1,0,0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <ToggleButton x:Name="NavToggle1" Background="#3b4453" Width="30" Height="30" Grid.Row="0" IsChecked="True" Content="☰" />
                 </Grid>
                 <!--Button layout-->
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
