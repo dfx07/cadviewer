@@ -116,6 +116,7 @@
     <Compile Include="Interfaces\ToastControl.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
     <Compile Include="UIControls\CMenuItem.cs" />
+    <Compile Include="UIControls\CRadioButton.cs" />
     <Compile Include="UIControls\CToastContainer.cs" />
     <Compile Include="UIControls\CWindow.cs" />
     <Compile Include="UIControls\CDropDownButton.cs" />
@@ -189,6 +190,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CMenuItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CRadioButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -105,11 +105,11 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ContentPresenter x:Name="Icon" Margin="3" ContentSource="Icon" HorizontalAlignment="Center" Width="16" Height="16"
+                <ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Width="20" Height="20"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center">
                     <ContentPresenter.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding}" Width="16" Height="16" />
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding}" Width="15" Height="15" />
                         </DataTemplate>
                     </ContentPresenter.ContentTemplate>
                 </ContentPresenter>
@@ -154,11 +154,11 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ContentPresenter x:Name="Icon" Margin="3" ContentSource="Icon" HorizontalAlignment="Center" Width="16" Height="16"
+                <ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Width="20" Height="20"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center">
                     <ContentPresenter.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding}" Width="16" Height="16" />
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding}" Width="15" Height="15" />
                         </DataTemplate>
                     </ContentPresenter.ContentTemplate>
                 </ContentPresenter>
@@ -223,20 +223,20 @@
                                       BorderThickness="{TemplateBinding BorderThickness}"
                                       CornerRadius="{DynamicResource CompUI_MenuItem_CornerRadius}"
                                       Height="21" SnapsToDevicePixels="true">
-            <Grid Margin="-1">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto" />
+                    <ColumnDefinition MinWidth="20" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto" />
                     <ColumnDefinition Width="13" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="30" />
                     <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto" />
                     <ColumnDefinition Width="20" />
                 </Grid.ColumnDefinitions>
-                <ContentPresenter x:Name="Icon" Margin="3" ContentSource="Icon" HorizontalAlignment="Center" Width="16" Height="16"
+                <ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Width="20" Height="20"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center">
                     <ContentPresenter.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding}" Width="16" Height="16" />
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding}" Width="15" Height="15" />
                         </DataTemplate>
                     </ContentPresenter.ContentTemplate>
                 </ContentPresenter>
@@ -282,18 +282,18 @@
                 Height="21" SnapsToDevicePixels="true">
             <Grid Margin="-1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto" />
+                    <ColumnDefinition MinWidth="20" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto" />
                     <ColumnDefinition Width="13" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="30" />
                     <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto" />
                     <ColumnDefinition Width="20" />
                 </Grid.ColumnDefinitions>
-                <ContentPresenter x:Name="Icon" Margin="3" ContentSource="Icon" HorizontalAlignment="Center" Width="16" Height="16"
+                <ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Width="20" Height="20"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center">
                     <ContentPresenter.ContentTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding}" Width="16" Height="16" />
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding}" Width="15" Height="15" />
                         </DataTemplate>
                     </ContentPresenter.ContentTemplate>
                 </ContentPresenter>
@@ -356,13 +356,6 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ScrollViewer.PanningMode" Value="Both" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
-        <!--<Setter Property="IconTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Image Source="{Binding}" Width="16" Height="16" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>-->
         <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">

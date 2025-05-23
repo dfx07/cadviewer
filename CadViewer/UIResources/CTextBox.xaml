@@ -189,7 +189,6 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="xCTextBoxImageTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.1" />
                                         <DoubleAnimation Storyboard.TargetName="xCTextBoxPlaceholderTranslateTransform" Storyboard.TargetProperty="Y" By="-1" Duration="0:0:0.1" />
-                                        <ThicknessAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="BorderThickness" To="0,0,0,2" Duration="0:0:0.2" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.1" />
                                         <ColorAnimation Storyboard.TargetName="xCTextBoxBottomRoundBorder" Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" From="Transparent" To="{DynamicResource CompUI_TextBox_BorderClickEndColor}" Duration="0:0:0.4" />

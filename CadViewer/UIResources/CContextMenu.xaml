@@ -8,6 +8,8 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="HorizontalOffset" Value="-5" />
+        <Setter Property="VerticalOffset" Value="-5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CContextMenu}">
@@ -31,5 +33,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-  
 </ResourceDictionary>

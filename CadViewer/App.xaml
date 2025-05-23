@@ -33,6 +33,7 @@
                 <ResourceDictionary Source="UIResources/CMenuItem.xaml" />
                 <ResourceDictionary Source="UIResources/CEtc.xaml" />
                 <ResourceDictionary Source="UIResources/CContextMenu.xaml" />
+                <ResourceDictionary Source="UIResources/CRadioButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

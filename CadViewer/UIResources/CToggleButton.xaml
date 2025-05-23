@@ -200,8 +200,8 @@
             <Border.BorderBrush>
                 <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BorderColor}" />
             </Border.BorderBrush>
-            <DockPanel Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Image DockPanel.Dock="Left" x:Name="PART_Image" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{TemplateBinding ImageSource}">
+            <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Image DockPanel.Dock="Left" Margin="0,2,0,2" x:Name="PART_Image" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{TemplateBinding ImageSource}">
                     <Image.Width>
                         <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
@@ -209,11 +209,7 @@
                         </MultiBinding>
                     </Image.Width>
                 </Image>
-                 <ContentPresenter x:Name="PART_ContentText" Margin="1,-1,1,1" Content="{TemplateBinding Content}" VerticalAlignment="Center"
-                         HorizontalAlignment="Left" />
-                <!--<Border x:Name="PART_Content" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                </Border>-->
+                <ContentPresenter x:Name="PART_ContentText" Margin="0,-1,1,1" Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Left" />
             </DockPanel>
             <Border.Triggers>
                 <EventTrigger RoutedEvent="MouseEnter">

@@ -79,6 +79,12 @@
     <Color x:Key="CompUI_ContextMenu_BackgroundColor">#fbfbfb</Color>
     <Color x:Key="CompUI_ContextMenu_BorderColor">#d2d2d2</Color>
 
+    <Color x:Key="CompUI_RadioButton_BackgroundColor">#ffffff</Color>
+    <Color x:Key="CompUI_RadioButton_BorderColor">#898989</Color>
+    <Color x:Key="CompUI_RadioButton_BackgroundOverColor">#ededed</Color>
+    <Color x:Key="CompUI_RadioButton_ThumbColor">#1a6ba8</Color>
+
+
     <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
     <SolidColorBrush x:Key="Cmm_NotifyTextColor" Color="{DynamicResource CompUI_Cmm_NotifyTextColor}" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>
