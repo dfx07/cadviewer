@@ -53,16 +53,23 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Grid.Column="0" ClipToBounds="True">
-                    <ToggleButton x:Name="NavToggle" Content="☰ NavSlider" />
-                    <ui:CNavSlider x:Name="NavSlider" Width="200" Orientation="Horizontal" IsOpen="{Binding IsChecked, ElementName=NavToggle}">
-                        <StackPanel Margin="10">
-                            <TextBlock Text="Home" Foreground="White" FontSize="16" Margin="0 10" />
-                            <TextBlock Text="Settings" Foreground="White" FontSize="16" Margin="0 10" />
-                            <TextBlock Text="About" Foreground="White" FontSize="16" Margin="0 10" />
-                        </StackPanel>
+                <Grid Grid.Row="0" Margin="1" Grid.Column="0" Background="#3b4453" ClipToBounds="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ToggleButton x:Name="NavToggle" Grid.Row="0" Height="30" Content="☰ NavSlider" />
+                    <ui:CNavSlider x:Name="NavSlider" Grid.Row="1" Width="200" Orientation="Horizontal"
+                                   IsOpen="{Binding IsChecked, ElementName=NavToggle}">
+                        <ui:CNavSlider.Content>
+                            <StackPanel Margin="10">
+                                <TextBlock Text="Home" Foreground="White" FontSize="16" Margin="0 10" />
+                                <TextBlock Text="Settings" Foreground="White" FontSize="16" Margin="0 10" />
+                                <TextBlock Text="About" Foreground="White" FontSize="16" Margin="0 10" />
+                            </StackPanel>
+                        </ui:CNavSlider.Content>
                     </ui:CNavSlider>
-                </StackPanel>
+                </Grid>
                 <!--Button layout-->
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.ColumnDefinitions>

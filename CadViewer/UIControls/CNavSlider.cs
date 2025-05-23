@@ -47,14 +47,24 @@ namespace CadViewer.UIControls
 				{
 					if(Orientation == Orientation.Vertical)
 					{
-						_Translate.Y = IsOpen ? 0 : -_InitHeight;
+						_Translate.Y = IsOpen ? 0 : -GetXOffset();
 					}
 					else
 					{
-						_Translate.X = IsOpen ? 0 : -_InitWidth ;
+						_Translate.X = IsOpen ? 0 : -GetYOffset() ;
 					}
 				}
 			};
+		}
+
+		private double GetXOffset()
+		{
+			return MinimizeWidth > 0 ? (_InitWidth - MinimizeWidth) : _InitWidth;
+		}
+
+		private double GetYOffset()
+		{
+			return MinimizeWidth > 0 ? (_InitHeight - MinimizeWidth) : _InitHeight;
 		}
 
 		public static readonly DependencyProperty IsOpenProperty =
@@ -82,6 +92,33 @@ namespace CadViewer.UIControls
 		{
 			get => (Orientation)GetValue(OrientationProperty);
 			set => SetValue(OrientationProperty, value);
+		}
+
+		public static readonly DependencyProperty HeaderContentProperty =
+		DependencyProperty.Register(nameof(HeaderContent), typeof(object), typeof(CNavSlider), null);
+
+		public object HeaderContent
+		{
+			get => GetValue(HeaderContentProperty);
+			set => SetValue(HeaderContentProperty, value);
+		}
+
+		public static readonly DependencyProperty MinimizeWidthProperty =
+		DependencyProperty.Register(nameof(MinimizeWidth), typeof(double), typeof(CNavSlider), new PropertyMetadata(0.0));
+
+		public double MinimizeWidth
+		{
+			get => (double)GetValue(MinimizeWidthProperty);
+			set => SetValue(MinimizeWidthProperty, value);
+		}
+
+		public static readonly DependencyProperty CornerRadiusProperty =
+		DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(CNavSlider), new PropertyMetadata(new CornerRadius(0,0,0,0)));
+
+		public CornerRadius CornerRadius
+		{
+			get => (CornerRadius)GetValue(CornerRadiusProperty);
+			set => SetValue(CornerRadiusProperty, value);
 		}
 
 		private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -190,7 +227,7 @@ namespace CadViewer.UIControls
 
 				var widthIn = new DoubleAnimation
 				{
-					From = 0,
+					From = MinimizeWidth,
 					To = _LastWidth,
 					Duration = TimeSpan.FromMilliseconds(300),
 					EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
@@ -210,7 +247,7 @@ namespace CadViewer.UIControls
 
 				var widthOut = new DoubleAnimation
 				{
-					To = 0,
+					To = GetXOffset(),
 					Duration = TimeSpan.FromMilliseconds(300),
 					EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn }
 				};

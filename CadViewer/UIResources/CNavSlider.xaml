@@ -12,18 +12,26 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CNavSlider}">
-                    <Border Background="#3b4453" BorderThickness="1" Width="{TemplateBinding Width}" CornerRadius="8">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="1" Width="{TemplateBinding Width}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="PART_Translate" X="0" Y="0" />
                         </Border.RenderTransform>
-                        <ContentPresenter x:Name="PART_Content" 
-                                            Content="{TemplateBinding Content}" 
-                                            ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" 
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <StackPanel ClipToBounds="True">
+                            <ContentPresenter x:Name="PART_ContentHeader" Content="{TemplateBinding HeaderContent}">
+                            </ContentPresenter>
+                            <ContentPresenter x:Name="PART_Content" 
+                                              Content="{TemplateBinding Content}" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding HeaderContent, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="PART_ContentHeader" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
