@@ -129,6 +129,15 @@ namespace CadViewer.UIControls
 			}
 		}
 
+		public static readonly DependencyProperty CloseDoneProperty =
+		DependencyProperty.Register(nameof(CloseDone), typeof(bool), typeof(CNavSlider), new PropertyMetadata(false));
+
+		public bool CloseDone
+		{
+			get => (bool)GetValue(CloseDoneProperty);
+			set => SetValue(CloseDoneProperty, value);
+		}
+
 		private void AnimationVertical(bool bOpen)
 		{
 			if(!IsUseAnimation)
@@ -197,6 +206,7 @@ namespace CadViewer.UIControls
 			if (bOpen)
 			{
 				this.Visibility = Visibility.Visible;
+				CloseDone = false;
 
 				var slideIn = new DoubleAnimation
 				{
@@ -214,11 +224,18 @@ namespace CadViewer.UIControls
 					EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
 				};
 
+				widthIn.Completed += (s, e) =>
+				{
+					CloseDone = true;
+				};
+
 				_Translate.BeginAnimation(TranslateTransform.XProperty, slideIn);
 				this.BeginAnimation(WidthProperty, widthIn);
 			}
 			else
 			{
+				CloseDone = false;
+
 				var slideOut = new DoubleAnimation
 				{
 					To = -_LastWidth,
@@ -236,6 +253,7 @@ namespace CadViewer.UIControls
 				widthOut.Completed += (s, e) =>
 				{
 					this.Visibility = Visibility.Collapsed;
+					CloseDone = true;
 				};
 
 				_Translate.BeginAnimation(TranslateTransform.XProperty, slideOut);

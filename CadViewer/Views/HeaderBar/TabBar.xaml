@@ -22,7 +22,7 @@
                     <ControlTemplate TargetType="ListBoxItem">
                         <Border x:Name="xBorderItem" CornerRadius="0" MinWidth="60" SnapsToDevicePixels="True"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                BorderBrush="WhiteSmoke" Background="Transparent"
+                                BorderBrush="#71829f" Background="Transparent"
                                 Visibility="{Binding bVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -32,16 +32,18 @@
                                     <VisualState x:Name="Unselected" />
                                     <VisualState x:Name="Selected">
                                         <Storyboard>
-                                            <ThicknessAnimation Storyboard.TargetName="xBorderItem" Storyboard.TargetProperty="BorderThickness" To="1,1,1,0" Duration="0:0:0.04" />
+                                            <ThicknessAnimation Storyboard.TargetName="xBorderItem" Storyboard.TargetProperty="BorderThickness" To="1,1,1,0" Duration="0:0:0.0" />
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            <ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(Color)"
+                                                            To="#3b4453" Duration="0:0:0.2" />
+                                            <!--<ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)"
                                                             From="Transparent" To="#3b4453" Duration="0:0:0.09" />
                                             <ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)"
                                                             From="Transparent" To="#3b4453" Duration="0:0:0.02" />
                                             <ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(GradientBrush.GradientStops)[2].(GradientStop.Color)"
-                                                            From="Transparent" To="#3b4453" Duration="0:0:0.09" />
+                                                            From="Transparent" To="#3b4453" Duration="0:0:0.09" />-->
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="SelectedUnfocused">
@@ -62,8 +64,11 @@
                                      IsEnabled="{Binding bEnable}">
                                     <TextBlock Text="{Binding strTabName}" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <Border x:Name="xPART_SelectedBottomLine" Margin="0,0,0,-1" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed">
+                                <Border x:Name="xPART_SelectedBottomLine" Margin="0,0,0,-1" VerticalAlignment="Bottom" Height="1" Visibility="Collapsed">
                                     <Border.Background>
+                                        <SolidColorBrush Color="#3b4453" />
+                                    </Border.Background>
+                                    <!--<Border.Background>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                             <LinearGradientBrush.GradientStops>
                                                 <GradientStop Color="#3b4453" Offset="0.0" />
@@ -71,7 +76,7 @@
                                                 <GradientStop Color="#3b4453" Offset="1.0" />
                                             </LinearGradientBrush.GradientStops>
                                         </LinearGradientBrush>
-                                    </Border.Background>
+                                    </Border.Background>-->
                                 </Border>
                             </Grid>
                         </Border>

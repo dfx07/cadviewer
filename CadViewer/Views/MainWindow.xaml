@@ -54,12 +54,23 @@
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
 
-                <ui:CNavSlider x:Name="NavSlider" Grid.Row="0" Margin="0,1,0,0" Width="200" Background="#3b4453"
+                <ui:CNavSlider x:Name="NavSlider" Grid.Row="0" Width="200" Background="#3b4453" BorderThickness="0,1,0,0"
+                             BorderBrush="#71829f"
                              Orientation="Horizontal" IsOpen="{Binding IsChecked, ElementName=NavToggle1}">
                     <ui:CNavSlider.HeaderContent>
-                        <DockPanel>
-                            <ToggleButton x:Name="NavToggle" DockPanel.Dock="Right" Background="#3b4453" Width="30" Height="30" Grid.Row="0" IsChecked="True" Content="☰" />
-                            <TextBlock Foreground="White" FontSize="16" Text="Nav Bar" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30"></TextBlock>
+                        <DockPanel Background="#222933" VerticalAlignment="Center">
+                            <!--<ToggleButton x:Name="NavToggle" Foreground="WhiteSmoke" Margin="1" DockPanel.Dock="Right" Background="Transparent" Width="30"
+                                          Height="30" Grid.Row="0" IsChecked="False" Content="☰" FocusVisualStyle="{x:Null}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Grid x:Name="Root" Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>-->
+                            <TextBlock Foreground="WhiteSmoke" FontSize="16" Text="Nav Bar" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" Height="30"></TextBlock>
                         </DockPanel>
                     </ui:CNavSlider.HeaderContent>
                     <ui:CNavSlider.Content>
@@ -70,8 +81,44 @@
                         </StackPanel>
                     </ui:CNavSlider.Content>
                 </ui:CNavSlider>
-                <Grid x:Name="NavSliderButton" Grid.Row="0" Margin="0,1,0,0" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <ToggleButton x:Name="NavToggle1" Background="#3b4453" Width="30" Height="30" Grid.Row="0" IsChecked="True" Content="☰" />
+                <Grid x:Name="NavSliderButton" Grid.Row="0" Margin="1,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <ToggleButton x:Name="NavToggle1" Background="Transparent" Width="30" Height="30" Grid.Row="0" IsChecked="True" Content="☰" FocusVisualStyle="{x:Null}">
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Grid x:Name="Root" Background="{TemplateBinding Background}">
+                                    <TextBlock x:Name="PART_Text" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}" />
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualStateGroup.Transitions>
+                                                <VisualTransition GeneratedDuration="0:0:0.1" To="Normal" />
+                                            </VisualStateGroup.Transitions>
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="MouseOver">
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetProperty="(Background).Color" To="#bee6fd" Duration="0:0:0.1" />
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsOpen, ElementName=NavSlider}" Value="True">
+                                        <Setter TargetName="PART_Text" Property="Foreground" Value="White" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsOpen, ElementName=NavSlider}" Value="False">
+                                        <Setter TargetName="PART_Text" Property="Foreground" Value="{DynamicResource Cmm_TextColor}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CloseDone, ElementName=NavSlider}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
                 </Grid>
                 <!--Button layout-->
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">

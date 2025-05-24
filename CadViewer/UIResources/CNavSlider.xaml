@@ -12,7 +12,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CNavSlider}">
-                    <Border Background="{TemplateBinding Background}" Width="{TemplateBinding Width}"
+                    <Border Background="{TemplateBinding Background}" Width="{TemplateBinding Width}" BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="PART_Translate" X="0" Y="0" />

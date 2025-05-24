@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="xGridRibbonTabs" Grid.Row="0" Background="#222933">
-            <Border BorderBrush="WhiteSmoke" BorderThickness="0,0,0,1"/>
+            <Border BorderBrush="#71829f" BorderThickness="0,0,0,1"/>
             <local:TabBar x:Name="xTabBar" RefTabBarInfos="{Binding TabBarInfos}"
                           SelectedTabBarInfo="{Binding SelectedTab, Mode=TwoWay}" Padding="10,2,0,0">
             </local:TabBar>
