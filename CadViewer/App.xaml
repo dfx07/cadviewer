@@ -34,6 +34,7 @@
                 <ResourceDictionary Source="UIResources/CEtc.xaml" />
                 <ResourceDictionary Source="UIResources/CContextMenu.xaml" />
                 <ResourceDictionary Source="UIResources/CRadioButton.xaml" />
+                <ResourceDictionary Source="UIResources/CResizableContainer.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

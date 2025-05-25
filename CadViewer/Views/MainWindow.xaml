@@ -38,54 +38,39 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="90" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="24"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
                 <uctrl:BibbonBar DataContext="{Binding RibbonBarVM}"></uctrl:BibbonBar>
-                <!--<ui:CButton Width="70" Height="24"></ui:CButton>-->
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="60"/>
-                </Grid.RowDefinitions>
 
-                <ui:CNavSlider x:Name="NavSlider" Grid.Row="0" Width="200" Background="#3b4453" BorderThickness="0,1,0,0"
-                             BorderBrush="#71829f"
+                <!--#region [LEFT] Content-->
+                <ui:CNavSlider x:Name="NavSlider" Grid.Row="0" Width="200" Background="#f3f3f3" BorderThickness="0,0,6,0" BorderBrush="#3b4453"
                              Orientation="Horizontal" IsOpen="{Binding IsChecked, ElementName=NavToggle1}">
                     <ui:CNavSlider.HeaderContent>
-                        <DockPanel Background="#222933" VerticalAlignment="Center">
-                            <!--<ToggleButton x:Name="NavToggle" Foreground="WhiteSmoke" Margin="1" DockPanel.Dock="Right" Background="Transparent" Width="30"
-                                          Height="30" Grid.Row="0" IsChecked="False" Content="☰" FocusVisualStyle="{x:Null}">
-                                <ToggleButton.Template>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Grid x:Name="Root" Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Grid>
-                                    </ControlTemplate>
-                                </ToggleButton.Template>
-                            </ToggleButton>-->
-                            <TextBlock Foreground="WhiteSmoke" FontSize="16" Text="Nav Bar" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" Height="30"></TextBlock>
-                        </DockPanel>
+                        <Grid Background="#222933" VerticalAlignment="Center" Height="30">
+                            <TextBlock  Foreground="WhiteSmoke" FontSize="16" Text="Nav Bar" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
                     </ui:CNavSlider.HeaderContent>
                     <ui:CNavSlider.Content>
                         <StackPanel Margin="10">
-                            <TextBlock Text="Home" Foreground="White" FontSize="16" Margin="0 10" />
-                            <TextBlock Text="Settings" Foreground="White" FontSize="16" Margin="0 10" />
-                            <TextBlock Text="About" Foreground="White" FontSize="16" Margin="0 10" />
+                            <TextBlock Text="Home" FontSize="16" Margin="0 10" />
+                            <TextBlock Text="Settings" FontSize="16" Margin="0 10" />
+                            <TextBlock Text="About" FontSize="16" Margin="0 10" />
                         </StackPanel>
                     </ui:CNavSlider.Content>
                 </ui:CNavSlider>
-                <Grid x:Name="NavSliderButton" Grid.Row="0" Margin="1,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <ToggleButton x:Name="NavToggle1" Background="Transparent" Width="30" Height="30" Grid.Row="0" IsChecked="True" Content="☰" FocusVisualStyle="{x:Null}">
+                <Grid x:Name="NavSliderButton" Grid.Row="0" Margin="2,2,1,2" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <ToggleButton x:Name="NavToggle1" Background="Transparent" Width="28" Height="28" Grid.Row="0" IsChecked="True" Content="☰" FocusVisualStyle="{x:Null}">
                         <ToggleButton.Template>
                             <ControlTemplate TargetType="ToggleButton">
-                                <Grid x:Name="Root" Background="{TemplateBinding Background}">
+                                <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
                                     <TextBlock x:Name="PART_Text" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}">
                                         <TextBlock.Foreground>
                                             <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}" />
@@ -99,12 +84,12 @@
                                             <VisualState x:Name="Normal" />
                                             <VisualState x:Name="MouseOver">
                                                 <Storyboard>
-                                                    <ColorAnimation Storyboard.TargetProperty="(Background).Color" To="#bee6fd" Duration="0:0:0.1" />
+                                                    <ColorAnimation Storyboard.TargetProperty="(Background).Color" To="{DynamicResource CompUI_Cmm_BorderOverColor}" Duration="0:0:0.1" />
                                                 </Storyboard>
                                             </VisualState>
                                         </VisualStateGroup>
                                     </VisualStateManager.VisualStateGroups>
-                                </Grid>
+                                </Border>
                                 <ControlTemplate.Triggers>
                                     <DataTrigger Binding="{Binding IsOpen, ElementName=NavSlider}" Value="True">
                                         <Setter TargetName="PART_Text" Property="Foreground" Value="White" />
@@ -120,7 +105,9 @@
                         </ToggleButton.Template>
                     </ToggleButton>
                 </Grid>
-                <!--Button layout-->
+                <!--#endregion-->
+
+                <!--#region [MID] Content-->
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" /> <!--Small controls-->
@@ -415,15 +402,39 @@
                         </Grid>
                     </Grid>
                 </Grid>
-
                 <!--Label layout 0,0,-3,-6-->
                 <Grid Grid.Row="1" Margin="0,0,0,-1" Grid.Column="0">
-
+                    <!--Temp-->
                 </Grid>
+                <!--#endregion-->
+
+                <!--#region [RIGHT] Content-->
+                <ui:CResizableContainer x:Name="PART_Property" Grid.Row="0" Grid.Column="2" ResizeDirections="Left"
+                                        Width="150" MinWidth="50" MaxWidth="300"
+                                        Background="#3b4453" BorderThickness="0,0,0,0" BorderBrush="#71829f">
+                    <DockPanel >
+                        <Grid x:Name="PART_PropertyTitleBar" DockPanel.Dock="Top" Background="#222933" Height="25">
+                            <TextBlock Margin="2" Foreground="WhiteSmoke" FontSize="12" Text="Property" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                        <Grid x:Name="PART_PropertyContent" DockPanel.Dock="Bottom" Background="#eeeeee">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBlock Text="This is content and so many control contains here" />
+                                <TextBox Text="This is content and so many control contains here" />
+                                <ComboBox Text="This is content and so many control contains here" />
+                            </StackPanel>
+                        </Grid>
+                    </DockPanel>
+
+                </ui:CResizableContainer>
+                <!--#endregion-->
+
             </Grid>
-            <Grid Grid.Row="2" Grid.Column="0">
-                <Button Name="btnGenOpenGL" Content="Click to gen OpenGL context" Margin=" 10 ,10 ,10, 10" Command="{Binding IBtnRegisterClickComand}">
-                </Button>
+            <Grid Grid.Row="2" Grid.Column="0" Background="#80000000">
             </Grid>
         </Grid>
         <Grid x:Name="PART_ModalOverlay" Background="#80000000" Visibility="Collapsed"

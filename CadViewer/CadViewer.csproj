@@ -94,7 +94,6 @@
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ResourceLocator.cs" />
-    <Compile Include="Components\CPanelControl.cs" />
     <Compile Include="Components\Converter.cs" />
     <Compile Include="Converters\CommonConverter.cs" />
     <Compile Include="Converters\ProgressBarConverter.cs" />
@@ -115,6 +114,7 @@
     <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
+    <Compile Include="UIControls\CResizableContainer.cs" />
     <Compile Include="UIControls\CMenuItem.cs" />
     <Compile Include="UIControls\CRadioButton.cs" />
     <Compile Include="UIControls\CToastContainer.cs" />
@@ -186,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIResources\CContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CResizableContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
