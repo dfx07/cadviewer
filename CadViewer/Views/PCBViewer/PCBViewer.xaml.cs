@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CadViewer.View
+namespace CadViewer.Views
 {
 	/// <summary>
 	/// Interaction logic for PCBViewer.xaml

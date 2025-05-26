@@ -36,7 +36,7 @@ namespace CadViewer.ViewModels
 		{
 			TabBarInfos = new ObservableCollection<TabBarItemInfo>()
 			{
-				new TabBarItemInfo { strTabName = "FILE", nTabIdx = 0 },
+				new TabBarItemInfo { strTabName = "HOME", nTabIdx = 0 },
 				new TabBarItemInfo { strTabName = "EDIT", nTabIdx = 1 },
 				new TabBarItemInfo { strTabName = "VIEW", nTabIdx = 2 },
 				new TabBarItemInfo { strTabName = "PROJ", nTabIdx = 3 }

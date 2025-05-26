@@ -56,6 +56,47 @@ namespace CadViewer.UIControls
 
 			PreviewMouseLeftButtonDown += CToggleButton_PreviewMouseLeftButtonDown;
 			PreviewMouseLeftButtonUp += CToggleButton_PreviewMouseLeftButtonUp;
+
+			UpdateVisualState(false);
+		}
+
+		void UpdateVisualState(bool useTransitions)
+		{
+			if (ButtonStyle != EToggleButtonStyle.Normal)
+				return;
+
+			string state = "";
+
+			if (IsChecked == true)
+				state = IsMouseOver ? "CheckedMouseOver" : "CheckedNormal";
+			else
+				state = IsMouseOver ? "UncheckedMouseOver" : "UncheckedNormal";
+
+			VisualStateManager.GoToState(this, state, useTransitions);
+		}
+
+		protected override void OnMouseEnter(MouseEventArgs e)
+		{
+			base.OnMouseEnter(e);
+			UpdateVisualState(true);
+		}
+
+		protected override void OnMouseLeave(MouseEventArgs e)
+		{
+			base.OnMouseLeave(e);
+			UpdateVisualState(true);
+		}
+
+		protected override void OnChecked(RoutedEventArgs e)
+		{
+			base.OnChecked(e);
+			UpdateVisualState(true);
+		}
+
+		protected override void OnUnchecked(RoutedEventArgs e)
+		{
+			base.OnUnchecked(e);
+			UpdateVisualState(true);
 		}
 
 		private void CToggleButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -135,6 +176,15 @@ namespace CadViewer.UIControls
 			refThumb.BeginAnimation(Border.WidthProperty, widthAnim);
 		}
 
+		public static readonly DependencyProperty CornerRadiusProperty =
+		DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(CToggleButton), new PropertyMetadata(new CornerRadius(0, 0, 0, 0)));
+
+		public CornerRadius CornerRadius
+		{
+			get => (CornerRadius)GetValue(CornerRadiusProperty);
+			set => SetValue(CornerRadiusProperty, value);
+		}
+
 		public static readonly DependencyProperty ButtonStyleProperty =
 		DependencyProperty.Register(nameof(ButtonStyle), typeof(EToggleButtonStyle), typeof(CToggleButton), new PropertyMetadata(EToggleButtonStyle.Switch));
 
@@ -179,6 +229,15 @@ namespace CadViewer.UIControls
 		{
 			get => (string)GetValue(OffTextProperty);
 			set => SetValue(OffTextProperty, value);
+		}
+
+		public static readonly DependencyProperty BackgroundOverColorProperty =
+		DependencyProperty.Register(nameof(BackgroundOverColor), typeof(Color), typeof(CToggleButton), new PropertyMetadata(null));
+
+		public Color BackgroundOverColor
+		{
+			get => (Color)GetValue(BackgroundOverColorProperty);
+			set => SetValue(BackgroundOverColorProperty, value);
 		}
 	}
 }

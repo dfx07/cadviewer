@@ -18,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace CadViewer.View
+namespace CadViewer.Views
 {
 	/// <summary>
 	/// Interaction logic for OpenGLView.xaml

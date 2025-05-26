@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CadViewer.View
+namespace CadViewer.Views
 {
 	/// <summary>
 	/// Interaction logic for BibbonBar.xaml
@@ -36,13 +36,13 @@ namespace CadViewer.View
 			//}
 		}
 
-		//public static readonly DependencyProperty ViewModelProperty =
-		//	DependencyProperty.Register(nameof(ViewModel), typeof(RibbonBarViewModel), typeof(BibbonBar), new PropertyMetadata(null));
+		public static readonly DependencyProperty RibbonContentProperty =
+		DependencyProperty.Register("RibbonContent", typeof(object), typeof(BibbonBar), new PropertyMetadata(null));
 
-		//public RibbonBarViewModel ViewModel
-		//{
-		//	get => (RibbonBarViewModel)GetValue(ViewModelProperty);
-		//	set => SetValue(ViewModelProperty, value);
-		//}
+		public object RibbonContent
+		{
+			get => GetValue(RibbonContentProperty);
+			set => SetValue(RibbonContentProperty, value);
+		}
 	}
 }

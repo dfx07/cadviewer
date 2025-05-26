@@ -35,6 +35,8 @@
                 <ResourceDictionary Source="UIResources/CContextMenu.xaml" />
                 <ResourceDictionary Source="UIResources/CRadioButton.xaml" />
                 <ResourceDictionary Source="UIResources/CResizableContainer.xaml" />
+                <ResourceDictionary Source="UIResources/CPanel.xaml" />
+                <ResourceDictionary Source="UIResources/CRibbonGroup.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

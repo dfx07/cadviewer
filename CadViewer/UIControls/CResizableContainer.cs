@@ -40,66 +40,63 @@ namespace CadViewer.UIControls
 		{
 			base.OnApplyTemplate();
 
-			HookThumb("PART_ResizeLeftThumb", ResizeDirection.Left, (dx, dy) =>
+			var newMargin = new Thickness();
+
+			HookThumb("PART_ResizeLeftThumb", ref newMargin, ResizeDirection.Left, (dx, dy) =>
 			{
 				double newWidth = Width - dx;
 				Width = Clamp(newWidth, MinWidth, MaxWidth);
 			});
-			HookThumb("PART_ResizeRightThumb", ResizeDirection.Right, (dx, dy) =>
+			HookThumb("PART_ResizeRightThumb", ref newMargin, ResizeDirection.Right, (dx, dy) =>
 			{
 				double newWidth = Width + dx;
 				Width = Clamp(newWidth, MinWidth, MaxWidth);
 			});
-			HookThumb("PART_ResizeTopThumb", ResizeDirection.Top, (dx, dy) =>
+			HookThumb("PART_ResizeTopThumb", ref newMargin, ResizeDirection.Top, (dx, dy) =>
 			{
 				double newHeight = Height - dy;
 				Height = Clamp(newHeight, MinHeight, MaxHeight);
 			});
-			HookThumb("PART_ResizeBottomThumb", ResizeDirection.Bottom, (dx, dy) =>
+			HookThumb("PART_ResizeBottomThumb", ref newMargin, ResizeDirection.Bottom, (dx, dy) =>
 			{
 				double newHeight = Height + dy;
 				Height = Clamp(newHeight, MinHeight, MaxHeight);
 			});
 
+			if (GetTemplateChild("PART_Content") is ContentPresenter ctn)
+			{
+				ctn.Margin = newMargin;
+			}
+
 			Loaded += (s, e) =>
 			{
 
 			};
-
-			if(GetTemplateChild("PART_Content") is ContentPresenter ctn)
-			{
-				var newMargin = new Thickness();
-				if(ResizeDirections.HasFlag(ResizeDirection.Left))
-				{
-					newMargin.Left = 5;
-				}
-				if (ResizeDirections.HasFlag(ResizeDirection.Right))
-				{
-					newMargin.Right = 5;
-				}
-				if (ResizeDirections.HasFlag(ResizeDirection.Top))
-				{
-					newMargin.Top = 5;
-				}
-				if (ResizeDirections.HasFlag(ResizeDirection.Bottom))
-				{
-					newMargin.Bottom = 5;
-				}
-
-				ctn.Margin = newMargin;
-			}
 		}
 		private double Clamp(double value, double min, double max)
 		{
 			return Math.Max(min, Math.Min(max, value));
 		}
 
-		private void HookThumb(string partName, ResizeDirection dir, Action<double, double> resizeAction)
+		private void HookThumb(string partName, ref Thickness margin, ResizeDirection dir, Action<double, double> resizeAction)
 		{
 			if (ResizeDirections.HasFlag(dir) &&
 				GetTemplateChild(partName) is Thumb thumb)
 			{
 				thumb.Visibility = Visibility.Visible;
+
+				if (dir == ResizeDirection.Left)
+					margin.Left = thumb.Width;
+
+				if (dir == ResizeDirection.Right)
+					margin.Right = thumb.Width;
+
+				if (dir == ResizeDirection.Top)
+					margin.Top = thumb.Height;
+
+				if (dir == ResizeDirection.Bottom)
+					margin.Bottom = thumb.Height;
+
 				thumb.DragDelta += (s, e) => resizeAction(e.HorizontalChange, e.VerticalChange);
 			}
 			else if (GetTemplateChild(partName) is Thumb thumbHidden)

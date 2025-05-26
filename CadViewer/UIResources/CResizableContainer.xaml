@@ -39,7 +39,7 @@
                             <ContentPresenter x:Name="PART_Content" Margin="7,0,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
                             <Thumb x:Name="PART_ResizeRightThumb" Width="5" Style="{StaticResource VerticalResizeThumbStyle}"
                                    VerticalAlignment="Stretch" HorizontalAlignment="Right" Cursor="SizeWE" Background="#3b4453" />
-                            <Thumb x:Name="PART_ResizeLeftThumb" Width="7" Style="{StaticResource VerticalResizeThumbStyle}"
+                            <Thumb x:Name="PART_ResizeLeftThumb" Width="6" Style="{StaticResource VerticalResizeThumbStyle}"
                                    VerticalAlignment="Stretch" HorizontalAlignment="Left" Cursor="SizeWE" Background="#3b4453"/>
                             <Thumb x:Name="PART_ResizeTopThumb" Width="5" Style="{StaticResource HorizontalResizeThumbStyle}"
                                    HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Background="#3b4453"/>
