@@ -8,11 +8,14 @@
     <cvt:CommonSetDoubleDefaultConverter x:Key="SetDoubleDefaultConverter" />
     <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
 
+    <SolidColorBrush x:Key="ToggleBtn_BackgroundBrush" Color="{DynamicResource CompUI_ToggleBtn_BackgroundOffColor}" />
+    <SolidColorBrush x:Key="ToggleBtn_BackgroundOnBrush" Color="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" />
+
     <ControlTemplate x:Key="xToggleButtonSwitchStyle" TargetType="{x:Type local:CToggleButton}">
         <Border x:Name="xCToggleButtonBorder" CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent},
                                         Path=Height, Converter={StaticResource HeightToCornerRadiusConverter}}">
             <Border.Background>
-                <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" />
+                <SolidColorBrush Color="{TemplateBinding Background}" />
             </Border.Background>
             <Border.BorderBrush>
                 <SolidColorBrush Color="Transparent" />
@@ -138,7 +141,7 @@
         <Grid>
             <Border x:Name="xCToggleButtonBorder" Height="{TemplateBinding Height}">
                 <Border.Background>
-                    <SolidColorBrush Color="{DynamicResource CompUI_ToggleBtn_BackgroundOffColor}" />
+                    <SolidColorBrush Color="{TemplateBinding Background}" />
                 </Border.Background>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -192,8 +195,13 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="xToggleButtonNormalStyle" TargetType="{x:Type local:CToggleButton}">
-        <Border x:Name="PART_BorderBound" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
-                BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
+        <Border x:Name="PART_BorderBound" BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                SnapsToDevicePixels="True">
+            <Border.Background>
+                <SolidColorBrush Color="{TemplateBinding Background}" />
+            </Border.Background>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -209,62 +217,6 @@
                 </Image>
                 <ContentPresenter x:Name="PART_ContentText" Grid.Column="1" Margin="0,-1,1,1" Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Left" />
             </Grid>
-            <Border.Triggers>
-                <!--<EventTrigger RoutedEvent="MouseEnter">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation Storyboard.TargetName="PART_BorderBound"
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                Duration="0:0:0.1">
-                                    <ColorAnimation.To>
-                                        <MultiBinding Converter="{StaticResource ToggleButtonCheckNSelectColorConverter}">
-                                            <Binding Path="IsChecked" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding>
-                                                <Binding.Source>
-                                                    <sys:String>CompUI_ToggleBtn_BackgroundOnOverColor</sys:String>
-                                                </Binding.Source>
-                                            </Binding>
-                                            <Binding>
-                                                <Binding.Source>
-                                                    <sys:String>CompUI_ToggleBtn_BackgroundOffOver2Color</sys:String>
-                                                </Binding.Source>
-                                            </Binding>
-                                        </MultiBinding>
-                                    </ColorAnimation.To>
-                                </ColorAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation Storyboard.TargetName="PART_BorderBound" 
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                Duration="0:0:0.1">
-                                    <ColorAnimation.To>
-                                        <MultiBinding Converter="{StaticResource ToggleButtonCheckNSelectColorConverter}">
-                                            <Binding Path="IsChecked" RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding>
-                                                <Binding.Source>
-                                                    <sys:String>CompUI_ToggleBtn_BackgroundOnColor</sys:String>
-                                                </Binding.Source>
-                                            </Binding>
-                                            <Binding>
-                                                <Binding.Source>
-                                                    <sys:String>CompUI_ToggleBtn_BackgroundOffColor</sys:String>
-                                                </Binding.Source>
-                                            </Binding>
-                                        </MultiBinding>
-                                    </ColorAnimation.To>
-                                </ColorAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>-->
-            </Border.Triggers>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CombinedStates">
                     <VisualState x:Name="UncheckedNormal" />
@@ -279,7 +231,7 @@
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="PART_BorderBound"
                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            To="{TemplateBinding BackgroundOverColor}" Duration="0:0:0.1" />
+                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOffOver2Color}" Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="CheckedMouseOver">
@@ -326,6 +278,7 @@
 
     <Style TargetType="{x:Type local:CToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="{DynamicResource ToggleBtn_BackgroundBrush}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" Value="Switch">
                 <Setter Property="Template" Value="{StaticResource xToggleButtonSwitchStyle}" />

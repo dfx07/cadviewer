@@ -51,13 +51,42 @@ namespace CadViewer.UIControls
 				}
 			};
 
+
+			if(ButtonStyle == EToggleButtonStyle.Normal)
+			{
+				//if (BackgroundOverColor != Colors.Transparent)
+				//{
+				//	var border = GetTemplateChild("PART_BorderBound") as Border;
+				//	var groups = VisualStateManager.GetVisualStateGroups(border);
+
+				//	foreach (VisualStateGroup group in groups)
+				//	{
+				//		foreach (VisualState state in group.States)
+				//		{
+				//			if (state.Name == "UncheckedMouseOver")
+				//			{
+				//				foreach (Timeline timeline in state.Storyboard.Children)
+				//				{
+				//					if (timeline is ColorAnimation colorAnimation)
+				//					{
+				//						colorAnimation.To = BackgroundOverColor;
+				//					}
+				//				}
+				//			}
+				//		}
+				//	}
+				//}
+			}
+
+
+
 			PreviewMouseLeftButtonDown -= CToggleButton_PreviewMouseLeftButtonDown;
 			PreviewMouseLeftButtonUp -= CToggleButton_PreviewMouseLeftButtonUp; ;
 
 			PreviewMouseLeftButtonDown += CToggleButton_PreviewMouseLeftButtonDown;
 			PreviewMouseLeftButtonUp += CToggleButton_PreviewMouseLeftButtonUp;
 
-			UpdateVisualState(false);
+			//UpdateVisualState(false);
 		}
 
 		void UpdateVisualState(bool useTransitions)
@@ -232,7 +261,7 @@ namespace CadViewer.UIControls
 		}
 
 		public static readonly DependencyProperty BackgroundOverColorProperty =
-		DependencyProperty.Register(nameof(BackgroundOverColor), typeof(Color), typeof(CToggleButton), new PropertyMetadata(null));
+		DependencyProperty.Register(nameof(BackgroundOverColor), typeof(Color), typeof(CToggleButton), new PropertyMetadata(Colors.Transparent));
 
 		public Color BackgroundOverColor
 		{
