@@ -11,6 +11,11 @@
     <ub:UserControlBase.Resources>
         <com:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
+        <Color x:Key="TabSelected_BackgroundColor">#f1f1f1</Color>
+        <Color x:Key="TabSelected_ForegroundColor">#000000</Color>
+
+        <SolidColorBrush x:Key="TabSelected_BackgroundBrush" Color="{DynamicResource TabSelected_BackgroundColor}" />
+        <SolidColorBrush x:Key="TabSelected_ForegroundBrush" Color="{DynamicResource TabSelected_ForegroundColor}" />
         <Style x:Key="TabBarItemStyle" TargetType="ListBoxItem">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -20,9 +25,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="xBorderItem" CornerRadius="0" MinWidth="60" SnapsToDevicePixels="True"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                BorderBrush="#71829f" Background="Transparent"
+                        <Border x:Name="PART_ItemBorder" CornerRadius="0" MinWidth="60" SnapsToDevicePixels="True"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="#3b4453" Background="Transparent"
                                 Visibility="{Binding bVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -32,28 +36,22 @@
                                     <VisualState x:Name="Unselected" />
                                     <VisualState x:Name="Selected">
                                         <Storyboard>
-                                            <ThicknessAnimation Storyboard.TargetName="xBorderItem" Storyboard.TargetProperty="BorderThickness" To="1,1,1,0" Duration="0:0:0.0" />
+                                            <ThicknessAnimation Storyboard.TargetName="PART_ItemBorder" Storyboard.TargetProperty="BorderThickness" To="1,1,1,0" Duration="0:0:0.0" />
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(Color)"
-                                                            To="#3b4453" Duration="0:0:0.2" />
-                                            <!--<ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)"
-                                                            From="Transparent" To="#3b4453" Duration="0:0:0.09" />
-                                            <ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)"
-                                                            From="Transparent" To="#3b4453" Duration="0:0:0.02" />
-                                            <ColorAnimation Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="(Background).(GradientBrush.GradientStops)[2].(GradientStop.Color)"
-                                                            From="Transparent" To="#3b4453" Duration="0:0:0.09" />-->
+                                                            To="{StaticResource TabSelected_BackgroundColor}" Duration="0:0:0.2" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="SelectedUnfocused">
                                         <Storyboard>
-                                            <ThicknessAnimation Storyboard.TargetName="xBorderItem" Storyboard.TargetProperty="BorderThickness" To="1,1,1,0" Duration="0" />
+                                            <ThicknessAnimation Storyboard.TargetName="PART_ItemBorder" Storyboard.TargetProperty="BorderThickness" To="1,1,1,0" Duration="0" />
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xPART_SelectedBottomLine" Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ColorAnimation Storyboard.TargetName="xBorderItem" Storyboard.TargetProperty="(Background).(Color)"
-                                                            From="Transparent" To="#3b4453" Duration="0:0:0.0" />
+                                            <ColorAnimation Storyboard.TargetName="PART_ItemBorder" Storyboard.TargetProperty="(Background).(Color)"
+                                                            To="{StaticResource TabSelected_BackgroundColor}" Duration="0:0:0.0" />
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -62,35 +60,24 @@
                                 <StackPanel SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      VerticalAlignment="Center" HorizontalAlignment="Center"
                                      IsEnabled="{Binding bEnable}">
-                                    <TextBlock Text="{Binding strTabName}" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="PART_TextContent" Foreground="White" Text="{Binding strTabName}" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <Border x:Name="xPART_SelectedBottomLine" Margin="0,0,0,-1" VerticalAlignment="Bottom" Height="1" Visibility="Collapsed">
-                                    <Border.Background>
-                                        <SolidColorBrush Color="#3b4453" />
-                                    </Border.Background>
-                                    <!--<Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStop Color="#3b4453" Offset="0.0" />
-                                                <GradientStop Color="#3b4453" Offset="0.5" />
-                                                <GradientStop Color="#3b4453" Offset="1.0" />
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Border.Background>-->
-                                </Border>
+                                <Border x:Name="xPART_SelectedBottomLine" Margin="0,0,0,-1" Background="{StaticResource TabSelected_BackgroundBrush}"
+                                        VerticalAlignment="Bottom" Height="1" Visibility="Collapsed" />
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="xBorderItem" Property="CornerRadius" Value="3,3,0,0"/>
-                                <Setter TargetName="xBorderItem" Property="Background" Value="#3b4453"/>
+                                <Setter TargetName="PART_ItemBorder" Property="CornerRadius" Value="3,3,0,0"/>
+                                <Setter TargetName="PART_ItemBorder" Property="Background" Value="{StaticResource TabSelected_BackgroundBrush}"/>
+                                <Setter TargetName="PART_TextContent" Property="Foreground" Value="{StaticResource TabSelected_ForegroundBrush}" />
                             </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsMouseOver" Value="True" />
                                     <Condition Property="IsSelected" Value="False" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="xBorderItem" Property="Background" Value="#4d4d4d" />
+                                <Setter TargetName="PART_ItemBorder" Property="Background" Value="#4d4d4d" />
                             </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

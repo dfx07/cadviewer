@@ -17,7 +17,7 @@
                 <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
                     <ui:CToggleButton Width="45" Height="45" ButtonStyle="Normal"
                                       BorderThickness="1" BorderBrush="#71829f" CornerRadius="5"
-                                      Background="#3b4453" BackgroundOverColor="#566379" ImageSource="{com:PackImage Path=Assets/Images/cursor35.png}">
+                                      Background="#3b4453" BackgroundOverColor="Red" ImageSource="{com:PackImage Path=Assets/Images/cursor35.png}">
                     </ui:CToggleButton>
                     <Grid Width="2"></Grid>
                     <ui:CDropDownButton Width="45" Height="45" ButtonFlowDirection="Vertical">

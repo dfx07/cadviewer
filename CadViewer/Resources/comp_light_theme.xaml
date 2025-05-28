@@ -19,10 +19,10 @@
     <Color x:Key="CompUI_Cmm_TextDisableColor">#aaaaaa</Color>
     <Color x:Key="CompUI_ToggleBtn_BackgroundOnColor">#005a9e</Color>
     <Color x:Key="CompUI_ToggleBtn_BackgroundOnOverColor">#1a6ba8</Color>
-    <Color x:Key="CompUI_ToggleBtn_ThumbOnColor">#ffffff</Color>
     <Color x:Key="CompUI_ToggleBtn_BackgroundOffColor">#f6f6f6</Color>
     <Color x:Key="CompUI_ToggleBtn_BackgroundOffOverColor">#f3f3f3</Color>
     <Color x:Key="CompUI_ToggleBtn_BackgroundOffOver2Color">#e5e5e5</Color>
+    <Color x:Key="CompUI_ToggleBtn_ThumbOnColor">#ffffff</Color>
     <Color x:Key="CompUI_ToggleBtn_ThumbOffColor">#5c5c5c</Color>
     <Color x:Key="CompUI_ToggleBtn_BorderColor">#5c5c5c</Color>
     <Color x:Key="CompUI_ToggleBtn_OnTextColor">#f6f6f6</Color>

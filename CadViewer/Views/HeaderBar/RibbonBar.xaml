@@ -12,12 +12,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="PART_GridRibbonTab" Grid.Row="0" Background="#222933">
-            <Border BorderBrush="#71829f" BorderThickness="0,0,0,1"/>
+            <Border BorderBrush="#3b4453" BorderThickness="0,0,0,1"/>
             <local:TabBar x:Name="xTabBar" RefTabBarInfos="{Binding TabBarInfos}"
                           SelectedTabBarInfo="{Binding SelectedTab, Mode=TwoWay}" Padding="10,2,0,0">
             </local:TabBar>
         </Grid>
-        <Grid x:Name="PART_GridRibbonContent" Grid.Row="1" Background="#3b4453">
+        <Grid x:Name="PART_GridRibbonContent" Grid.Row="1" Background="#f1f1f1">
             <ContentPresenter HorizontalAlignment="Left" Content="{Binding RibbonContent, RelativeSource={RelativeSource AncestorType=local:BibbonBar}}" />
         </Grid>
     </Grid>

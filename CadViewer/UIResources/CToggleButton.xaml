@@ -196,18 +196,19 @@
 
     <ControlTemplate x:Key="xToggleButtonNormalStyle" TargetType="{x:Type local:CToggleButton}">
         <Border x:Name="PART_BorderBound" BorderThickness="{TemplateBinding BorderThickness}"
-                CornerRadius="{TemplateBinding CornerRadius}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                SnapsToDevicePixels="True">
+                                          CornerRadius="{TemplateBinding CornerRadius}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          SnapsToDevicePixels="True">
             <Border.Background>
-                <SolidColorBrush Color="{TemplateBinding Background}" />
+                <SolidColorBrush Color="{StaticResource CompUI_ToggleBtn_BackgroundOffColor}" />
             </Border.Background>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Margin="0,2,0,2" x:Name="PART_Image" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{TemplateBinding ImageSource}">
+                <Image Grid.Column="0" Margin="0,2,0,2" x:Name="PART_Image" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" Source="{TemplateBinding ImageSource}">
                     <Image.Width>
                         <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
@@ -215,7 +216,8 @@
                         </MultiBinding>
                     </Image.Width>
                 </Image>
-                <ContentPresenter x:Name="PART_ContentText" Grid.Column="1" Margin="0,-1,1,1" Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <ContentPresenter x:Name="PART_ContentText" Grid.Column="1" Margin="0,-1,1,1"
+                        Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Left" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CombinedStates">
@@ -224,21 +226,21 @@
                         <Storyboard>
                            <ColorAnimation Storyboard.TargetName="PART_BorderBound"
                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" Duration="0:0:0.1" />
+                                            To="{StaticResource CompUI_ToggleBtn_BackgroundOnColor}" Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="UncheckedMouseOver">
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="PART_BorderBound"
                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOffOver2Color}" Duration="0:0:0.1" />
+                                            To="{StaticResource CompUI_ToggleBtn_BackgroundOffOver2Color}" Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="CheckedMouseOver">
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="PART_BorderBound"
                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" 
-                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOnOverColor}" Duration="0:0:0.1" />
+                                            To="{StaticResource CompUI_ToggleBtn_BackgroundOnOverColor}" Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
@@ -247,20 +249,20 @@
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="PART_BorderBound"
                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            To="{TemplateBinding Background}" Duration="0:0:0.1" />
+                                            To="{StaticResource CompUI_ToggleBtn_BackgroundOffColor}" Duration="0:0:0.1" />
                             <ColorAnimation Storyboard.TargetName="PART_ContentText"
                                             Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
-                                            To="{DynamicResource CompUI_Cmm_TextColor}" Duration="0:0:0.1"/>
+                                            To="{StaticResource CompUI_Cmm_TextColor}" Duration="0:0:0.1"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Checked">
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="PART_BorderBound"
                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            To="{DynamicResource CompUI_ToggleBtn_BackgroundOnColor}" Duration="0:0:0.1" />
+                                            To="{StaticResource CompUI_ToggleBtn_BackgroundOnColor}" Duration="0:0:0.1" />
                             <ColorAnimation Storyboard.TargetName="PART_ContentText"
                                             Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                            To="{DynamicResource CompUI_ToggleBtn_OnTextColor}" Duration="0:0:0.1" />
+                                            To="{StaticResource CompUI_ToggleBtn_OnTextColor}" Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>

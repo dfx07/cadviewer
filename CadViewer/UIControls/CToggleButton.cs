@@ -51,35 +51,6 @@ namespace CadViewer.UIControls
 				}
 			};
 
-
-			if(ButtonStyle == EToggleButtonStyle.Normal)
-			{
-				//if (BackgroundOverColor != Colors.Transparent)
-				//{
-				//	var border = GetTemplateChild("PART_BorderBound") as Border;
-				//	var groups = VisualStateManager.GetVisualStateGroups(border);
-
-				//	foreach (VisualStateGroup group in groups)
-				//	{
-				//		foreach (VisualState state in group.States)
-				//		{
-				//			if (state.Name == "UncheckedMouseOver")
-				//			{
-				//				foreach (Timeline timeline in state.Storyboard.Children)
-				//				{
-				//					if (timeline is ColorAnimation colorAnimation)
-				//					{
-				//						colorAnimation.To = BackgroundOverColor;
-				//					}
-				//				}
-				//			}
-				//		}
-				//	}
-				//}
-			}
-
-
-
 			PreviewMouseLeftButtonDown -= CToggleButton_PreviewMouseLeftButtonDown;
 			PreviewMouseLeftButtonUp -= CToggleButton_PreviewMouseLeftButtonUp; ;
 
@@ -91,17 +62,6 @@ namespace CadViewer.UIControls
 
 		void UpdateVisualState(bool useTransitions)
 		{
-			if (ButtonStyle != EToggleButtonStyle.Normal)
-				return;
-
-			string state = "";
-
-			if (IsChecked == true)
-				state = IsMouseOver ? "CheckedMouseOver" : "CheckedNormal";
-			else
-				state = IsMouseOver ? "UncheckedMouseOver" : "UncheckedNormal";
-
-			VisualStateManager.GoToState(this, state, useTransitions);
 		}
 
 		protected override void OnMouseEnter(MouseEventArgs e)
@@ -261,7 +221,7 @@ namespace CadViewer.UIControls
 		}
 
 		public static readonly DependencyProperty BackgroundOverColorProperty =
-		DependencyProperty.Register(nameof(BackgroundOverColor), typeof(Color), typeof(CToggleButton), new PropertyMetadata(Colors.Transparent));
+		DependencyProperty.Register(nameof(BackgroundOverColor), typeof(Color), typeof(CToggleButton), new PropertyMetadata(Colors.DodgerBlue));
 
 		public Color BackgroundOverColor
 		{
