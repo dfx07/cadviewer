@@ -37,6 +37,7 @@
                 <ResourceDictionary Source="UIResources/CResizableContainer.xaml" />
                 <ResourceDictionary Source="UIResources/CPanel.xaml" />
                 <ResourceDictionary Source="UIResources/CRibbonGroup.xaml" />
+                <ResourceDictionary Source="UIResources/CRibbonButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

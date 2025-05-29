@@ -11,15 +11,16 @@
     <Grid>
         <ui:CRibbonGroup Background="Transparent" Width="200" BorderThickness="0,0,1,0" BorderBrush="#222933">
             <ui:CRibbonGroup.RibbonGroupTitleContent>
-                <TextBlock FontSize="11" Foreground="White" Text="Draw" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock FontSize="11" Foreground="{DynamicResource Cmm_TextColor}" Text="Draw" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </ui:CRibbonGroup.RibbonGroupTitleContent>
             <ui:CRibbonGroup.Content>
-                <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
-                    <ui:CToggleButton Width="45" Height="45" ButtonStyle="Normal"
-                                      BorderThickness="1" BorderBrush="#71829f" CornerRadius="5"
-                                      Background="#3b4453" BackgroundOverColor="Red" ImageSource="{com:PackImage Path=Assets/Images/cursor35.png}">
-                    </ui:CToggleButton>
-                    <Grid Width="2"></Grid>
+                <StackPanel Margin="10,0,10,0" FlowDirection="LeftToRight" Orientation="Horizontal">
+                    <ui:CRibbonButton Width="45" Height="45">
+                        <Border Padding="1">
+                            <Image Source="{com:PackImage Path=Assets/Images/cursor35.png}" />
+                        </Border>
+                    </ui:CRibbonButton>
+                    <Grid Width="5"></Grid>
                     <ui:CDropDownButton Width="45" Height="45" ButtonFlowDirection="Vertical">
                         <ui:CDropDownButton.Content>
                             <Border Padding="6">
