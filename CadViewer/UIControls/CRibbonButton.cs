@@ -63,5 +63,21 @@ namespace CadViewer.UIControls
 			get => (string)GetValue(OffTextProperty);
 			set => SetValue(OffTextProperty, value);
 		}
+
+		public static readonly DependencyProperty IsOpenDropDownProperty =
+		DependencyProperty.Register(nameof(IsOpenDropDown), typeof(bool), typeof(CRibbonButton), new PropertyMetadata(false));
+		public bool IsOpenDropDown
+		{
+			get => (bool)GetValue(IsOpenDropDownProperty);
+			set => SetValue(IsOpenDropDownProperty, value);
+		}
+
+		public static readonly DependencyProperty DropDownContentProperty =
+		DependencyProperty.Register(nameof(DropDownContent), typeof(object), typeof(CRibbonButton));
+		public object DropDownContent
+		{
+			get => GetValue(DropDownContentProperty);
+			set => SetValue(DropDownContentProperty, value);
+		}
 	}
 }

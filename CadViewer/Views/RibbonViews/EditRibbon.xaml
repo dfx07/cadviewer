@@ -1,0 +1,39 @@
+﻿<local:RibbonControl x:Class="CadViewer.Views.RibbonViews.EditRibbon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CadViewer.Views.RibbonViews"
+             xmlns:ui="clr-namespace:CadViewer.UIControls"
+             xmlns:com="clr-namespace:CadViewer.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="0,2,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <ui:CRibbonGroup Grid.Column="0" Background="Transparent" BorderThickness="0,0,1,0" BorderBrush="#222933">
+            <ui:CRibbonGroup.RibbonGroupTitleContent>
+                <TextBlock FontSize="11" Foreground="{DynamicResource Cmm_TextColor}" Text="Edit" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </ui:CRibbonGroup.RibbonGroupTitleContent>
+            <ui:CRibbonGroup.Content>
+                <StackPanel Margin="10,0,10,0" FlowDirection="LeftToRight" Orientation="Horizontal">
+                    <ui:CRibbonButton Width="50" Height="55">
+                        <ui:CRibbonButton.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Source="{com:PackImage Path=Assets/Images/cursor35.png}" />
+                                <TextBlock Grid.Row="1" Text="Modify" TextAlignment="Center" />
+                            </Grid>
+                        </ui:CRibbonButton.Content>
+                    </ui:CRibbonButton>
+                    <Grid Width="5"></Grid>
+                </StackPanel>
+            </ui:CRibbonGroup.Content>
+        </ui:CRibbonGroup>
+    </Grid>
+</local:RibbonControl>

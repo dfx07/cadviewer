@@ -112,8 +112,8 @@
         </Style>
     </ub:UserControlBase.Resources>
     <Grid>
-        <ListBox x:Name="xTabItems" Style="{StaticResource TabBarStyle}"
-                    HorizontalAlignment="Left" Width="Auto" ItemsSource="{Binding RefTabBarInfos, RelativeSource={RelativeSource AncestorType=UserControl} }">
+        <ListBox x:Name="xTabItems" Style="{StaticResource TabBarStyle}" SelectionChanged="TabItems_SelectionChanged" SelectedItem="{Binding SelectedTabBarInfo, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    HorizontalAlignment="Left" Width="Auto" ItemsSource="{Binding RefTabBarInfos, RelativeSource={RelativeSource AncestorType=UserControl}}">
         </ListBox>
     </Grid>
 </ub:UserControlBase>

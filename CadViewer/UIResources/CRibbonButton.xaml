@@ -10,7 +10,7 @@
     <Color x:Key="RibbonButton_BackgroundCheckedColor">#bbd2ee</Color>
     <Color x:Key="RibbonButton_BackgroundOverColor">#dddddd</Color>
     <Color x:Key="RibbonButton_BorderColor">#bdbdbd</Color>
-    <Color x:Key="RibbonButton_BorderOverColor">#d0d0d0</Color>
+    <Color x:Key="RibbonButton_BorderOverColor">#bdbdbd</Color>
     <Color x:Key="RibbonButton_BorderCheckedColor">#7ea0cc</Color>
 
     <SolidColorBrush x:Key="RibbonButton_BackgroundBrush" Color="{DynamicResource RibbonButton_BackgroundColor}" />
@@ -28,9 +28,10 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ContentPresenter x:Name="PART_Content" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Border x:Name="PART_DropDownButton" Grid.Row="1" Height="15">
-                    <ToggleButton x:Name="PART_ToggleButton" Background="Transparent" IsChecked="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" Margin="0">
+                <ContentPresenter x:Name="PART_Content" Margin="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Border x:Name="PART_DropDownButton" Grid.Row="1" Height="15" Visibility="Visible">
+                    <ToggleButton x:Name="PART_ToggleButton" Background="Transparent" IsChecked="{Binding IsOpenDropDown, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" Margin="0">
                         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                         <ToggleButton.Template>
                             <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -63,10 +64,33 @@
                         </ToggleButton.Template>
                     </ToggleButton>
                 </Border>
+                <local:CFlexPopup x:Name="PART_Popup" Focusable="True" HorizontalAlignment="Left" HorizontalOffset="-7" Visibility="Visible"
+                                  Placement="Bottom" AllowsTransparency="True" PlacementTarget="{Binding ElementName=PART_DropDownButton}"
+                                  OpenMode="AutoClose" IsOpen="{Binding IsOpenDropDown, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Border Background="Transparent" BorderThickness="0">
+                        <Border Margin="6,2,6,6" Padding="2" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                            </Border.BorderBrush>
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
+                            </Border.Effect>
+                            <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+                        </Border>
+                    </Border>
+                </local:CFlexPopup>
             </Grid>
         </Border>
 
         <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding DropDownContent, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_Popup" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_Content" Property="Margin" Value="3" />
+            </DataTrigger>
             <Trigger Property="IsChecked" Value="True">
                 <Setter TargetName="PART_BoundBorder" Property="Background" Value="{DynamicResource RibbonButton_BackgroundCheckedBrush}" />
                 <Setter TargetName="PART_BoundBorder" Property="BorderBrush" Value="{DynamicResource RibbonButton_BorderCheckedBrush}" />
@@ -95,20 +119,8 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-
     <Style TargetType="{x:Type local:CRibbonButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template" Value="{StaticResource xRibbonButtonCheckTemplate}" />
-        <!--<Style.Triggers>
-            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" Value="Switch">
-                <Setter Property="Template" Value="{StaticResource xRibbonButtonSwitchStyle}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" Value="Normal">
-                <Setter Property="Template" Value="{StaticResource xRibbonButtonNormalStyle}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" Value="Square">
-                <Setter Property="Template" Value="{StaticResource xRibbonButtonSquareStyle}" />
-            </DataTrigger>
-        </Style.Triggers>-->
     </Style>
 </ResourceDictionary>

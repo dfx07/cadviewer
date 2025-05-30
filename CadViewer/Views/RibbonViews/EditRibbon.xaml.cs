@@ -1,5 +1,4 @@
-﻿using CadViewer.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CadViewer.Views
+namespace CadViewer.Views.RibbonViews
 {
 	/// <summary>
-	/// Interaction logic for BibbonBar.xaml
+	/// Interaction logic for EditRibbon.xaml
 	/// </summary>
-	public partial class BibbonBar : UserControl
+	public partial class EditRibbon : RibbonControl
 	{
-		public BibbonBar()
+		public EditRibbon()
 		{
 			InitializeComponent();
-
-			Loaded += BibbonBar_Loaded;
-		}
-		private void BibbonBar_Loaded(object sender, RoutedEventArgs e)
-		{
-
 		}
 	}
 }

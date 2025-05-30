@@ -152,6 +152,8 @@
     <Compile Include="Interfaces\NotificationHandler.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
+    <Compile Include="ViewModels\EditBarViewModel.cs" />
+    <Compile Include="ViewModels\HomeBarViewModel.cs" />
     <Compile Include="ViewModels\RibbonBarViewModel.cs" />
     <Compile Include="ViewModels\BaseModalDialogViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -175,6 +177,9 @@
     </Compile>
     <Compile Include="Views\HeaderBar\TabBar.xaml.cs">
       <DependentUpon>TabBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RibbonViews\EditRibbon.xaml.cs">
+      <DependentUpon>EditRibbon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RibbonViews\HomeRibbon.xaml.cs">
       <DependentUpon>HomeRibbon.xaml</DependentUpon>
@@ -351,6 +356,10 @@
     <Page Include="Views\HeaderBar\TabBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RibbonViews\EditRibbon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\RibbonViews\HomeRibbon.xaml">
       <SubType>Designer</SubType>

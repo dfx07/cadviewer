@@ -29,6 +29,18 @@ namespace CadViewer.ViewModels
 			{
 				_selectedTab = value;
 				OnPropertyChanged(nameof(SelectedTab));
+				OnTabChanged(_selectedTab);
+			}
+		}
+
+		private object _ribbonContent;
+		public object RibbonContent
+		{
+			get => _ribbonContent;
+			set
+			{
+				_ribbonContent = value;
+				OnPropertyChanged(nameof(RibbonContent));
 			}
 		}
 
@@ -43,6 +55,25 @@ namespace CadViewer.ViewModels
 			};
 
 			SelectedTab = TabBarInfos.FirstOrDefault();
+		}
+
+		private void OnTabChanged(TabBarItemInfo tabinfo)
+		{
+			ViewModelBase CurrentViewModel = null;
+
+			switch(tabinfo.strTabName.ToUpper())
+			{
+				case "HOME":
+					CurrentViewModel = new HomeBarViewModel();
+					break;
+				case "EDIT":
+					CurrentViewModel = new EditBarViewModel();
+					break;
+				default:
+					break;
+			}
+
+			RibbonContent = CurrentViewModel;
 		}
 	}
 }
