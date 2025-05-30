@@ -8,19 +8,19 @@
              xmlns:com="clr-namespace:CadViewer.Common"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="0,2,0,0">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ui:CRibbonGroup Grid.Column="0" Background="Transparent" BorderThickness="0,0,1,0" BorderBrush="#222933">
+        <ui:CRibbonGroup Grid.Column="0" Padding="5,0,5,0" BorderThickness="0,0,1,0" BorderBrush="#222933">
             <ui:CRibbonGroup.RibbonGroupTitleContent>
                 <TextBlock FontSize="11" Foreground="{DynamicResource Cmm_TextColor}" Text="Edit" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </ui:CRibbonGroup.RibbonGroupTitleContent>
             <ui:CRibbonGroup.Content>
-                <StackPanel Margin="10,0,10,0" FlowDirection="LeftToRight" Orientation="Horizontal">
-                    <ui:CRibbonButton Width="50" Height="55">
-                        <ui:CRibbonButton.Content>
+                <StackPanel Orientation="Horizontal">
+                    <ui:CRibbonToggleButton Width="50" Height="55">
+                        <ui:CRibbonToggleButton.Content>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
@@ -29,10 +29,87 @@
                                 <Image Grid.Row="0" Source="{com:PackImage Path=Assets/Images/cursor35.png}" />
                                 <TextBlock Grid.Row="1" Text="Modify" TextAlignment="Center" />
                             </Grid>
-                        </ui:CRibbonButton.Content>
-                    </ui:CRibbonButton>
+                        </ui:CRibbonToggleButton.Content>
+                    </ui:CRibbonToggleButton>
                     <Grid Width="5"></Grid>
                 </StackPanel>
+            </ui:CRibbonGroup.Content>
+        </ui:CRibbonGroup>
+        <ui:CRibbonGroup Grid.Column="1" Padding="5,0,5,0" BorderThickness="0,0,1,0" BorderBrush="#222933">
+            <ui:CRibbonGroup.RibbonGroupTitleContent>
+                <TextBlock FontSize="11" Foreground="{DynamicResource Cmm_TextColor}" Text="Text" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </ui:CRibbonGroup.RibbonGroupTitleContent>
+            <ui:CRibbonGroup.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ui:CRibbonButton Grid.Column="0" Width="50" Height="55" DropDownDirection="Bottom">
+                        <ui:CRibbonButton.Content>
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{com:PackImage Path=Assets/Images/cursor35.png}" />
+                                <TextBlock Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="Object" />
+                            </Grid>
+                        </ui:CRibbonButton.Content>
+                        <ui:CRibbonButton.DropDownContent>
+                            <StackPanel Background="White">
+                                <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                </ui:CCheckBox>
+                                <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                </ui:CCheckBox>
+                            </StackPanel>
+                        </ui:CRibbonButton.DropDownContent>
+                    </ui:CRibbonButton>
+                    <StackPanel Grid.Column="2">
+                        <ui:CRibbonButton Width="80" Height="22" DropDownDirection="Right">
+                            <ui:CRibbonButton.Content>
+                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Margin="3,0,3,0" Width="15" Source="{com:PackImage Path=Assets/Images/cursor35.png}" />
+                                    <TextBlock Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Center" Text="Object" />
+                                </Grid>
+                            </ui:CRibbonButton.Content>
+                            <ui:CRibbonButton.DropDownContent>
+                                <StackPanel Background="White">
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                </StackPanel>
+                            </ui:CRibbonButton.DropDownContent>
+                        </ui:CRibbonButton>
+                        <Grid Height="3" />
+                        <ui:CRibbonButton Width="80" Height="22" DropDownDirection="Right">
+                            <ui:CRibbonButton.Content>
+                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Margin="3,0,3,0" Width="15" Source="{com:PackImage Path=Assets/Images/cursor35.png}" />
+                                    <TextBlock Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Center" Text="Object" />
+                                </Grid>
+                            </ui:CRibbonButton.Content>
+                            <ui:CRibbonButton.DropDownContent>
+                                <StackPanel Background="White">
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                    <ui:CCheckBox Width="140" Height="24" CheckWidth="18" Content="Check box">
+                                    </ui:CCheckBox>
+                                </StackPanel>
+                            </ui:CRibbonButton.DropDownContent>
+                        </ui:CRibbonButton>
+                    </StackPanel>
+                </Grid>
             </ui:CRibbonGroup.Content>
         </ui:CRibbonGroup>
     </Grid>

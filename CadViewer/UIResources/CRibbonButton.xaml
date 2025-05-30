@@ -7,20 +7,27 @@
     <cvt:CommonSetDoubleDefaultConverter x:Key="SetDoubleDefaultConverter" />
 
     <Color x:Key="RibbonButton_BackgroundColor">#f3f3f3</Color>
-    <Color x:Key="RibbonButton_BackgroundCheckedColor">#bbd2ee</Color>
     <Color x:Key="RibbonButton_BackgroundOverColor">#dddddd</Color>
+    <Color x:Key="RibbonButton_BackgroundCheckedColor">#bbd2ee</Color>
+    <Color x:Key="RibbonButton_BackgroundPressedColor">#c8ddff</Color>
+
     <Color x:Key="RibbonButton_BorderColor">#bdbdbd</Color>
     <Color x:Key="RibbonButton_BorderOverColor">#bdbdbd</Color>
     <Color x:Key="RibbonButton_BorderCheckedColor">#7ea0cc</Color>
+    <Color x:Key="RibbonButton_BorderPressedColor">#95bdf2</Color>
 
     <SolidColorBrush x:Key="RibbonButton_BackgroundBrush" Color="{DynamicResource RibbonButton_BackgroundColor}" />
-    <SolidColorBrush x:Key="RibbonButton_BackgroundCheckedBrush" Color="{DynamicResource RibbonButton_BackgroundCheckedColor}" />
     <SolidColorBrush x:Key="RibbonButton_BackgroundOverBrush" Color="{DynamicResource RibbonButton_BackgroundOverColor}" />
+    <SolidColorBrush x:Key="RibbonButton_BackgroundCheckedBrush" Color="{DynamicResource RibbonButton_BackgroundCheckedColor}" />
+    <SolidColorBrush x:Key="RibbonButton_BackgroundPressedBrush" Color="{DynamicResource RibbonButton_BackgroundPressedColor}" />
+
+
     <SolidColorBrush x:Key="RibbonButton_BorderBrush" Color="{DynamicResource RibbonButton_BorderColor}" />
     <SolidColorBrush x:Key="RibbonButton_BorderOverBrush" Color="{DynamicResource RibbonButton_BorderOverColor}" />
     <SolidColorBrush x:Key="RibbonButton_BorderCheckedBrush" Color="{DynamicResource RibbonButton_BorderCheckedColor}" />
+    <SolidColorBrush x:Key="RibbonButton_BorderPressedBrush" Color="{DynamicResource RibbonButton_BorderPressedColor}" />
 
-    <ControlTemplate x:Key="xRibbonButtonCheckTemplate" TargetType="{x:Type local:CRibbonButton}">
+    <ControlTemplate x:Key="xRibbonToggleButtonTemplate" TargetType="{x:Type local:CRibbonToggleButton}">
         <Border x:Name="PART_BoundBorder" Background="{DynamicResource RibbonButton_BackgroundBrush}"
                 CornerRadius="3" BorderThickness="1" BorderBrush="{DynamicResource RibbonButton_BorderBrush}">
             <Grid>
@@ -28,7 +35,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ContentPresenter x:Name="PART_Content" Margin="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <ContentPresenter x:Name="PART_Content" Margin="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Border x:Name="PART_DropDownButton" Grid.Row="1" Height="15" Visibility="Visible">
                     <ToggleButton x:Name="PART_ToggleButton" Background="Transparent" IsChecked="{Binding IsOpenDropDown, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" Margin="0">
@@ -119,8 +126,103 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type local:CRibbonButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
+    <ControlTemplate x:Key="xRibbonButtonTemplate" TargetType="{x:Type local:CRibbonButton}">
+        <Border x:Name="PART_BoundBorder" Background="{DynamicResource RibbonButton_BackgroundBrush}"
+                CornerRadius="3" BorderThickness="1" BorderBrush="{DynamicResource RibbonButton_BorderBrush}">
+            <DockPanel>
+                <Border x:Name="PART_DropDownButton" DockPanel.Dock="Bottom" Visibility="Visible">
+                    <ToggleButton x:Name="PART_ToggleButton" Background="Transparent" IsChecked="{Binding IsOpenDropDown, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" Margin="0">
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                <Border x:Name="PART_DropDownButton_Bound" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" CornerRadius="0,0,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Path x:Name="PART_DropDownButton_Path" Data="M 0 0 L 4 4 L 8 0" Stroke="Gray" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" SnapsToDevicePixels="True">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="PART_DropDownButton_Path_Rotate" Angle="0" />
+                                        </Path.RenderTransform>
+                                    </Path>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CheckStatus">
+                                            <VisualState x:Name="Unchecked">
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="PART_DropDownButton_Path_Rotate" 
+                                                                     Storyboard.TargetProperty="Angle" From="180" To="0" Duration="0:0:0.2"
+                                                                     AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Checked">
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="PART_DropDownButton_Path_Rotate"
+                                                                     Storyboard.TargetProperty="Angle" From="0" To="180" Duration="0:0:0.2"
+                                                                     AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Border>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
+                </Border>
+                <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+                <local:CFlexPopup x:Name="PART_Popup" Focusable="True" HorizontalAlignment="Left" HorizontalOffset="-7" Visibility="Visible"
+                                  Placement="Bottom" AllowsTransparency="True" PlacementTarget="{Binding ElementName=PART_BoundBorder}"
+                                  OpenMode="AutoClose" IsOpen="{Binding IsOpenDropDown, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Border Background="Transparent" BorderThickness="0">
+                        <Border Margin="6,2,6,6" Padding="2" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                            </Border.BorderBrush>
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
+                            </Border.Effect>
+                            <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+                        </Border>
+                    </Border>
+                </local:CFlexPopup>
+            </DockPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding DropDownContent, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_Popup" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_Content" Property="Margin" Value="3" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding DropDownDirection, RelativeSource={RelativeSource Self}}" Value="Right">
+                <Setter TargetName="PART_DropDownButton" Property="DockPanel.Dock" Value="Right" />
+                <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Left" />
+                <Setter TargetName="PART_DropDownButton" Property="Width" Value="20" />
+                <Setter TargetName="PART_DropDownButton" Property="Padding" Value="0" />
+                <Setter TargetName="PART_DropDownButton" Property="Height" Value="Auto" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding DropDownDirection, RelativeSource={RelativeSource Self}}" Value="Bottom">
+                <Setter TargetName="PART_DropDownButton" Property="DockPanel.Dock" Value="Bottom" />
+                <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Top" />
+                <Setter TargetName="PART_DropDownButton" Property="Height" Value="15" />
+                <Setter TargetName="PART_DropDownButton" Property="Width" Value="Auto" />
+            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_BoundBorder" Property="BorderBrush" Value="{DynamicResource RibbonButton_BorderOverBrush}" />
+                <Setter TargetName="PART_BoundBorder" Property="Background" Value="{DynamicResource RibbonButton_BackgroundOverBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="PART_BoundBorder" Property="Background" Value="{DynamicResource RibbonButton_BackgroundPressedBrush}" />
+                <Setter TargetName="PART_BoundBorder" Property="BorderBrush" Value="{DynamicResource RibbonButton_BorderPressedBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type local:CRibbonToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Template" Value="{StaticResource xRibbonButtonCheckTemplate}" />
+        <Setter Property="Template" Value="{StaticResource xRibbonToggleButtonTemplate}" />
+    </Style>
+    <Style TargetType="{x:Type local:CRibbonButton}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template" Value="{StaticResource xRibbonButtonTemplate}" />
     </Style>
 </ResourceDictionary>
