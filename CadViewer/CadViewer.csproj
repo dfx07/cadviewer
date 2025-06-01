@@ -110,10 +110,12 @@
       <DependentUpon>DlgSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Interfaces\IPropertyItem.cs" />
     <Compile Include="Interfaces\ModalDialog.cs" />
     <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
+    <Compile Include="UIControls\CPropertyTree.cs" />
     <Compile Include="UIControls\CRibbonGroup.cs" />
     <Compile Include="UIControls\CPanel.cs" />
     <Compile Include="UIControls\CResizableContainer.cs" />
@@ -198,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIResources\CContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CPropertyTree.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -444,6 +450,9 @@
     <Resource Include="Assets\Images\line35.png" />
     <Resource Include="Assets\Images\poly35.png" />
     <Resource Include="Assets\Images\rect35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\text35.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

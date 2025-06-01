@@ -12,6 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <ui:CRibbonGroup Grid.Column="0" Padding="5,0,5,0" BorderThickness="0,0,1,0" BorderBrush="#222933">
             <ui:CRibbonGroup.RibbonGroupTitleContent>
@@ -123,6 +124,28 @@
                                 </ui:CCheckBox>
                             </StackPanel>
                         </ui:CRibbonToggleButton.DropDownContent>
+                    </ui:CRibbonToggleButton>
+                    <Grid Width="5"></Grid>
+                </StackPanel>
+            </ui:CRibbonGroup.Content>
+        </ui:CRibbonGroup>
+        <ui:CRibbonGroup Grid.Column="2" Padding="5,0,5,0" BorderThickness="0,0,1,0" BorderBrush="#222933">
+            <ui:CRibbonGroup.RibbonGroupTitleContent>
+                <TextBlock FontSize="11" Foreground="{DynamicResource Cmm_TextColor}" Text="Annotation" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </ui:CRibbonGroup.RibbonGroupTitleContent>
+            <ui:CRibbonGroup.Content>
+                <StackPanel Orientation="Horizontal">
+                    <ui:CRibbonToggleButton Width="50" Height="55">
+                        <ui:CRibbonToggleButton.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Source="{com:PackImage Path=Assets/Images/text35.png}" />
+                                <TextBlock Grid.Row="1" Text="Text" TextAlignment="Center" />
+                            </Grid>
+                        </ui:CRibbonToggleButton.Content>
                     </ui:CRibbonToggleButton>
                     <Grid Width="5"></Grid>
                 </StackPanel>

@@ -480,18 +480,9 @@
                         </ui:CPanel.HeaderContent>
                         <ui:CPanel.Content>
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="This is content and so many control contains here" />
-                                    <TextBlock Text="This is content and so many control contains here" />
-                                    <TextBlock Text="This is content and so many control contains here" />
-                                    <TextBox Text="This is content and so many control contains here" />
-                                    <ComboBox Text="This is content and so many control contains here" />
-                                </StackPanel>
+                                <ui:CPropertyTree ItemsSource="{Binding PropertyDataItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                </ui:CPropertyTree>
                             </Grid>
-
                         </ui:CPanel.Content>
                     </ui:CPanel>
 
