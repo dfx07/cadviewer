@@ -26,6 +26,10 @@ namespace CadViewer.Interfaces
 		private bool _isVisible = true;
 		private bool _isCheckable;
 		private object _commandParameter;
+		private bool _isExpanded = false;
+		private bool _isGroup = false;
+
+		public int Level { get; set; } = 0; // Level in the tree, used for indentation
 
 		public string Name
 		{
@@ -45,6 +49,17 @@ namespace CadViewer.Interfaces
 		{
 			get => _isEnabled;
 			set { _isEnabled = value; OnPropertyChanged(nameof(IsEnabled)); }
+		}
+
+		public bool IsExpanded
+		{
+			get => _isExpanded;
+			set { _isExpanded = value; OnPropertyChanged(nameof(IsExpanded)); }
+		}
+		public bool IsGroup
+		{
+			get => _isGroup;
+			set { _isGroup = value; OnPropertyChanged(nameof(IsGroup)); }
 		}
 
 		public bool IsChecked
@@ -69,6 +84,14 @@ namespace CadViewer.Interfaces
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		protected void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+	}
+
+	public class PropertyItemGroupData : PropertyItemData
+	{
+		public PropertyItemGroupData()
+		{
+			IsGroup = true;
+		}
 	}
 
 	public class PropertyItemStringData : PropertyItemData

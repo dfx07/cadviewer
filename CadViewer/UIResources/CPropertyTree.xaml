@@ -4,38 +4,138 @@
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
                     xmlns:if="clr-namespace:CadViewer.Interfaces"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <cvt:LevelToWidthMultiConverter x:Key="LevelToWidthMultiConverter" Step="20" />
+    <cvt:CommonListToVisibilityConverter x:Key="ListToVisibilityConverter" />
+    <cvt:CommonCountToBoolConverter x:Key="CountToBoolConverter" />
+
     <DataTemplate DataType="{x:Type if:PropertyItemIntegerData}">
-        <TextBlock Background="Wheat" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type if:PropertyItemStringData}">
-        <TextBox Background="Yellow" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </DataTemplate>
+
+    <Style x:Key="ExpanderToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Background="Transparent">
+                        <Path x:Name="Arrow" Fill="Gray" Stretch="Uniform" HorizontalAlignment="Center"
+                              VerticalAlignment="Center" Width="10" Height="10" Data="M 0 0 L 8 5 L 0 10 Z" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <RotateTransform x:Name="ArrowRotateTransform" Angle="180" />
+                            </Path.RenderTransform>
+                        </Path>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ArrowRotateTransform"
+                                                         Storyboard.TargetProperty="Angle" To="180" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ArrowRotateTransform"
+                                                         Storyboard.TargetProperty="Angle" To="90" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Arrow" Property="Fill" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Arrow" Property="Fill" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Arrow" Property="Fill" Value="DarkSlateBlue" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type local:CPropertyTreeItem}" BasedOn="{StaticResource {x:Type ItemsControl}}">
         <Setter Property="Foreground" Value="{DynamicResource Cmm_TextColor}" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CPropertyTreeItem}">
-                    <Border BorderThickness="1" BorderBrush="#2e3440">
+                    <Border BorderBrush="#2e3440">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <!--Property name-->
-                            <TextBlock Grid.Column="0" Width="50" VerticalAlignment="Center" Margin="5,0,5,0" Text="{Binding Name}" FontSize="12" />
-                            <!--Property value-->
-                            <ContentControl Grid.Column="1" Content="{Binding Value, Mode=TwoWay}" />
-                            <ItemsControl ItemsSource="{Binding Children}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <local:CPropertyTreeItem DataContext="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Border x:Name="PART_ItemContent" Grid.Row="0" BorderThickness="1" Margin="0,0,0,-1" Height="22" BorderBrush="#2e3440">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition MaxWidth="15" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="PART_ItemProperty" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Name}" FontSize="11">
+                                        <TextBlock.Width>
+                                            <MultiBinding Converter="{StaticResource LevelToWidthMultiConverter}">
+                                                <Binding Path="Level" />
+                                                <Binding Path="NameWidth" RelativeSource="{RelativeSource AncestorType={x:Type local:CPropertyTree}}" />
+                                            </MultiBinding>
+                                        </TextBlock.Width>
+                                    </TextBlock>
+                                    <Border x:Name="PART_ItemValue" Grid.Column="1" Grid.ColumnSpan="1" Background="White" BorderBrush="#2e3440" BorderThickness="1,0,0,0" Padding="1">
+                                        <ContentControl Content="{Binding}" />
+                                    </Border>
+                                    <ToggleButton x:Name="PART_Expander" Grid.Column="2" Style="{StaticResource ExpanderToggleButtonStyle}" 
+                                                  IsChecked="{Binding IsExpanded, Mode=TwoWay}" Visibility="{Binding Children, Converter={StaticResource ListToVisibilityConverter}}">
+                                    </ToggleButton>
+                                </Grid>
+                            </Border>
+                            <Grid x:Name="PART_ChildrenContent" Grid.Row="1">
+                                <ItemsControl ItemsSource="{Binding Children}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:CPropertyTreeItem Margin="20,0,0,0" DataContext="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Children, Converter={StaticResource CountToBoolConverter}}" Value="True">
+                            <Setter TargetName="PART_ItemContent" Property="Background" Value="#b9b9b9" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Children, Converter={StaticResource CountToBoolConverter}}" Value="False">
+                            <Setter TargetName="PART_ItemValue" Property="Grid.ColumnSpan" Value="2" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsGroup}" Value="True">
+                            <Setter TargetName="PART_ItemValue" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                            <Setter TargetName="PART_ChildrenContent" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+                            <Setter TargetName="PART_ChildrenContent" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -46,8 +146,31 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CPropertyTree}">
-                    <Border Background="#3b4453">
-                        <ItemsPresenter />
+                    <Border BorderThickness="1" Padding="5" CornerRadius="3" BorderBrush="#2e3440">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <!-- Header row -->
+                                <RowDefinition Height="*" />
+                                <!-- Content -->
+                            </Grid.RowDefinitions>
+
+                            <!-- Header Row -->
+                            <Grid x:Name="PART_HeaderGrid" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="PART_NameColumn" Width="{Binding NameWidth, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                                    <ColumnDefinition Width="2" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Property" Padding="5" Background="#333" Foreground="White" VerticalAlignment="Center" />
+                                <GridSplitter x:Name="PART_Splitter" Grid.Column="1" Width="2" HorizontalAlignment="Center" Background="Gray" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" />
+                                <TextBlock Grid.Column="2" Text="Value" Padding="5" Background="#333" Foreground="White" VerticalAlignment="Center" />
+                            </Grid>
+
+                            <!-- Tree Items -->
+                            <ItemsPresenter Grid.Row="1" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

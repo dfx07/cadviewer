@@ -97,6 +97,7 @@
     <Compile Include="Components\Converter.cs" />
     <Compile Include="Converters\CommonConverter.cs" />
     <Compile Include="Converters\ProgressBarConverter.cs" />
+    <Compile Include="Converters\PropertyTreeConverter.cs" />
     <Compile Include="Converters\TextBoxConverter.cs" />
     <Compile Include="Converters\TabControlConverter.cs" />
     <Compile Include="Converters\ToggleConverter.cs" />

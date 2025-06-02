@@ -16,6 +16,7 @@ using System.Drawing.Printing;
 using System.Windows.Threading;
 using CadViewer.Interfaces;
 using System.Windows.Data;
+using System.ComponentModel;
 
 namespace CadViewer.UIControls
 {
@@ -123,6 +124,22 @@ namespace CadViewer.UIControls
 		{
 			base.OnApplyTemplate();
 
+			var splitter = GetTemplateChild("PART_Splitter") as GridSplitter;
+			var nameColumn = GetTemplateChild("PART_NameColumn") as ColumnDefinition;
+
+			if (splitter != null && nameColumn != null)
+			{
+				splitter.DragDelta += (s, e) =>
+				{
+					SetCurrentValue(NameWidthProperty, nameColumn.ActualWidth);
+				};
+
+				splitter.DragCompleted += (s, e) =>
+				{
+					SetCurrentValue(NameWidthProperty, nameColumn.ActualWidth);
+				};
+			}
+
 			Loaded += (s, e) =>
 			{
 
@@ -131,12 +148,22 @@ namespace CadViewer.UIControls
 
 		protected override DependencyObject GetContainerForItemOverride()
 		{
-			return new CPropertyTreeItem(); // đây là điều bắt buộc để WPF tạo đúng container
+			return new CPropertyTreeItem();
 		}
 
 		protected override bool IsItemItsOwnContainerOverride(object item)
 		{
 			return item is CPropertyTreeItem;
+		}
+
+		public static readonly DependencyProperty NameWidthProperty =
+			DependencyProperty.Register(nameof(NameWidth), typeof(double), typeof(CPropertyTree),
+				new FrameworkPropertyMetadata(150.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+		public double NameWidth
+		{
+			get => (double)GetValue(NameWidthProperty);
+			set => SetValue(NameWidthProperty, value);
 		}
 	}
 }

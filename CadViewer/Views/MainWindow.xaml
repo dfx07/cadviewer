@@ -480,7 +480,7 @@
                         </ui:CPanel.HeaderContent>
                         <ui:CPanel.Content>
                             <Grid>
-                                <ui:CPropertyTree ItemsSource="{Binding PropertyDataItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ui:CPropertyTree x:Name="xPropertyTree" ItemsSource="{Binding PropertyDataItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 </ui:CPropertyTree>
                             </Grid>
                         </ui:CPanel.Content>

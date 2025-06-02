@@ -41,18 +41,222 @@ namespace CadViewer.ViewModels
 				new PropertyItemIntegerData
 				{
 					Name = "Color",
-					Value = 111
+					Value = 111,
+					Level = 0
 				},
-				new PropertyItemStringData
+				new PropertyItemGroupData
 				{
 					Name = "Layer",
-					Value = "Thi"
+					Children = new ObservableCollection<PropertyItemData>
+					{
+						new PropertyItemStringData
+						{
+							Name = "Thi1.1",
+							Value = "Thi",
+							Level = 1
+						},
+						new PropertyItemIntegerData
+						{
+							Name = "Thi1.2",
+							Value = 1234,
+							Level = 1
+						}
+					},
+					Level = 0
 				},
 				new PropertyItemIntegerData
 				{
 					Name = "LineType",
-					Value = 222
-				}
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemIntegerData
+				{
+					Name = "LineType",
+					Value = 222,
+					Level = 0
+				},
+				new PropertyItemGroupData
+				{
+					Name = "Layer",
+					Children = new ObservableCollection<PropertyItemData>
+					{
+						new PropertyItemStringData
+						{
+							Name = "Thi1.1",
+							Value = "Thi",
+							Level = 1
+						},
+						new PropertyItemIntegerData
+						{
+							Name = "Thi1.2",
+							Value = 1234,
+							Level = 1
+						}
+					},
+					Level = 0
+				},
+				new PropertyItemGroupData
+				{
+					Name = "Layer",
+					Children = new ObservableCollection<PropertyItemData>
+					{
+						new PropertyItemStringData
+						{
+							Name = "Thi1.1",
+							Value = "Thi",
+							Level = 1
+						},
+						new PropertyItemIntegerData
+						{
+							Name = "Thi1.2",
+							Value = 1234,
+							Level = 1
+						}
+					},
+					Level = 0
+				},
+				new PropertyItemGroupData
+				{
+					Name = "Layer",
+					Children = new ObservableCollection<PropertyItemData>
+					{
+						new PropertyItemStringData
+						{
+							Name = "Thi1.1",
+							Value = "Thi",
+							Level = 1
+						},
+						new PropertyItemIntegerData
+						{
+							Name = "Thi1.2",
+							Value = 1234,
+							Level = 1
+						}
+					},
+					Level = 0
+				},
+				new PropertyItemGroupData
+				{
+					Name = "Layer",
+					Children = new ObservableCollection<PropertyItemData>
+					{
+						new PropertyItemStringData
+						{
+							Name = "Thi1.1",
+							Value = "Thi",
+							Level = 1
+						},
+						new PropertyItemIntegerData
+						{
+							Name = "Thi1.2",
+							Value = 1234,
+							Level = 1
+						}
+					},
+					Level = 0
+				},
+				new PropertyItemGroupData
+				{
+					Name = "Layer",
+					Children = new ObservableCollection<PropertyItemData>
+					{
+						new PropertyItemStringData
+						{
+							Name = "Thi1.1",
+							Value = "Thi",
+							Level = 1
+						},
+						new PropertyItemIntegerData
+						{
+							Name = "Thi1.2",
+							Value = 1234,
+							Level = 1
+						},
+						new PropertyItemStringData
+						{
+							Name = "Layer",
+							Value = "Thi",
+							Children = new ObservableCollection<PropertyItemData>
+							{
+								new PropertyItemStringData
+								{
+									Name = "Thi1.1",
+									Value = "Thi",
+									Level = 2
+								},
+								new PropertyItemIntegerData
+								{
+									Name = "Thi1.2",
+									Value = 1234,
+									Level = 2
+								}
+							},
+							Level = 1
+						}
+					},
+					Level = 0
+				},
 			};
 		}
 

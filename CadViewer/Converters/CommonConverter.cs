@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Collections;
 
 namespace CadViewer.Converters
 {
@@ -100,6 +101,39 @@ namespace CadViewer.Converters
 		{
 			throw new NotImplementedException();
 		}
+	}
+
+	public class CommonListToVisibilityConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value is IEnumerable children)
+			{
+				foreach (var item in children)
+					return Visibility.Visible;
+			}
+			return Visibility.Collapsed;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class CommonCountToBoolConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value is ICollection collection)
+			{
+				return collection.Count > 0;
+			}
+			return false;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			=> throw new NotImplementedException();
 	}
 
 	public class CommonAddValueDoubleConverter : IValueConverter
