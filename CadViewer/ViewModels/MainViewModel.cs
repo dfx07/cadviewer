@@ -11,6 +11,7 @@ using CadViewer.Common;
 using CadViewer.Implements;
 using CadViewer.Interfaces;
 using CadViewer.UIControls;
+using CadViewer.Views;
 
 namespace CadViewer.ViewModels
 {
@@ -21,6 +22,7 @@ namespace CadViewer.ViewModels
 		public PCBViewModel MainPCBViewVM { get; set; }
 		public RibbonBarViewModel RibbonBarVM { get; set; }
 		public MainPCBViewHandler mainPCBViewHandler { get; set; }
+		public PropertiesPanelViewModel PropertiesPanelVM { get; set; }
 
 		public ICommand IBtnRegisterClickComand { get; }
 
@@ -32,232 +34,234 @@ namespace CadViewer.ViewModels
 
 			mainPCBViewHandler = new MainPCBViewHandler();
 
+			PropertiesPanelVM = new PropertiesPanelViewModel();
+
 			MainPCBViewVM.SetHandler(mainPCBViewHandler);
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 
-			PropertyDataItems = new ObservableCollection<PropertyItemData>()
-			{
-				new PropertyItemIntegerData
-				{
-					Name = "Color",
-					Value = 111,
-					Level = 0
-				},
-				new PropertyItemGroupData
-				{
-					Name = "Layer",
-					Children = new ObservableCollection<PropertyItemData>
-					{
-						new PropertyItemStringData
-						{
-							Name = "Thi1.1",
-							Value = "Thi",
-							Level = 1
-						},
-						new PropertyItemIntegerData
-						{
-							Name = "Thi1.2",
-							Value = 1234,
-							Level = 1
-						}
-					},
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemIntegerData
-				{
-					Name = "LineType",
-					Value = 222,
-					Level = 0
-				},
-				new PropertyItemGroupData
-				{
-					Name = "Layer",
-					Children = new ObservableCollection<PropertyItemData>
-					{
-						new PropertyItemStringData
-						{
-							Name = "Thi1.1",
-							Value = "Thi",
-							Level = 1
-						},
-						new PropertyItemIntegerData
-						{
-							Name = "Thi1.2",
-							Value = 1234,
-							Level = 1
-						}
-					},
-					Level = 0
-				},
-				new PropertyItemGroupData
-				{
-					Name = "Layer",
-					Children = new ObservableCollection<PropertyItemData>
-					{
-						new PropertyItemStringData
-						{
-							Name = "Thi1.1",
-							Value = "Thi",
-							Level = 1
-						},
-						new PropertyItemIntegerData
-						{
-							Name = "Thi1.2",
-							Value = 1234,
-							Level = 1
-						}
-					},
-					Level = 0
-				},
-				new PropertyItemGroupData
-				{
-					Name = "Layer",
-					Children = new ObservableCollection<PropertyItemData>
-					{
-						new PropertyItemStringData
-						{
-							Name = "Thi1.1",
-							Value = "Thi",
-							Level = 1
-						},
-						new PropertyItemIntegerData
-						{
-							Name = "Thi1.2",
-							Value = 1234,
-							Level = 1
-						}
-					},
-					Level = 0
-				},
-				new PropertyItemGroupData
-				{
-					Name = "Layer",
-					Children = new ObservableCollection<PropertyItemData>
-					{
-						new PropertyItemStringData
-						{
-							Name = "Thi1.1",
-							Value = "Thi",
-							Level = 1
-						},
-						new PropertyItemIntegerData
-						{
-							Name = "Thi1.2",
-							Value = 1234,
-							Level = 1
-						}
-					},
-					Level = 0
-				},
-				new PropertyItemGroupData
-				{
-					Name = "Layer",
-					Children = new ObservableCollection<PropertyItemData>
-					{
-						new PropertyItemStringData
-						{
-							Name = "Thi1.1",
-							Value = "Thi",
-							Level = 1
-						},
-						new PropertyItemIntegerData
-						{
-							Name = "Thi1.2",
-							Value = 1234,
-							Level = 1
-						},
-						new PropertyItemStringData
-						{
-							Name = "Layer",
-							Value = "Thi",
-							Children = new ObservableCollection<PropertyItemData>
-							{
-								new PropertyItemStringData
-								{
-									Name = "Thi1.1",
-									Value = "Thi",
-									Level = 2
-								},
-								new PropertyItemIntegerData
-								{
-									Name = "Thi1.2",
-									Value = 1234,
-									Level = 2
-								}
-							},
-							Level = 1
-						}
-					},
-					Level = 0
-				},
-			};
+			//PropertyDataItems = new ObservableCollection<PropertyItemData>()
+			//{
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "Color",
+			//		Value = 111,
+			//		Level = 0
+			//	},
+			//	new PropertyItemGroupData
+			//	{
+			//		Name = "Layer",
+			//		Children = new ObservableCollection<PropertyItemData>
+			//		{
+			//			new PropertyItemStringData
+			//			{
+			//				Name = "Thi1.1",
+			//				Value = "Thi",
+			//				Level = 1
+			//			},
+			//			new PropertyItemIntegerData
+			//			{
+			//				Name = "Thi1.2",
+			//				Value = 1234,
+			//				Level = 1
+			//			}
+			//		},
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemIntegerData
+			//	{
+			//		Name = "LineType",
+			//		Value = 222,
+			//		Level = 0
+			//	},
+			//	new PropertyItemGroupData
+			//	{
+			//		Name = "Layer",
+			//		Children = new ObservableCollection<PropertyItemData>
+			//		{
+			//			new PropertyItemStringData
+			//			{
+			//				Name = "Thi1.1",
+			//				Value = "Thi",
+			//				Level = 1
+			//			},
+			//			new PropertyItemIntegerData
+			//			{
+			//				Name = "Thi1.2",
+			//				Value = 1234,
+			//				Level = 1
+			//			}
+			//		},
+			//		Level = 0
+			//	},
+			//	new PropertyItemGroupData
+			//	{
+			//		Name = "Layer",
+			//		Children = new ObservableCollection<PropertyItemData>
+			//		{
+			//			new PropertyItemStringData
+			//			{
+			//				Name = "Thi1.1",
+			//				Value = "Thi",
+			//				Level = 1
+			//			},
+			//			new PropertyItemIntegerData
+			//			{
+			//				Name = "Thi1.2",
+			//				Value = 1234,
+			//				Level = 1
+			//			}
+			//		},
+			//		Level = 0
+			//	},
+			//	new PropertyItemGroupData
+			//	{
+			//		Name = "Layer",
+			//		Children = new ObservableCollection<PropertyItemData>
+			//		{
+			//			new PropertyItemStringData
+			//			{
+			//				Name = "Thi1.1",
+			//				Value = "Thi",
+			//				Level = 1
+			//			},
+			//			new PropertyItemIntegerData
+			//			{
+			//				Name = "Thi1.2",
+			//				Value = 1234,
+			//				Level = 1
+			//			}
+			//		},
+			//		Level = 0
+			//	},
+			//	new PropertyItemGroupData
+			//	{
+			//		Name = "Layer",
+			//		Children = new ObservableCollection<PropertyItemData>
+			//		{
+			//			new PropertyItemStringData
+			//			{
+			//				Name = "Thi1.1",
+			//				Value = "Thi",
+			//				Level = 1
+			//			},
+			//			new PropertyItemIntegerData
+			//			{
+			//				Name = "Thi1.2",
+			//				Value = 1234,
+			//				Level = 1
+			//			}
+			//		},
+			//		Level = 0
+			//	},
+			//	new PropertyItemGroupData
+			//	{
+			//		Name = "Layer",
+			//		Children = new ObservableCollection<PropertyItemData>
+			//		{
+			//			new PropertyItemStringData
+			//			{
+			//				Name = "Thi1.1",
+			//				Value = "Thi",
+			//				Level = 1
+			//			},
+			//			new PropertyItemIntegerData
+			//			{
+			//				Name = "Thi1.2",
+			//				Value = 1234,
+			//				Level = 1
+			//			},
+			//			new PropertyItemStringData
+			//			{
+			//				Name = "Layer",
+			//				Value = "Thi",
+			//				Children = new ObservableCollection<PropertyItemData>
+			//				{
+			//					new PropertyItemStringData
+			//					{
+			//						Name = "Thi1.1",
+			//						Value = "Thi",
+			//						Level = 2
+			//					},
+			//					new PropertyItemIntegerData
+			//					{
+			//						Name = "Thi1.2",
+			//						Value = 1234,
+			//						Level = 2
+			//					}
+			//				},
+			//				Level = 1
+			//			}
+			//		},
+			//		Level = 0
+			//	},
+			//};
 		}
 
 		private void OnButtonRegisterClick()

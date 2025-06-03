@@ -1,12 +1,14 @@
-﻿<UserControl x:Class="CadViewer.View.PropertiesView"
+﻿<interfaces:PropertyView xmlns:interfaces="clr-namespace:CadViewer.Interfaces" 
+             x:Class="CadViewer.Views.Properties.CirclePropertyView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CadViewer.View"
+             xmlns:local="clr-namespace:CadViewer.Views.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
-</UserControl>
+    <StackPanel>
+        <TextBlock Text="Circle Properties" FontWeight="Bold" />
+        <TextBox  Width="100" Height="24" />
+    </StackPanel>
+</interfaces:PropertyView>

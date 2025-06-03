@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CadViewer"
         xmlns:com="clr-namespace:CadViewer.Common"
-        xmlns:uctrl="clr-namespace:CadViewer.Views"
+        xmlns:views="clr-namespace:CadViewer.Views"
         xmlns:rb="clr-namespace:CadViewer.Views.RibbonViews"
         xmlns:vm="clr-namespace:CadViewer.ViewModels"
         xmlns:ui="clr-namespace:CadViewer.UIControls"
@@ -42,8 +42,8 @@
                 <RowDefinition Height="24"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
-                <uctrl:BibbonBar DataContext="{Binding RibbonBarVM}">
-                </uctrl:BibbonBar>
+                <views:BibbonBar DataContext="{Binding RibbonBarVM}">
+                </views:BibbonBar>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.ColumnDefinitions>
@@ -293,25 +293,25 @@
                                     </Button>
 
                                     <!--<Border x:Name="PopupContent" Background="Transparent" BorderThickness="0" Width="120" Height="30">
-                            <Border Margin="6,2,6,6" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
-                                </Border.Background>
-                                <Border.BorderBrush>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
-                                </Border.BorderBrush>
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
-                                </Border.Effect>
-                                <Button Content="Abc" Click="Button_Click"></Button>
-                            </Border>
-                        </Border>-->
+                                        <Border Margin="6,2,6,6" BorderThickness="1" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}" />
+                                            </Border.Background>
+                                            <Border.BorderBrush>
+                                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+                                            </Border.BorderBrush>
+                                            <Border.Effect>
+                                                <DropShadowEffect Color="Black" BlurRadius="7" Direction="270" ShadowDepth="2" Opacity="0.1" />
+                                            </Border.Effect>
+                                            <Button Content="Abc" Click="Button_Click"></Button>
+                                        </Border>
+                                    </Border>-->
                                     <!--<ui:CSoftPopup x:Name="MyPopup" PlacementTarget="{Binding ElementName=ToggleBtn}" IsOpen="{Binding IsChecked, ElementName=ToggleBtn}" HorizontalOffset="10" VerticalOffset="40">
-                            <Border Background="LightYellow" Padding="8" BorderBrush="Black" BorderThickness="1">
-                                <TextBlock Text="Lo cc!" FontWeight="Bold" />
-                            </Border>
-                            <Button Width="40" Height="20" Content="Click day"></Button>
-                        </ui:CSoftPopup>-->
+                                        <Border Background="LightYellow" Padding="8" BorderBrush="Black" BorderThickness="1">
+                                            <TextBlock Text="Lo cc!" FontWeight="Bold" />
+                                        </Border>
+                                        <Button Width="40" Height="20" Content="Click day"></Button>
+                                    </ui:CSoftPopup>-->
 
                                     <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Foreground="{DynamicResource Cmm_TextColor}" Text="Show Progress"></TextBlock>
                                     <Button Margin="0,5,0,0" Click="ShowProgress_Click" Grid.Row="11" Grid.Column="1" Width="140" Height="24" Content="Show Progress">
@@ -465,10 +465,8 @@
                             </Grid>
                         </ui:CPanel.Content>
                     </ui:CPanel>
-
-                    <!--#endregion-->
                 </DockPanel>
-
+                <!--#endregion-->
 
                 <!--#region [RIGHT] Content-->
                 <ui:CResizableContainer x:Name="PART_Property" Grid.Row="0" Grid.Column="2" ResizeDirections="Left"
@@ -479,16 +477,17 @@
                             <TextBlock Margin="2" Foreground="WhiteSmoke" FontSize="12" Text="Property" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
                         </ui:CPanel.HeaderContent>
                         <ui:CPanel.Content>
-                            <Grid>
-                                <ui:CPropertyTree x:Name="xPropertyTree" ItemsSource="{Binding PropertyDataItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                </ui:CPropertyTree>
-                            </Grid>
+                            <views:PropertiesPanel x:Name="PART_PropertyPanel" DataContext="{Binding PropertiesPanelVM}">
+                                <!--<Grid>
+                                    <ui:CPropertyTree x:Name="xPropertyTree" ItemsSource="{Binding PropertyDataItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    </ui:CPropertyTree>
+                                </Grid>-->
+                            </views:PropertiesPanel>
                         </ui:CPanel.Content>
                     </ui:CPanel>
 
                 </ui:CResizableContainer>
                 <!--#endregion-->
-
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0" Background="#80000000">
             </Grid>

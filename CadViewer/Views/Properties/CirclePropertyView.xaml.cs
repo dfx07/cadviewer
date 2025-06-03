@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CadViewer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CadViewer.View
+namespace CadViewer.Views.Properties
 {
 	/// <summary>
-	/// Interaction logic for PropertiesView.xaml
+	/// Interaction logic for CirclePropertyView.xaml
 	/// </summary>
-	public partial class PropertiesView : UserControl
+	public partial class CirclePropertyView : PropertyView
 	{
-		public PropertiesView()
+		public CirclePropertyView():
+			base()
 		{
 			InitializeComponent();
 		}

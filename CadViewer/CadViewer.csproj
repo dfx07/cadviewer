@@ -114,6 +114,7 @@
     <Compile Include="Interfaces\IPropertyItem.cs" />
     <Compile Include="Interfaces\ModalDialog.cs" />
     <Compile Include="Interfaces\IMenuItem.cs" />
+    <Compile Include="Interfaces\PropertyView.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
     <Compile Include="UIControls\CPropertyTree.cs" />
@@ -157,6 +158,8 @@
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
     <Compile Include="ViewModels\EditBarViewModel.cs" />
     <Compile Include="ViewModels\HomeBarViewModel.cs" />
+    <Compile Include="ViewModels\PropertiesPanelViewModel.cs" />
+    <Compile Include="ViewModels\Properties\CirclePropertyViewModel.cs" />
     <Compile Include="ViewModels\RibbonBarViewModel.cs" />
     <Compile Include="ViewModels\BaseModalDialogViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -172,14 +175,17 @@
     <Compile Include="Views\PCBViewer\PCBViewer.xaml.cs">
       <DependentUpon>PCBViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Properties\PropertiesView.xaml.cs">
-      <DependentUpon>PropertiesView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\HeaderBar\RibbonBar.xaml.cs">
       <DependentUpon>RibbonBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HeaderBar\TabBar.xaml.cs">
       <DependentUpon>TabBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Properties\CirclePropertyView.xaml.cs">
+      <DependentUpon>CirclePropertyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PropertiesPanel.xaml.cs">
+      <DependentUpon>PropertiesPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RibbonViews\EditRibbon.xaml.cs">
       <DependentUpon>EditRibbon.xaml</DependentUpon>
@@ -352,15 +358,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Properties\PropertiesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\HeaderBar\RibbonBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HeaderBar\TabBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Properties\CirclePropertyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PropertiesPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

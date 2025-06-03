@@ -16,34 +16,21 @@ namespace CadViewer.ViewModels
 		public ObservableCollection<TabBarItemInfo> TabBarInfos
 		{
 			get => _tabBarInfos;
-			set
-			{
-				_tabBarInfos = value;
-				OnPropertyChanged(nameof(TabBarInfos));
-			}
+			set => SetProperty(ref _tabBarInfos, value);
 		}
 
 		private TabBarItemInfo _selectedTab;
 		public TabBarItemInfo SelectedTab
 		{
 			get => _selectedTab;
-			set
-			{
-				_selectedTab = value;
-				OnPropertyChanged(nameof(SelectedTab));
-				OnTabChanged(_selectedTab);
-			}
+			set => SetProperty(ref _selectedTab, value, () => OnTabChanged(_selectedTab));
 		}
 
 		private object _ribbonContent;
 		public object RibbonContent
 		{
 			get => _ribbonContent;
-			set
-			{
-				_ribbonContent = value;
-				OnPropertyChanged(nameof(RibbonContent));
-			}
+			set => SetProperty(ref _ribbonContent, value);
 		}
 
 		public RibbonBarViewModel()
