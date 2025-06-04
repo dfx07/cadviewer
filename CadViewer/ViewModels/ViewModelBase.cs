@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 using CadViewer.API;
 using CadViewer.Common;
 using CadViewer.Interfaces;
+using CadViewer.Services;
 
 namespace CadViewer.ViewModels
 {
-	public class ViewModelBase : NotifyPropertyChanged
+	public abstract class ViewModelBase : NotifyPropertyChanged
 	{
 		public ViewModelBase()
 		{
+			Messenger = VmMessenger.Instance;
 			m_pViewModelPtr = new GCHandleProvider(this);
 		}
 
@@ -28,5 +30,6 @@ namespace CadViewer.ViewModels
 		}
 
 		protected GCHandleProvider m_pViewModelPtr = null;
+		protected IMessenger Messenger { get; } = null;
 	}
 }

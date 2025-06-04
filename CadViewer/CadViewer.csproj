@@ -111,11 +111,13 @@
       <DependentUpon>DlgSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Interfaces\IMessenger.cs" />
     <Compile Include="Interfaces\IPropertyItem.cs" />
     <Compile Include="Interfaces\ModalDialog.cs" />
     <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\PropertyView.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
+    <Compile Include="Services\VmMessager.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
     <Compile Include="UIControls\CPropertyTree.cs" />
     <Compile Include="UIControls\CRibbonGroup.cs" />
@@ -156,8 +158,8 @@
     <Compile Include="Interfaces\NotificationHandler.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
-    <Compile Include="ViewModels\EditBarViewModel.cs" />
-    <Compile Include="ViewModels\HomeBarViewModel.cs" />
+    <Compile Include="ViewModels\RibbonPanels\EditRibbonPanelViewModel.cs" />
+    <Compile Include="ViewModels\RibbonPanels\HomeRibbonPanelViewModel.cs" />
     <Compile Include="ViewModels\PropertiesPanelViewModel.cs" />
     <Compile Include="ViewModels\Properties\CirclePropertyViewModel.cs" />
     <Compile Include="ViewModels\RibbonBarViewModel.cs" />
@@ -175,7 +177,7 @@
     <Compile Include="Views\PCBViewer\PCBViewer.xaml.cs">
       <DependentUpon>PCBViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HeaderBar\RibbonBar.xaml.cs">
+    <Compile Include="Views\RibbonBar.xaml.cs">
       <DependentUpon>RibbonBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HeaderBar\TabBar.xaml.cs">
@@ -187,13 +189,13 @@
     <Compile Include="Views\PropertiesPanel.xaml.cs">
       <DependentUpon>PropertiesPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RibbonViews\EditRibbon.xaml.cs">
-      <DependentUpon>EditRibbon.xaml</DependentUpon>
+    <Compile Include="Views\RibbonPanels\EditRibbonPanel.xaml.cs">
+      <DependentUpon>EditRibbonPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RibbonViews\HomeRibbon.xaml.cs">
-      <DependentUpon>HomeRibbon.xaml</DependentUpon>
+    <Compile Include="Views\RibbonPanels\HomeRibbonPanel.xaml.cs">
+      <DependentUpon>HomeRibbonPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RibbonViews\RibbonControl.cs" />
+    <Compile Include="Interfaces\RibbonPanelControl.cs" />
     <Page Include="Dialogs\ToastMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -358,7 +360,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HeaderBar\RibbonBar.xaml">
+    <Page Include="Views\RibbonBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -374,11 +376,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RibbonViews\EditRibbon.xaml">
+    <Page Include="Views\RibbonPanels\EditRibbonPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RibbonViews\HomeRibbon.xaml">
+    <Page Include="Views\RibbonPanels\HomeRibbonPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

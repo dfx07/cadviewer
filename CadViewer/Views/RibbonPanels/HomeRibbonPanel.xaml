@@ -1,12 +1,13 @@
-﻿<local:RibbonControl x:Class="CadViewer.Views.RibbonViews.HomeRibbon"
+﻿<interfaces:RibbonPanelControl xmlns:interfaces="clr-namespace:CadViewer.Interfaces"
+             x:Class="CadViewer.Views.RibbonPanels.HomeRibbonPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CadViewer.Views.RibbonViews"
+             xmlns:local="clr-namespace:CadViewer.Views.RibbonPanels"
              xmlns:ui="clr-namespace:CadViewer.UIControls"
-             xmlns:com="clr-namespace:CadViewer.Common"
-             mc:Ignorable="d" 
+             xmlns:com="clr-namespace:CadViewer.Common" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
@@ -42,7 +43,15 @@
             </ui:CRibbonGroup.RibbonGroupTitleContent>
             <ui:CRibbonGroup.Content>
                 <StackPanel Orientation="Horizontal">
-                    <ui:CRibbonToggleButton Width="50" Height="55">
+                    <ui:CRibbonToggleButton Width="50" Height="55" IsChecked="{Binding IsLineActive, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding LineInputCommand}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding LineInputCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ui:CRibbonToggleButton.Content>
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -152,4 +161,4 @@
             </ui:CRibbonGroup.Content>
         </ui:CRibbonGroup>
     </Grid>
-</local:RibbonControl>
+</interfaces:RibbonPanelControl>

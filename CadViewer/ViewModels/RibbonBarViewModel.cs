@@ -26,11 +26,11 @@ namespace CadViewer.ViewModels
 			set => SetProperty(ref _selectedTab, value, () => OnTabChanged(_selectedTab));
 		}
 
-		private object _ribbonContent;
-		public object RibbonContent
+		private object _currentRibbonPanelViewModel;
+		public object CurrentRibbonPanelViewModel
 		{
-			get => _ribbonContent;
-			set => SetProperty(ref _ribbonContent, value);
+			get => _currentRibbonPanelViewModel;
+			set => SetProperty(ref _currentRibbonPanelViewModel, value);
 		}
 
 		public RibbonBarViewModel()
@@ -45,7 +45,7 @@ namespace CadViewer.ViewModels
 
 			SelectedTab = TabBarInfos.FirstOrDefault();
 		}
-		private void LoadRibbonContentForTab(TabBarItemInfo tab)
+		private void LoadRibbonPanelForTab(TabBarItemInfo tab)
 		{
 			if (tab == null)
 				return;
@@ -64,10 +64,10 @@ namespace CadViewer.ViewModels
 				switch (tab.strTabName.ToUpper())
 				{
 					case "HOME":
-						NewViewModel = new HomeBarViewModel();
+						NewViewModel = new HomeRibbonPanelViewModel();
 						break;
 					case "EDIT":
-						NewViewModel = new EditBarViewModel();
+						NewViewModel = new EditRibbonPanelViewModel();
 						break;
 					default:
 						break;
@@ -77,12 +77,12 @@ namespace CadViewer.ViewModels
 					_ribbonContentTabs[tab.strTabName] = NewViewModel;
 			}
 
-			RibbonContent = NewViewModel;
+			CurrentRibbonPanelViewModel = NewViewModel;
 		}
 
 		private void OnTabChanged(TabBarItemInfo tabinfo)
 		{
-			LoadRibbonContentForTab(tabinfo);
+			LoadRibbonPanelForTab(tabinfo);
 		}
 	}
 }

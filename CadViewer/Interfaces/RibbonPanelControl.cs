@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace CadViewer.Views.RibbonViews
+namespace CadViewer.Interfaces
 {
-	public partial class RibbonControl : UserControl
+	public partial class RibbonPanelControl : UserControl
 	{
 
 	}

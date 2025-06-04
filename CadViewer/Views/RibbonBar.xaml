@@ -4,16 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.Views"
-             xmlns:rbviews="clr-namespace:CadViewer.Views.RibbonViews"
+             xmlns:rbviews="clr-namespace:CadViewer.Views.RibbonPanels"
              xmlns:vm="clr-namespace:CadViewer.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type vm:HomeBarViewModel}">
-            <rbviews:HomeRibbon />
+        <DataTemplate DataType="{x:Type vm:HomeRibbonPanelViewModel}">
+            <rbviews:HomeRibbonPanel />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:EditBarViewModel}">
-            <rbviews:EditRibbon />
+        <DataTemplate DataType="{x:Type vm:EditRibbonPanelViewModel}">
+            <rbviews:EditRibbonPanel />
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
@@ -28,7 +28,7 @@
             </local:TabBar>
         </Grid>
         <Grid x:Name="PART_GridRibbonContent" Grid.Row="1" Background="#f1f1f1">
-            <ContentPresenter HorizontalAlignment="Left" Content="{Binding RibbonContent}" />
+            <ContentPresenter HorizontalAlignment="Left" Content="{Binding CurrentRibbonPanelViewModel}" />
         </Grid>
     </Grid>
 </UserControl>

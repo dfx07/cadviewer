@@ -16,7 +16,7 @@ namespace CadViewer.ViewModels
 		public PropertiesPanelViewModel()
 		: base()
 		{
-			CurrentPropertyView = new CirclePropertyViewModel();
+			CurrentPropertyViewModel = new CirclePropertyViewModel();
 		}
 
 		public void SelectShape(Shape shape)
@@ -27,11 +27,11 @@ namespace CadViewer.ViewModels
 			//	PropertiesPanelVM.CurrentPropertyViewModel = new RectPropertyViewModel(rect);
 		}
 
-		private ViewModelBase m_currentPropertyView;
-		public ViewModelBase CurrentPropertyView
+		private ViewModelBase m_currentPropertyViewModel;
+		public ViewModelBase CurrentPropertyViewModel
 		{
-			get => m_currentPropertyView;
-			set => SetProperty(ref m_currentPropertyView, value);
+			get => m_currentPropertyViewModel;
+			set => SetProperty(ref m_currentPropertyViewModel, value);
 		}
 	}
 }

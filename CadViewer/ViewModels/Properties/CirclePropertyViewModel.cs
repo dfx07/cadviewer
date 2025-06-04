@@ -11,7 +11,6 @@ namespace CadViewer.ViewModels.Properties
 		public CirclePropertyViewModel()
 			: base()
 		{
-
 		}
 
 		public double Radius { get; set; }

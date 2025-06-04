@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CadViewer.ViewModels
 {
-	public class EditBarViewModel : ViewModelBase
+	public class EditRibbonPanelViewModel : ViewModelBase
 	{
 
 	}

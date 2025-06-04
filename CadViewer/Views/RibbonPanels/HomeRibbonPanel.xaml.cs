@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CadViewer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CadViewer.Views.RibbonViews
+namespace CadViewer.Views.RibbonPanels
 {
 	/// <summary>
-	/// Interaction logic for HomeRibbon.xaml
+	/// Interaction logic for HomeRibbonPanel.xaml
 	/// </summary>
-	public partial class HomeRibbon : RibbonControl
+	public partial class HomeRibbonPanel : RibbonPanelControl
 	{
-		public HomeRibbon()
+		public HomeRibbonPanel()
 		{
 			InitializeComponent();
 		}

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CadViewer"
         xmlns:com="clr-namespace:CadViewer.Common"
         xmlns:views="clr-namespace:CadViewer.Views"
-        xmlns:rb="clr-namespace:CadViewer.Views.RibbonViews"
+        xmlns:rb="clr-namespace:CadViewer.Views.RibbonPanels"
         xmlns:vm="clr-namespace:CadViewer.ViewModels"
         xmlns:ui="clr-namespace:CadViewer.UIControls"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
