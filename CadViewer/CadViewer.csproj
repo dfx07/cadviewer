@@ -171,6 +171,12 @@
     <Compile Include="Views\.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditorPanel.xaml.cs">
+      <DependentUpon>EditorPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Editors\UIControlViewer.xaml.cs">
+      <DependentUpon>UIControlViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PCBViewer\OpenGLView.xaml.cs">
       <DependentUpon>OpenGLView.xaml</DependentUpon>
     </Compile>
@@ -341,6 +347,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editors\UIControlViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
