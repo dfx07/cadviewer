@@ -158,6 +158,10 @@
     <Compile Include="Interfaces\NotificationHandler.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
+    <Compile Include="ViewModels\Editors\UIControlViewerViewModel.cs" />
+    <Compile Include="ViewModels\EditorPanelViewModel.cs" />
+    <Compile Include="ViewModels\Properties\RectPropertyViewModel.cs" />
+    <Compile Include="ViewModels\Properties\LinePropertyViewModel.cs" />
     <Compile Include="ViewModels\RibbonPanels\EditRibbonPanelViewModel.cs" />
     <Compile Include="ViewModels\RibbonPanels\HomeRibbonPanelViewModel.cs" />
     <Compile Include="ViewModels\PropertiesPanelViewModel.cs" />
@@ -182,6 +186,12 @@
     </Compile>
     <Compile Include="Views\PCBViewer\PCBViewer.xaml.cs">
       <DependentUpon>PCBViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Properties\LinePropertyView.xaml.cs">
+      <DependentUpon>LinePropertyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Properties\RectPropertyView.xaml.cs">
+      <DependentUpon>RectPropertyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RibbonBar.xaml.cs">
       <DependentUpon>RibbonBar.xaml</DependentUpon>
@@ -374,6 +384,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Properties\LinePropertyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Properties\RectPropertyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\RibbonBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -480,6 +498,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\text35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\uidesign35.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

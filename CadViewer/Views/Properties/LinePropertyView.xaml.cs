@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace CadViewer.Views
 {
 	/// <summary>
-	/// Interaction logic for CirclePropertyView.xaml
+	/// Interaction logic for LinePropertyView.xaml
 	/// </summary>
-	public partial class CirclePropertyView : PropertyView
+	public partial class LinePropertyView : PropertyView
 	{
-		public CirclePropertyView():
+		public LinePropertyView():
 			base()
 		{
 			InitializeComponent();

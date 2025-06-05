@@ -176,7 +176,7 @@
                                        HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
                         </ui:CPanel.HeaderContent>
                         <ui:CPanel.Content>
-                            <views:EditorPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                            <views:EditorPanel DataContext="{Binding EditorPanelVM}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                         </ui:CPanel.Content>
                     </ui:CPanel>
                 </DockPanel>

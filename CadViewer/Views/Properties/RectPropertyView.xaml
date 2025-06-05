@@ -1,5 +1,5 @@
 ﻿<interfaces:PropertyView xmlns:interfaces="clr-namespace:CadViewer.Interfaces" 
-             x:Class="CadViewer.Views.CirclePropertyView"
+             x:Class="CadViewer.Views.RectPropertyView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock Text="Circle Properties" FontWeight="Bold" />
+        <TextBlock Text="Rectangle Properties" FontWeight="Bold" />
         <TextBox  Width="100" Height="24" />
     </StackPanel>
 </interfaces:PropertyView>

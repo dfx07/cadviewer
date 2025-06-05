@@ -1,5 +1,4 @@
 ﻿using CadViewer.Interfaces;
-using CadViewer.ViewModels.Properties;
 using CadViewer.Views;
 using System;
 using System.Collections.Generic;
@@ -8,23 +7,46 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows;
+using CadViewer.Services;
+using System.Diagnostics;
 
 namespace CadViewer.ViewModels
 {
 	public class PropertiesPanelViewModel : ViewModelBase
 	{
 		public PropertiesPanelViewModel()
-		: base()
+			: base()
 		{
-			CurrentPropertyViewModel = new CirclePropertyViewModel();
+			Messenger.Register<ShapeActionMessageArgs>(this, OnReceivedShapeActionMessage);
 		}
 
-		public void SelectShape(Shape shape)
+		private void OnReceivedShapeActionMessage(ShapeActionMessageArgs args)
 		{
-			//if (shape is Circle circle)
-			//	PropertiesPanelVM.CurrentPropertyViewModel = new CirclePropertyViewModel(circle);
-			//else if (shape is Rect rect)
-			//	PropertiesPanelVM.CurrentPropertyViewModel = new RectPropertyViewModel(rect);
+			if(args is null || string.IsNullOrEmpty(args.ShapeType))
+				return;
+
+			if(args.ActionType == "Deactivate")
+			{
+				CurrentPropertyViewModel = null;
+				return;
+			}
+
+			if (args.ShapeType == "Circle")
+			{
+				CurrentPropertyViewModel = new CirclePropertyViewModel();
+			}
+			else if (args.ShapeType == "Line")
+			{
+				CurrentPropertyViewModel = new LinePropertyViewModel();
+			}
+			else if (args.ShapeType == "Rectangle")
+			{
+				CurrentPropertyViewModel = new RectPropertyViewModel();
+			}
+			else
+			{
+				CurrentPropertyViewModel = null;
+			}
 		}
 
 		private ViewModelBase m_currentPropertyViewModel;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CadViewer.ViewModels.Properties
+namespace CadViewer.ViewModels
 {
 	public class CirclePropertyViewModel : ViewModelBase
 	{

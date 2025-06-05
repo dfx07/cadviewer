@@ -7,45 +7,68 @@ using System.Threading.Tasks;
 
 namespace CadViewer.Services
 {
-	public class MessageParam
+	public class MessageArgs
 	{
 		public string MessageID { get; set; }
 		public object Sender { get; set; }
 	}
 
+	public class ShapeActionMessageArgs : MessageArgs
+	{
+		public bool IsActive { get; set; }
+		public string ShapeType { get; set; } // e.g., "Line", "Circle", etc.
+		public string ActionType { get; set; } // e.g., "Create", "Update", "Delete"
+	}
 
 	public class VmMessenger : IMessenger
 	{
-		private static readonly Lazy<VmMessenger> _instance = new Lazy<VmMessenger>(() => new VmMessenger());
+		private class StrongAction<TMessage>
+		{
+			public WeakReference Recipient { get; }
+			private readonly Action<TMessage> _strongAction;
 
+			public StrongAction(object recipient, Action<TMessage> action)
+			{
+				Recipient = new WeakReference(recipient);
+				_strongAction = action;
+			}
+
+			public bool Invoke(TMessage message)
+			{
+				if (Recipient.IsAlive && _strongAction != null)
+				{
+					_strongAction(message);
+					return true;
+				}
+				return false;
+			}
+
+			public bool IsMatch(object recipient)
+			{
+				return Recipient.Target == recipient;
+			}
+
+			public bool IsAlive => Recipient.IsAlive;
+		}
+
+		private static readonly Lazy<VmMessenger> _instance = new Lazy<VmMessenger>(() => new VmMessenger());
 		public static VmMessenger Instance => _instance.Value;
 
+		private readonly Dictionary<Type, List<object>> _recipients = new Dictionary<Type, List<object>>();
 
-		private readonly Dictionary<Type, List<WeakReference>> _recipients = new Dictionary<Type, List<WeakReference>>();
-
-		private VmMessenger()
-		{
-			// Private constructor to prevent instantiation from outside
-		}
+		private VmMessenger() { }
 
 		public void Send<TMessage>(TMessage message)
 		{
 			var messageType = typeof(TMessage);
-
-			if (_recipients.TryGetValue(messageType, out var recipients))
+			if (_recipients.TryGetValue(messageType, out var list))
 			{
-				// Browse recipients in reverse order to avoid issues with collection modification
-				for (int i = recipients.Count - 1; i >= 0; i--)
+				for (int i = list.Count - 1; i >= 0; i--)
 				{
-					if (recipients[i].IsAlive)
+					if (list[i] is StrongAction<TMessage> wa)
 					{
-						if (recipients[i].Target is Action<TMessage> action)
-							action(message);
-					}
-					else
-					{
-						// Delete weak reference if it is not alive
-						recipients.RemoveAt(i);
+						if (!wa.Invoke(message))
+							list.RemoveAt(i);
 					}
 				}
 			}
@@ -54,27 +77,21 @@ namespace CadViewer.Services
 		public void Register<TMessage>(object recipient, Action<TMessage> action)
 		{
 			var messageType = typeof(TMessage);
-			if (!_recipients.TryGetValue(messageType, out var recipients))
+			if (!_recipients.TryGetValue(messageType, out var list))
 			{
-				recipients = new List<WeakReference>();
-				_recipients[messageType] = recipients;
+				list = new List<object>();
+				_recipients[messageType] = list;
 			}
-			recipients.Add(new WeakReference(action));
+			list.Add(new StrongAction<TMessage>(recipient, action));
 		}
 
 		public void Unregister<TMessage>(object recipient)
 		{
 			var messageType = typeof(TMessage);
-			if (_recipients.TryGetValue(messageType, out var recipients))
+			if (_recipients.TryGetValue(messageType, out var list))
 			{
-				recipients.RemoveAll(wr =>
-				{
-					if (wr.Target is Action<TMessage> action)
-					{
-						return true;
-					}
-					return false;
-				});
+				list.RemoveAll(obj =>
+					obj is StrongAction<TMessage> wa && wa.IsMatch(recipient));
 			}
 		}
 	}

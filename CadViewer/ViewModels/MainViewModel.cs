@@ -23,6 +23,7 @@ namespace CadViewer.ViewModels
 		public RibbonBarViewModel RibbonBarVM { get; set; }
 		public MainPCBViewHandler mainPCBViewHandler { get; set; }
 		public PropertiesPanelViewModel PropertiesPanelVM { get; set; }
+		public EditorPanelViewModel EditorPanelVM { get; set; }
 
 		public ICommand IBtnRegisterClickComand { get; }
 
@@ -35,6 +36,8 @@ namespace CadViewer.ViewModels
 			mainPCBViewHandler = new MainPCBViewHandler();
 
 			PropertiesPanelVM = new PropertiesPanelViewModel();
+
+			EditorPanelVM = new EditorPanelViewModel();
 
 			MainPCBViewVM.SetHandler(mainPCBViewHandler);
 

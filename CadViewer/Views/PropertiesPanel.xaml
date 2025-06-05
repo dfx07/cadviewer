@@ -4,18 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.Views"
-             xmlns:views_pro="clr-namespace:CadViewer.Views.Properties"
-             xmlns:vm_pro="clr-namespace:CadViewer.ViewModels.Properties"
+             xmlns:views="clr-namespace:CadViewer.Views"
+             xmlns:vm="clr-namespace:CadViewer.ViewModels"
              mc:Ignorable="d" 
              x:Name="root"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type vm_pro:CirclePropertyViewModel}">
-            <views_pro:CirclePropertyView />
+        <DataTemplate DataType="{x:Type vm:CirclePropertyViewModel}">
+            <views:CirclePropertyView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LinePropertyViewModel}">
+            <views:LinePropertyView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RectPropertyViewModel}">
+            <views:RectPropertyView />
         </DataTemplate>
     </UserControl.Resources>
 
-    <Border BorderBrush="Red" CornerRadius="3" BorderThickness="1">
+    <Border BorderBrush="#2e3440" CornerRadius="3" BorderThickness="1">
         <ContentControl Content="{Binding CurrentPropertyViewModel}" />
     </Border>
 </UserControl>

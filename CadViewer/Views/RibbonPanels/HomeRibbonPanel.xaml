@@ -72,7 +72,15 @@
                         </ui:CRibbonToggleButton.DropDownContent>
                     </ui:CRibbonToggleButton>
                     <Grid Width="5"></Grid>
-                    <ui:CRibbonToggleButton Width="50" Height="55">
+                    <ui:CRibbonToggleButton Width="50" Height="55" IsChecked="{Binding IsCircleActive, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding CircleInputCommand}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding CircleInputCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ui:CRibbonToggleButton.Content>
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -93,7 +101,15 @@
                         </ui:CRibbonToggleButton.DropDownContent>
                     </ui:CRibbonToggleButton>
                     <Grid Width="5"></Grid>
-                    <ui:CRibbonToggleButton Width="50" Height="55">
+                    <ui:CRibbonToggleButton Width="50" Height="55" IsChecked="{Binding IsRectActive, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding RectInputCommand}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding RectInputCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ui:CRibbonToggleButton.Content>
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -153,6 +169,27 @@
                                 </Grid.RowDefinitions>
                                 <Image Grid.Row="0" Source="{com:PackImage Path=Assets/Images/text35.png}" />
                                 <TextBlock Grid.Row="1" Text="Text" TextAlignment="Center" />
+                            </Grid>
+                        </ui:CRibbonToggleButton.Content>
+                    </ui:CRibbonToggleButton>
+                    <Grid Width="5"></Grid>
+                    <ui:CRibbonToggleButton Width="50" Height="55" IsChecked="{Binding IsShowUIActive, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding ShowUIDesignCommand}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding ShowUIDesignCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ui:CRibbonToggleButton.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Source="{com:PackImage Path=Assets/Images/uidesign35.png}" />
+                                <TextBlock Grid.Row="1" Text="UI" TextAlignment="Center" />
                             </Grid>
                         </ui:CRibbonToggleButton.Content>
                     </ui:CRibbonToggleButton>

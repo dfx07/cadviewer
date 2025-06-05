@@ -4,13 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.Views"
+             xmlns:views="clr-namespace:CadViewer.Views"
+             xmlns:vm="clr-namespace:CadViewer.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-
+        <DataTemplate DataType="{x:Type vm:UIControlViewerViewModel}">
+            <views:UIControlViewer />
+        </DataTemplate>
     </UserControl.Resources>
 
-    <Border BorderBrush="" Padding="2" CornerRadius="3" BorderThickness="1">
-        <ContentControl Content="{Binding CurrentPropertyViewModel}" />
+    <Border BorderBrush="#2e3440" Padding="2" CornerRadius="3" BorderThickness="1">
+        <ContentControl Content="{Binding CurrentPanelViewModel}" />
     </Border>
 </UserControl>

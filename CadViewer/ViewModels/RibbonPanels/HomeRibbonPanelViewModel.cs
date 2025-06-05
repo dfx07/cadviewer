@@ -1,5 +1,6 @@
 ﻿using CadViewer.Common;
 using CadViewer.Interfaces;
+using CadViewer.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,20 +21,84 @@ namespace CadViewer.ViewModels
 			set => SetProperty(ref _isLineActive, value);
 		}
 
+		private bool _isCircleActive;
+		public bool IsCircleActive
+		{
+			get => _isCircleActive;
+			set => SetProperty(ref _isCircleActive, value);
+		}
+
+		private bool _isRectActive;
+		public bool IsRectActive
+		{
+			get => _isRectActive;
+			set => SetProperty(ref _isRectActive, value);
+		}
+
+		private bool _isShowUIActive;
+		public bool IsShowUIActive
+		{
+			get => _isShowUIActive;
+			set => SetProperty(ref _isShowUIActive, value);
+		}
+
 		public ICommand LineInputCommand { get; }
+		public ICommand CircleInputCommand { get; }
+		public ICommand RectInputCommand { get; }
+		public ICommand ShowUIDesignCommand { get; }
 
 		public HomeRibbonPanelViewModel()
 			: base()
 		{
-			LineInputCommand = new RelayCommand(OnLineInput);
+			LineInputCommand = new RelayCommand(OnInputLineShape);
+			CircleInputCommand = new RelayCommand(OnInputCircleShape);
+			RectInputCommand = new RelayCommand(OnInputRectShape);
+			ShowUIDesignCommand = new RelayCommand(OnShowUIDesign);
 		}
 
-		private void OnLineInput()
+		private void OnInputLineShape()
 		{
-			if (IsLineActive)
-				Debug.WriteLine("LineInput is ON");
-			else
-				Debug.WriteLine("LineInput is OFF");
+			Messenger.Send(new ShapeActionMessageArgs
+			{
+				MessageID = "ShapeAction",
+				Sender = this,
+				IsActive = IsLineActive,
+				ShapeType = "Line",
+				ActionType = IsLineActive ? "Create" : "Deactivate"
+			});
+		}
+
+		private void OnInputCircleShape()
+		{
+			Messenger.Send(new ShapeActionMessageArgs
+			{
+				MessageID = "ShapeAction",
+				Sender = this,
+				IsActive = IsCircleActive,
+				ShapeType = "Circle",
+				ActionType = IsCircleActive ? "Create" : "Deactivate"
+			});
+		}
+
+		private void OnInputRectShape()
+		{
+			Messenger.Send(new ShapeActionMessageArgs
+			{
+				MessageID = "ShapeAction",
+				Sender = this,
+				IsActive = IsRectActive,
+				ShapeType = "Rectangle",
+				ActionType = IsRectActive ? "Create" : "Deactivate"
+			});
+		}
+
+		private void OnShowUIDesign()
+		{
+			Messenger.Send(new MessageArgs
+			{
+				MessageID = IsShowUIActive ? "Show" : "Hide",
+				Sender = this,
+			});
 		}
 	}
 }
