@@ -39,6 +39,7 @@
                 <ResourceDictionary Source="UIResources/CRibbonGroup.xaml" />
                 <ResourceDictionary Source="UIResources/CRibbonButton.xaml" />
                 <ResourceDictionary Source="UIResources/CPropertyTree.xaml" />
+                <ResourceDictionary Source="UIResources/CPropertyPalette.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -20,22 +20,6 @@ using System.ComponentModel;
 
 namespace CadViewer.UIControls
 {
-	public enum CPropertyValueType
-	{
-		String,
-		Integer,
-		Double,
-		Boolean,
-		Color,
-		Vector2D,
-		Vector3D,
-		Matrix3D,
-		Point2D,
-		Point3D,
-		Rect2D,
-		Rect3D,
-		Image
-	}
 
 	public class CPropertyTreeItem : ItemsControl
 	{

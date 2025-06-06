@@ -5,10 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.Views"
-             mc:Ignorable="d" 
+             xmlns:ui="clr-namespace:CadViewer.UIControls" mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
         <TextBlock Text="Circle Properties" FontWeight="Bold" />
-        <TextBox  Width="100" Height="24" />
+        <ui:CPropertyPalette HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                             ItemsSource="{Binding Propterties.Groups}">
+        </ui:CPropertyPalette>
     </StackPanel>
 </interfaces:PropertyView>
