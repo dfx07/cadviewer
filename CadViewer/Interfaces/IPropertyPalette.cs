@@ -19,12 +19,12 @@ namespace CadViewer.Interfaces
 		protected void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 	}
 
-
 	public class PropertyPaletteItemData : PropertyPaletteBase
 	{
 		private string _name = "";
 		private bool _isEnabled = true;
 		private bool _isVisible = true;
+		private bool _isReadOnly = false;
 
 		public string Name
 		{
@@ -43,9 +43,77 @@ namespace CadViewer.Interfaces
 			set { _isVisible = value; OnPropertyChanged(nameof(IsVisible)); }
 		}
 
+		public bool IsReadOnly
+		{
+			get => _isReadOnly;
+			set { _isReadOnly = value; OnPropertyChanged(nameof(IsReadOnly)); }
+		}
+
 		public PropertyPaletteItemData()
 		{
 
+		}
+	}
+
+	public class PropertyPaletteItemStringData : PropertyPaletteItemData
+	{
+		private string _value;
+
+		public string Value
+		{
+			get => _value;
+			set { _value = value; OnPropertyChanged(nameof(Value)); }
+		}
+
+		public PropertyPaletteItemStringData()
+		{
+		}
+	}
+
+	public class PropertyPaletteItemIntegerData : PropertyPaletteItemData
+	{
+		private int _value;
+
+		public int Value
+		{
+			get => _value;
+			set { _value = value; OnPropertyChanged(nameof(Value)); }
+		}
+
+		public PropertyPaletteItemIntegerData()
+		{
+		}
+	}
+
+	public class PropertyPaletteItemColorData : PropertyPaletteItemData
+	{
+		private Color _value;
+
+		public Color Value
+		{
+			get => _value;
+			set { _value = value; OnPropertyChanged(nameof(Value)); }
+		}
+
+		public PropertyPaletteItemColorData()
+		{
+		}
+	}
+
+	public class PropertyPaletteItemSelectData : PropertyPaletteItemData
+	{
+		public ObservableCollection<object> Items { get; } = new ObservableCollection<object>();
+
+		private object _value;
+
+		public object Value
+		{
+			get => _value;
+			set { _value = value; OnPropertyChanged(nameof(Value)); }
+		}
+
+		public PropertyPaletteItemSelectData()
+		{
 		}
 	}
 
@@ -57,6 +125,13 @@ namespace CadViewer.Interfaces
 		{
 			get => _name;
 			set { _name = value; OnPropertyChanged(nameof(Name)); }
+		}
+
+		private bool _isExpanded = false;
+		public bool IsExpanded
+		{
+			get => _isExpanded;
+			set { _isExpanded = value; OnPropertyChanged(nameof(IsExpanded)); }
 		}
 
 		public ObservableCollection<PropertyPaletteItemData> Items { get; } = new ObservableCollection<PropertyPaletteItemData>();

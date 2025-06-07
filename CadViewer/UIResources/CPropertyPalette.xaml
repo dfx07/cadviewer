@@ -5,25 +5,50 @@
                     xmlns:if="clr-namespace:CadViewer.Interfaces"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <cvt:LevelToWidthMultiConverter x:Key="LevelToWidthMultiConverter" Step="20" />
-    <cvt:CommonListToVisibilityConverter x:Key="ListToVisibilityConverter" />
-    <cvt:CommonCountToBoolConverter x:Key="CountToBoolConverter" />
+    <DataTemplate DataType="{x:Type if:PropertyPaletteItemIntegerData}">
+        <TextBox Margin="0,0,0,2" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type if:PropertyPaletteItemStringData}">
+        <TextBlock Margin="0,0,0,2" Text="{Binding Value}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type if:PropertyPaletteItemColorData}">
+        <TextBlock Margin="0,0,0,2" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type if:PropertyPaletteItemSelectData}">
+        <TextBlock Margin="0,0,0,2" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+    </DataTemplate>
 
     <Style TargetType="{x:Type local:CPropertyPaletteItem}">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CPropertyPaletteItem}">
-                    <TextBlock Height="30" Text="{Binding Name}" Margin="10,2" />
+                    <Border Margin="0,-1,0,0" BorderThickness="1" BorderBrush="#2e3440">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="NameGroup" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="#2e3440" VerticalAlignment="Center">
+                                <TextBlock  Height="18" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,2" />
+                            </Border>
+                            <Border x:Name="PART_Expander" Grid.Column="1" VerticalAlignment="Center">
+                                <ContentPresenter Content="{Binding}" />
+                            </Border>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
     <Style TargetType="{x:Type local:CPropertyPalette}">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CPropertyPalette}">
-                    <Grid Margin="2">
+                    <Grid Margin="2" Grid.IsSharedSizeScope="True">
                         <ItemsPresenter />
                     </Grid>
                 </ControlTemplate>
@@ -32,24 +57,42 @@
     </Style>
 
     <Style TargetType="{x:Type local:CPropertyPaletteGroup}">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CPropertyPaletteGroup}">
-                    <StackPanel>
-                        <Border x:Name="PART_TitleBar" BorderBrush="#2e3440" BorderThickness="1"
+                    <StackPanel >
+                        <Border x:Name="PART_GroupBar" Margin="0,-1,0,0" BorderBrush="#2e3440" BorderThickness="1"
                                 Background="LightGray" Height="23" Padding="2" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0" />
+                            <DockPanel >
+                                <ToggleButton x:Name="PART_GroupExpander" DockPanel.Dock="Right" Width="14"
+                                              Style="{StaticResource ExpanderToggleButtonStyle}"
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                </ToggleButton>
+                                <TextBlock x:Name="PART_GroupName" Text="{Binding Name}"
+                                           SnapsToDevicePixels="True" UseLayoutRounding="True" VerticalAlignment="Center" Margin="5,0" />
+                            </DockPanel>
                         </Border>
-                        <Border x:Name="PART_Content">
-                            <ItemsControl ItemsSource="{Binding Items}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <local:CPropertyPaletteItem Margin="20,0,0,0" DataContext="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Border>
+                        <Grid x:Name="PART_GroupContent" ClipToBounds="True">
+                            <local:CSlideDownContainer x:Name="SlideBox">
+                                <ItemsControl x:Name="PART_Content" ItemsSource="{Binding Items}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:CPropertyPaletteItem Margin="20,0,0,0" DataContext="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </local:CSlideDownContainer>
+                        </Grid>
                     </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="True">
+                            <Setter TargetName="SlideBox" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="False">
+                            <Setter TargetName="SlideBox" Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

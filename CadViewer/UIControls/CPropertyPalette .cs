@@ -17,6 +17,8 @@ using System.Windows.Threading;
 using CadViewer.Interfaces;
 using System.Windows.Data;
 using System.ComponentModel;
+using System.Runtime.Remoting.Contexts;
+using System.Xml.Linq;
 
 namespace CadViewer.UIControls
 {
@@ -51,6 +53,28 @@ namespace CadViewer.UIControls
 		{
 
 		}
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+		}
+
+		public static readonly DependencyProperty IsExpandedProperty =
+		DependencyProperty.Register(nameof(IsExpanded), typeof(bool), typeof(CPropertyPaletteGroup), new PropertyMetadata(true));
+
+		public bool IsExpanded
+		{
+			get => (bool)GetValue(IsExpandedProperty);
+			set => SetValue(IsExpandedProperty, value);
+		}
+
+		private static void OnIsExpandedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (d is CPropertyPaletteGroup group)
+			{
+
+			}
+		}
 	}
 
 	public class CPropertyPalette : ItemsControl
@@ -66,6 +90,23 @@ namespace CadViewer.UIControls
 
 		}
 
+		public void ExpandAllGroups()
+		{
+			//foreach (var item in Items)
+			//{
+			//	if (item is CPropertyPaletteGroup group)
+			//	{
+			//		group.IsExpanded = true;
+			//		foreach (var child in group.Items)
+			//		{
+			//			if (child is CPropertyPaletteGroup childGroup)
+			//			{
+			//				childGroup.IsExpanded = true;
+			//			}
+			//		}
+			//	}
+			//}
+		}
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();

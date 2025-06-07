@@ -120,6 +120,7 @@
     <Compile Include="Interfaces\ToastControl.cs" />
     <Compile Include="Services\VmMessager.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
+    <Compile Include="UIControls\CSlideDownContainer.cs" />
     <Compile Include="UIControls\CPropertyPalette .cs" />
     <Compile Include="UIControls\CPropertyTree.cs" />
     <Compile Include="UIControls\CRibbonGroup.cs" />
@@ -227,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIResources\CContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CSlideDownContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

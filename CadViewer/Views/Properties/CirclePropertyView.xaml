@@ -12,5 +12,20 @@
         <ui:CPropertyPalette HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                              ItemsSource="{Binding Propterties.Groups}">
         </ui:CPropertyPalette>
+
+        <!--<ui:CSlideDownContainer>
+            <StackPanel>
+                <TextBlock Text="Circle Center" FontWeight="Bold" />
+                <TextBlock Text="Circle Center" FontWeight="Bold" />
+                <TextBlock Text="Circle Center" FontWeight="Bold" />
+            </StackPanel>
+        </ui:CSlideDownContainer>
+        <ui:CSlideDownContainer>
+            <StackPanel>
+                <TextBlock Text="Circle Center" FontWeight="Bold" />
+                <TextBlock Text="Circle Center" FontWeight="Bold" />
+                <TextBlock Text="Circle Center" FontWeight="Bold" />
+            </StackPanel>
+        </ui:CSlideDownContainer>-->
     </StackPanel>
 </interfaces:PropertyView>

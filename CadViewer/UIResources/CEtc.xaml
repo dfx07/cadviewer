@@ -31,5 +31,57 @@
             </Setter.Value>
         </Setter>
     </Style>-->
-  
+
+    <Style x:Key="ExpanderToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Background="Transparent">
+                        <Path x:Name="Arrow" Fill="Gray" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" Data="M 0 0 L 8 5 L 0 10 Z" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <RotateTransform x:Name="ArrowRotateTransform" Angle="180" />
+                            </Path.RenderTransform>
+                        </Path>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ArrowRotateTransform" Storyboard.TargetProperty="Angle" To="180" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ArrowRotateTransform" Storyboard.TargetProperty="Angle" To="90" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Arrow" Property="Fill" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Arrow" Property="Fill" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Arrow" Property="Fill" Value="DarkSlateBlue" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

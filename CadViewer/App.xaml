@@ -40,6 +40,7 @@
                 <ResourceDictionary Source="UIResources/CRibbonButton.xaml" />
                 <ResourceDictionary Source="UIResources/CPropertyTree.xaml" />
                 <ResourceDictionary Source="UIResources/CPropertyPalette.xaml" />
+                <ResourceDictionary Source="UIResources/CSlideDownContainer.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
