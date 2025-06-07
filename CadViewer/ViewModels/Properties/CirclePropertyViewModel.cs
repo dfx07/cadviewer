@@ -1,6 +1,7 @@
 ﻿using CadViewer.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,14 +25,23 @@ namespace CadViewer.ViewModels
 			group1.Items.Add(new PropertyPaletteItemIntegerData { Name = "Thickness", Value =1 });
 
 			var group2 = new PropertyPaletteGroupData { Name = "Geometry" };
-			group2.Items.Add(new PropertyPaletteItemIntegerData { Name = "Center X" , Value = 12});
-			group2.Items.Add(new PropertyPaletteItemIntegerData { Name = "Center Y" , Value = 12 });
-			group2.Items.Add(new PropertyPaletteItemIntegerData { Name = "Center Z" , Value = 15 });
-			group2.Items.Add(new PropertyPaletteItemIntegerData { Name = "Radius control panle", Value = 20 });
+			group2.Items.Add(new PropertyPaletteItemDoubleData { Name = "Center X" , Value = 12.4});
+			group2.Items.Add(new PropertyPaletteItemDoubleData { Name = "Center Y" , Value = 12.5 });
+			group2.Items.Add(new PropertyPaletteItemDoubleData { Name = "Center Z" , Value = 15.6 });
+			group2.Items.Add(new PropertyPaletteItemStringData { Name = "Radius control panle", Value = "Nhap vao" });
 
 			var group3 = new PropertyPaletteGroupData { Name = "General" };
 			group3.Items.Add(new PropertyPaletteItemColorData { Name = "Color", Value = Colors.Red });
-			group3.Items.Add(new PropertyPaletteItemSelectData { Name = "Layer", Value = 12 });
+			group3.Items.Add(new PropertyPaletteItemSelectData { 
+				Name = "Layer",
+				Items = new ObservableCollection<PropertyPaletteItemSelectItemData>
+				{
+					new PropertyPaletteItemSelectItemData("Layer 1", 1),
+					new PropertyPaletteItemSelectItemData("Layer 2", 2),
+					new PropertyPaletteItemSelectItemData("Layer 3", 3)
+				},
+				Value = 1
+			});
 			group3.Items.Add(new PropertyPaletteItemSelectData { Name = "Linetype", Value = 12 });
 			group3.Items.Add(new PropertyPaletteItemIntegerData { Name = "Thickness", Value = 1 });
 

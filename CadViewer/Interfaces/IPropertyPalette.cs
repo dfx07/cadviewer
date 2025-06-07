@@ -85,6 +85,21 @@ namespace CadViewer.Interfaces
 		}
 	}
 
+	public class PropertyPaletteItemDoubleData : PropertyPaletteItemData
+	{
+		private double _value;
+
+		public double Value
+		{
+			get => _value;
+			set { _value = value; OnPropertyChanged(nameof(Value)); }
+		}
+
+		public PropertyPaletteItemDoubleData()
+		{
+		}
+	}
+
 	public class PropertyPaletteItemColorData : PropertyPaletteItemData
 	{
 		private Color _value;
@@ -100,13 +115,31 @@ namespace CadViewer.Interfaces
 		}
 	}
 
+	public class PropertyPaletteItemSelectItemData
+	{
+		public string Name { get; set; }
+		public object Value { get; set; }
+		public PropertyPaletteItemSelectItemData(string name, object value)
+		{
+			Name = name;
+			Value = value;
+		}
+
+		public override string ToString() => Name;
+	}
+
 	public class PropertyPaletteItemSelectData : PropertyPaletteItemData
 	{
-		public ObservableCollection<object> Items { get; } = new ObservableCollection<object>();
+		private ObservableCollection<PropertyPaletteItemSelectItemData> _items;
+		public ObservableCollection<PropertyPaletteItemSelectItemData> Items
+		{
+			get => _items;
+			set { _items = value; OnPropertyChanged(nameof(Items)); }
+		}
 
-		private object _value;
+		private int _value;
 
-		public object Value
+		public int Value
 		{
 			get => _value;
 			set { _value = value; OnPropertyChanged(nameof(Value)); }
@@ -114,6 +147,7 @@ namespace CadViewer.Interfaces
 
 		public PropertyPaletteItemSelectData()
 		{
+
 		}
 	}
 

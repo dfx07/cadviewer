@@ -5,17 +5,22 @@
                     xmlns:if="clr-namespace:CadViewer.Interfaces"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <DataTemplate DataType="{x:Type if:PropertyPaletteItemDoubleData}">
+        <local:CInputBox Height="20" InputType="Double" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemIntegerData}">
-        <TextBox Margin="0,0,0,2" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <local:CInputBox Height="20" InputType="Integer" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemStringData}">
-        <TextBlock Margin="0,0,0,2" Text="{Binding Value}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <local:CInputBox Height="20" InputType="String" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemColorData}">
-        <TextBlock Margin="0,0,0,2" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <local:CColorPicker Height="20" SelectedColor="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        </local:CColorPicker>
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemSelectData}">
-        <TextBlock Margin="0,0,0,2" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <ComboBox Height="20" SelectedIndex="{Binding Value, Mode=TwoWay}" ItemsSource="{Binding Items}"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
 
     <Style TargetType="{x:Type local:CPropertyPaletteItem}">
@@ -31,9 +36,9 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="#2e3440" VerticalAlignment="Center">
-                                <TextBlock  Height="18" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,2" />
+                                <TextBlock Height="18" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,2" />
                             </Border>
-                            <Border x:Name="PART_Expander" Grid.Column="1" VerticalAlignment="Center">
+                            <Border x:Name="PART_Expander" Margin="2,0,2,0" Grid.Column="1" VerticalAlignment="Center">
                                 <ContentPresenter Content="{Binding}" />
                             </Border>
                         </Grid>
@@ -75,7 +80,7 @@
                         </Border>
                         <Grid x:Name="PART_GroupContent" ClipToBounds="True">
                             <local:CSlideDownContainer x:Name="SlideBox">
-                                <ItemsControl x:Name="PART_Content" ItemsSource="{Binding Items}">
+                                <ItemsControl x:Name="PART_Content" IsTabStop="False" ItemsSource="{Binding Items}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <local:CPropertyPaletteItem Margin="20,0,0,0" DataContext="{Binding}" />

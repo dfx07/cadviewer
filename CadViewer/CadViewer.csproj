@@ -120,6 +120,7 @@
     <Compile Include="Interfaces\ToastControl.cs" />
     <Compile Include="Services\VmMessager.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
+    <Compile Include="UIControls\CColorPicker.cs" />
     <Compile Include="UIControls\CSlideDownContainer.cs" />
     <Compile Include="UIControls\CPropertyPalette .cs" />
     <Compile Include="UIControls\CPropertyTree.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="UIControls\CResizableContainer.cs" />
     <Compile Include="UIControls\CMenuItem.cs" />
     <Compile Include="UIControls\CRadioButton.cs" />
+    <Compile Include="UIControls\CInputBox.cs" />
     <Compile Include="UIControls\CToastContainer.cs" />
     <Compile Include="UIControls\CRibbonButton.cs" />
     <Compile Include="UIControls\CWindow.cs" />
@@ -231,6 +233,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UIResources\CColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIResources\CSlideDownContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -260,6 +266,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CRadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CInputBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
