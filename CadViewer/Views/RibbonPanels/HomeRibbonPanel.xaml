@@ -194,6 +194,27 @@
                         </ui:CRibbonToggleButton.Content>
                     </ui:CRibbonToggleButton>
                     <Grid Width="5"></Grid>
+                    <ui:CRibbonToggleButton Width="50" Height="55" IsChecked="{Binding IsViewerActive, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding ShowViewerCommand}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding ShowViewerCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ui:CRibbonToggleButton.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Source="{com:PackImage Path=Assets/Images/viewer32.png}" />
+                                <TextBlock Grid.Row="1" Text="View" TextAlignment="Center" />
+                            </Grid>
+                        </ui:CRibbonToggleButton.Content>
+                    </ui:CRibbonToggleButton>
+                    <Grid Width="5"></Grid>
                 </StackPanel>
             </ui:CRibbonGroup.Content>
         </ui:CRibbonGroup>

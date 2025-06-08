@@ -4,6 +4,7 @@ using CadViewer.Views;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -14,7 +15,7 @@ namespace CadViewer.Components
 		private IntPtr _deviceContext = IntPtr.Zero;
 		private IntPtr _renderContext = IntPtr.Zero;
 
-		public IWinformViewCtrlEventListener ViewControl { get; set; } = null;
+		public IWinformViewCtrlEventListener ViewHandler { get; set; } = null;
 
 		public ViewPanel()
 		{
@@ -30,20 +31,20 @@ namespace CadViewer.Components
 		{
 			base.OnHandleCreated(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_OnCreated(this, this.Handle);
+			ViewHandler.WinformViewCtrl_OnCreated(this, this.Handle);
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_OnViewUpdate(this);
+			ViewHandler.WinformViewCtrl_OnViewUpdate(this);
 		}
 
 		protected override void OnHandleDestroyed(EventArgs e)
@@ -55,69 +56,69 @@ namespace CadViewer.Components
 		{
 			base.OnMouseMove(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_MouseMove(this, e);
+			ViewHandler.WinformViewCtrl_MouseMove(this, e);
 		}
 
 		protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_MouseDown(this, e);
+			ViewHandler.WinformViewCtrl_MouseDown(this, e);
 		}
 
 		protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_MouseUp(this, e);
+			ViewHandler.WinformViewCtrl_MouseUp(this, e);
 		}
 
 		protected override void OnMouseWheel(System.Windows.Forms.MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_MouseWheel(this, e);
+			ViewHandler.WinformViewCtrl_MouseWheel(this, e);
 		}
 
 		protected override void OnKeyDown(System.Windows.Forms.KeyEventArgs e)
 		{
 			base.OnKeyDown(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_KeyDown(this, e);
+			ViewHandler.WinformViewCtrl_KeyDown(this, e);
 		}
 
 		protected override void OnKeyUp(System.Windows.Forms.KeyEventArgs e)
 		{
 			base.OnKeyUp(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_KeyUp(this, e);
+			ViewHandler.WinformViewCtrl_KeyUp(this, e);
 		}
 		protected override void OnSizeChanged(System.EventArgs e)
 		{
 			base.OnSizeChanged(e);
 
-			if (ViewControl is null)
+			if (ViewHandler is null)
 				return;
 
-			ViewControl.WinformViewCtrl_SizeChanged(this, new System.Windows.Size(ClientSize.Width, ClientSize.Height));
+			ViewHandler.WinformViewCtrl_SizeChanged(this, new System.Windows.Size(ClientSize.Width, ClientSize.Height));
 		}
 	}
 }

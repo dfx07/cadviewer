@@ -42,10 +42,18 @@ namespace CadViewer.ViewModels
 			set => SetProperty(ref _isShowUIActive, value);
 		}
 
+		private bool _isViewerActive;
+		public bool IsViewerActive
+		{
+			get => _isViewerActive;
+			set => SetProperty(ref _isViewerActive, value);
+		}
+
 		public ICommand LineInputCommand { get; }
 		public ICommand CircleInputCommand { get; }
 		public ICommand RectInputCommand { get; }
 		public ICommand ShowUIDesignCommand { get; }
+		public ICommand ShowViewerCommand { get; }
 
 		public HomeRibbonPanelViewModel()
 			: base()
@@ -54,6 +62,7 @@ namespace CadViewer.ViewModels
 			CircleInputCommand = new RelayCommand(OnInputCircleShape);
 			RectInputCommand = new RelayCommand(OnInputRectShape);
 			ShowUIDesignCommand = new RelayCommand(OnShowUIDesign);
+			ShowViewerCommand = new RelayCommand(OnShowViewer);
 		}
 
 		private void OnInputLineShape()
@@ -96,7 +105,16 @@ namespace CadViewer.ViewModels
 		{
 			Messenger.Send(new MessageArgs
 			{
-				MessageID = IsShowUIActive ? "Show" : "Hide",
+				MessageID = IsShowUIActive ? "UIShow" : "UIHide",
+				Sender = this,
+			});
+		}
+
+		private void OnShowViewer()
+		{
+			Messenger.Send(new MessageArgs
+			{
+				MessageID = IsViewerActive ? "ViewShow" : "ViewHide",
 				Sender = this,
 			});
 		}

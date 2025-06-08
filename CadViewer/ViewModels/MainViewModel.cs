@@ -21,7 +21,7 @@ namespace CadViewer.ViewModels
 
 		public PCBViewModel MainPCBViewVM { get; set; }
 		public RibbonBarViewModel RibbonBarVM { get; set; }
-		public MainPCBViewHandler mainPCBViewHandler { get; set; }
+
 		public PropertiesPanelViewModel PropertiesPanelVM { get; set; }
 		public EditorPanelViewModel EditorPanelVM { get; set; }
 
@@ -29,17 +29,11 @@ namespace CadViewer.ViewModels
 
 		public MainViewModel()
 		{
-			MainPCBViewVM = new PCBViewModel();
-
 			RibbonBarVM = new RibbonBarViewModel();
-
-			mainPCBViewHandler = new MainPCBViewHandler();
 
 			PropertiesPanelVM = new PropertiesPanelViewModel();
 
 			EditorPanelVM = new EditorPanelViewModel();
-
-			MainPCBViewVM.SetHandler(mainPCBViewHandler);
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 
@@ -269,7 +263,7 @@ namespace CadViewer.ViewModels
 
 		private void OnButtonRegisterClick()
 		{
-			mainPCBViewHandler.DrawLine();
+			
 		}
 	}
 }

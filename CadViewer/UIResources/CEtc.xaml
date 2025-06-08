@@ -4,35 +4,34 @@
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!--<Style x:Key="CContextMenuStyle" TargetType="{x:Type ContextMenu}">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="HasDropShadow" Value="True" />
-        <Setter Property="Template">
+    <SolidColorBrush x:Key="Expander.Static.Circle.Stroke" Color="#FF333333" />
+    <SolidColorBrush x:Key="Expander.Static.Circle.Fill" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="Expander.Static.Arrow.Stroke" Color="#FF333333" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Circle.Stroke" Color="#FF5593FF" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Circle.Fill" Color="#FFF3F9FF" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Arrow.Stroke" Color="#FF000000" />
+    <SolidColorBrush x:Key="Expander.Pressed.Circle.Stroke" Color="#FF3C77DD" />
+    <SolidColorBrush x:Key="Expander.Pressed.Circle.Fill" Color="#FFD9ECFF" />
+    <SolidColorBrush x:Key="Expander.Pressed.Arrow.Stroke" Color="#FF000000" />
+    <SolidColorBrush x:Key="Expander.Disabled.Circle.Stroke" Color="#FFBCBCBC" />
+    <SolidColorBrush x:Key="Expander.Disabled.Circle.Fill" Color="#FFE6E6E6" />
+    <SolidColorBrush x:Key="Expander.Disabled.Arrow.Stroke" Color="#FF707070" />
+
+    <Style x:Key="xExpanderFocusVisual">
+        <Setter Property="Control.Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ContextMenu">
-                    <Border Background="Transparent" CornerRadius="{DynamicResource CompUI_Cmm_CornerRadius}">
-                        <Border x:Name="SubMenuBorder" Margin="5"
-                                BorderThickness="1"
-                                CornerRadius="{DynamicResource CompUI_MenuItem_CornerRadius}" Padding="2">
-                            <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource CompUI_ContextMenu_BackgroundColor}" />
-                            </Border.Background>
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource CompUI_ContextMenu_BorderColor}" />
-                            </Border.BorderBrush>
-                            <Border.Effect>
-                                <DropShadowEffect x:Name="PART_DropShadow" Color="Black" BlurRadius="3" Direction="-50" ShadowDepth="2" Opacity="0.2" />
-                            </Border.Effect>
-                            <StackPanel IsItemsHost="True" />
-                        </Border>
+                <ControlTemplate>
+                    <Border>
+                        <Rectangle Margin="0" StrokeDashArray="1 2" Stroke="Black" SnapsToDevicePixels="true" StrokeThickness="1" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
 
-    <Style x:Key="ExpanderToggleButtonStyle" TargetType="ToggleButton">
+    <!--▼-->
+
+    <Style x:Key="xToggleButtonExpanderStyle1" TargetType="{x:Type ToggleButton}">
         <Setter Property="Width" Value="16" />
         <Setter Property="Height" Value="16" />
         <Setter Property="Background" Value="Transparent" />
@@ -41,7 +40,7 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Grid Background="Transparent">
                         <Path x:Name="Arrow" Fill="Gray" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" Data="M 0 0 L 8 5 L 0 10 Z" RenderTransformOrigin="0.5,0.5">
                             <Path.RenderTransform>
@@ -67,7 +66,6 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Arrow" Property="Fill" Value="Black" />
@@ -77,6 +75,114 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Arrow" Property="Fill" Value="DarkSlateBlue" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--⌄-->
+    <Style x:Key="xToggleButtonExpanderDownStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="19" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Path x:Name="xExpanderArrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" 
+                                  Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2"
+                                  VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="xExpanderArrowRotate" Angle="0" />
+                                </Path.RenderTransform>
+                            </Path>
+                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" 
+                                              RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center" />
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle"
+                                                         From="180" To="0" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle" 
+                                                         From="0" To="180" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--⌃-->
+    <Style x:Key="xToggleButtonExpanderUpStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="19" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Path x:Name="xExpanderArrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center"
+                                  Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2"
+                                  VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="xExpanderArrowRotate" Angle="0" />
+                                </Path.RenderTransform>
+                            </Path>
+                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="True" VerticalAlignment="Center" />
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle"
+                                                         From="180" To="0" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle"
+                                                         From="0" To="180" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

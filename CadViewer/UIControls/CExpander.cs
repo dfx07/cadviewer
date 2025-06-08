@@ -14,7 +14,6 @@ using CadViewer.Animations;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Windows.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace CadViewer.UIControls
 {
@@ -27,7 +26,7 @@ namespace CadViewer.UIControls
 		}
 
 		private Border _HeaderBorder = null;
-		private ToggleButton _ToogleButton = null;
+		private CSlideDownContainer _Content = null;
 
 		public override void OnApplyTemplate()
 		{
@@ -35,46 +34,17 @@ namespace CadViewer.UIControls
 
 			Loaded += (s, e) =>
 			{
-				_HeaderBorder = GetTemplateChild("xExpanderHeaderBorder") as Border;
-				_ToogleButton = GetTemplateChild("HeaderSite") as ToggleButton;
 
-				_HeaderBorder.MouseLeftButtonUp += (sender, args) =>
-				{
-					IsExpanded = !IsExpanded;
-					e.Handled = true;
-				};
 			};
 
-			UpdateExpansionState(false);
-		}
+			_HeaderBorder = GetTemplateChild("PART_ExpanderHeader") as Border;
+			_Content = GetTemplateChild("PART_ExpanderContent") as CSlideDownContainer;
 
-		private void UpdateExpansionState(bool bUseTransitions)
-		{
-			var state = "";
-
-			if (!IsExpanded)
+			_HeaderBorder.MouseLeftButtonUp += (sender, args) =>
 			{
-				state = ExpandDirection == ExpandDirection.Up ? "CollapsedUp" : "CollapsedDown";
-			}
-			else
-			{
-				state = ExpandDirection == ExpandDirection.Up ? "ExpandedUp" : "ExpandedDown";
-			}
-
-			if(state != string.Empty)
-				VisualStateManager.GoToState(this, state, bUseTransitions);
-		}
-
-		protected override void OnExpanded()
-		{
-			base.OnExpanded();
-			UpdateExpansionState(true);
-		}
-
-		protected override void OnCollapsed()
-		{
-			base.OnCollapsed();
-			UpdateExpansionState(true);
+				IsExpanded = !IsExpanded;
+				args.Handled = true;
+			};
 		}
 
 		public static readonly DependencyProperty ImageSourceProperty =

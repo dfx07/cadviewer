@@ -13,15 +13,13 @@
              Focusable="True"
              mc:Ignorable="d"
              d:DesignHeight="640" d:DesignWidth="640">
-    <Grid>
-        <Border BorderBrush="Wheat">
-            <Grid Style="{StaticResource ResourceKey=OpenGLViewStyle}">
-                <wfi:WindowsFormsHost x:Name="xWindowsFormsHost"
-                    Margin="-2,-2,-2,-3" Loaded="xWindowsFormsHost_Loaded"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                </wfi:WindowsFormsHost>
-            </Grid>
-        </Border>
-    </Grid>
 
+    <Border BorderBrush="Wheat">
+        <Grid Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <wfi:WindowsFormsHost x:Name="xWindowsFormsHost" Margin="-2,-2,-2,-3" Loaded="xWindowsFormsHost_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <comp:ViewPanel x:Name="PART_ControlViewer" Dock="Fill">
+                </comp:ViewPanel>
+            </wfi:WindowsFormsHost>
+        </Grid>
+    </Border>
 </UserControl>

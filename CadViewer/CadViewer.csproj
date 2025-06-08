@@ -176,7 +176,7 @@
     <Compile Include="ViewModels\BaseModalDialogViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\PCBViewModel.cs" />
+    <Compile Include="ViewModels\PCBViewers\PCBViewModel.cs" />
     <Compile Include="ViewModels\ViewModelCallback.cs" />
     <Compile Include="Views\.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -187,10 +187,10 @@
     <Compile Include="Views\Editors\UIControlViewer.xaml.cs">
       <DependentUpon>UIControlViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PCBViewer\OpenGLView.xaml.cs">
+    <Compile Include="Views\PCBViewers\OpenGLView.xaml.cs">
       <DependentUpon>OpenGLView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PCBViewer\PCBViewer.xaml.cs">
+    <Compile Include="Views\PCBViewers\PCBViewer.xaml.cs">
       <DependentUpon>PCBViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Properties\LinePropertyView.xaml.cs">
@@ -398,11 +398,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\PCBViewer\OpenGLView.xaml">
+    <Page Include="Views\PCBViewers\OpenGLView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PCBViewer\PCBViewer.xaml">
+    <Page Include="Views\PCBViewers\PCBViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -523,6 +523,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\uidesign35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\viewer32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

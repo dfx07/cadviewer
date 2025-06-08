@@ -8,127 +8,6 @@
     <cvt:CommonBoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <cvt:CommonNumberToStringWithFormatConverter x:Key="NumberToStringWithFormatConverter" />
 
-    <SolidColorBrush x:Key="Expander.Static.Circle.Stroke" Color="#FF333333" />
-    <SolidColorBrush x:Key="Expander.Static.Circle.Fill" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="Expander.Static.Arrow.Stroke" Color="#FF333333" />
-    <SolidColorBrush x:Key="Expander.MouseOver.Circle.Stroke" Color="#FF5593FF" />
-    <SolidColorBrush x:Key="Expander.MouseOver.Circle.Fill" Color="#FFF3F9FF" />
-    <SolidColorBrush x:Key="Expander.MouseOver.Arrow.Stroke" Color="#FF000000" />
-    <SolidColorBrush x:Key="Expander.Pressed.Circle.Stroke" Color="#FF3C77DD" />
-    <SolidColorBrush x:Key="Expander.Pressed.Circle.Fill" Color="#FFD9ECFF" />
-    <SolidColorBrush x:Key="Expander.Pressed.Arrow.Stroke" Color="#FF000000" />
-    <SolidColorBrush x:Key="Expander.Disabled.Circle.Stroke" Color="#FFBCBCBC" />
-    <SolidColorBrush x:Key="Expander.Disabled.Circle.Fill" Color="#FFE6E6E6" />
-    <SolidColorBrush x:Key="Expander.Disabled.Arrow.Stroke" Color="#FF707070" />
-    <Style x:Key="ExpanderHeaderFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Border>
-                        <Rectangle Margin="0" StrokeDashArray="1 2" Stroke="Black" SnapsToDevicePixels="true" StrokeThickness="1" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="ExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent" SnapsToDevicePixels="False">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="19" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Path x:Name="xExpanderArrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center"
-                                  Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false"
-                                  StrokeThickness="2" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                                <Path.RenderTransform>
-                                    <RotateTransform x:Name="xExpanderArrowRotate" Angle="0" />
-                                </Path.RenderTransform>
-                            </Path>
-                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center" />
-                        </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CheckStates">
-                                <VisualState x:Name="Unchecked">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate"
-                                                         Storyboard.TargetProperty="Angle" From="180" To="0" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Checked">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" 
-                                                         Storyboard.TargetProperty="Angle" From="0" To="180" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="ExpanderUpHeaderStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent" SnapsToDevicePixels="False">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="19" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Path x:Name="xExpanderArrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource Expander.Static.Arrow.Stroke}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                                <Path.RenderTransform>
-                                    <RotateTransform x:Name="xExpanderArrowRotate" Angle="0" />
-                                </Path.RenderTransform>
-                            </Path>
-                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center" />
-                        </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CheckStates">
-                                <VisualState x:Name="Unchecked">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle" From="180" To="0" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Checked">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderArrowRotate" Storyboard.TargetProperty="Angle" From="0" To="180" Duration="0:0:0.2" AccelerationRatio="0.3" DecelerationRatio="0.3" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.MouseOver.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Pressed.Arrow.Stroke}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Stroke" TargetName="xExpanderArrow" Value="{StaticResource Expander.Disabled.Arrow.Stroke}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     <Style TargetType="{x:Type local:CExpander}" BasedOn="{StaticResource {x:Type Expander}}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="Background" Value="Transparent" />
@@ -140,7 +19,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CExpander}">
                     <DockPanel>
-                        <Border x:Name="xExpanderHeaderBorder" DockPanel.Dock="Top" Height="{TemplateBinding HeaderHeight}" Padding="2" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" CornerRadius="{DynamicResource CompUI_Expander_CornerRadius}">
+                        <Border x:Name="PART_ExpanderHeader" DockPanel.Dock="Top" Height="{TemplateBinding HeaderHeight}" Padding="2" 
+                                BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" CornerRadius="{DynamicResource CompUI_Expander_CornerRadius}">
                             <Border.BorderBrush>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
@@ -157,41 +37,54 @@
                                 <EventTrigger RoutedEvent="MouseEnter">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_Expander_HeaderBackgroundOverColor}" Duration="0:0:0.1" />
-                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderEndColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                            To="{DynamicResource CompUI_Expander_HeaderBackgroundOverColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" 
+                                                            To="{DynamicResource CompUI_Cmm_BorderEndColor}" Duration="0:0:0.1" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
                                 <EventTrigger RoutedEvent="MouseLeave">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{DynamicResource CompUI_Expander_HeaderBackgroundColor}" Duration="0:0:0.1" />
-                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                            To="{DynamicResource CompUI_Expander_HeaderBackgroundColor}" Duration="0:0:0.1" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" 
+                                                            To="{DynamicResource CompUI_Cmm_BorderColor}" Duration="0:0:0.1" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
                                 <EventTrigger RoutedEvent="MouseDown">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderColor}" Duration="0:0:0.0" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" 
+                                                            To="{DynamicResource CompUI_Cmm_BorderColor}" Duration="0:0:0.0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
                                 <EventTrigger RoutedEvent="MouseUp">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="{DynamicResource CompUI_Cmm_BorderEndColor}" Duration="0:0:0.0" />
+                                            <ColorAnimation Storyboard.TargetProperty="(BorderBrush).(GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                            To="{DynamicResource CompUI_Cmm_BorderEndColor}" Duration="0:0:0.0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
                             </Border.Triggers>
                             <DockPanel>
-                                <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" DockPanel.Dock="Right" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" FontStretch="{TemplateBinding FontStretch}" Foreground="{TemplateBinding Foreground}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" DockPanel.Dock="Right" 
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" FontStretch="{TemplateBinding FontStretch}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" 
+                                              FontSize="{TemplateBinding FontSize}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" 
+                                              Padding="{TemplateBinding Padding}" Style="{StaticResource xToggleButtonExpanderDownStyle}" 
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                 </ToggleButton>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition x:Name="xExpanderHeaderColumn1" Width="Auto" />
-                                        <ColumnDefinition x:Name="xExpanderHeaderColumn2" Width="*" />
+                                        <ColumnDefinition x:Name="PART_ExpanderHeaderColumn1" Width="Auto" />
+                                        <ColumnDefinition x:Name="PART_ExpanderHeaderColumn2" Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Image x:Name="xExpanderHeaderImage" Grid.Row="0" Grid.Column="0" Margin="4,2,4,2" Source="{TemplateBinding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True">
                                         <Image.Width>
@@ -201,90 +94,21 @@
                                             </MultiBinding>
                                         </Image.Width>
                                     </Image>
-                                    <ContentPresenter x:Name="xExpanderHeaderContent" Grid.Row="0" Grid.Column="1" Margin="4,2,4,2" ContentSource="Header" RecognizesAccessKey="True" />
+                                    <ContentPresenter x:Name="PART_ExpanderHeaderContent" Grid.Row="0" Grid.Column="1" Margin="4,2,4,2" ContentSource="Header" RecognizesAccessKey="True" />
                                 </Grid>
                             </DockPanel>
                         </Border>
-                        <Grid ClipToBounds="True" Background="Transparent">
-                            <Border x:Name="xExpanderContentBorder" DockPanel.Dock="Bottom" Visibility="Collapsed" BorderThickness="1,0,1,1" Padding="4" CornerRadius="{DynamicResource CompUI_Expander_ContentCornerRadius}" SnapsToDevicePixels="True">
-                                <Border.BorderBrush>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
-                                </Border.BorderBrush>
-                                <Border.Background>
-                                    <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"></SolidColorBrush>
-                                </Border.Background>
-                                <Border.RenderTransform>
-                                    <TranslateTransform Y="-20" />
-                                </Border.RenderTransform>
-                                <ContentPresenter x:Name="ExpandSite" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Border>
-                        </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="ExpansionStates">
-                                <VisualState x:Name="CollapsedDown">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-100" Duration="0:0:0.2" />
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility" BeginTime="0:0:0.4">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Collapsed</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="ExpandedDown">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" />
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="-100" To="0" Duration="0:0:0.4">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="CollapsedUp">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="100" Duration="0:0:0.2" />
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility" BeginTime="0:0:0.4">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Collapsed</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="ExpandedUp">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" />
-                                        <DoubleAnimation Storyboard.TargetName="xExpanderContentBorder" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="100" To="0" Duration="0:0:0.4">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+                        <local:CSlideDownContainer x:Name="PART_ExpanderContent" DockPanel.Dock="Bottom" BorderThickness="1,0,1,1" SnapsToDevicePixels="True"
+                                                   CornerRadius="{DynamicResource CompUI_Expander_ContentCornerRadius}" Padding="4">
+                            <local:CSlideDownContainer.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BorderColor}"></SolidColorBrush>
+                            </local:CSlideDownContainer.BorderBrush>
+                            <local:CSlideDownContainer.Background>
+                                <SolidColorBrush Color="{DynamicResource CompUI_Cmm_BackgroundColor}"></SolidColorBrush>
+                            </local:CSlideDownContainer.Background>
+                            <ContentPresenter Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </local:CSlideDownContainer>
                     </DockPanel>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -292,33 +116,39 @@
                                 <Condition Property="IsExpanded" Value="True" />
                                 <Condition Property="ExpandDirection" Value="Up" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="CornerRadius" TargetName="xExpanderHeaderBorder" Value="{DynamicResource CompUI_Expander_ContentCornerRadius}" />
+                            <Setter TargetName="PART_ExpanderHeader" Property="CornerRadius" Value="{DynamicResource CompUI_Expander_ContentCornerRadius}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsExpanded" Value="True" />
                                 <Condition Property="ExpandDirection" Value="Down" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="CornerRadius" TargetName="xExpanderHeaderBorder" Value="{DynamicResource CompUI_Expander_HeaderCornerRadius}" />
+                            <Setter TargetName="PART_ExpanderHeader" Property="CornerRadius" Value="{DynamicResource CompUI_Expander_HeaderCornerRadius}" />
                         </MultiTrigger>
+                        <Trigger Property="IsExpanded" Value="False">
+                            <Setter TargetName="PART_ExpanderContent" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="PART_ExpanderContent" Property="Visibility" Value="Visible" />
+                        </Trigger>
                         <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Left">
                             <Setter TargetName="xExpanderHeaderImage" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="xExpanderHeaderContent" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="xExpanderHeaderColumn1" Property="Width" Value="Auto" />
-                            <Setter TargetName="xExpanderHeaderColumn2" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ExpanderHeaderContent" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_ExpanderHeaderColumn1" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ExpanderHeaderColumn2" Property="Width" Value="*" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ImagePlacement, RelativeSource={RelativeSource Self}}" Value="Right">
                             <Setter TargetName="xExpanderHeaderImage" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="xExpanderHeaderContent" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="xExpanderHeaderColumn1" Property="Width" Value="*" />
-                            <Setter TargetName="xExpanderHeaderColumn2" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ExpanderHeaderContent" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ExpanderHeaderColumn1" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ExpanderHeaderColumn2" Property="Width" Value="Auto" />
                         </DataTrigger>
                         <Trigger Property="ExpandDirection" Value="Up">
-                            <Setter Property="DockPanel.Dock" TargetName="xExpanderHeaderBorder" Value="Bottom" />
-                            <Setter Property="BorderThickness" TargetName="xExpanderContentBorder" Value="1,1,1,0" />
-                            <Setter Property="CornerRadius" TargetName="xExpanderContentBorder" Value="{DynamicResource CompUI_Expander_HeaderCornerRadius}" />
-                            <Setter Property="DockPanel.Dock" TargetName="xExpanderContentBorder" Value="Top" />
-                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderUpHeaderStyle}" />
+                            <Setter TargetName="PART_ExpanderHeader" Property="DockPanel.Dock" Value="Bottom" />
+                            <Setter TargetName="PART_ExpanderContent" Property="DockPanel.Dock" Value="Top" />
+                            <Setter TargetName="PART_ExpanderContent" Property="BorderThickness" Value="1,1,1,0" />
+                            <Setter TargetName="PART_ExpanderContent" Property="CornerRadius" Value="{DynamicResource CompUI_Expander_HeaderCornerRadius}" />
+                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource xToggleButtonExpanderUpStyle}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />

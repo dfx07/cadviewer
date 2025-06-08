@@ -32,10 +32,7 @@ namespace CadViewer.Views
 
 		private void OnPCBViewer_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (PCBViewModel != null)
-			{
-				PCBViewModel.OnInitModel();
-			}
+
 		}
 
 		#region [Property]
@@ -43,14 +40,14 @@ namespace CadViewer.Views
 		/// /////////////////////////////////////////////////////////////////////////////
 		/// </summary>
 		// DependencyProperty for binding the model
-		public static readonly DependencyProperty PCBViewModelProperty =
-			DependencyProperty.Register(nameof(PCBViewModel), typeof(PCBViewModel), typeof(PCBViewer), new PropertyMetadata(null));
+		//public static readonly DependencyProperty PCBViewModelProperty =
+		//	DependencyProperty.Register(nameof(PCBViewModel), typeof(PCBViewModel), typeof(PCBViewer), new PropertyMetadata(null));
 
-		public PCBViewModel PCBViewModel
-		{
-			get => (PCBViewModel)GetValue(PCBViewModelProperty);
-			set => SetValue(PCBViewModelProperty, value);
-		}
+		//public PCBViewModel PCBViewModel
+		//{
+		//	get => (PCBViewModel)GetValue(PCBViewModelProperty);
+		//	set => SetValue(PCBViewModelProperty, value);
+		//}
 		//------------------------------------------------------------------------------/
 		#endregion
 	}

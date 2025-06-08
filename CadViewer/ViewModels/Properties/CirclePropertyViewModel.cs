@@ -52,6 +52,7 @@ namespace CadViewer.ViewModels
 			group4.Items.Add(new PropertyPaletteItemIntegerData { Name = "Center Y", Value = 12 });
 			group4.Items.Add(new PropertyPaletteItemIntegerData { Name = "Center Z", Value = 15 });
 			group4.Items.Add(new PropertyPaletteItemIntegerData { Name = "Radius control panle", Value = 20 });
+			group4.Items.Add(new PropertyPaletteItemCheckData { Name = "Radius control panle", Value = true });
 
 			palette.AddGroup(group1);
 			palette.AddGroup(group2);
@@ -84,6 +85,11 @@ namespace CadViewer.ViewModels
 		public void PropertyPaletteItem_ColorChanged(PropertyPaletteItemColorData item, Color clNewValue)
 		{
 			Console.WriteLine($"Color changed: {item.Name} ({item.Value})");
+		}
+
+		public void PropertyPaletteItem_CheckChanged(PropertyPaletteItemCheckData item, bool bNewValue)
+		{
+			Console.WriteLine($"Check changed: {item.Name} ({item.Value})");
 		}
 
 		public double Radius { get; set; }

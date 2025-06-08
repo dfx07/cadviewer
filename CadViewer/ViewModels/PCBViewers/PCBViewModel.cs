@@ -17,10 +17,8 @@ namespace CadViewer.ViewModels
 {
 	public class PCBViewModel : ViewModelBase, PCBViewNotify
 	{
-		public PCBViewModel()
+		public PCBViewModel(PCBViewHandler pCBViewHandler = null)
 		{
-			OpenGLViewPanel = new ViewPanel();
-
 			MouseMoveCommand = new RelayCommand<XMouseEventArgs>(OnMouseMove);
 			MouseEnterCommand = new RelayCommand<XMouseEventArgs>(OnMouseEnter);
 			MouseDragDropCommand = new RelayCommand<XMouseDragDropEventArgs>(OnMouseDragDrop);
@@ -34,6 +32,8 @@ namespace CadViewer.ViewModels
 			ViewSizeChangedCommand = new RelayCommand<Size>(OnViewSizeChanged);
 			ViewCreatedCommand = new RelayCommand<IntPtr>(OnViewCreated);
 			ViewUpdateCommand = new RelayCommand(OnViewUpdate);
+
+			SetHandler(pCBViewHandler);
 		}
 
 		~PCBViewModel()
@@ -243,7 +243,7 @@ namespace CadViewer.ViewModels
 		public void SetHandler(PCBViewHandler handler)
 		{
 			_pCBViewHandler = handler;
-			handler.SetPCBViewNotifier(this);
+			handler?.SetPCBViewNotifier(this);
 		}
 
 		public PCBViewHandler GetHandler()
@@ -270,7 +270,6 @@ namespace CadViewer.ViewModels
 		public ICommand ViewUpdateCommand { get; set; }
 
 		private bool _isKeyDownHandled = false;
-		private ViewPanel _openGLViewPanel; public ViewPanel OpenGLViewPanel { get => _openGLViewPanel; set => SetProperty(ref _openGLViewPanel, value); }
 		private string _title; public string ViewTitle { get => _title; set => SetProperty(ref _title, value); }
 		private string _status; public string ViewStatus { get => _status; set => SetProperty(ref _status, value); }
 		private Visibility _titleVisibility; public Visibility TitleVisibility { get => _titleVisibility; set => SetProperty(ref _titleVisibility, value); }

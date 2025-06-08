@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace CadViewer.Views
 {
@@ -26,7 +25,6 @@ namespace CadViewer.Views
 	public partial class OpenGLView : UserControl, IWinformViewCtrlEventListener
 	{
 		private bool _isDragging = false;
-
 
 		public OpenGLView()
 		{
@@ -42,24 +40,14 @@ namespace CadViewer.Views
 			return false;
 		}
 
-		public static readonly DependencyProperty OpenGLContentProperty =
-			DependencyProperty.Register(nameof(OpenGLContent), typeof(OpenGLHost), typeof(OpenGLView), new PropertyMetadata(null));
+		//public static readonly DependencyProperty OpenGLViewPanelProperty =
+		//DependencyProperty.Register(nameof(OpenGLViewPanel), typeof(ViewPanel), typeof(OpenGLView), new PropertyMetadata(null));
 
-		public OpenGLHost OpenGLContent
-		{
-			get => (OpenGLHost)GetValue(OpenGLContentProperty);
-			set => SetValue(OpenGLContentProperty, value);
-		}
-
-
-		public static readonly DependencyProperty OpenGLViewPanelProperty =
-		DependencyProperty.Register(nameof(OpenGLViewPanel), typeof(ViewPanel), typeof(OpenGLView), new PropertyMetadata(null));
-
-		public ViewPanel OpenGLViewPanel
-		{
-			get => (ViewPanel)GetValue(OpenGLViewPanelProperty);
-			set => SetValue(OpenGLViewPanelProperty, value);
-		}
+		//public ViewPanel OpenGLViewPanel
+		//{
+		//	get => (ViewPanel)GetValue(OpenGLViewPanelProperty);
+		//	set => SetValue(OpenGLViewPanelProperty, value);
+		//}
 
 		#region [Mouse Events]
 		/// <summary>
@@ -173,15 +161,15 @@ namespace CadViewer.Views
 		//------------------------------------------------------------------------------/
 		#endregion
 
-
 		public void WinformViewCtrl_OnCreated(object sender, IntPtr handle)
 		{
-			OpenGLViewCreatedCommand.Execute(handle);
+			PART_ControlViewer.ViewHandler = this;
+			OpenGLViewCreatedCommand?.Execute(handle);
 		}
 
 		public void WinformViewCtrl_OnViewUpdate(object sender)
 		{
-			OpenGLViewUpdateCommand.Execute(null);
+			OpenGLViewUpdateCommand?.Execute(null);
 		}
 
 		public void WinformViewCtrl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -191,13 +179,13 @@ namespace CadViewer.Views
 				if (_isDragging)
 				{
 					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Move);
-					OpenGLMouseDragDropCommand.Execute(evtArgs);
+					OpenGLMouseDragDropCommand?.Execute(evtArgs);
 				}
 			}
 
 			var evt = new XMouseEventArgs(new Point(e.X, e.Y));
 
-			OpenGLMouseMoveCommand.Execute(evt);
+			OpenGLMouseMoveCommand?.Execute(evt);
 		}
 
 		public void WinformViewCtrl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -207,13 +195,13 @@ namespace CadViewer.Views
 				_isDragging = true;
 				var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Drag);
 
-				OpenGLMouseDragDropCommand.Execute(evtArgs);
+				OpenGLMouseDragDropCommand?.Execute(evtArgs);
 			}
 
 			var evt = new XMouseButtonEventArgs(new Point(e.X, e.Y),
 				EventConverter.MouseWpf2WF(e.Button), MouseButtonState.Pressed);
 
-			OpenGLMouseDownCommand.Execute(evt);
+			OpenGLMouseDownCommand?.Execute(evt);
 		}
 
 		public void WinformViewCtrl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -224,7 +212,7 @@ namespace CadViewer.Views
 				{
 					_isDragging = false;
 					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Drop);
-					OpenGLMouseDragDropCommand.Execute(evtArgs);
+					OpenGLMouseDragDropCommand?.Execute(evtArgs);
 					Mouse.Capture(null);
 				}
 			}
@@ -232,14 +220,14 @@ namespace CadViewer.Views
 			var evt = new XMouseButtonEventArgs(new Point(e.X, e.Y),
 				EventConverter.MouseWpf2WF(e.Button), MouseButtonState.Pressed);
 
-			OpenGLMouseUpCommand.Execute(evt);
+			OpenGLMouseUpCommand?.Execute(evt);
 		}
 
 		public void WinformViewCtrl_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			var evt = new XMouseWheelEventArgs(new Point(e.X, e.Y), e.Delta);
 
-			OpenGLMouseWheelCommand.Execute(evt);
+			OpenGLMouseWheelCommand?.Execute(evt);
 		}
 
 		public void WinformViewCtrl_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -250,7 +238,7 @@ namespace CadViewer.Views
 
 				var evt = new XKeyEventArgs(key, KeyStates.Down);
 
-				OpenGLKeyDownCommand.Execute(evt);
+				OpenGLKeyDownCommand?.Execute(evt);
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
@@ -267,7 +255,7 @@ namespace CadViewer.Views
 
 				var evt = new XKeyEventArgs(key, KeyStates.None);
 
-				OpenGLKeyUpCommand.Execute(evt);
+				OpenGLKeyUpCommand?.Execute(evt);
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
@@ -280,22 +268,18 @@ namespace CadViewer.Views
 		{
 			if (OpenGLSizeChangedCommand != null)
 			{
-				OpenGLSizeChangedCommand.Execute(newSize);
+				OpenGLSizeChangedCommand?.Execute(newSize);
 			}
 		}
 
-
 		private void xWindowsFormsHost_Loaded(object sender, RoutedEventArgs e)
 		{
-			if(OpenGLViewPanel != null)
+			if (PART_ControlViewer != null)
 			{
-				OpenGLViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-				OpenGLViewPanel.ViewControl = this;
-				xWindowsFormsHost.Child  = OpenGLViewPanel;
+				WinformViewCtrl_OnCreated(null, PART_ControlViewer.Handle);
 			}
 		}
 
 		/* Keyboard events*/
-
 	}
 }

@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Resources/uctrl.xaml" />
                 <ResourceDictionary Source="Resources/comp_light_theme.xaml" />
                 <ResourceDictionary Source="UIResources/CToggleButton.xaml" />
+                <ResourceDictionary Source="UIResources/CEtc.xaml" />
                 <ResourceDictionary Source="UIResources/CButton.xaml" />
                 <ResourceDictionary Source="UIResources/CTextBox.xaml" />
                 <ResourceDictionary Source="UIResources/CComboBox.xaml" />
@@ -31,7 +32,6 @@
                 <ResourceDictionary Source="UIResources/CWindow.xaml" />
                 <ResourceDictionary Source="UIResources/CToastContainer.xaml" />
                 <ResourceDictionary Source="UIResources/CMenuItem.xaml" />
-                <ResourceDictionary Source="UIResources/CEtc.xaml" />
                 <ResourceDictionary Source="UIResources/CContextMenu.xaml" />
                 <ResourceDictionary Source="UIResources/CRadioButton.xaml" />
                 <ResourceDictionary Source="UIResources/CResizableContainer.xaml" />

@@ -20,8 +20,10 @@
         </local:CColorPicker>
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemSelectData}">
-        <ComboBox com:EnterAsTabBehavior.IsEnabled="True" Height="20" SelectedIndex="{Binding Value, Mode=TwoWay}" ItemsSource="{Binding Items}"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <ComboBox com:EnterAsTabBehavior.IsEnabled="True" Height="20" SelectedIndex="{Binding Value, Mode=TwoWay}" ItemsSource="{Binding Items}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type if:PropertyPaletteItemCheckData}">
+        <CheckBox com:EnterAsTabBehavior.IsEnabled="True" Height="20" IsChecked="{Binding Value, Mode=TwoWay}" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
 
     <Style TargetType="{x:Type local:CPropertyPaletteItem}">
@@ -29,18 +31,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CPropertyPaletteItem}">
-                    <Border Margin="0,-1,0,0" BorderThickness="1" BorderBrush="#2e3440">
+                    <Border Margin="0,-1,0,0" BorderThickness="1" BorderBrush="#d2d2d2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="NameGroup" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="#2e3440" VerticalAlignment="Center">
+                            <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="#d2d2d2" VerticalAlignment="Center">
                                 <TextBlock Height="18" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,2" />
                             </Border>
                             <Border x:Name="PART_Expander" Margin="2,0,2,0" Grid.Column="1" VerticalAlignment="Center">
-                                <ContentPresenter Content="{Binding}" />
+                                <ContentPresenter VerticalAlignment="Center" Content="{Binding}" />
                             </Border>
                         </Grid>
                     </Border>
@@ -68,11 +70,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CPropertyPaletteGroup}">
                     <StackPanel >
-                        <Border x:Name="PART_GroupBar" Margin="0,-1,0,0" BorderBrush="#2e3440" BorderThickness="1"
+                        <Border x:Name="PART_GroupBar" Margin="0,-1,0,0" BorderBrush="#a6a6a6" BorderThickness="1"
                                 Background="LightGray" Height="23" Padding="2" VerticalAlignment="Center">
-                            <DockPanel >
+                            <DockPanel>
                                 <ToggleButton x:Name="PART_GroupExpander" DockPanel.Dock="Right" Width="14"
-                                              Style="{StaticResource ExpanderToggleButtonStyle}"
+                                              FocusVisualStyle="{StaticResource xExpanderFocusVisual}"
+                                              Style="{StaticResource xToggleButtonExpanderStyle1}"
                                               IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 </ToggleButton>
                                 <TextBlock x:Name="PART_GroupName" Text="{Binding Name}"

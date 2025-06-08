@@ -40,6 +40,11 @@ namespace CadViewer.UIControls
 
 			this.IsVisibleChanged -= OnIsVisibleChanged;
 			this.IsVisibleChanged += OnIsVisibleChanged;
+
+			if (IsVisible == false)
+			{
+				_contentHost.Height = 0;
+			}
 		}
 
 		private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -62,6 +67,15 @@ namespace CadViewer.UIControls
 			};
 
 			_contentHost.BeginAnimation(Border.HeightProperty, animation);
+		}
+
+		public static readonly DependencyProperty CornerRadiusProperty =
+		DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(CSlideDownContainer), new PropertyMetadata(new CornerRadius(0, 0, 0, 0)));
+
+		public CornerRadius CornerRadius
+		{
+			get => (CornerRadius)GetValue(CornerRadiusProperty);
+			set => SetValue(CornerRadiusProperty, value);
 		}
 	}
 }

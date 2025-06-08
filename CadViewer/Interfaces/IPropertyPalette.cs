@@ -26,6 +26,7 @@ namespace CadViewer.Interfaces
 		void PropertyPaletteItem_IntChanged(PropertyPaletteItemIntegerData item, int nNewValue);
 		void PropertyPaletteItem_DoubleChanged(PropertyPaletteItemDoubleData item, double dblNewValue);
 		void PropertyPaletteItem_ColorChanged(PropertyPaletteItemColorData item, Color clNewValue);
+		void PropertyPaletteItem_CheckChanged(PropertyPaletteItemCheckData item, bool bNewValue);
 	}
 
 	public class PropertyPaletteItemData : PropertyPaletteBase
@@ -202,6 +203,28 @@ namespace CadViewer.Interfaces
 		}
 	}
 
+	public class PropertyPaletteItemCheckData : PropertyPaletteItemData
+	{
+		private bool _value;
+
+		public bool Value
+		{
+			get => _value;
+
+			set => SetProperty(ref _value, value, OnValueChanged);
+		}
+
+		private void OnValueChanged()
+		{
+			propertyPaletteData?.PropertyPaletteItem_CheckChanged(this, Value);
+		}
+
+		public PropertyPaletteItemCheckData()
+		{
+
+		}
+	}
+
 	public class PropertyPaletteGroupData : PropertyPaletteBase
 	{
 		private string _name;
@@ -272,6 +295,11 @@ namespace CadViewer.Interfaces
 		public void PropertyPaletteItem_ColorChanged(PropertyPaletteItemColorData item, Color clNewValue)
 		{
 			CallBack?.PropertyPaletteItem_ColorChanged(item, clNewValue);
+		}
+
+		public void PropertyPaletteItem_CheckChanged(PropertyPaletteItemCheckData item, bool bNewValue)
+		{
+			CallBack?.PropertyPaletteItem_CheckChanged(item, bNewValue);
 		}
 
 		public PropertyPaletteData()

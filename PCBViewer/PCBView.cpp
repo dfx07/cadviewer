@@ -94,7 +94,7 @@ void PCBView::Clear()
 {
 	MakeContext();
 
-	glClearColor(1.0, 0.0, 1.0, 1.0);
+	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -104,6 +104,11 @@ void PCBView::Draw()
 	glColor3f(0, 1, 0);
 	glBegin(GL_POINTS);
 		glVertex2f(0.f, 0.f);
+	glEnd();
+
+	glBegin(GL_LINES);
+		glVertex2f(-0.5f, -0.5f);
+		glVertex2f(0.5f, 0.5f);
 	glEnd();
 
 	m_pContext->SwapBuffer();
