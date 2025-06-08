@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CadViewer.UIControls"
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
+                    xmlns:com="clr-namespace:CadViewer.Common"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Style TargetType="{x:Type local:CColorPicker}" BasedOn="{StaticResource {x:Type ContentControl}}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -20,7 +21,7 @@
                                     <SolidColorBrush Color="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Border.Background>
                             </Border>
-                            <Button x:Name="PART_Button" Grid.Column="1" Width="10" Height="10" Margin="2" ToolTip="Choose Color">
+                            <Button x:Name="PART_Button" com:EnterAsTabBehavior.IsEnabled="True" Grid.Column="1" Width="10" Height="10" Margin="2" ToolTip="Choose Color">
                                 <Ellipse Fill="Gray" Width="12" Height="12" />
                             </Button>
                         </Grid>

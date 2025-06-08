@@ -3,23 +3,24 @@
                     xmlns:local="clr-namespace:CadViewer.UIControls"
                     xmlns:cvt="clr-namespace:CadViewer.Converters"
                     xmlns:if="clr-namespace:CadViewer.Interfaces"
+                    xmlns:com="clr-namespace:CadViewer.Common"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemDoubleData}">
-        <local:CInputBox Height="20" InputType="Double" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <local:CInputBox com:EnterAsTabBehavior.IsEnabled="True" Height="20" InputType="Double" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemIntegerData}">
-        <local:CInputBox Height="20" InputType="Integer" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <local:CInputBox com:EnterAsTabBehavior.IsEnabled="True" Height="20" InputType="Integer" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemStringData}">
-        <local:CInputBox Height="20" InputType="String" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <local:CInputBox com:EnterAsTabBehavior.IsEnabled="True" Height="20" InputType="String" Text="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemColorData}">
-        <local:CColorPicker Height="20" SelectedColor="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <local:CColorPicker com:EnterAsTabBehavior.IsEnabled="True" Height="20" SelectedColor="{Binding Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
         </local:CColorPicker>
     </DataTemplate>
     <DataTemplate DataType="{x:Type if:PropertyPaletteItemSelectData}">
-        <ComboBox Height="20" SelectedIndex="{Binding Value, Mode=TwoWay}" ItemsSource="{Binding Items}"
+        <ComboBox com:EnterAsTabBehavior.IsEnabled="True" Height="20" SelectedIndex="{Binding Value, Mode=TwoWay}" ItemsSource="{Binding Items}"
                   HorizontalAlignment="Stretch" VerticalAlignment="Center" />
     </DataTemplate>
 
@@ -79,7 +80,7 @@
                             </DockPanel>
                         </Border>
                         <Grid x:Name="PART_GroupContent" ClipToBounds="True">
-                            <local:CSlideDownContainer x:Name="SlideBox">
+                            <local:CSlideDownContainer IsTabStop="False" x:Name="SlideBox">
                                 <ItemsControl x:Name="PART_Content" IsTabStop="False" ItemsSource="{Binding Items}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>

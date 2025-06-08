@@ -86,6 +86,7 @@
     <Compile Include="API\BaseAPI.cs" />
     <Compile Include="API\GCHandleProvider.cs" />
     <Compile Include="API\PCBViewerAPI.cs" />
+    <Compile Include="Common\EnterAsTabBehavior.cs" />
     <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\EventBehavior.cs" />
     <Compile Include="Common\EventDef.cs" />

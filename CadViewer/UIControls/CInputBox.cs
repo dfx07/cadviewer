@@ -34,6 +34,16 @@ namespace CadViewer.UIControls
 		public static readonly DependencyProperty InputTypeProperty =
 			DependencyProperty.Register(nameof(InputType), typeof(InputType), typeof(CInputBox), new PropertyMetadata(InputType.String));
 
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			GotKeyboardFocus += (s, e) =>
+			{
+				CaretIndex = Text.Length;
+			};
+		}
+
 		public InputType InputType
 		{
 			get => (InputType)GetValue(InputTypeProperty);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CadViewer.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,10 +14,18 @@ using System.Windows.Threading;
 
 namespace CadViewer.Interfaces
 {
-	public class PropertyPaletteBase : INotifyPropertyChanged
+	public class PropertyPaletteBase : NotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-		protected void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+	}
+
+	public interface IPropertyPaletteItemValueChangedEvent
+	{
+		void PropertyPaletteItem_SelectionChanged(PropertyPaletteItemSelectData item, int nNewValue);
+		void PropertyPaletteItem_TextChanged(PropertyPaletteItemStringData item, string strNewValue);
+		void PropertyPaletteItem_IntChanged(PropertyPaletteItemIntegerData item, int nNewValue);
+		void PropertyPaletteItem_DoubleChanged(PropertyPaletteItemDoubleData item, double dblNewValue);
+		void PropertyPaletteItem_ColorChanged(PropertyPaletteItemColorData item, Color clNewValue);
 	}
 
 	public class PropertyPaletteItemData : PropertyPaletteBase
@@ -49,20 +58,32 @@ namespace CadViewer.Interfaces
 			set { _isReadOnly = value; OnPropertyChanged(nameof(IsReadOnly)); }
 		}
 
+		public PropertyPaletteData propertyPaletteData { get; set; } = null;
+
 		public PropertyPaletteItemData()
 		{
 
 		}
 	}
 
+	/// <summary>
+	/// Represents a string property item in the property palette.
+	/// </summary>
+
 	public class PropertyPaletteItemStringData : PropertyPaletteItemData
 	{
+
 		private string _value;
 
 		public string Value
 		{
 			get => _value;
-			set { _value = value; OnPropertyChanged(nameof(Value)); }
+			set => SetProperty(ref _value, value, OnValueChanged);
+		}
+
+		private void OnValueChanged()
+		{
+			propertyPaletteData?.PropertyPaletteItem_TextChanged(this, Value);
 		}
 
 		public PropertyPaletteItemStringData()
@@ -77,7 +98,12 @@ namespace CadViewer.Interfaces
 		public int Value
 		{
 			get => _value;
-			set { _value = value; OnPropertyChanged(nameof(Value)); }
+			set => SetProperty(ref _value, value, OnValueChanged);
+		}
+
+		private void OnValueChanged()
+		{
+			propertyPaletteData?.PropertyPaletteItem_IntChanged(this, Value);
 		}
 
 		public PropertyPaletteItemIntegerData()
@@ -92,7 +118,12 @@ namespace CadViewer.Interfaces
 		public double Value
 		{
 			get => _value;
-			set { _value = value; OnPropertyChanged(nameof(Value)); }
+			set => SetProperty(ref _value, value, OnValueChanged);
+		}
+
+		private void OnValueChanged()
+		{
+			propertyPaletteData?.PropertyPaletteItem_DoubleChanged(this, Value);
 		}
 
 		public PropertyPaletteItemDoubleData()
@@ -107,7 +138,12 @@ namespace CadViewer.Interfaces
 		public Color Value
 		{
 			get => _value;
-			set { _value = value; OnPropertyChanged(nameof(Value)); }
+			set => SetProperty(ref _value, value, OnValueChanged);
+		}
+
+		private void OnValueChanged()
+		{
+			propertyPaletteData?.PropertyPaletteItem_ColorChanged(this, Value);
 		}
 
 		public PropertyPaletteItemColorData()
@@ -142,7 +178,22 @@ namespace CadViewer.Interfaces
 		public int Value
 		{
 			get => _value;
-			set { _value = value; OnPropertyChanged(nameof(Value)); }
+
+			set => SetProperty(ref _value, value, OnValueChanged);
+		}
+
+		private void OnValueChanged()
+		{
+			propertyPaletteData?.PropertyPaletteItem_SelectionChanged(this, Value);
+		}
+
+		PropertyPaletteItemSelectItemData GetItem(int idx)
+		{
+			if (idx< 0 || idx >= Items.Count)
+			{
+				throw new ArgumentOutOfRangeException(nameof(idx), "Index is out of range.");
+			}
+			return Items[idx];
 		}
 
 		public PropertyPaletteItemSelectData()
@@ -176,7 +227,7 @@ namespace CadViewer.Interfaces
 		}
 	}
 
-	public class PropertyPaletteData : PropertyPaletteBase
+	public class PropertyPaletteData : PropertyPaletteBase, IPropertyPaletteItemValueChangedEvent
 	{
 		private string _name;
 
@@ -186,7 +237,42 @@ namespace CadViewer.Interfaces
 			set { _name = value; OnPropertyChanged(nameof(Name)); }
 		}
 
-		public ObservableCollection<PropertyPaletteGroupData> Groups { get; } = new ObservableCollection<PropertyPaletteGroupData>();
+		public ObservableCollection<PropertyPaletteGroupData> Groups { get; set; } = new ObservableCollection<PropertyPaletteGroupData>();
+
+		public IPropertyPaletteItemValueChangedEvent CallBack { get; set; } = null;
+
+
+		public void AddGroup(PropertyPaletteGroupData group)
+		{
+			foreach (var item in group.Items)
+			{
+				item.propertyPaletteData = this;
+			}
+
+			Groups.Add(group);
+		}
+
+		public void PropertyPaletteItem_SelectionChanged(PropertyPaletteItemSelectData item, int nNewValue)
+		{
+			CallBack?.PropertyPaletteItem_SelectionChanged(item, nNewValue);
+		}
+		public void PropertyPaletteItem_TextChanged(PropertyPaletteItemStringData item, string strNewValue)
+		{
+			CallBack?.PropertyPaletteItem_TextChanged(item, strNewValue);
+		}
+		public void PropertyPaletteItem_IntChanged(PropertyPaletteItemIntegerData item, int nNewValue)
+		{
+			CallBack?.PropertyPaletteItem_IntChanged(item, nNewValue);
+		}
+
+		public void PropertyPaletteItem_DoubleChanged(PropertyPaletteItemDoubleData item, double dblNewValue)
+		{
+			CallBack?.PropertyPaletteItem_DoubleChanged(item, dblNewValue);
+		}
+		public void PropertyPaletteItem_ColorChanged(PropertyPaletteItemColorData item, Color clNewValue)
+		{
+			CallBack?.PropertyPaletteItem_ColorChanged(item, clNewValue);
+		}
 
 		public PropertyPaletteData()
 		{

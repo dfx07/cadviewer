@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace CadViewer.ViewModels
 {
-	public class CirclePropertyViewModel : ViewModelBase
+	public class CirclePropertyViewModel : ViewModelBase, IPropertyPaletteItemValueChangedEvent
 	{
 		public PropertyPaletteData Propterties { get; }
 
@@ -18,6 +18,8 @@ namespace CadViewer.ViewModels
 		{
 
 			var palette = new PropertyPaletteData { Name = "Circle Property" };
+			palette.CallBack = this;
+
 			var group1 = new PropertyPaletteGroupData { Name = "General" };
 			group1.Items.Add(new PropertyPaletteItemColorData { Name = "Color", Value = Colors.Red });
 			group1.Items.Add(new PropertyPaletteItemSelectData { Name = "Layer", Value = 12 });
@@ -51,12 +53,37 @@ namespace CadViewer.ViewModels
 			group4.Items.Add(new PropertyPaletteItemIntegerData { Name = "Center Z", Value = 15 });
 			group4.Items.Add(new PropertyPaletteItemIntegerData { Name = "Radius control panle", Value = 20 });
 
-			palette.Groups.Add(group1);
-			palette.Groups.Add(group2);
-			palette.Groups.Add(group3);
-			palette.Groups.Add(group4);
+			palette.AddGroup(group1);
+			palette.AddGroup(group2);
+			palette.AddGroup(group3);
+			palette.AddGroup(group4);
 
 			Propterties = palette;
+		}
+
+		public void PropertyPaletteItem_SelectionChanged(PropertyPaletteItemSelectData item, int nNewValue)
+		{
+			Console.WriteLine($"Selected: {item.Name} ({item.Value})");
+		}
+
+		public void PropertyPaletteItem_TextChanged(PropertyPaletteItemStringData item, string strNewValue)
+		{
+			Console.WriteLine($"Text changed: {item.Name} ({item.Value})");
+		}
+
+		public void PropertyPaletteItem_IntChanged(PropertyPaletteItemIntegerData item, int strNewValue)
+		{
+			Console.WriteLine($"Int changed: {item.Name} ({item.Value})");
+		}
+
+		public void PropertyPaletteItem_DoubleChanged(PropertyPaletteItemDoubleData item, double strNewValue)
+		{
+			Console.WriteLine($"Double changed: {item.Name} ({item.Value})");
+		}
+
+		public void PropertyPaletteItem_ColorChanged(PropertyPaletteItemColorData item, Color clNewValue)
+		{
+			Console.WriteLine($"Color changed: {item.Name} ({item.Value})");
 		}
 
 		public double Radius { get; set; }
