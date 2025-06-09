@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\graphics">
+      <UniqueIdentifier>{1df7fc74-ad9f-4aa0-b38c-f8cd312ad05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\modules">
+      <UniqueIdentifier>{6a56458e-c108-4442-a46c-62206b7c33fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{924cc71f-34b0-4f51-adde-a791dabe473a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common">
+      <UniqueIdentifier>{108991a1-fd37-44de-b90a-1407108701ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics">
+      <UniqueIdentifier>{6e0f50d1-38b6-4fd6-b148-237af74ee61a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\modules">
+      <UniqueIdentifier>{ca06c37a-8450-4284-9629-92a9f91e0e79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCBView.h">
@@ -24,6 +42,15 @@
     <ClInclude Include="PCBViewDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -34,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="PCBViewIF.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

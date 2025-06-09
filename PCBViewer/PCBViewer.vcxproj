@@ -125,11 +125,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;PCBVIEWER_EXPORTS;_WINDOWS;_USRDLL;LIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;PCBVIEWER_EXPORTS;_WINDOWS;_USRDLL;LIBRARY_EXPORTS;%(PreprocessorDefinitions);USE_GLM</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Core</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -141,7 +141,7 @@
       <ImportLibrary>$(SolutionDir)Build\$(IntDir)$(TargetName).lib</ImportLibrary>
       <IncrementalLinkDatabaseFile>$(IntDir)$(TargetName).ilk</IncrementalLinkDatabaseFile>
       <AdditionalDependencies>PCBModelData.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\3rdparty\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,11 +150,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;PCBVIEWER_EXPORTS;_WINDOWS;_USRDLL;LIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;PCBVIEWER_EXPORTS;_WINDOWS;_USRDLL;LIBRARY_EXPORTS;%(PreprocessorDefinitions);USE_GLM</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Core</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -168,15 +168,19 @@
       <ImportLibrary>$(SolutionDir)Build\$(IntDir)$(TargetName).lib</ImportLibrary>
       <IncrementalLinkDatabaseFile>$(IntDir)$(TargetName).ilk</IncrementalLinkDatabaseFile>
       <AdditionalDependencies>PCBModelData.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\3rdparty\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
     <ClInclude Include="PCBView.h" />
     <ClInclude Include="PCBViewDef.h" />
     <ClInclude Include="PCBViewIF.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="PCBView.cpp" />
     <ClCompile Include="PCBViewIF.cpp" />

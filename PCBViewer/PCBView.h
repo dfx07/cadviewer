@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Common/dllexports.h>
-#include <Graphics/xopenglctx.h>
-#include <Modules/NotifyObject.h>
+#include <common/dllexports.h>
+#include <graphics/rendering/xopenglctx.h>
+#include <modules/NotifyObject.h>
 #include "PCBViewDef.h"
 
 class PCBView : public NotifyObject
