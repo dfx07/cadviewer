@@ -1,4 +1,6 @@
 #include "PCBView.h"
+#include "graphics/rendering/xopenglrenderer.h"
+#include "graphics/camera/xcamera.h"
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -34,23 +36,28 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	if (m_hHandle == NULL)
 		return false;
 
-	if (IsAlreadyContext())
+	if (m_pContext != nullptr && m_pContext->IsValid())
 		DeleteContext();
 
 	DeviceContextConfig config;
 	config.UseOpenGLExtension(ctx_conf.m_bUseContextExt ? true : false);
 	config.SetAntiliasingLevel(static_cast<int>(ctx_conf.m_nAntialiasingLevel));
 
-	m_pContext = new OpenGLDeviceContext(config);
-
+	m_pContext = std::make_shared<OpenGLDeviceContext>(config);
 	if (!m_pContext->CreateContext(m_hHandle))
 	{
-		delete m_pContext;
-		m_pContext = NULL;
+		m_pContext.reset();
 		return false;
 	}
 
-	m_Renderer->Init();
+	// create camera
+	m_pCamera = std::make_shared<tfx::Camera2D>();
+	m_pCamera->SetCamera({ 0.f, 0.f, 8.f }, { 0.f, 0.f, -1.f }, { 0.f, 1.f, 0.f });
+	m_pCamera->SetDistPlane(0, -1000.f);
+
+	m_pRenderer = std::make_shared<tfx::OpenGLRenderer>(m_pCamera);
+	m_pRenderer->SetContext(m_pContext);
+	m_pRenderer->SetClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Default clear color is white
 
 	return true;
 }
@@ -62,18 +69,8 @@ void PCBView::DeleteContext()
 
 	m_pContext->DeleteContext();
 
-	delete m_pContext;
-	m_pContext = NULL;
-}
-
-bool PCBView::IsAlreadyContext() const
-{
-	return (m_pContext != nullptr && m_pContext->IsValid());
-}
-
-void PCBView::MakeContext() const
-{
-	bool c = m_pContext->MakeCurrentContext();
+	m_pContext.reset();
+	m_pContext = nullptr;
 }
 
 void PCBView::SetView(const int nWidth, const int nHeight)
@@ -81,42 +78,31 @@ void PCBView::SetView(const int nWidth, const int nHeight)
 	m_nWidth = nWidth;
 	m_nHeight = nHeight;
 
-	if (IsAlreadyContext())
-	{
-		glViewport(0, 0, m_nWidth, m_nHeight);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+	m_pCamera->SetView(nWidth, nHeight);
+	m_pCamera->UpdateMatrix();
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-	}
-}
-
-void PCBView::Clear()
-{
-	MakeContext();
-
-	glClearColor(1.0, 1.0, 1.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	m_pRenderer->SetViewPort(0, 0, m_nWidth, m_nHeight);
 }
 
 void PCBView::Draw()
 {
-	glPointSize(10.0);
-	glColor3f(0, 1, 0);
-	glBegin(GL_POINTS);
-		glVertex2f(0.f, 0.f);
-	glEnd();
+	//glPointSize(10.0);
+	//glColor3f(0, 1, 0);
+	//glBegin(GL_POINTS);
+	//	glVertex2f(0.f, 0.f);
+	//glEnd();
 
-	glBegin(GL_LINES);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f(0.5f, 0.5f);
-	glEnd();
+	//glBegin(GL_LINES);
+	//	glVertex2f(-0.5f, -0.5f);
+	//	glVertex2f(0.5f, 0.5f);
+	//glEnd();
 
-	m_pContext->SwapBuffer();
+	//m_pContext->SwapBuffer();
+
+	m_pRenderer->Render();
 }
 
-DeviceContext* PCBView::GetContext() const
+DeviceContextPtr PCBView::GetContext() const
 {
 	return m_pContext;
 }

@@ -1,10 +1,13 @@
 #pragma once
 
-#include <common/dllexports.h>
-#include <graphics/rendering/xopenglctx.h>
-#include <modules/NotifyObject.h>
-#include <graphics/rendering/xopenglrenderer.h>
 #include "PCBViewDef.h"
+#include <common/dllexports.h>
+#include <modules/NotifyObject.h>
+#include "graphics/rendering/xctx.h"
+#include "graphics/rendering/xrendertype.h"
+
+
+#include <Windows.h>
 
 class PCBView : public NotifyObject
 {
@@ -19,20 +22,18 @@ public:
 
 protected:
 	virtual void DeleteContext();
-	virtual bool IsAlreadyContext() const;
-	virtual void MakeContext() const;
 
 public:
 	virtual void SetView(const int nWidth, const int nHeight);
-	virtual void Clear();
 	virtual void Draw();
 
 public:
-	DeviceContext* GetContext() const;
+	DeviceContextPtr GetContext() const;
 
 protected:
-	DeviceContext*	m_pContext = nullptr;
-	tfx::OpenGLRenderer* m_Renderer = nullptr;
+	DeviceContextPtr		m_pContext = nullptr;
+	tfx::TFXRendererPtr		m_pRenderer = nullptr;
+	tfx::CameraPtr			m_pCamera = nullptr;
 	
 	HWND			m_hHandle;
 	int				m_nWidth;

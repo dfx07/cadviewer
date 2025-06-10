@@ -22,16 +22,12 @@ enum class CameraType
 	C3D,
 };
 
-enum struct View
-{
-
-};
-
 enum class CameraMode
 {
 	CMODE_NORMAL,
 	CMODE_NOZOOM,
 };
+
 
 /**********************************************************************************
 * ⮟⮟ Class name: Camera

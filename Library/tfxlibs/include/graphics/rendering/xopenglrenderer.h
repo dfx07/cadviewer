@@ -11,62 +11,30 @@
 #ifndef XOPENGLRENDER_H
 #define XOPENGLRENDER_H
 
-#include "graphics/rendering/xtfxrender.h"
 #include "OpenGL/glew.h"
+#include "graphics/rendering/xrendertype.h"
+#include "graphics/rendering/xtfxrender.h"
 
 __BEGIN_NAMESPACE__
 
 class OpenGLRenderer : public TFXRenderer
 {
 public:
-	OpenGLRenderer()
-	{
+	OpenGLRenderer();
 
-	}
+	OpenGLRenderer(CameraPtr pCamera);
 
-	~OpenGLRenderer()
-	{
+	~OpenGLRenderer();
 
-	}
+	virtual void SetViewPort(const int x, const int y, const int width, const int height);
 
-	virtual void SetViewPort(const int x, const int y, const int width, const int height)
-	{
-		glViewport(x, y, width, height);
-	}
+	virtual void SetClearColor(const float r, const float g, const float b, const float a);
 
-	virtual void SetClearColor(const float r, const float g, const float b, const float a)
-	{
-		m_v4ClearColor = Vec4(r, g, b, a);
-	}
+	virtual void Init();
 
-	virtual void Init()
-	{
+	virtual void Render();
 
-	}
-
-	virtual void Render()
-	{
-		if (!m_pContext->IsValid())
-			return;
-
-		if (!m_pContext->MakeCurrentContext())
-			return;
-
-		glClearColor(m_v4ClearColor.r, m_v4ClearColor.g, m_v4ClearColor.b, m_v4ClearColor.a);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		for (auto pObjRenderable : m_ObjectRenders)
-		{
-			pObjRenderable->Draw();
-		}
-
-		m_pContext->SwapBuffer();
-	}
-
-	virtual void Update(float deltaTime)
-	{
-
-	}
+	virtual void Update(float deltaTime);
 
 protected:
 	Vec4	m_v4ClearColor;

@@ -20,6 +20,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 __BEGIN_NAMESPACE__
 
@@ -29,6 +30,12 @@ typedef glm::vec4 Vec4;
 typedef glm::mat2 Mat2;
 typedef glm::mat3 Mat3;
 typedef glm::mat4 Mat4;
+
+
+template<typename T>
+auto ValuePtr(const T& obj) -> decltype(glm::value_ptr(obj)) {
+	return glm::value_ptr(obj);
+}
 
 __END_NAMESPACE__
 

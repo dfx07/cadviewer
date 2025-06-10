@@ -175,7 +175,9 @@
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xopenglrenderer.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xtfxrender.h" />
     <ClInclude Include="PCBView.h" />
     <ClInclude Include="PCBViewDef.h" />
@@ -183,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\xopenglrenderer.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="PCBView.cpp" />
     <ClCompile Include="PCBViewIF.cpp" />

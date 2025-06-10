@@ -57,6 +57,12 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xtfxrender.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xopenglrenderer.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -69,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\xopenglrenderer.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>

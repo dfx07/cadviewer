@@ -73,7 +73,7 @@ LIBRARY_API void Clear(IntPtr pPCB)
 
 	NULL_RETURN(pView);
 
-	pView->Clear();
+	//pView->Clear();
 }
 
 

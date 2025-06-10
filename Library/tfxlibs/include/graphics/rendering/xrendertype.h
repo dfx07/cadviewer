@@ -3,49 +3,37 @@
 *         Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>               
 *                   MIT software Licencs, see the accompanying                      
 ************************************************************************************
-* @brief : Interface define object rendering
-* @file  : xrenderable.h
+* @brief : Define type object for rendering
+* @file  : xrendertype.h
 * @create: June 10, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-#ifndef XRENDERABLE_H
-#define XRENDERABLE_H
+#ifndef XRENDERTYPE_H
+#define XRENDERTYPE_H
+
+#include "common/tfxdef.h"
 
 #include <memory>
-#include "common/tfxtype.h"
+#include <vector>
 
 __BEGIN_NAMESPACE__
 
-class ObjectRenderable
-{
-public:
-	ObjectRenderable(const Vec4& modelMatrix = Vec4(1.0f))
-		: m_matModelMatrix(modelMatrix)
-	{
+class TFXRenderer;
+typedef std::shared_ptr<TFXRenderer> TFXRendererPtr;
 
-	}
+class ObjectRenderable;
+typedef std::shared_ptr<ObjectRenderable> ObjectRenderablePtr;
+typedef std::vector<ObjectRenderablePtr> ObjectRenderablePtrList;
 
-	virtual ~ObjectRenderable()
-	{
+class Camera;
+typedef std::shared_ptr<Camera> CameraPtr;
 
-	}
+class Camera2D;
+typedef std::shared_ptr<Camera2D> Camera2DPtr;
 
-	virtual void Draw() = 0;
-
-	void SetModelMatrix(const Vec4& modelMatrix)
-	{
-		m_matModelMatrix = modelMatrix;
-	}
-
-	const Vec4& GetModelMatrix() const
-	{
-		return m_matModelMatrix;
-	}
-
-protected:
-	Vec4 m_matModelMatrix;
-};
+class Camera3D;
+typedef std::shared_ptr<Camera3D> Camera3DPtr;
 
 __END_NAMESPACE__
 
-#endif // !XCTX_H
+#endif // !XRENDERTYPE_H

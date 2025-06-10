@@ -13,19 +13,21 @@
 
 #include <vector>
 
-#include "common/tfxtype.h"
-#include "graphics/camera/xcamera.h"
-
 #include "graphics/rendering/xrenderable.h"
-#include "graphics/rendering/xctx.h"
 #include "graphics/rendering/xopenglctx.h"
+#include "graphics/rendering/xrendertype.h"
 
 __BEGIN_NAMESPACE__
 
 class TFXRenderer
 {
 public:
-	TFXRenderer(Camera* pCamera)
+	TFXRenderer() : m_pCamera(nullptr)
+	{
+
+	}
+
+	TFXRenderer(CameraPtr pCamera)
 		: m_pCamera(pCamera)
 	{
 
@@ -42,7 +44,7 @@ public:
 	virtual void Render() = 0;
 	virtual void Update(float deltaTime) = 0;
 
-	virtual void AddObjectRenderable(ObjectRenderable* pObject)
+	virtual void AddObjectRenderable(ObjectRenderablePtr pObject)
 	{
 		m_ObjectRenders.push_back(pObject);
 	}
@@ -52,15 +54,20 @@ public:
 		m_ObjectRenders.reserve(szObj);
 	}
 
-	virtual void SetContext(DeviceContext* pContext)
+	virtual void SetContext(DeviceContextPtr pContext)
 	{
 		m_pContext = pContext;
 	}
 
+	virtual void SetCamera(CameraPtr pCamera)
+	{
+		m_pCamera = pCamera;
+	}
+
 protected:
-	DeviceContext* m_pContext = nullptr;
-	Camera* m_pCamera = nullptr;
-	std::vector<ObjectRenderable*> m_ObjectRenders;
+	DeviceContextPtr			m_pContext = nullptr;
+	CameraPtr					m_pCamera = nullptr;
+	ObjectRenderablePtrList		m_ObjectRenders;
 };
 
 __END_NAMESPACE__
