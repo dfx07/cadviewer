@@ -3,6 +3,7 @@
 #include <common/dllexports.h>
 #include <graphics/rendering/xopenglctx.h>
 #include <modules/NotifyObject.h>
+#include <graphics/rendering/xopenglrenderer.h>
 #include "PCBViewDef.h"
 
 class PCBView : public NotifyObject
@@ -31,6 +32,8 @@ public:
 
 protected:
 	DeviceContext*	m_pContext = nullptr;
+	tfx::OpenGLRenderer* m_Renderer = nullptr;
+	
 	HWND			m_hHandle;
 	int				m_nWidth;
 	int				m_nHeight;

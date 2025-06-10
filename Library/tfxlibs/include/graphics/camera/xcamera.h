@@ -22,6 +22,11 @@ enum class CameraType
 	C3D,
 };
 
+enum struct View
+{
+
+};
+
 enum class CameraMode
 {
 	CMODE_NORMAL,
@@ -30,9 +35,8 @@ enum class CameraMode
 
 /**********************************************************************************
 * ⮟⮟ Class name: Camera
-* Base class for window handle inheritance
+*  Camera template class
 ***********************************************************************************/
-template<CameraType T>
 class Camera
 {
 public:
@@ -40,14 +44,12 @@ public:
 	virtual ~Camera();
 
 public:
-	virtual CameraType GetType();
+	virtual CameraType GetType() const = 0;
 
 	virtual void UpdateViewMatrix() = 0;
 	virtual void UpdateProjMatrix() = 0;
 
 	virtual void UpdateMatrix() = 0;
-	virtual void UseMatrix(CameraMode mode = CameraMode::CMODE_NORMAL) const = 0;
-	virtual void LoadMatrix(unsigned int program) const = 0;
 
 	virtual Mat4& GetViewMatrix();
 	virtual Mat4& GetProjMatrix();
@@ -63,18 +65,7 @@ public:
 	*******************************************************************************/
 	Vec2 PointLT2Center(const Vec2& p) const;
 
-	/*******************************************************************************
-	*! @brief  : Chuyển đổi từ tọa độ [Trái trên] sang tọa độ tại [Trung tâm] trên view   [3D]
-	*! @param    [in] p : tọa độ trên view
-	*! @return : Vec2 tọa độ thực tế
-	*! @author : thuong.nv          - [Date] : 22/04/2023
-	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
-	*******************************************************************************/
-	Vec3 PointLT2Center(const Vec3& p) const;
-
 public:
-	void InitView(int width, int height, float _near, float _far);
-
 	/*******************************************************************************
 	*! @brief  : Chuyển đổi từ tọa độ [Trái trên] sang tọa độ tại [Trung tâm] trên view   [3D]
 	*! @param    [in] p : tọa độ trên view
@@ -82,7 +73,7 @@ public:
 	*! @author : thuong.nv          - [Date] : 22/04/2023
 	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 	*******************************************************************************/
-	void SetUpCamera(const Vec3& pos, const Vec3& dir, const Vec3& up = Vec3(0, 1, 0));
+	void SetCamera(const Vec3& pos, const Vec3& dir, const Vec3& up = Vec3(0, 1, 0));
 
 	/*******************************************************************************
 	*! @brief  : Set view size
@@ -90,7 +81,7 @@ public:
 	*! @param    [in] height : height view
 	*! @author : thuong.nv          - [Date] : 22/04/2023
 	*******************************************************************************/
-	void SetViewSize(int width, int height);
+	void SetView(const int width, const int height);
 
 	/*******************************************************************************
 	*! @brief  : Set near and far distance camera
@@ -98,8 +89,13 @@ public:
 	*! @param    [in] _far  : far distance clip plane
 	*! @author : thuong.nv          - [Date] : 22/04/2023
 	*******************************************************************************/
-	void SetDistPlane(float _near, float _far);
+	void SetDistPlane(const float _near, const float _far);
 
+	/*******************************************************************************
+	*! @brief  : Get camera position
+	*! @param  : [in] pos : point3D
+	*! @author : thuong.nv          - [Date] : 22/04/2023
+	*******************************************************************************/
 	Vec3 GetPosition() const;
 
 	/*******************************************************************************
@@ -107,7 +103,7 @@ public:
 	*! @param  : [in] pos : point3D
 	*! @author : thuong.nv          - [Date] : 22/04/2023
 	*******************************************************************************/
-	void SetPosition(Vec3 pos);
+	void SetPosition(const Vec3& pos);
 
 	/*******************************************************************************
 	*! @brief  : Vị trí camera dự vào vị trí target góc quay và khoảng cách  [3D]
@@ -118,7 +114,13 @@ public:
 	*******************************************************************************/
 	void SetPosition(float phi, float theta, float distance, Vec3 target);
 
-	void Move(Vec3 mov);
+	/*******************************************************************************
+	*! @brief  : Move camera
+	*! @param  : [in] vOffset : offset Vec3
+	*! @return : Vec2 tọa độ thực tế
+	*! @author : thuong.nv          - [Date] : 2025.06.10
+	*******************************************************************************/
+	void Move(const Vec3& vOffset);
 
 protected:
 	Vec3		m_position;     // Vị trí camera
@@ -133,21 +135,14 @@ protected:
 	Mat4		m_viewMat;      // view matrix
 	Mat4		m_projMat;      // projection matrix 
 	Mat4		m_modelMat;     // model matrix (sử dụng OpenGL 1.1)
-
-	CameraType	m_type = T;
 };
 
 /**********************************************************************************
 * ⮟⮟ Class name: Camera2D
 * Base class for window handle inheritance
 ***********************************************************************************/
-class Camera2D : public Camera<CameraType::C2D>
+class Camera2D : public Camera
 {
-protected:
-	static constexpr float ZOOM_MIN = 0.01f;
-	static constexpr float ZOOM_MAX = 100.f;
-	static constexpr float ZOOM_FACTOR = 0.9f;
-
 private:
 	float	m_fZoom;         // Tỷ lệ zoom
 	Mat4	m_projMatNozoom; //projection matrix nozoom
@@ -176,8 +171,15 @@ public:
 	Vec2 PointGlobal2Local(const Vec2& p) const;
 
 public:
-	Mat4 GetMatrixNozoom();
+	/*******************************************************************************
+	*! @brief  : Lấy ma trận chiếu nhưng không zoom
+	*! @param    [in] mode : Chế độ zoom hoặc không zoom
+	*! @return : void
+	*! @author : thuong.nv          - [Date] : 22/04/2023
+	*******************************************************************************/
+	Mat4& GetProjMatrixNozoom();
 
+public:
 	/*******************************************************************************
 	*! @brief  : Cập nhật view matrix
 	*! @param    [in] mode : Chế độ zoom hoặc không zoom
@@ -202,16 +204,6 @@ public:
 	*******************************************************************************/
 	virtual void UpdateMatrix();
 
-	/*******************************************************************************
-	*! @brief  : Sử dụng matrix
-	*! @param  : [in] mode : Chế độ zoom hoặc không zoom
-	*! @return : void
-	*! @author : thuong.nv          - [Date] : 22/04/2023
-	*******************************************************************************/
-	void UseMatrix(CameraMode mode = CameraMode::CMODE_NORMAL) const;
-
-	void LoadMatrix(unsigned int program) const;
-
 protected:
 	/*******************************************************************************
 	*! @brief  : Cập nhật thông số zoom có giới hạn giá trị
@@ -221,7 +213,7 @@ protected:
 	void UpdateZoom(float zDelta);
 
 public:
-	virtual CameraType GetType() { return CameraType::C2D; }
+	virtual CameraType GetType() const;
 
 	float GetZoom() const;
 
@@ -246,21 +238,12 @@ public:
 * ⮟⮟ Class name: Camera3D
 * Base class for window handle inheritance
 ***********************************************************************************/
-class Camera3D : public Camera<CameraType::C3D>
+class Camera3D : public Camera
 {
-private:
-	float           m_fFov;    // Góc nhìn
-
-	// 2021.09.22 N.V.Thuong [Tính toán cho xoay quanh mục tiêu]
-	float           m_fTheta;  // Góc với trục Oz
-	float           m_fPhi;    // Góc phụ với trục Oy
-	Vec3       m_vTarget; // Vị trí camera Target
-	float           m_fDis;    // Vị trí camera Target
-
-	int             m_iMode;   // Chế độ Camera đang hoạt động
-
 public:
 	Camera3D();
+
+	virtual ~Camera3D();
 
 	/*******************************************************************************
 	*! @brief  : Cập nhật model matrix
@@ -294,27 +277,11 @@ public:
 	*******************************************************************************/
 	virtual void UpdateMatrix();
 
-	/*******************************************************************************
-	*! @brief  : Load ma trận cho  GPU
-	*! @param    [in] mode : Chế độ zoom hoặc không zoom
-	*! @return : void
-	*! @author : thuong.nv          - [Date] : 22/04/2023
-	*******************************************************************************/
-	void UseMatrix(CameraMode mode = CameraMode::CMODE_NORMAL) const;
-
-	/*******************************************************************************
-	*! @brief  : Load ma trận cho  GPU
-	*! @param    [in] mode : Chế độ zoom hoặc không zoom
-	*! @return : void
-	*! @author : thuong.nv          - [Date] : 22/04/2023
-	*******************************************************************************/
-	void LoadMatrix(unsigned int program) const;
-
 private:
 	void UpdateOrbitTarget(float phi, float theta);
 
 public:
-	virtual CameraType GetType();
+	virtual CameraType GetType() const;
 
 	void SetFieldOfView(float fov);
 
@@ -351,6 +318,16 @@ public:
 	*! @author : thuong.nv          - [Date] : 22/04/2023
 	*******************************************************************************/
 	void OrbitMove1(float x, float y);
+
+private:
+	float			m_fFov;    // Góc nhìn
+
+	float			m_fTheta;  // Góc với trục Oz
+	float			m_fPhi;    // Góc phụ với trục Oy
+	Vec3			m_vTarget; // Vị trí camera Target
+	float			m_fDis;    // Vị trí camera Target
+
+	int				m_iMode;   // Chế độ Camera đang hoạt động
 };
 
 __END_NAMESPACE__

@@ -2,8 +2,8 @@
 
 __BEGIN_NAMESPACE__
 
-template<CameraType T>
-Camera<T>::Camera() : m_iWidth(0), m_iHeight(0), m_fFar(0.f), m_fNear(0.f)
+Camera::Camera():
+	m_iWidth(0), m_iHeight(0), m_fFar(0.f), m_fNear(0.f)
 {
 	m_position = { 0.f, 0.f, 0.f };
 	m_direction = { 0.f, 0.f, 1.f };
@@ -14,16 +14,9 @@ Camera<T>::Camera() : m_iWidth(0), m_iHeight(0), m_fFar(0.f), m_fNear(0.f)
 	m_modelMat = Mat4(1.f);
 }
 
-template<CameraType T>
-Camera<T>::~Camera()
+Camera::~Camera()
 {
 
-}
-
-template<CameraType T>
-CameraType Camera<T>::GetType()
-{
-	return m_type;
 }
 
 /*******************************************************************************
@@ -33,8 +26,8 @@ CameraType Camera<T>::GetType()
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 *******************************************************************************/
-template<CameraType T>
-Vec2 Camera<T>::PointLT2Center(const Vec2& p) const
+
+Vec2 Camera::PointLT2Center(const Vec2& p) const
 {
 	Vec2 point = { 0, 0 };  // Để mặc định
 	point.x = (p.x - m_iWidth / 2);
@@ -42,85 +35,60 @@ Vec2 Camera<T>::PointLT2Center(const Vec2& p) const
 	return point;
 }
 
-/*******************************************************************************
-*! @brief  : Chuyển đổi từ tọa độ [Trái trên] sang tọa độ tại [Trung tâm] trên view   [3D]
-*! @param    [in] p : tọa độ trên view
-*! @return : Vec2 tọa độ thực tế
-*! @author : thuong.nv          - [Date] : 22/04/2023
-*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
-*******************************************************************************/
-template<CameraType T>
-Vec3 Camera<T>::PointLT2Center(const Vec3& p) const
-{
-	Vec3 point = { 0, 0 ,  p.z };  // Để mặc định
-	point.x = (p.x - m_iWidth / 2);
-	point.y = -(p.y - m_iHeight / 2);
-	return point;
-}
 
-template<CameraType T>
-Mat4& Camera<T>::GetViewMatrix()
+Mat4& Camera::GetViewMatrix()
 {
 	return m_viewMat;
 }
 
-template<CameraType T>
-Mat4& Camera<T>::GetProjMatrix()
+
+Mat4& Camera::GetProjMatrix()
 {
 	return m_projMat;
 }
 
-template<CameraType T>
-Mat4& Camera<T>::GetModelMatrix()
+
+Mat4& Camera::GetModelMatrix()
 {
 	return m_modelMat;
 }
 
-template<CameraType T>
-void Camera<T>::InitView(int width, int height, float _near, float _far)
-{
-	m_fNear = _near;
-	m_fFar = _far;
-	m_iWidth = width;
-	m_iHeight = height;
-}
 
-template<CameraType T>
-void Camera<T>::SetUpCamera(const Vec3& pos, const Vec3& dir, const Vec3& up)
+void Camera::SetCamera(const Vec3& pos, const Vec3& dir, const Vec3& up)
 {
 	m_position = pos;
 	m_direction = dir;
 	m_up = up;
 }
 
-template<CameraType T>
-void Camera<T>::SetViewSize(int width, int height)
+
+void Camera::SetView(const int width, const int height)
 {
 	m_iWidth = width;
 	m_iHeight = height;
 }
 
-template<CameraType T>
-void Camera<T>::SetDistPlane(float _near, float _far)
+
+void Camera::SetDistPlane(const float _near, const float _far)
 {
 	m_fNear = _near;
 	m_fFar = _far;
 }
 
-template<CameraType T>
-Vec3 Camera<T>::GetPosition() const
+
+Vec3 Camera::GetPosition() const
 {
 	return m_position;
 }
 
-template<CameraType T>
-void Camera<T>::SetPosition(Vec3 pos)
+
+void Camera::SetPosition(const Vec3& pos)
 {
 	m_position = pos;
 }
 
-template<CameraType T>
-void Camera<T>::SetPosition(float phi, float theta, float distance, Vec3 target)
+
+void Camera::SetPosition(float phi, float theta, float distance, Vec3 target)
 {
 	// caculate position based on spherical coordinates
 	float x = cos(phi) * sin(theta);
@@ -143,11 +111,12 @@ void Camera<T>::SetPosition(float phi, float theta, float distance, Vec3 target)
 	}
 }
 
-template<CameraType T>
-void Camera<T>::Move(Vec3 mov)
+
+void Camera::Move(const Vec3& vOffset)
 {
-	m_position += mov;
-	this->UpdateViewMatrix();
+	m_position += vOffset;
+
+	UpdateViewMatrix();
 }
 
 
@@ -196,10 +165,11 @@ Vec2 Camera2D::PointGlobal2Local(const Vec2& p) const
 	return point;
 }
 
-Mat4 Camera2D::GetMatrixNozoom()
+Mat4& Camera2D::GetProjMatrixNozoom()
 {
-	return  m_projMatNozoom;
+	return m_projMatNozoom;
 }
+
 
 /*******************************************************************************
 *! @brief  : Cập nhật view matrix
@@ -221,18 +191,18 @@ void Camera2D::UpdateViewMatrix()
 void Camera2D::UpdateProjMatrix()
 {
 	// Projection matrix không sử dụng zoom
-	float left = -float(m_iWidth / 2);
-	float right = float(m_iWidth / 2);
-	float bottom = -float(m_iHeight / 2);
-	float top = float(m_iHeight / 2);
+	float left		= -float(m_iWidth / 2);
+	float right		=  float(m_iWidth / 2);
+	float bottom	= -float(m_iHeight / 2);
+	float top		=  float(m_iHeight / 2);
 
 	m_projMatNozoom = glm::ortho(left, right, bottom, top, float(m_fNear), float(m_fFar));
 
 	// Projection matrix sử dụng thuộc tính zoom
-	left = left / m_fZoom;
-	right = right / m_fZoom;
-	bottom = bottom / m_fZoom;
-	top = top / m_fZoom;
+	left	= left / m_fZoom;
+	right	= right / m_fZoom;
+	bottom	= bottom / m_fZoom;
+	top		= top / m_fZoom;
 
 	m_projMat = glm::ortho(left, right, bottom, top, float(m_fNear), float(m_fFar));
 }
@@ -245,44 +215,8 @@ void Camera2D::UpdateProjMatrix()
 *******************************************************************************/
 void Camera2D::UpdateMatrix()
 {
-	this->UpdateViewMatrix();
-	this->UpdateProjMatrix();
-}
-
-/*******************************************************************************
-*! @brief  : Load ma trận cho  GPU
-*! @param    [in] mode : Chế độ zoom hoặc không zoom
-*! @return : void
-*! @author : thuong.nv          - [Date] : 22/04/2023
-*******************************************************************************/
-void Camera2D::UseMatrix(CameraMode mode) const
-{
-	// Use OpenGL >= 1.1 có thể sử dụng shader
-	//if (mode == CameraMode::CMODE_NOZOOM)
-	//{
-	//	glMatrixMode(GL_PROJECTION);
-	//	glLoadMatrixf(glm::value_ptr(m_projMatNozoom));
-
-	//	glMatrixMode(GL_MODELVIEW);
-	//	glLoadIdentity();
-	//}
-	//else
-	//{
-	//	glMatrixMode(GL_PROJECTION);
-	//	glLoadMatrixf(glm::value_ptr(m_projMat));
-
-	//	glMatrixMode(GL_MODELVIEW);
-	//	glLoadMatrixf(glm::value_ptr(m_viewMat));
-	//}
-}
-
-void Camera2D::LoadMatrix(unsigned int program) const
-{
-	//GLint mvLoc = glGetUniformLocation(program, "mv_matrix");
-	//GLint projLoc = glGetUniformLocation(program, "proj_matrix");
-
-	//glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(m_viewMat));
-	//glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_projMat));
+	UpdateViewMatrix();
+	UpdateProjMatrix();
 }
 
 /*******************************************************************************
@@ -292,6 +226,10 @@ void Camera2D::LoadMatrix(unsigned int program) const
 *******************************************************************************/
 void Camera2D::UpdateZoom(float zDelta)
 {
+	static constexpr float ZOOM_MIN = 0.01f;
+	static constexpr float ZOOM_MAX = 100.f;
+	static constexpr float ZOOM_FACTOR = 0.9f;
+
 	// [Note] Điều chỉnh zoom này có lợi thế là sẽ zoom đều             
 	// Khi zoom càng bé thì giảm zoom càng chậm thay cho việc tuyến tính
 	// Tương tự nếu tăng sẽ nhanh nếu nếu zoom càng lớn                 
@@ -314,6 +252,11 @@ void Camera2D::UpdateZoom(float zDelta)
 	{
 		m_fZoom = ZOOM_MAX;
 	}
+}
+
+CameraType Camera2D::GetType() const
+{
+	return CameraType::C2D;
 }
 
 float Camera2D::GetZoom() const
@@ -366,6 +309,11 @@ m_fDis(0.f), m_iMode(0)
 	m_vTarget = { 0.f, 0.f, 0.f };
 }
 
+Camera3D::~Camera3D()
+{
+
+}
+
 /*******************************************************************************
 *! @brief  : Cập nhật model matrix
 *! @param    [in] mode : Chế độ zoom hoặc không zoom
@@ -412,35 +360,6 @@ void Camera3D::UpdateMatrix()
 	this->UpdateProjMatrix();
 }
 
-/*******************************************************************************
-*! @brief  : Load ma trận cho  GPU
-*! @param    [in] mode : Chế độ zoom hoặc không zoom
-*! @return : void
-*! @author : thuong.nv          - [Date] : 22/04/2023
-*******************************************************************************/
-void Camera3D::UseMatrix(CameraMode mode) const
-{
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadMatrixf(glm::value_ptr(m_projMat));
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadMatrixf(glm::value_ptr(m_viewMat * m_modelMat));
-}
-
-/*******************************************************************************
-*! @brief  : Load ma trận cho  GPU
-*! @param    [in] mode : Chế độ zoom hoặc không zoom
-*! @return : void
-*! @author : thuong.nv          - [Date] : 22/04/2023
-*******************************************************************************/
-void Camera3D::LoadMatrix(unsigned int program) const
-{
-	//GLint mvLoc = glGetUniformLocation(program, "mv_matrix");
-	//GLint projLoc = glGetUniformLocation(program, "proj_matrix");
-
-	//glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(m_viewMat));
-	//glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_projMat));
-}
-
 void Camera3D::UpdateOrbitTarget(float phi, float theta)
 {
 	//↓ 2021.09.22 N.V.Thuong [Xử lý ngoại lệ và khoảng xoay]
@@ -476,7 +395,7 @@ void Camera3D::UpdateOrbitTarget(float phi, float theta)
 	//↑ 2021.09.22 N.V.Thuong [Cập nhật thông số camera]
 }
 
-CameraType Camera3D::GetType()
+CameraType Camera3D::GetType() const
 {
 	return CameraType::C3D;
 }

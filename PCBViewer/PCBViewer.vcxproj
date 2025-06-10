@@ -175,6 +175,8 @@
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xtfxrender.h" />
     <ClInclude Include="PCBView.h" />
     <ClInclude Include="PCBViewDef.h" />
     <ClInclude Include="PCBViewIF.h" />

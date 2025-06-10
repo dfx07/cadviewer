@@ -50,6 +50,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 		return false;
 	}
 
+	m_Renderer->Init();
+
 	return true;
 }
 
