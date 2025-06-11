@@ -27,13 +27,14 @@ namespace CadViewer.Common
 
 	public class XMouseDragDropEventArgs : XMouseEventArgs
 	{
-		public XMouseDragDropEventArgs(Point _pt, MouseDragDropState _state)
+		public XMouseDragDropEventArgs(Point _pt, MouseButton _btn, MouseDragDropState _state)
 			: base(_pt)
 		{
 			State = _state;
+			Button = _btn;
 			Pt = _pt;
 		}
-
+		public MouseButton Button { get; set; }
 		public MouseDragDropState State { get; set; }
 	}
 

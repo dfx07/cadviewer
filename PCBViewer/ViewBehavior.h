@@ -32,6 +32,6 @@ interface ITFXKeyboardInteractiveView
 public:
 	virtual ~ITFXKeyboardInteractiveView() {}
 
-	virtual void OnKeyDown(TFXEvent* event) = 0;
+	virtual void OnKeyDown(TFXKeyEvent* event) = 0;
 	virtual void OnKeyUp(TFXKeyEvent* event) = 0;
 };

@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
+using _INT  = System.Int32;
+using _BOOL = System.Int32;
+using _DOUBLE = System.Double;
+
 namespace CadViewer.Interfaces
 {
 	public abstract class PCBViewHandler : NotificationHandler
@@ -21,7 +25,7 @@ namespace CadViewer.Interfaces
 
 		public void OnCreateHandle(IntPtr pHandle, Size size)
 		{
-			m_pHandler = PCBViewerAPI.CreatePCBView(pHandle, (BaseAPI._INT)size.Width, (BaseAPI._INT)size.Height);
+			m_pHandler = PCBViewerAPI.CreatePCBView(pHandle, (_INT)size.Width, (_INT)size.Height);
 
 			PCBViewerAPI.SetCallbackFunctionNotifyUI(m_pHandler, m_pCallbackUI);
 
@@ -55,7 +59,7 @@ namespace CadViewer.Interfaces
 		{
 			//TODO: Implement
 		}
-		public virtual void OnMouseDragDrop(MouseDragDropState state, Point pt)
+		public virtual void OnMouseDragDrop(MouseDragDropState state, MouseButton btn, Point pt)
 		{
 			//TODO: Implement
 		}

@@ -21,6 +21,14 @@ enum class TFXMouseButton
 	RIGHT
 };
 
+enum class TFXMouseDragDropState
+{
+	UNKNOW,
+	DRAG,
+	MOVE,
+	DROP
+};
+
 enum class TFXMouseState
 {
 	UNKNOW,
@@ -137,10 +145,12 @@ struct TFXMouseEvent : TFXEvent
 	TFXMouseButton	m_Button;
 	TFXMouseState	m_State;
 	float			m_Delta;
+	TFXMouseDragDropState m_DragDropState;
 
 	TFXMouseEvent():
 		m_Delta(0.f), m_Button(TFXMouseButton::UNKNOWN),
-		m_State(TFXMouseState::UNKNOW)
+		m_State(TFXMouseState::UNKNOW),
+		m_DragDropState(TFXMouseDragDropState::UNKNOW)
 	{
 
 	}

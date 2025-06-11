@@ -16,4 +16,5 @@ class WInputDeviceMap
 {
 public:
 	static TFXMouseButton MapWinBtn2TFXBtn(int nButton);
+	static TFXMouseDragDropState MapDrag2DragState(int nState);
 };

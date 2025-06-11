@@ -36,3 +36,18 @@ TFXMouseButton WInputDeviceMap::MapWinBtn2TFXBtn(int nButton)
 		return TFXMouseButton::UNKNOWN;
 	}
 }
+
+TFXMouseDragDropState WInputDeviceMap::MapDrag2DragState(int nState)
+{
+	switch (nState)
+	{
+	case 0:
+		return TFXMouseDragDropState::DRAG;
+	case 1:
+		return TFXMouseDragDropState::MOVE;
+	case 2:
+		return TFXMouseDragDropState::DROP;
+	default:
+		return TFXMouseDragDropState::UNKNOW;
+	}
+}

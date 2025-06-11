@@ -75,27 +75,8 @@ void PCBView::DeleteContext()
 	m_pContext = nullptr;
 }
 
-void PCBView::SetView(const int nWidth, const int nHeight)
-{
-	m_nWidth = nWidth;
-	m_nHeight = nHeight;
-}
-
 void PCBView::Draw()
 {
-	//glPointSize(10.0);
-	//glColor3f(0, 1, 0);
-	//glBegin(GL_POINTS);
-	//	glVertex2f(0.f, 0.f);
-	//glEnd();
-
-	//glBegin(GL_LINES);
-	//	glVertex2f(-0.5f, -0.5f);
-	//	glVertex2f(0.5f, 0.5f);
-	//glEnd();
-
-	//m_pContext->SwapBuffer();
-
 	m_pRenderer->Render();
 }
 
@@ -109,6 +90,19 @@ void PCBView::UpdateView()
 
 	if (m_pRenderer)
 		m_pRenderer->SetViewPort(0, 0, m_nWidth, m_nHeight);
+}
+
+void PCBView::OnPaint()
+{
+	Draw();
+}
+
+void PCBView::OnSizeChanged(const int nWidth, const int nHeight)
+{
+	m_nWidth = nWidth;
+	m_nHeight = nHeight;
+
+	UpdateView();
 }
 
 void PCBView::OnMouseEnter(TFXEvent* event)
@@ -139,6 +133,40 @@ void PCBView::OnMouseDoubleClick(TFXMouseEvent* event)
 void PCBView::OnMouseWheel(TFXMouseEvent* event)
 {
 	int a = 10;
+}
+
+void PCBView::OnMouseDragDrop(TFXMouseEvent* event)
+{
+	int a = 10;
+}
+
+void PCBView::OnKeyDown(TFXKeyEvent* event)
+{
+	int a = 10;
+}
+
+void PCBView::OnKeyUp(TFXKeyEvent* event)
+{
+	int a = 10;
+}
+
+/*
+* This function is called to receive the state of control keys (Ctrl, Alt, Shift).
+ * The keyFlags parameter can be a combination of MK_CONTROL, MK_SHIFT, and MK_ALT.
+ */
+void PCBView::OnReceiveCtrlKeyState(const int keyFlags)
+{
+	m_nCtrlKeyFlags = keyFlags;
+}
+
+bool PCBView::IsCtrlKeyPressed(int key) const
+{
+	if (m_pCallbackUI != nullptr)
+	{
+		m_pCallbackUI("GetCtrlKeyPressed", 0, key);
+	}
+
+	return m_nCtrlKeyFlags & key;
 }
 
 DeviceContextPtr PCBView::GetContext() const

@@ -25,6 +25,7 @@ namespace CadViewer.Views
 	public partial class OpenGLView : UserControl, IWinformViewCtrlEventListener
 	{
 		private bool _isDragging = false;
+		private bool _isKeyDownHandled = false;
 
 		public OpenGLView()
 		{
@@ -181,7 +182,7 @@ namespace CadViewer.Views
 			{
 				if (_isDragging)
 				{
-					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Move);
+					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), EventConverter.MouseWpf2WF(e.Button), MouseDragDropState.Move);
 					OpenGLMouseDragDropCommand?.Execute(evtArgs);
 				}
 			}
@@ -193,37 +194,37 @@ namespace CadViewer.Views
 
 		public void WinformViewCtrl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
-			if (IsUseDragDropFun())
-			{
-				_isDragging = true;
-				var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Drag);
-
-				OpenGLMouseDragDropCommand?.Execute(evtArgs);
-			}
-
 			var evt = new XMouseButtonEventArgs(new Point(e.X, e.Y),
 				EventConverter.MouseWpf2WF(e.Button), MouseButtonState.Pressed);
 
 			OpenGLMouseDownCommand?.Execute(evt);
+
+			if (IsUseDragDropFun())
+			{
+				_isDragging = true;
+				var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), EventConverter.MouseWpf2WF(e.Button), MouseDragDropState.Drag);
+
+				OpenGLMouseDragDropCommand?.Execute(evtArgs);
+			}
 		}
 
 		public void WinformViewCtrl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
+			var evt = new XMouseButtonEventArgs(new Point(e.X, e.Y),
+				EventConverter.MouseWpf2WF(e.Button), MouseButtonState.Pressed);
+
+			OpenGLMouseUpCommand?.Execute(evt);
+
 			if (IsUseDragDropFun())
 			{
 				if (_isDragging)
 				{
 					_isDragging = false;
-					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), MouseDragDropState.Drop);
+					var evtArgs = new XMouseDragDropEventArgs(new Point(e.X, e.Y), EventConverter.MouseWpf2WF(e.Button), MouseDragDropState.Drop);
 					OpenGLMouseDragDropCommand?.Execute(evtArgs);
 					Mouse.Capture(null);
 				}
 			}
-
-			var evt = new XMouseButtonEventArgs(new Point(e.X, e.Y),
-				EventConverter.MouseWpf2WF(e.Button), MouseButtonState.Pressed);
-
-			OpenGLMouseUpCommand?.Execute(evt);
 		}
 
 		public void WinformViewCtrl_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)

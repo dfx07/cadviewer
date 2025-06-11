@@ -1,13 +1,16 @@
 /*Define type data macro*/
+#pragma once
+
+#include <cstdint>
 
 #define IntPtr	void*
 
 #ifndef _INT
-#define _INT	int
+#define _INT	int32_t
 #endif // !Int
 
 #ifndef _BOOL
-#define _BOOL	int
+#define _BOOL	int32_t
 #endif // !Bool
 
 #ifndef _FLOAT

@@ -23,6 +23,7 @@ namespace CadViewer.Interfaces
 		SET_TITLE_MSG,
 		DISABLE_EVENTS,
 		ENABLE_EVENTS,
+		GET_CTRL_KEY_STATE,
 	}
 
 	public interface PCBViewNotify
@@ -30,5 +31,7 @@ namespace CadViewer.Interfaces
 		void SetTitle(string strTitle);
 		void SetVisibleTitle(bool bShow);
 		int SendToUI(EnumPCBViewMsg msg, int lParam, int wParam);
+
+		int GetUIData(EnumPCBViewMsg msg, int lParam, int wParam);
 	}
 }

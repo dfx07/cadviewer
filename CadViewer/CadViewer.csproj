@@ -156,7 +156,6 @@
     <Compile Include="Components\ViewPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\OpenGLHost.cs" />
     <Compile Include="Implements\MainPCBViewHandler.cs" />
     <Compile Include="Interfaces\TabBarEventListener.cs" />
     <Compile Include="Interfaces\UserControlBase.cs" />

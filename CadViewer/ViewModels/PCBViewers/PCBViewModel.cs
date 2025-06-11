@@ -75,7 +75,7 @@ namespace CadViewer.ViewModels
 			if (e is null || _pCBViewHandler is null)
 				return;
 
-			_pCBViewHandler.OnMouseDragDrop(e.State, e.Pt);
+			_pCBViewHandler.OnMouseDragDrop(e.State, e.Button, e.Pt);
 		}
 
 		private void OnMouseDown(XMouseButtonEventArgs e)
@@ -178,6 +178,15 @@ namespace CadViewer.ViewModels
 				return;
 
 			_pCBViewHandler.OnViewUpdate();
+		}
+
+		bool GetCtrlKeyState(Key key)
+		{
+			if(Keyboard.IsKeyDown(key))
+			{
+				return true;
+			}
+			return false;
 		}
 
 		#region /// [Internal handle]

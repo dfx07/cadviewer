@@ -172,6 +172,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Library\tfxlibs\include\common\apicom.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\apidef.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\dllexports.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />

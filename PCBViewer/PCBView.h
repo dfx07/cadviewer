@@ -10,7 +10,9 @@
 
 #include <Windows.h>
 
-class PCBView : public NotifyObject, public ITFXMouseInteractiveView
+class PCBView : public NotifyObject,
+	public ITFXMouseInteractiveView,
+	public ITFXKeyboardInteractiveView
 {
 public:
 	PCBView();
@@ -25,19 +27,29 @@ protected:
 	virtual void DeleteContext();
 
 public:
-	virtual void SetView(const int nWidth, const int nHeight);
 	virtual void Draw();
 
 public:
 	void UpdateView();
 
 public:
+	virtual void OnPaint();
+	virtual void OnSizeChanged(const int nWidth, const int nHeight);
+
 	virtual void OnMouseEnter(TFXEvent* event);
 	virtual void OnMouseMove(TFXMouseEvent* event);
 	virtual void OnMouseDown(TFXMouseEvent* event);
 	virtual void OnMouseUp(TFXMouseEvent* event);
 	virtual void OnMouseDoubleClick(TFXMouseEvent* event);
 	virtual void OnMouseWheel(TFXMouseEvent* event);
+	virtual void OnMouseDragDrop(TFXMouseEvent* event);
+
+	virtual void OnKeyDown(TFXKeyEvent* event);
+	virtual void OnKeyUp(TFXKeyEvent* event);
+
+public:
+	void OnReceiveCtrlKeyState(const int keyFlags);
+	bool IsCtrlKeyPressed(int key) const;
 
 public:
 	DeviceContextPtr GetContext() const;
@@ -50,5 +62,6 @@ protected:
 	HWND			m_hHandle;
 	int				m_nWidth;
 	int				m_nHeight;
+	int				m_nCtrlKeyFlags = 0;
 };
 

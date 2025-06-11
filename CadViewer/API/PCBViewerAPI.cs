@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 using CadViewer.Properties;
 using CadViewer.APIDef;
 
+
+using _INT = System.Int32;
+using _BOOL = System.Int32;
+using _DOUBLE = System.Double;
+using _FLOAT = System.Single;
+
 namespace CadViewer.API
 {
 	public static class DLL
@@ -17,8 +23,8 @@ namespace CadViewer.API
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ContextConfig
 	{
-		public BaseAPI._BOOL m_bUseContextExt;
-		public BaseAPI._INT  m_nAntialiasingLevel; // 0~8
+		public _BOOL m_bUseContextExt;
+		public _INT  m_nAntialiasingLevel; // 0~8
 	};
 
 	class PCBViewerAPI : BaseAPI
@@ -39,18 +45,14 @@ namespace CadViewer.API
 
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void DrawLine(IntPtr pPCB, _INT a);
-
-
-		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void Draw(IntPtr pPCB);
+		public static extern void OnPaint(IntPtr pPCB);
 
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Clear(IntPtr pPCB);
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SetView(IntPtr pPCB, _INT nWidth, _INT nHeight);
+		public static extern void OnSizeChanged(IntPtr pPCB, _INT nWidth, _INT nHeight);
 
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
@@ -74,5 +76,16 @@ namespace CadViewer.API
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void OnMouseWheel(IntPtr pPCB, _INT x, _INT y, _FLOAT deltal);
+
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnMouseDragDrop(IntPtr pPCB, _INT x, _INT y, _INT button, _INT state);
+
+
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnKeyDown(IntPtr pPCB, _INT key, _INT nFlags);
+
+
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnKeyUp(IntPtr pPCB, _INT key, _INT nFlags);
 	}
 }

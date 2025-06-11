@@ -72,6 +72,15 @@
     <ClInclude Include="WInputDeviceMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\apicom.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\apidef.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\dllexports.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

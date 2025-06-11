@@ -50,7 +50,7 @@ namespace CadViewer.ViewModels
 
 		private void OnButtonRegisterClick()
 		{
-			mainPCBViewHandler.DrawLine();
+			//mainPCBViewHandler.DrawLine();
 		}
 	}
 }
