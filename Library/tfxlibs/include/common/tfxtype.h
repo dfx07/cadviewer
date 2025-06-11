@@ -14,6 +14,60 @@
 
 #include "tfxdef.h"
 
+__BEGIN_NAMESPACE__
+
+template<typename T>
+struct _tfx2Point
+{
+public:
+	T x = static_cast<T>(0);
+	T y = static_cast<T>(0);
+
+	_tfx2Point() = default;
+
+	_tfx2Point(T _x, T _y) : x(_x), y(_y) {}
+
+	template<typename U, typename V>
+	_tfx2Point(const U& _x, const V& _y) :
+		x(static_cast<T>(_x)), y(static_cast<T>(_y)){
+
+	}
+
+	template<typename U>
+	_tfx2Point<T>& operator=(const _tfx2Point<U>& other) {
+		x = static_cast<T>(other.x);
+		y = static_cast<T>(other.y);
+		return *this;
+	}
+
+	template<typename U>
+	_tfx2Point<T> operator+(const _tfx2Point<U>& other) const {
+		return _tfx2Point<T>(x + static_cast<T>(other.x), y + static_cast<T>(other.y));
+	}
+
+	template<typename U>
+	_tfx2Point<T> operator-(const _tfx2Point<U>& other) const {
+		return _tfx2Point<T>(x - static_cast<T>(other.x), y - static_cast<T>(other.y));
+	}
+
+	template<typename U>
+	_tfx2Point<T>& operator+=(const _tfx2Point<U>& other) {
+		x += static_cast<T>(other.x);
+		y += static_cast<T>(other.y);
+		return *this;
+	}
+
+	template<typename U>
+	_tfx2Point<T>& operator-=(const _tfx2Point<U>& other) {
+		x -= static_cast<T>(other.x);
+		y -= static_cast<T>(other.y);
+		return *this;
+	}
+};
+
+__END_NAMESPACE__
+
+
 // //////////////////////////////////////////////////////////////////////////////////
 // User can define USE_GLM to use GLM types, otherwise custom types will be used
 #ifdef USE_GLM
@@ -36,6 +90,8 @@ template<typename T>
 auto ValuePtr(const T& obj) -> decltype(glm::value_ptr(obj)) {
 	return glm::value_ptr(obj);
 }
+
+typedef _tfx2Point<float> TFX2Point;
 
 __END_NAMESPACE__
 

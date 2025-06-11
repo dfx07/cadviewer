@@ -59,6 +59,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_pRenderer->SetContext(m_pContext);
 	m_pRenderer->SetClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Default clear color is white
 
+	UpdateView();
+
 	return true;
 }
 
@@ -77,11 +79,6 @@ void PCBView::SetView(const int nWidth, const int nHeight)
 {
 	m_nWidth = nWidth;
 	m_nHeight = nHeight;
-
-	m_pCamera->SetView(nWidth, nHeight);
-	m_pCamera->UpdateMatrix();
-
-	m_pRenderer->SetViewPort(0, 0, m_nWidth, m_nHeight);
 }
 
 void PCBView::Draw()
@@ -102,7 +99,51 @@ void PCBView::Draw()
 	m_pRenderer->Render();
 }
 
+void PCBView::UpdateView()
+{
+	if (m_pCamera)
+	{
+		m_pCamera->SetView(m_nWidth, m_nHeight);
+		m_pCamera->UpdateMatrix();
+	}
+
+	if (m_pRenderer)
+		m_pRenderer->SetViewPort(0, 0, m_nWidth, m_nHeight);
+}
+
+void PCBView::OnMouseEnter(TFXEvent* event)
+{
+	int a = 10;
+}
+
+void PCBView::OnMouseMove(TFXMouseEvent* event)
+{
+	int a = 10;
+}
+
+void PCBView::OnMouseDown(TFXMouseEvent* event)
+{
+	int a = 10;
+}
+
+void PCBView::OnMouseUp(TFXMouseEvent* event)
+{
+	int a = 10;
+}
+
+void PCBView::OnMouseDoubleClick(TFXMouseEvent* event)
+{
+	int a = 10;
+}
+
+void PCBView::OnMouseWheel(TFXMouseEvent* event)
+{
+	int a = 10;
+}
+
 DeviceContextPtr PCBView::GetContext() const
 {
 	return m_pContext;
 }
+
+

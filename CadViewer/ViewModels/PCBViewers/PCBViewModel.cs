@@ -30,7 +30,7 @@ namespace CadViewer.ViewModels
 			KeyUpCommand = new RelayCommand<XKeyEventArgs>(OnKeyUp);
 
 			ViewSizeChangedCommand = new RelayCommand<Size>(OnViewSizeChanged);
-			ViewCreatedCommand = new RelayCommand<IntPtr>(OnViewCreated);
+			ViewCreatedCommand = new RelayCommand<XHandleCreatedArgs>(OnViewCreated);
 			ViewUpdateCommand = new RelayCommand(OnViewUpdate);
 
 			SetHandler(pCBViewHandler);
@@ -164,12 +164,12 @@ namespace CadViewer.ViewModels
 			_pCBViewHandler.OnViewChanged((int)newSize.Width, (int)newSize.Height);
 		}
 
-		private void OnViewCreated(IntPtr handle)
+		private void OnViewCreated(XHandleCreatedArgs createdArgs)
 		{
 			if (_pCBViewHandler is null)
 				return;
 
-			_pCBViewHandler.OnCreateContext(handle);
+			_pCBViewHandler.OnCreateHandle(createdArgs.Handle, createdArgs.Size);
 		}
 
 		private void OnViewUpdate()

@@ -19,9 +19,9 @@ namespace CadViewer.Interfaces
 			PCBViewerAPI.DestroyPCBView(m_pHandler);
 		}
 
-		public void OnCreateContext(IntPtr pHandle)
+		public void OnCreateHandle(IntPtr pHandle, Size size)
 		{
-			m_pHandler = PCBViewerAPI.CreatePCBView(pHandle);
+			m_pHandler = PCBViewerAPI.CreatePCBView(pHandle, (BaseAPI._INT)size.Width, (BaseAPI._INT)size.Height);
 
 			PCBViewerAPI.SetCallbackFunctionNotifyUI(m_pHandler, m_pCallbackUI);
 

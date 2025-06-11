@@ -6,10 +6,11 @@
 #include "graphics/rendering/xctx.h"
 #include "graphics/rendering/xrendertype.h"
 
+#include "ViewBehavior.h"
 
 #include <Windows.h>
 
-class PCBView : public NotifyObject
+class PCBView : public NotifyObject, public ITFXMouseInteractiveView
 {
 public:
 	PCBView();
@@ -26,6 +27,17 @@ protected:
 public:
 	virtual void SetView(const int nWidth, const int nHeight);
 	virtual void Draw();
+
+public:
+	void UpdateView();
+
+public:
+	virtual void OnMouseEnter(TFXEvent* event);
+	virtual void OnMouseMove(TFXMouseEvent* event);
+	virtual void OnMouseDown(TFXMouseEvent* event);
+	virtual void OnMouseUp(TFXMouseEvent* event);
+	virtual void OnMouseDoubleClick(TFXMouseEvent* event);
+	virtual void OnMouseWheel(TFXMouseEvent* event);
 
 public:
 	DeviceContextPtr GetContext() const;

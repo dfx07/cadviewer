@@ -63,6 +63,15 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="ViewBehavior.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\modules\inputdevice.h">
+      <Filter>Header Files\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="WInputDeviceMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -79,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\xopenglrenderer.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="WInputDeviceMap.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

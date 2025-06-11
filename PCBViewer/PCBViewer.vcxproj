@@ -179,9 +179,12 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xtfxrender.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\modules\inputdevice.h" />
     <ClInclude Include="PCBView.h" />
     <ClInclude Include="PCBViewDef.h" />
     <ClInclude Include="PCBViewIF.h" />
+    <ClInclude Include="ViewBehavior.h" />
+    <ClInclude Include="WInputDeviceMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
@@ -189,6 +192,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="PCBView.cpp" />
     <ClCompile Include="PCBViewIF.cpp" />
+    <ClCompile Include="WInputDeviceMap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

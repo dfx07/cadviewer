@@ -17,8 +17,8 @@ namespace CadViewer.API
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ContextConfig
 	{
-		public BaseAPI.BOOL m_bUseContextExt;
-		public BaseAPI.INT  m_nAntialiasingLevel; // 0~8
+		public BaseAPI._BOOL m_bUseContextExt;
+		public BaseAPI._INT  m_nAntialiasingLevel; // 0~8
 	};
 
 	class PCBViewerAPI : BaseAPI
@@ -28,10 +28,10 @@ namespace CadViewer.API
 
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr CreatePCBView(IntPtr pHandle);
+		public static extern IntPtr CreatePCBView(IntPtr pHandle, _INT nWidth, _INT nHeight);
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int CreateContext(IntPtr pHandle, ContextConfig _ctxConfig);
+		public static extern _INT CreateContext(IntPtr pHandle, ContextConfig _ctxConfig);
 
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
@@ -39,7 +39,7 @@ namespace CadViewer.API
 
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void DrawLine(IntPtr pPCB, INT a);
+		public static extern void DrawLine(IntPtr pPCB, _INT a);
 
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
@@ -49,9 +49,30 @@ namespace CadViewer.API
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Clear(IntPtr pPCB);
 
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void SetView(IntPtr pPCB, _INT nWidth, _INT nHeight);
+
 
 		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SetView(IntPtr pPCB, INT nWidth, INT nHeight);
+		public static extern void OnMouseEnter(IntPtr pPCB);
 
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnMouseMove(IntPtr pPCB, _INT x, _INT y);
+
+
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnMouseDown(IntPtr pPCB, _INT x, _INT  y, _INT button);
+
+
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnMouseUp(IntPtr pPCB, _INT x, _INT y, _INT button);
+
+
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnMouseDoubleClick(IntPtr pPCB, _INT x, _INT y, _INT button);
+
+
+		[DllImport(DLL.PCBNameDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void OnMouseWheel(IntPtr pPCB, _INT x, _INT y, _FLOAT deltal);
 	}
 }

@@ -154,7 +154,6 @@ namespace CadViewer.Common
 		}
 	}
 
-
 	public class XKeyEventArgs
 	{
 		public XKeyEventArgs(Key _key, KeyStates _keyState)
@@ -164,5 +163,17 @@ namespace CadViewer.Common
 		}
 		public Key Key { get; set; }
 		public KeyStates KeyStates { get; set; }
+	}
+
+	public class XHandleCreatedArgs
+	{
+		public XHandleCreatedArgs(IntPtr handle, Size size)
+		{
+			Size = size;
+			Handle = handle;
+		}
+
+		public IntPtr Handle { get; set; }
+		public Size Size { get; set; }
 	}
 }

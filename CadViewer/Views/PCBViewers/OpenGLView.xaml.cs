@@ -161,10 +161,13 @@ namespace CadViewer.Views
 		//------------------------------------------------------------------------------/
 		#endregion
 
-		public void WinformViewCtrl_OnCreated(object sender, IntPtr handle)
+		public void WinformViewCtrl_OnCreated(object sender, IntPtr handle, int width, int height)
 		{
 			PART_ControlViewer.ViewHandler = this;
-			OpenGLViewCreatedCommand?.Execute(handle);
+
+			XHandleCreatedArgs args = new XHandleCreatedArgs(handle, new Size(width, height));
+
+			OpenGLViewCreatedCommand?.Execute(args);
 		}
 
 		public void WinformViewCtrl_OnViewUpdate(object sender)
@@ -276,7 +279,7 @@ namespace CadViewer.Views
 		{
 			if (PART_ControlViewer != null)
 			{
-				WinformViewCtrl_OnCreated(null, PART_ControlViewer.Handle);
+				WinformViewCtrl_OnCreated(null, PART_ControlViewer.Handle, PART_ControlViewer.Width, PART_ControlViewer.Height);
 			}
 		}
 

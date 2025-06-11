@@ -36,24 +36,33 @@ namespace CadViewer.Implements
 		public override void OnMouseMove(Point pt)
 		{
 			PCBViewNotifier.SetTitle("Mouse Move :" + pt.ToString());
+
+			PCBViewerAPI.OnMouseMove(m_pHandler, (BaseAPI._INT)pt.X, (BaseAPI._INT)pt.Y);
 		}
 
 		public override void OnMouseEnter()
 		{
 			PCBViewNotifier.SetTitle("Mouse Enter");
+			PCBViewerAPI.OnMouseEnter(m_pHandler);
 		}
 
 		public override void OnMouseDown(MouseButton btn, Point pt)
 		{
 			PCBViewNotifier.SetTitle("Mouse Down : " + pt.ToString());
+
+			PCBViewerAPI.OnMouseDown(m_pHandler, (BaseAPI._INT)pt.X, (BaseAPI._INT)pt.Y, (BaseAPI._INT)((int)btn));
 		}
 		public override void OnMouseUp(MouseButton btn, Point pt)
 		{
 			PCBViewNotifier.SetTitle("Mouse Up : " + pt.ToString());
+
+			PCBViewerAPI.OnMouseUp(m_pHandler, (BaseAPI._INT)pt.X, (BaseAPI._INT)pt.Y, (BaseAPI._INT)((int)btn));
 		}
 		public override void OnMouseWheel(float delta, Point pt)
 		{
 			PCBViewNotifier.SetTitle("Mouse wheel: " + pt);
+
+			PCBViewerAPI.OnMouseWheel(m_pHandler, (BaseAPI._INT)pt.X, (BaseAPI._INT)pt.Y, (BaseAPI._FLOAT)((float)delta));
 		}
 
 		public override void OnMouseDragDrop(MouseDragDropState state, Point pt)

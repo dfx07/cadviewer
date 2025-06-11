@@ -12,23 +12,31 @@ namespace CadViewer.API
 
 	public class BaseAPI
 	{
-		public struct BOOL
+		public struct _BOOL
 		{
 			private Int32 value;
-			public BOOL(Int32 value) => this.value = value;
-			public static implicit operator BOOL(Int32 value) => new BOOL(value);
-			public static implicit operator Int32(BOOL b) => b.value;
+			public _BOOL(Int32 value) => this.value = value;
+			public static implicit operator _BOOL(Int32 value) => new _BOOL(value);
+			public static implicit operator Int32(_BOOL b) => b.value;
 		}
 
-		public struct INT
+		public struct _INT
 		{
 			private Int32 value;
-			public INT(Int32 value) => this.value = value;
-			public static implicit operator INT(Int32 value) => new INT(value);
-			public static implicit operator Int32(INT i) => i.value;
+			public _INT(Int32 value) => this.value = value;
+			public static implicit operator _INT(Int32 value) => new _INT(value);
+			public static implicit operator Int32(_INT i) => i.value;
 		}
 
-		public static BOOL TRUE = 1;
-		public static BOOL FALSE = 0;
+		public struct _FLOAT
+		{
+			private float value;
+			public _FLOAT(float value) => this.value = value;
+			public static implicit operator _FLOAT(float value) => new _FLOAT(value);
+			public static implicit operator float(_FLOAT i) => i.value;
+		}
+
+		public static _BOOL TRUE = 1;
+		public static _BOOL FALSE = 0;
 	}
 }

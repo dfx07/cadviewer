@@ -34,7 +34,7 @@ namespace CadViewer.Components
 			if (ViewHandler is null)
 				return;
 
-			ViewHandler.WinformViewCtrl_OnCreated(this, this.Handle);
+			ViewHandler.WinformViewCtrl_OnCreated(this, this.Handle, Width, Height);
 		}
 
 		protected override void OnPaint(PaintEventArgs e)

@@ -2,18 +2,29 @@
 
 #define IntPtr	void*
 
-#ifndef Int
-#define Int		int
+#ifndef _INT
+#define _INT	int
 #endif // !Int
 
-#ifndef Bool
-#define Bool	int
+#ifndef _BOOL
+#define _BOOL	int
 #endif // !Bool
 
-#define Float	float
-#define Double	double
+#ifndef _FLOAT
+#define _FLOAT	float
+#endif // !FLOAT
 
-#define True	1
-#define False	0
+#ifndef _DOUBLE
+#define _DOUBLE	double
+#endif // !DOUBLE
+
+#ifndef TRUE
+#define TRUE	1
+#endif // !TRUE
+
+#ifndef FALSE
+#define FALSE	0
+#endif // !FALSE
+
 
 #define NULL_RETURN(ptr, ...) if (ptr == nullptr) return __VA_ARGS__

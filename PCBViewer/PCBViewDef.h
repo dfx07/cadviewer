@@ -3,6 +3,6 @@
 
 struct ContextConfig
 {
-	Bool m_bUseContextExt{ True };
-	Int  m_nAntialiasingLevel{ 0 }; // 0~8
+	_BOOL m_bUseContextExt{ TRUE };
+	_INT  m_nAntialiasingLevel{ 0 }; // 0~8
 };

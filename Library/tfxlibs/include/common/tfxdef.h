@@ -20,4 +20,9 @@
 
 #define USING_NAMESPACE using namespace __NAME_SPACE__;
 
+#ifndef interface
+#define interface struct
+#endif // !interface
+
+
 #endif // !TFXDEF_H
