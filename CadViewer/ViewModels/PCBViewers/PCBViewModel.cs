@@ -2,9 +2,11 @@
 using CadViewer.Common;
 using CadViewer.Components;
 using CadViewer.Interfaces;
+using CadViewer.UIControls;
 using CadViewer.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
@@ -15,23 +17,23 @@ using System.Windows.Interop;
 
 namespace CadViewer.ViewModels
 {
-	public class PCBViewModel : ViewModelBase, PCBViewNotify
+	public class PCBViewModel : ViewModelBase, IPCBViewHandlerListener
 	{
 		public PCBViewModel(PCBViewHandler pCBViewHandler = null)
 		{
-			MouseMoveCommand = new RelayCommand<XMouseEventArgs>(OnMouseMove);
-			MouseEnterCommand = new RelayCommand<XMouseEventArgs>(OnMouseEnter);
-			MouseDragDropCommand = new RelayCommand<XMouseDragDropEventArgs>(OnMouseDragDrop);
-			MouseDownCommand = new RelayCommand<XMouseButtonEventArgs>(OnMouseDown);
-			MouseUpCommand = new RelayCommand<XMouseButtonEventArgs>(OnMouseUp);
-			MouseWheelCommand = new RelayCommand<XMouseWheelEventArgs>(OnMouseWheel);
+			MouseMoveCommand = new RelayCommand<XMouseEventArgs>(pCBViewHandler.OnMouseMove);
+			MouseEnterCommand = new RelayCommand<XMouseEventArgs>(pCBViewHandler.OnMouseEnter);
+			MouseDragDropCommand = new RelayCommand<XMouseDragDropEventArgs>(pCBViewHandler.OnMouseDragDrop);
+			MouseDownCommand = new RelayCommand<XMouseButtonEventArgs>(pCBViewHandler.OnMouseDown);
+			MouseUpCommand = new RelayCommand<XMouseButtonEventArgs>(pCBViewHandler.OnMouseUp);
+			MouseWheelCommand = new RelayCommand<XMouseWheelEventArgs>(pCBViewHandler.OnMouseWheel);
 
-			KeyDownCommand = new RelayCommand<XKeyEventArgs>(OnKeyDown);
-			KeyUpCommand = new RelayCommand<XKeyEventArgs>(OnKeyUp);
+			KeyDownCommand = new RelayCommand<XKeyEventArgs>(pCBViewHandler.OnKeyDown);
+			KeyUpCommand = new RelayCommand<XKeyEventArgs>(pCBViewHandler.OnKeyUp);
 
-			ViewSizeChangedCommand = new RelayCommand<Size>(OnViewSizeChanged);
-			ViewCreatedCommand = new RelayCommand<XHandleCreatedArgs>(OnViewCreated);
-			ViewUpdateCommand = new RelayCommand(OnViewUpdate);
+			ViewSizeChangedCommand = new RelayCommand<Size>(pCBViewHandler.OnViewSizeChanged);
+			ViewCreatedCommand = new RelayCommand<XHandleCreatedArgs>(pCBViewHandler.OnViewCreated);
+			ViewUpdateCommand = new RelayCommand(pCBViewHandler.OnViewUpdate);
 
 			SetHandler(pCBViewHandler);
 		}
@@ -39,145 +41,6 @@ namespace CadViewer.ViewModels
 		~PCBViewModel()
 		{
 
-		}
-
-		public void OnInitModel()
-		{
-			//TODO: Implement
-		}
-
-		private void OnMouseMove(XMouseEventArgs e)
-		{
-			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_MOVE))
-				return;
-
-			if (e is null || _pCBViewHandler is null)
-				return;
-
-			_pCBViewHandler.OnMouseMove(e.Pt);
-		}
-
-		private void OnMouseEnter(XMouseEventArgs e)
-		{
-			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_ENTER))
-				return;
-
-			if (_pCBViewHandler is null)
-				return;
-
-			_pCBViewHandler.OnMouseEnter();
-		}
-		private void OnMouseDragDrop(XMouseDragDropEventArgs e)
-		{
-			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DRAG))
-				return;
-
-			if (e is null || _pCBViewHandler is null)
-				return;
-
-			_pCBViewHandler.OnMouseDragDrop(e.State, e.Button, e.Pt);
-		}
-
-		private void OnMouseDown(XMouseButtonEventArgs e)
-		{
-			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DOWN))
-				return;
-
-			if (e is null || _pCBViewHandler is null)
-				return;
-
-			if(e.Button == MouseButton.Left)
-			{
-				_pCBViewHandler.OnMouseDown(MouseButton.Left, e.Pt);
-			}
-			else if(e.Button == MouseButton.Right)
-			{
-				_pCBViewHandler.OnMouseDown(MouseButton.Right, e.Pt);
-			}
-			else if(e.Button == MouseButton.Middle)
-			{
-				_pCBViewHandler.OnMouseDown(MouseButton.Middle, e.Pt);
-			}
-		}
-		private void OnMouseUp(XMouseButtonEventArgs e)
-		{
-			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_UP))
-				return;
-
-			if (e is null || _pCBViewHandler is null)
-				return;
-
-			if (e.Button == MouseButton.Left)
-			{
-				_pCBViewHandler.OnMouseUp(MouseButton.Left, e.Pt);
-			}
-			else if (e.Button == MouseButton.Right)
-			{
-				_pCBViewHandler.OnMouseUp(MouseButton.Right, e.Pt);
-			}
-			else if (e.Button == MouseButton.Middle)
-			{
-				_pCBViewHandler.OnMouseUp(MouseButton.Middle, e.Pt);
-			}
-		}
-		private void OnMouseWheel(XMouseWheelEventArgs e)
-		{
-			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_WHEEL))
-				return;
-
-			if (e is null || _pCBViewHandler is null)
-				return;
-
-			_pCBViewHandler.OnMouseWheel(e.Delta, e.Pt);
-		}
-
-		/*Keyboard events*/
-		private void OnKeyDown(XKeyEventArgs k)
-		{
-			if (!CanExecuteEvents(EnumPCBViewEvent.KEY_DOWN))
-				return;
-
-			if (!_isKeyDownHandled)
-			{
-				_pCBViewHandler.OnKeyDown(k.Key);
-				_isKeyDownHandled = true;
-			}
-		}
-		private void OnKeyUp(XKeyEventArgs k)
-		{
-			_isKeyDownHandled = false;
-
-			if (!CanExecuteEvents(EnumPCBViewEvent.KEY_UP))
-				return;
-
-			_pCBViewHandler.OnKeyUp(k.Key);
-		}
-
-		private void OnViewSizeChanged(Size newSize)
-		{
-			Width = newSize.Width;
-			Height = newSize.Height;
-
-			if (_pCBViewHandler is null)
-				return;
-
-			_pCBViewHandler.OnViewChanged((int)newSize.Width, (int)newSize.Height);
-		}
-
-		private void OnViewCreated(XHandleCreatedArgs createdArgs)
-		{
-			if (_pCBViewHandler is null)
-				return;
-
-			_pCBViewHandler.OnCreateHandle(createdArgs.Handle, createdArgs.Size);
-		}
-
-		private void OnViewUpdate()
-		{
-			if (_pCBViewHandler is null)
-				return;
-
-			_pCBViewHandler.OnViewUpdate();
 		}
 
 		bool GetCtrlKeyState(Key key)
@@ -188,31 +51,6 @@ namespace CadViewer.ViewModels
 			}
 			return false;
 		}
-
-		#region /// [Internal handle]
-		// ------------------------------------------------------------------------------//
-
-		private bool CanExecuteEvents(EnumPCBViewEvent e)
-		{
-			if(_excludeEvents == 0)
-				return true;
-
-			if ((_excludeEvents & (Int64)e) > 0L)
-				return false;
-
-			return true;
-		}
-
-		private void SetDisableEvents(Int64 events)
-		{
-			_excludeEvents &= events;
-		}
-		private void SetEnableEvents(Int64 events)
-		{
-			_excludeEvents |= ~events;
-		}
-
-		#endregion
 
 		#region [Handle PCBViewNotifier]
 		// ------------------------------------------------------------------------------//
@@ -225,44 +63,83 @@ namespace CadViewer.ViewModels
 		{
 			TitleVisibility = bShow ? Visibility.Visible : Visibility.Collapsed;
 		}
-		public int SendToUI(EnumPCBViewMsg msg, int lParam, int wParam)
+
+		public int SendUIMessage(EnumPCBViewMsg msg, int nData, float fData, string strData, object pObject)
 		{
-			switch(msg)
+			switch (msg)
 			{
 				case EnumPCBViewMsg.SET_TITLE_MSG:
-					SetTitle(lParam.ToString());
-					break;
+					{
+						SetTitle(strData);
+						break;
+					}
+				case EnumPCBViewMsg.SHOW_MENU_CONTENT:
+					{
+						var menuItems = pObject as ObservableCollection<MenuItemData>;
+						//ShowMenuContent(menuItems);
 
-				case EnumPCBViewMsg.DISABLE_EVENTS:
-					SetDisableEvents(lParam);
-					break;
+						ContextMenuItems = menuItems;
+						IsContextMenuVisible = true;
 
-				case EnumPCBViewMsg.ENABLE_EVENTS:
-					SetEnableEvents(lParam);
+						break;
+					}
+				default:
 					break;
 			}
 
 			return 1;
 		}
 
+		public void ShowMenuContent(ObservableCollection<MenuItemData> menuItems)
+		{
+			//if (menuItems is null)
+			//	return;
+
+			//var contextMenu = new CContextMenu();
+
+			//foreach (var itemData in menuItems)
+			//{
+			//	CMenuItem items = CMenuItem.CreateMenuItem(itemData) as CMenuItem;
+
+			//	contextMenu.Items.Add(items);
+			//}
+
+			//contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
+
+			//contextMenu.IsOpen = true;
+		}
+
+		public int GetIntUIData(EnumPCBViewMsg msg, int lParam, int wParam)
+		{
+			switch(msg)
+			{
+				case EnumPCBViewMsg.GET_CTRL_KEY_STATE:
+					return GetCtrlKeyState((Key)lParam) ? 1 : 0;
+
+				default:
+					break;
+			}
+			return 1;
+		}
+
+		public string GetStringUIData(EnumPCBViewMsg msg, int lParam, int wParam)
+		{
+			return "";
+		}
+
 		#endregion
 
-		#region [Internal handle]
-		// ------------------------------------------------------------------------------//
+
 		public void SetHandler(PCBViewHandler handler)
 		{
 			_pCBViewHandler = handler;
-			handler?.SetPCBViewNotifier(this);
+			handler?.SetPCBViewHandleListener(this);
 		}
 
 		public PCBViewHandler GetHandler()
 		{
 			return _pCBViewHandler;
 		}
-
-		#endregion
-
-		private Int64 _excludeEvents = 0;
 
 		private PCBViewHandler _pCBViewHandler { get; set; }
 
@@ -278,11 +155,38 @@ namespace CadViewer.ViewModels
 		public ICommand ViewCreatedCommand { get; set; }
 		public ICommand ViewUpdateCommand { get; set; }
 
-		private bool _isKeyDownHandled = false;
-		private string _title; public string ViewTitle { get => _title; set => SetProperty(ref _title, value); }
-		private string _status; public string ViewStatus { get => _status; set => SetProperty(ref _status, value); }
-		private Visibility _titleVisibility; public Visibility TitleVisibility { get => _titleVisibility; set => SetProperty(ref _titleVisibility, value); }
-		private double _width; public double Width { get => _width; set => SetProperty(ref _width, value); }
-		private double _height; public double Height { get => _height; set => SetProperty(ref _height, value); }
+		private string _title;
+		public string ViewTitle { get => _title; set => SetProperty(ref _title, value); }
+
+		private string _status;
+		public string ViewStatus { get => _status; set => SetProperty(ref _status, value); }
+
+		private Visibility _titleVisibility;
+		public Visibility TitleVisibility { get => _titleVisibility; set => SetProperty(ref _titleVisibility, value); }
+
+		private double _width;
+		public double Width { get => _width; set => SetProperty(ref _width, value); }
+
+		private double _height;
+		public double Height { get => _height; set => SetProperty(ref _height, value); }
+
+		/// <summary>
+		/// ************************ Menu-Contenxt ************************
+		/// </summary>
+		public ObservableCollection<MenuItemData> ContextMenuItems { get; set; }
+
+		private bool _isContextMenuVisible;
+		public bool IsContextMenuVisible
+		{
+			get => _isContextMenuVisible;
+			set => SetProperty(ref _isContextMenuVisible, value);
+		}
+
+		private Point _menuPosition;
+		public Point MenuPosition
+		{
+			get => _menuPosition;
+			set => SetProperty(ref _menuPosition, value);
+		}
 	}
 }

@@ -9,17 +9,17 @@ namespace CadViewer.Interfaces
 {
 	interface INotificationHandler
 	{
-		void OnNotifyHandle(string message, int nParam, int nWaram);
+		void OnHandleNotify(string message, int nParam, int nWaram);
 	}
 
-	public class NotificationHandler
+	public class NotificationHandler : INotificationHandler
 	{
 		public NotificationHandler()
 		{
-			m_pCallbackUI = new CallbackFunctionNotifyUI(this.OnNotifyHandle);
+			m_pCallbackUI = new CallbackFunctionNotifyUI(this.OnHandleNotify);
 		}
 
-		public virtual void OnNotifyHandle(string message, int nParam, int nWaram)
+		public virtual void OnHandleNotify(string message, int nParam, int nWaram)
 		{
 			//TODO : implement
 		}

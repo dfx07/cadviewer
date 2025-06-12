@@ -73,6 +73,11 @@ void OpenGLRenderer::Render()
 		glVertex2f(100.5f, 100.5f);
 	glEnd();
 
+	glColor3f(0.5, 1, 1);
+		glBegin(GL_POINTS);
+		glVertex2f(0.f, 100.f);
+	glEnd();
+
 	m_pContext->SwapBuffer();
 }
 

@@ -173,7 +173,7 @@ LIBRARY_API void OnMouseDragDrop(IntPtr pPCB, _INT x, _INT y, _INT button, _INT 
 	mouseEvent.m_Delta = 0.f;
 	mouseEvent.m_DragDropState = WInputDeviceMap::MapDrag2DragState(state);
 
-	pView->OnMouseWheel(&mouseEvent);
+	pView->OnMouseDragDrop(&mouseEvent);
 }
 
 LIBRARY_API void OnKeyDown(IntPtr pPCB, _INT keyCode, _INT flag)
@@ -201,5 +201,5 @@ LIBRARY_API void ProcessKeyState(IntPtr pPCB, _INT keyFlags)
 	PCBView* pView = reinterpret_cast<PCBView*>(pPCB);
 	NULL_RETURN(pView);
 
-	pView->OnReceiveControlKeyState();
+	pView->OnReceiveCtrlKeyState(keyFlags);
 }

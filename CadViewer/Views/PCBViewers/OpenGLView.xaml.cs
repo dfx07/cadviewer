@@ -25,7 +25,6 @@ namespace CadViewer.Views
 	public partial class OpenGLView : UserControl, IWinformViewCtrlEventListener
 	{
 		private bool _isDragging = false;
-		private bool _isKeyDownHandled = false;
 
 		public OpenGLView()
 		{
@@ -49,6 +48,15 @@ namespace CadViewer.Views
 		//	get => (ViewPanel)GetValue(OpenGLViewPanelProperty);
 		//	set => SetValue(OpenGLViewPanelProperty, value);
 		//}
+
+		public static readonly DependencyProperty ViewTitleProperty =
+		DependencyProperty.Register(nameof(ViewTitle), typeof(string), typeof(OpenGLView), new PropertyMetadata(null));
+
+		public string ViewTitle
+		{
+			get => (string)GetValue(ViewTitleProperty);
+			set => SetValue(ViewTitleProperty, value);
+		}
 
 		#region [Mouse Events]
 		/// <summary>

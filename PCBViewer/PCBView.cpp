@@ -112,17 +112,36 @@ void PCBView::OnMouseEnter(TFXEvent* event)
 
 void PCBView::OnMouseMove(TFXMouseEvent* event)
 {
-	int a = 10;
+	if (m_ePCBViewState == EPCBViewState::move)
+	{
+		HandleMoveView(event->m_Pt);
+
+		m_ptLastMouse = event->m_Pt;
+	}
 }
 
 void PCBView::OnMouseDown(TFXMouseEvent* event)
 {
-	int a = 10;
+	if (m_ePCBViewState == EPCBViewState::none)
+	{
+		if (event->m_Button == TFXMouseButton::MID)
+		{
+			m_ePCBViewState = EPCBViewState::move;
+			m_ptMouseLastClick = event->m_Pt;
+			m_ptLastMouse = event->m_Pt;
+		}
+	}
 }
 
 void PCBView::OnMouseUp(TFXMouseEvent* event)
 {
-	int a = 10;
+	if (m_ePCBViewState == EPCBViewState::move)
+	{
+		if (event->m_Button == TFXMouseButton::MID)
+		{
+			m_ePCBViewState = EPCBViewState::none;
+		}
+	}
 }
 
 void PCBView::OnMouseDoubleClick(TFXMouseEvent* event)
@@ -132,7 +151,12 @@ void PCBView::OnMouseDoubleClick(TFXMouseEvent* event)
 
 void PCBView::OnMouseWheel(TFXMouseEvent* event)
 {
-	int a = 10;
+	float zDelta = event->m_Delta;
+
+	m_pCamera->ZoomTo({ event->m_Pt.x, event->m_Pt.y, 0 }, zDelta);
+	m_pCamera->UpdateMatrix();
+
+	OnPaint();
 }
 
 void PCBView::OnMouseDragDrop(TFXMouseEvent* event)
@@ -148,6 +172,21 @@ void PCBView::OnKeyDown(TFXKeyEvent* event)
 void PCBView::OnKeyUp(TFXKeyEvent* event)
 {
 	int a = 10;
+}
+
+bool PCBView::HandleMoveView(TFX_DevicePt ptNew)
+{
+	tfx::Vec2 ptNewReal = m_pCamera->Screen2WorldPoint({ ptNew.x, ptNew.y, 0 });
+	tfx::Vec2 ptOldReal = m_pCamera->Screen2WorldPoint({ m_ptLastMouse.x, m_ptLastMouse.y, 0 });
+
+	tfx::Vec2 vOffset = ptNewReal - ptOldReal;
+
+	m_pCamera->Move(tfx::Vec3(vOffset.x, vOffset.y, 0));
+	m_pCamera->UpdateMatrix();
+
+	OnPaint();
+
+	return true;
 }
 
 /*

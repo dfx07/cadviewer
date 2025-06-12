@@ -10,6 +10,13 @@
 
 #include <Windows.h>
 
+enum EPCBViewState
+{
+	none = 0,
+	move = 1 << 0,
+	zoom = 1 << 1,
+};
+
 class PCBView : public NotifyObject,
 	public ITFXMouseInteractiveView,
 	public ITFXKeyboardInteractiveView
@@ -48,6 +55,8 @@ public:
 	virtual void OnKeyUp(TFXKeyEvent* event);
 
 public:
+	bool HandleMoveView(TFX_DevicePt ptNew);
+
 	void OnReceiveCtrlKeyState(const int keyFlags);
 	bool IsCtrlKeyPressed(int key) const;
 
@@ -63,5 +72,12 @@ protected:
 	int				m_nWidth;
 	int				m_nHeight;
 	int				m_nCtrlKeyFlags = 0;
+
+	EPCBViewState	m_ePCBViewState = EPCBViewState::none;
+	TFX_DevicePt	m_ptMouseLastClick = { 0,0 };
+	TFX_DevicePt	m_ptLastMouse = { 0,0 };
+	/*
+		1 : Move
+	*/
 };
 

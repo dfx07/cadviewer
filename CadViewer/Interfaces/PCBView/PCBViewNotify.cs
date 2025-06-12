@@ -21,17 +21,17 @@ namespace CadViewer.Interfaces
 	public enum EnumPCBViewMsg
 	{
 		SET_TITLE_MSG,
+		SHOW_MENU_CONTENT,
 		DISABLE_EVENTS,
 		ENABLE_EVENTS,
 		GET_CTRL_KEY_STATE,
 	}
 
-	public interface PCBViewNotify
+	public interface IPCBViewHandlerListener
 	{
-		void SetTitle(string strTitle);
-		void SetVisibleTitle(bool bShow);
-		int SendToUI(EnumPCBViewMsg msg, int lParam, int wParam);
+		int SendUIMessage(EnumPCBViewMsg msg, int nData, float fData, string strData, object pObjectData);
 
-		int GetUIData(EnumPCBViewMsg msg, int lParam, int wParam);
+		int GetIntUIData(EnumPCBViewMsg msg, int lParam, int wParam);
+		string GetStringUIData(EnumPCBViewMsg msg, int lParam, int wParam);
 	}
 }

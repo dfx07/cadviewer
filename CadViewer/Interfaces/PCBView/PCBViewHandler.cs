@@ -23,73 +23,127 @@ namespace CadViewer.Interfaces
 			PCBViewerAPI.DestroyPCBView(m_pHandler);
 		}
 
-		public void OnCreateHandle(IntPtr pHandle, Size size)
+		public virtual bool OnCreatePCBLogic(IntPtr pHandle, Size size)
 		{
 			m_pHandler = PCBViewerAPI.CreatePCBView(pHandle, (_INT)size.Width, (_INT)size.Height);
 
 			PCBViewerAPI.SetCallbackFunctionNotifyUI(m_pHandler, m_pCallbackUI);
 
-			CreateContext();
+			return true;
+		}
+
+		protected bool CanExecuteEvents(EnumPCBViewEvent e)
+		{
+			if (_excludeEvents == 0)
+				return true;
+
+			if ((_excludeEvents & (Int64)e) > 0L)
+				return false;
+
+			return true;
+		}
+
+		protected void SetDisableEvents(Int64 events)
+		{
+			_excludeEvents &= events;
+		}
+
+		protected void SetEnableEvents(Int64 events)
+		{
+			_excludeEvents |= ~events;
+		}
+
+		// Implement
+		public virtual void OnMouseMove(XMouseEventArgs e)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_MOVE))
+				return;
+
+			// TODO : Implement
+		}
+
+		public virtual void OnMouseEnter(XMouseEventArgs e)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_ENTER))
+				return;
+
+			// TODO : Implement
+		}
+
+		public virtual void OnMouseDragDrop(XMouseDragDropEventArgs e)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DRAG))
+				return;
+
+			// TODO : Implement
+		}
+
+		public virtual void OnMouseDown(XMouseButtonEventArgs e)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_DOWN))
+				return;
+
+			// TODO : Implement
+		}
+
+		public virtual void OnMouseUp(XMouseButtonEventArgs e)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_UP))
+				return;
+
+			// TODO : Implement
+		}
+
+		public virtual void OnMouseWheel(XMouseWheelEventArgs e)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.MOUSE_WHEEL))
+				return;
+
+			// TODO : Implement
+		}
+
+		/*Keyboard events*/
+		public virtual void OnKeyDown(XKeyEventArgs k)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.KEY_DOWN))
+				return;
+
+			// TODO : Implement
+		}
+		public virtual void OnKeyUp(XKeyEventArgs k)
+		{
+			if (!CanExecuteEvents(EnumPCBViewEvent.KEY_UP))
+				return;
+
+			// TODO : Implement
+		}
+
+		public virtual void OnViewSizeChanged(Size newSize)
+		{
+			// TODO : Implement
+		}
+
+		public virtual void OnViewCreated(XHandleCreatedArgs createdArgs)
+		{
+			// TODO : Implement
 		}
 
 		public virtual void OnViewUpdate()
 		{
-			//TODO: Implement
+			// TODO : Implement
 		}
 
-		public virtual void CreateContext()
+		public virtual void SetPCBViewHandleListener(IPCBViewHandlerListener pCBViewHandlerListener)
 		{
-			//TODO: Implement
+			PCBViewUIHandler = pCBViewHandlerListener;
 		}
 
-		public virtual void OnMouseMove(Point pt)
+		public IPCBViewHandlerListener GetPCBViewHandleListener()
 		{
-			//TODO: Implement
-		}
-		public virtual void OnMouseEnter()
-		{
-			//TODO: Implement
+			return PCBViewUIHandler;
 		}
 
-		public virtual void OnMouseDown(MouseButton btn, Point pt)
-		{
-			//TODO: Implement
-		}
-		public virtual void OnMouseUp(MouseButton btn, Point pt)
-		{
-			//TODO: Implement
-		}
-		public virtual void OnMouseDragDrop(MouseDragDropState state, MouseButton btn, Point pt)
-		{
-			//TODO: Implement
-		}
-		public virtual void OnMouseWheel(float delta, Point pt)
-		{
-			//TODO: Implement
-		}
-		public virtual void OnKeyDown(Key key)
-		{
-			//TODO: Implement
-		}
-		public virtual void OnKeyUp(Key key)
-		{
-			//TODO: Implement
-		}
-		public virtual void OnViewChanged(int width, int height)
-		{
-			//TODO: Implement
-		}
-
-		public void SetPCBViewNotifier(PCBViewNotify pCBViewNofifier)
-		{
-			PCBViewNotifier = pCBViewNofifier;
-		}
-
-		public PCBViewNotify GetPCBViewNotifier()
-		{
-			return PCBViewNotifier;
-		}
-
-		protected PCBViewNotify PCBViewNotifier = null;
+		protected Int64 _excludeEvents = 0;
+		protected IPCBViewHandlerListener PCBViewUIHandler = null;
 	}
 }

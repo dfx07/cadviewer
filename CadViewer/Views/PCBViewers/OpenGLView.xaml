@@ -5,21 +5,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:CadViewer.Views"
+             xmlns:ui="clr-namespace:CadViewer.UIControls"
              xmlns:comp="clr-namespace:CadViewer.Components"
              xmlns:com="clr-namespace:CadViewer.Common"
              xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
-             xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-             IsTabStop="True"
+             xmlns:cvt="clr-namespace:CadViewer.Converters" IsTabStop="True"
              Focusable="True"
              mc:Ignorable="d"
              d:DesignHeight="640" d:DesignWidth="640">
+    <UserControl.Resources>
+        <cvt:CommonBoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
 
     <Border BorderBrush="Wheat">
         <Grid Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <wfi:WindowsFormsHost x:Name="xWindowsFormsHost" Margin="-2,-2,-2,-3" Loaded="xWindowsFormsHost_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <wfi:WindowsFormsHost x:Name="xWindowsFormsHost" Margin="-2,-2,-2,-3" Loaded="xWindowsFormsHost_Loaded"
+                                  Focusable="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <comp:ViewPanel x:Name="PART_ControlViewer" Dock="Fill">
                 </comp:ViewPanel>
             </wfi:WindowsFormsHost>
+            <i:Interaction.Behaviors>
+                <com:ContextMenuBehavior IsContextMenuVisible="{Binding IsContextMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </i:Interaction.Behaviors>
+
+            <Grid.ContextMenu>
+                <ui:CContextMenu>
+                    <ui:CMenuItem Header="Tùy chọn">
+                        <ui:CMenuItem Header="Tùy chọn 1" />
+                        <ui:CMenuItem Header="Tùy chọn 2" />
+                    </ui:CMenuItem>
+                </ui:CContextMenu>
+            </Grid.ContextMenu>
+            <!--<Popup Width="100" IsOpen="{Binding IsContextMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}" Height="100">
+                <Border Background="Red">
+                    
+                </Border>
+            </Popup>-->
         </Grid>
+        
     </Border>
 </UserControl>

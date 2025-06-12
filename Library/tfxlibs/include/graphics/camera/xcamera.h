@@ -53,6 +53,30 @@ public:
 
 public:
 	/*******************************************************************************
+	*! @brief  : Chuyển đổi tọa độ thực tế sang tọa độ view
+	*! @param    [in] p : tọa độ thực tế
+	*! @return : Vec3 tọa độ trên screen
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*******************************************************************************/
+	virtual Vec3 World2ScreenPoint(const Vec3& p) const;
+
+	/*******************************************************************************
+	*! @brief  : Chuyển đổi tọa độ screen sang tọa độ thực tế
+	*! @param    [in] p : tọa độ screen
+	*! @return : Vec3 tọa độ thực tế.
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*******************************************************************************/
+	virtual Vec3 Screen2WorldPoint(const Vec3& p) const;
+
+	/*******************************************************************************
+	*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
+	*! @return : void
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*******************************************************************************/
+	virtual void ZoomTo(Vec3 ptTarget, const float delta_z);
+
+public:
+	/*******************************************************************************
 	*! @brief  : Chuyển đổi từ tọa độ [Trái trên] sang tọa độ tại [Trung tâm] trên view
 	*! @param    [in] p : tọa độ trên view
 	*! @return : Vec2 tọa độ thực tế
@@ -104,7 +128,7 @@ public:
 	/*******************************************************************************
 	*! @brief  : Vị trí camera dự vào vị trí target góc quay và khoảng cách  [3D]
 	*! @param  : [in] p : tọa độ trên view
-	*! @return : Vec2 tọa độ thực tế
+	*! @return : void
 	*! @author : thuong.nv          - [Date] : 22/04/2023
 	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 	*******************************************************************************/
@@ -113,10 +137,18 @@ public:
 	/*******************************************************************************
 	*! @brief  : Move camera
 	*! @param  : [in] vOffset : offset Vec3
-	*! @return : Vec2 tọa độ thực tế
+	*! @return : void
 	*! @author : thuong.nv          - [Date] : 2025.06.10
 	*******************************************************************************/
 	void Move(const Vec3& vOffset);
+
+	/*******************************************************************************
+	*! @brief  : Update zoom
+	*! @param  : [in] zDelta : zoom delta range[]
+	*! @return : void
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*******************************************************************************/
+	virtual void UpdateZoom(const float zDelta);
 
 protected:
 	Vec3		m_position;     // Vị trí camera
@@ -149,22 +181,29 @@ public:
 
 public:
 	/*******************************************************************************
-	*! @brief  : Chuyển đổi tọa độ điểm từ view sang tọa độ thực tế
-	*! @param    [in] p : tọa độ trên view
-	*! @return : Vec2 tọa độ thực tế
-	*! @author : thuong.nv          - [Date] : 22/04/2023
+	*! @brief  : Chuyển đổi tọa độ thực tế sang tọa độ view
+	*! @param    [in] p : tọa độ thực tế
+	*! @return : Vec3 tọa độ trên screen
+	*! @author : thuong.nv          - [Date] : 2025.06.12
 	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 	*******************************************************************************/
-	Vec2 PointLocal2Global(const Vec2& p) const;
+	virtual Vec3 World2ScreenPoint(const Vec3& p) const;
 
 	/*******************************************************************************
-	*! @brief  : Chuyển đổi tọa độ điểm từ thực thế sang tọa độ view
-	*! @param    [in] p : real position to local view
-	*! @return : Vec2 view position
-	*! @author : thuong.nv          - [Date] : 22/04/2023
+	*! @brief  : Chuyển đổi tọa độ screen sang tọa độ thực tế
+	*! @param    [in] p : tọa độ screen
+	*! @return : Vec3 tọa độ thực tế.
+	*! @author : thuong.nv          - [Date] : 2025.06.12
 	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 	*******************************************************************************/
-	Vec2 PointGlobal2Local(const Vec2& p) const;
+	virtual Vec3 Screen2WorldPoint(const Vec3& p) const;
+
+	/*******************************************************************************
+	*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
+	*! @return : void
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*******************************************************************************/
+	virtual void ZoomTo(Vec3 ptTarget, const float delta_z);
 
 public:
 	/*******************************************************************************
@@ -203,22 +242,16 @@ public:
 protected:
 	/*******************************************************************************
 	*! @brief  : Cập nhật thông số zoom có giới hạn giá trị
+	*! @param  : [in] zDelta : zoom delta range[]
 	*! @return : void
-	*! @author : thuong.nv          - [Date] : 22/04/2023
+	*! @author : thuong.nv          - [Date] : 2023.04.22
 	*******************************************************************************/
-	void UpdateZoom(float zDelta);
+	void UpdateZoom(const float zDelta);
 
 public:
 	virtual CameraType GetType() const;
 
 	float GetZoom() const;
-
-	/*******************************************************************************
-	*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
-	*! @return : void
-	*! @author : thuong.nv          - [Date] : 22/04/2023
-	*******************************************************************************/
-	void ZoomTo(float x, float y, float delta_z);
 
 	/*******************************************************************************
 	*! @brief  : Dịch chuyển tọa độ camera đi một khoảng delta x và delta y
@@ -272,6 +305,32 @@ public:
 	*! @author : thuong.nv          - [Date] : 22/04/2023
 	*******************************************************************************/
 	virtual void UpdateMatrix();
+
+public:
+	/*******************************************************************************
+	*! @brief  : Chuyển đổi tọa độ thực tế sang tọa độ view
+	*! @param    [in] p : tọa độ thực tế
+	*! @return : Vec3 tọa độ trên screen
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
+	*******************************************************************************/
+	virtual Vec3 World2ScreenPoint(const Vec3& p) const;
+
+	/*******************************************************************************
+	*! @brief  : Chuyển đổi tọa độ screen sang tọa độ thực tế
+	*! @param    [in] p : tọa độ screen
+	*! @return : Vec3 tọa độ thực tế.
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
+	*******************************************************************************/
+	virtual Vec3 Screen2WorldPoint(const Vec3& p) const;
+
+	/*******************************************************************************
+	*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
+	*! @return : void
+	*! @author : thuong.nv          - [Date] : 2025.06.12
+	*******************************************************************************/
+	virtual void ZoomTo(Vec3 ptTarget, const float delta_z);
 
 private:
 	void UpdateOrbitTarget(float phi, float theta);

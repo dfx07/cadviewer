@@ -25,5 +25,15 @@ namespace CadViewer.UIControls
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(CContextMenu), new FrameworkPropertyMetadata(typeof(CContextMenu)));
 		}
+
+		protected override DependencyObject GetContainerForItemOverride()
+		{
+			return new CMenuItem();
+		}
+
+		protected override bool IsItemItsOwnContainerOverride(object item)
+		{
+			return item is CMenuItem;
+		}
 	}
 }

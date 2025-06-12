@@ -48,6 +48,9 @@ typedef struct _TFX_PT
 
 	}
 
+	_TFX_PT operator+(const _TFX_PT& other) const { return _TFX_PT(x + other.x, y + other.y); }
+	_TFX_PT operator-(const _TFX_PT& other) const { return _TFX_PT(x - other.x, y - other.y); }
+
 } TFX_DevicePt;
 
 enum class TFXKeyboard

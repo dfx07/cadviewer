@@ -53,6 +53,20 @@ Mat4& Camera::GetModelMatrix()
 	return m_modelMat;
 }
 
+Vec3 Camera::World2ScreenPoint(const Vec3& p) const
+{
+	return Vec3();
+}
+
+Vec3 Camera::Screen2WorldPoint(const Vec3& p) const
+{
+	return Vec3();
+}
+
+void Camera::ZoomTo(Vec3 ptTarget, const float delta_z)
+{
+}
+
 
 void Camera::SetCamera(const Vec3& pos, const Vec3& dir, const Vec3& up)
 {
@@ -119,6 +133,10 @@ void Camera::Move(const Vec3& vOffset)
 	UpdateViewMatrix();
 }
 
+void Camera::UpdateZoom(const float fDelta)
+{
+}
+
 
 /// <summary>
 /// Camera2D ////////////////////////////////////////////////////////////
@@ -136,33 +154,53 @@ Camera2D::~Camera2D()
 }
 
 /*******************************************************************************
-*! @brief  : Chuyển đổi tọa độ điểm từ view sang tọa độ thực tế
-*! @param    [in] p : tọa độ trên view
-*! @return : Vec2 tọa độ thực tế
-*! @author : thuong.nv          - [Date] : 22/04/2023
+*! @brief  : Chuyển đổi tọa độ thực tế sang tọa độ view
+*! @param    [in] p : tọa độ thực tế
+*! @return : Vec3 tọa độ trên screen
+*! @author : thuong.nv          - [Date] : 2025.06.12
 *! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 *******************************************************************************/
-Vec2 Camera2D::PointLocal2Global(const Vec2& p) const
+Vec3 Camera2D::World2ScreenPoint(const Vec3& p) const
 {
-	Vec2 point = { 0 , 0 };    // Để mặc định
-	point.x = m_position.x + (p.x - float(m_iWidth / 2)) / m_fZoom;
-	point.y = m_position.y - (p.y - float(m_iHeight / 2)) / m_fZoom;
+	Vec3 point = { 0 , 0 , 0};   // Để mặc định
+	point.x = (float(m_iWidth / 2) - m_fZoom * (m_position.x - p.x));
+	point.y = (m_fZoom * (m_position.y - p.y) + float(m_iHeight / 2));
 	return point;
 }
 
 /*******************************************************************************
-*! @brief  : Chuyển đổi tọa độ điểm từ thực thế sang tọa độ view
-*! @param    [in] p : real position to local view
-*! @return : Vec2 view position
-*! @author : thuong.nv          - [Date] : 22/04/2023
+*! @brief  : Chuyển đổi tọa độ screen sang tọa độ thực tế
+*! @param    [in] p : tọa độ screen
+*! @return : Vec3 tọa độ thực tế.
+*! @author : thuong.nv          - [Date] : 2025.06.12
 *! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 *******************************************************************************/
-Vec2 Camera2D::PointGlobal2Local(const Vec2& p) const
+Vec3 Camera2D::Screen2WorldPoint(const Vec3& p) const
 {
-	Vec2 point = { 0 , 0 };   // Để mặc định
-	point.x = (float(m_iWidth / 2) - m_fZoom * (m_position.x - p.x));
-	point.y = (m_fZoom * (m_position.y - p.y) + float(m_iHeight / 2));
+	Vec3 point = { 0 , 0 , 0 };    // Để mặc định
+	point.x = m_position.x + (p.x - float(m_iWidth / 2)) / m_fZoom;
+	point.y = m_position.y + (p.y - float(m_iHeight / 2)) / m_fZoom;
 	return point;
+}
+
+/*******************************************************************************
+*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
+*! @return : void
+*! @author : thuong.nv          - [Date] : 2025.06.12
+*******************************************************************************/
+void Camera2D::ZoomTo(Vec3 ptTarget, const float delta_z)
+{
+	ptTarget.z = 0.f;
+
+	// Tính tọa độ thực tế của nó trước và sau khi set zoom
+	Vec2 pGlobalOld = Screen2WorldPoint(ptTarget);
+	UpdateZoom(delta_z);
+	Vec2 pGlobalNew = Screen2WorldPoint(ptTarget);
+	Vec2 vMove = pGlobalNew - pGlobalOld;
+
+	// Di chuyển vị trí của camera một đoạn vì vị trí x, y được giữ nguyên
+	m_position.x += vMove.x;
+	m_position.y += vMove.y;
 }
 
 Mat4& Camera2D::GetProjMatrixNozoom()
@@ -262,25 +300,6 @@ CameraType Camera2D::GetType() const
 float Camera2D::GetZoom() const
 {
 	return m_fZoom;
-}
-
-/*******************************************************************************
-*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
-*! @return : void
-*! @author : thuong.nv          - [Date] : 22/04/2023
-*******************************************************************************/
-void Camera2D::ZoomTo(float x, float y, float delta_z)
-{
-	// Tính tọa độ thực tế của nó trước và sau khi set zoom
-	Vec2 pGlobalOld = PointLocal2Global(Vec2(x, y));
-	UpdateZoom(delta_z);
-	Vec2 pGlobalNew = PointLocal2Global(Vec2(x, y));
-	Vec2 vMove = pGlobalNew - pGlobalOld;
-
-	// Di chuyển vị trí của camera một đoạn vì vị trí x, y được giữ nguyên
-	m_position.x -= vMove.x;
-	m_position.y -= vMove.y;
-	m_position.z = m_position.z;
 }
 
 /*******************************************************************************
@@ -458,6 +477,11 @@ void Camera3D::OrbitMove(float delta)
 	this->UpdateViewMatrix();
 }
 
+Vec3 Camera3D::World2ScreenPoint(const Vec3& p) const
+{
+	return Vec3();
+}
+
 /*******************************************************************************
 *! @brief  :  Di chuyển camera theo mặt phẳng của camera
 *! @param    [in] mode : Chế độ zoom hoặc không zoom
@@ -482,6 +506,29 @@ void Camera3D::OrbitMove1(float x, float y)
 		m_vTarget += v * (0.12f);
 		this->UpdateViewMatrix();
 	}
+}
+
+/*******************************************************************************
+*! @brief  : Chuyển đổi tọa độ screen sang tọa độ thực tế
+*! @param    [in] p : tọa độ screen
+*! @return : Vec3 tọa độ thực tế.
+*! @author : thuong.nv          - [Date] : 2025.06.12
+*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
+*******************************************************************************/
+Vec3 Camera3D::Screen2WorldPoint(const Vec3& p) const
+{
+	// TODO : Implement
+	return Vec3();
+}
+
+/*******************************************************************************
+*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
+*! @return : void
+*! @author : thuong.nv          - [Date] : 2025.06.12
+*******************************************************************************/
+void Camera3D::ZoomTo(Vec3 ptTarget, const float delta_z)
+{
+	// TODO : Implement
 }
 
 __END_NAMESPACE__

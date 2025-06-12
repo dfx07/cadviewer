@@ -69,6 +69,11 @@ namespace CadViewer.Components
 			if (ViewHandler is null)
 				return;
 
+			if(!this.Focused)
+			{
+				this.Focus();
+			}
+
 			ViewHandler.WinformViewCtrl_MouseDown(this, e);
 		}
 

@@ -12,15 +12,15 @@ namespace CadViewer.ViewModels
 	{
 		public ViewModelCallback()
 		{
-			m_pCallbackUI = new CallbackFunctionNotifyUI(this.OnNotifyHandle);
+			m_pCallbackUI = new CallbackFunctionNotifyUI(this.OnHandleNotify);
 		}
 
-		public virtual void OnNotifyHandle(string message, int nParam, int nWaram)
+		public virtual void OnHandleNotify(string message, int nParam, int nWaram)
 		{
 			// TODO: Implement
 		}
 
-		public IntPtr m_pViewModel = IntPtr.Zero; // pointer in C++
+		public IntPtr m_pHandler = IntPtr.Zero; // pointer in C++
 		public CallbackFunctionNotifyUI m_pCallbackUI = null;
 	}
 }
