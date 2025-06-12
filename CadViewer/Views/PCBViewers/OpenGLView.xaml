@@ -29,18 +29,9 @@
             </i:Interaction.Behaviors>
 
             <Grid.ContextMenu>
-                <ui:CContextMenu>
-                    <ui:CMenuItem Header="Tùy chọn">
-                        <ui:CMenuItem Header="Tùy chọn 1" />
-                        <ui:CMenuItem Header="Tùy chọn 2" />
-                    </ui:CMenuItem>
+                <ui:CContextMenu ItemsSource="{Binding ContextMenuItems, UpdateSourceTrigger=PropertyChanged}">
                 </ui:CContextMenu>
             </Grid.ContextMenu>
-            <!--<Popup Width="100" IsOpen="{Binding IsContextMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}" Height="100">
-                <Border Background="Red">
-                    
-                </Border>
-            </Popup>-->
         </Grid>
         
     </Border>

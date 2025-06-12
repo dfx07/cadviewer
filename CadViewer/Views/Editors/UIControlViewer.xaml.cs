@@ -151,9 +151,9 @@ namespace CadViewer.Views
 
 			foreach (var itemData in MenuItems)
 			{
-				CMenuItem items = CMenuItem.CreateMenuItem(itemData) as CMenuItem;
+				//CMenuItem items = CMenuItem.CreateMenuItem(itemData) as CMenuItem;
 
-				menu.Items.Add(items);
+				//menu.Items.Add(items);
 			}
 
 			menu.PlacementTarget = MenuButton;

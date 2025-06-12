@@ -61,48 +61,5 @@ namespace CadViewer.UIControls
 
 			};
 		}
-
-		public static object CreateMenuItem(MenuItemData data, bool bCreateChild = true)
-		{
-			if (data.IsSeparator)
-			{
-				var separator = new CSeparator
-				{
-					Style = (Style)Application.Current.FindResource("CSeparatorStyle"),
-				};
-
-				return separator;
-			}
-
-			var menuItem = new CMenuItem
-			{
-				DataContext = data,
-			};
-
-			menuItem.SetBinding(CMenuItem.HeaderProperty, new Binding(nameof(MenuItemData.Header)));
-			menuItem.SetBinding(CMenuItem.IconProperty, new Binding(nameof(MenuItemData.Icon)));
-			menuItem.SetBinding(CMenuItem.IsEnabledProperty, new Binding(nameof(MenuItemData.IsEnabled)));
-			menuItem.SetBinding(CMenuItem.IsCheckedProperty, new Binding(nameof(MenuItemData.IsChecked)));
-			menuItem.SetBinding(CMenuItem.IsCheckableProperty, new Binding(nameof(MenuItemData.IsCheckable)));
-			menuItem.SetBinding(CMenuItem.CommandProperty, new Binding(nameof(MenuItemData.Command)));
-			menuItem.SetBinding(CMenuItem.CommandParameterProperty, new Binding(nameof(MenuItemData.CommandParameter)));
-			menuItem.SetBinding(CMenuItem.VisibilityProperty, new Binding(nameof(MenuItemData.IsVisible))
-			{
-				Converter = new BooleanToVisibilityConverter()
-			});
-
-			if(bCreateChild)
-			{
-				if (data.Children != null && data.Children.Any())
-				{
-					foreach (var child in data.Children)
-					{
-						menuItem.Items.Add(CreateMenuItem(child));
-					}
-				}
-			}
-
-			return menuItem;
-		}
 	}
 }
