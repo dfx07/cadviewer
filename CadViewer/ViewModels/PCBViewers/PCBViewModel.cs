@@ -69,20 +69,17 @@ namespace CadViewer.ViewModels
 			switch (msg)
 			{
 				case EnumPCBViewMsg.SET_TITLE_MSG:
-					{
-						SetTitle(strData);
-						break;
-					}
+				{
+					SetTitle(strData);
+					break;
+				}
 				case EnumPCBViewMsg.SHOW_MENU_CONTENT:
-					{
-						var menuItems = pObject as ObservableCollection<MenuItemData>;
-						//ShowMenuContent(menuItems);
+				{
+					var menuItems = pObject as ObservableCollection<MenuItemData>;
+					ShowContextMenu(menuItems);
 
-						ContextMenuItems = menuItems;
-						IsContextMenuVisible = true;
-
-						break;
-					}
+					break;
+				}
 				default:
 					break;
 			}
@@ -90,23 +87,15 @@ namespace CadViewer.ViewModels
 			return 1;
 		}
 
-		public void ShowMenuContent(ObservableCollection<MenuItemData> menuItems)
+		public void ShowContextMenu(ObservableCollection<MenuItemData> menuItems)
 		{
-			//if (menuItems is null)
-			//	return;
+			ContextMenuItems = menuItems;
+			IsContextMenuVisible = true;
+		}
 
-			//var contextMenu = new CContextMenu();
-
-			//foreach (var itemData in menuItems)
-			//{
-			//	CMenuItem items = CMenuItem.CreateMenuItem(itemData) as CMenuItem;
-
-			//	contextMenu.Items.Add(items);
-			//}
-
-			//contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
-
-			//contextMenu.IsOpen = true;
+		public void HideMenuContext()
+		{
+			IsContextMenuVisible = false;
 		}
 
 		public int GetIntUIData(EnumPCBViewMsg msg, int lParam, int wParam)

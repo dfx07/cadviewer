@@ -26,6 +26,11 @@ namespace CadViewer.UIControls
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(CSeparator),
 				new FrameworkPropertyMetadata(typeof(CSeparator)));
 		}
+
+		public CSeparator()
+		{
+			this.Style = (Style)Application.Current.FindResource("CSeparatorStyle");
+		}
 	}
 
 	public class CMenu : Menu
@@ -38,10 +43,15 @@ namespace CadViewer.UIControls
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-			Loaded += (s, e) =>
+
+			if (ItemsSource == null && DataContext is MenuItemData data)
 			{
-			};
+				ItemsSource = data.Children;
+			}
 		}
+
+		protected override DependencyObject GetContainerForItemOverride() => new CMenuItem();
+		protected override bool IsItemItsOwnContainerOverride(object item) => item is CMenuItem;
 	}
 
 	public class CMenuItem : MenuItem
@@ -56,10 +66,17 @@ namespace CadViewer.UIControls
 		{
 			base.OnApplyTemplate();
 
-			Loaded += (s, e) =>
+			if (ItemsSource == null && DataContext is MenuItemData data)
 			{
+				ItemsSource = data.Children;
+			}
+		}
 
-			};
+		protected override DependencyObject GetContainerForItemOverride() => new CMenuItem();
+
+		protected override bool IsItemItsOwnContainerOverride(object item)
+		{
+			return item is CMenuItem || item is CSeparator;
 		}
 	}
 }

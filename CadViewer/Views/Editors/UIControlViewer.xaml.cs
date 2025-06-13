@@ -108,57 +108,59 @@ namespace CadViewer.Views
 
 		private void ShowMenu_Click(object sender, RoutedEventArgs e)
 		{
-			ObservableCollection<MenuItemData> MenuItems = new ObservableCollection<MenuItemData>()
-			{
-				new MenuItemData
-				{
-					Header = "File",
-					Children = new ObservableCollection<MenuItemData>
-					{
-						new MenuItemData
-						{
-							Header = "New",
-							Command = new RelayCommand(OpenFile),
-							Icon = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/search26.png"))
-						},
-						new MenuItemData
-						{
-							IsSeparator = true
-						},
-						new MenuItemData
-						{
-							Header = "Open",
-							Command = new RelayCommand(OpenFile),
-							IsCheckable = true,
-							IsChecked = true,
-							IsEnabled = false,
-						},
-						new MenuItemData
-						{
-							Header = "Open 2",
-							Command = new RelayCommand(OpenFile),
-							IsEnabled = false
-						}
-					}
-				},
-				new MenuItemData
-				{
-					Header = "Edit",
-				},
-			};
+			//ObservableCollection<MenuItemData> MenuItems = new ObservableCollection<MenuItemData>()
+			//{
+			//	new MenuItemData
+			//	{
+			//		Header = "File",
+			//		IsChecked= true,
+			//		IsCheckable = true,
+			//		Children = new ObservableCollection<MenuItemData>
+			//		{
+			//			new MenuItemData
+			//			{
+			//				Header = "New",
+			//				Command = new RelayCommand(OpenFile),
+			//				Icon = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/search26.png"))
+			//			},
+			//			new MenuItemData
+			//			{
+			//				IsSeparator = true
+			//			},
+			//			new MenuItemData
+			//			{
+			//				Header = "Open",
+			//				Command = new RelayCommand(OpenFile),
+			//				IsCheckable = true,
+			//				IsChecked = true,
+			//				IsEnabled = false,
+			//			},
+			//			new MenuItemData
+			//			{
+			//				Header = "Open 2",
+			//				Command = new RelayCommand(OpenFile),
+			//				IsEnabled = false
+			//			}
+			//		}
+			//	},
+			//	new MenuItemData
+			//	{
+			//		Header = "Edit",
+			//	},
+			//};
 
-			var menu = new CContextMenu();
+			//var menu = new CContextMenu();
 
-			foreach (var itemData in MenuItems)
-			{
-				//CMenuItem items = CMenuItem.CreateMenuItem(itemData) as CMenuItem;
+			//foreach (var itemData in MenuItems)
+			//{
+			//	//CMenuItem items = CMenuItem.CreateMenuItem(itemData) as CMenuItem;
 
-				//menu.Items.Add(items);
-			}
+			//	//menu.Items.Add(items);
+			//}
 
-			menu.PlacementTarget = MenuButton;
-			menu.Placement = PlacementMode.Bottom;
-			menu.IsOpen = true;
+			//menu.PlacementTarget = MenuButton;
+			//menu.Placement = PlacementMode.Bottom;
+			//menu.IsOpen = true;
 		}
 	}
 }

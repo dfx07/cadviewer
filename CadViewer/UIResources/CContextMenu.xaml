@@ -26,7 +26,7 @@
                             <Border.Effect>
                                 <DropShadowEffect x:Name="PART_DropShadow" Color="Black" BlurRadius="3" Direction="-50" ShadowDepth="2" Opacity="0.2" />
                             </Border.Effect>
-                            <StackPanel IsItemsHost="True" />
+                            <StackPanel Width="Auto" Orientation="Vertical" HorizontalAlignment="Stretch" IsItemsHost="True" />
                         </Border>
                     </Border>
                 </ControlTemplate>

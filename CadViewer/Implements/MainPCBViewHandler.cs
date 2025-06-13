@@ -174,25 +174,23 @@ namespace CadViewer.Implements
 							{
 								Header = "New",
 								Command = new RelayCommand(OpenFile),
-								Icon = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/search26.png"))
+								Icon = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/rect35.png"))
 							},
 							new MenuItemData
 							{
-								IsSeparator = true
+								IsSeparator = true,
 							},
 							new MenuItemData
 							{
 								Header = "Open",
 								Command = new RelayCommand(OpenFile),
 								IsCheckable = true,
-								IsChecked = true,
-								IsEnabled = false,
+								IsChecked = true
 							},
 							new MenuItemData
 							{
 								Header = "Open 2",
 								Command = new RelayCommand(OpenFile),
-								IsEnabled = false
 							}
 						}
 					},
