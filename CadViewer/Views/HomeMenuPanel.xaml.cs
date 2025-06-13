@@ -31,43 +31,45 @@ namespace CadViewer.Views
 
 		private void HomeMenuPanel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
-			OpenHomeMenu((bool)(e.NewValue));
+			if (bRunAnimation)
+				return;
+
+			OpenHomeMenuAnimation((bool)(e.NewValue));
 		}
 
-		void OpenHomeMenu(bool bOpen)
+		void OpenHomeMenuAnimation(bool bOpen)
 		{
+			bRunAnimation = true;
+
+			Visibility = Visibility.Visible;
+
+			var anim = new DoubleAnimation
+			{
+				From = bOpen ? -ActualWidth : 0,
+				To = bOpen ? 0 : -ActualWidth,
+				Duration = TimeSpan.FromMilliseconds(500),
+				EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+			};
+
 			if (bOpen)
 			{
-				var expandAnim = new DoubleAnimation
+				anim.Completed += (s, e) =>
 				{
-					From = -ActualWidth,
-					To = 0,
-					Duration = TimeSpan.FromMilliseconds(500),
-					EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+					bRunAnimation = false;
 				};
-				SlideTransform.BeginAnimation(TranslateTransform.XProperty, expandAnim);
 			}
 			else
 			{
-				var expandAnim = new DoubleAnimation
+				anim.Completed += (s, e) =>
 				{
-					To = -ActualWidth,
-					Duration = TimeSpan.FromMilliseconds(500),
-					EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+					Visibility = Visibility.Collapsed;
+					bRunAnimation = false;
 				};
-
-				expandAnim.Completed += (s, e) =>
-				{
-					int a = 10;
-				};
-
-				SlideTransform.BeginAnimation(TranslateTransform.XProperty, expandAnim);
 			}
+
+			SlideTransform.BeginAnimation(TranslateTransform.XProperty, anim);
 		}
 
-		private void BackButton_Click(object sender, RoutedEventArgs e)
-		{
-			OpenHomeMenu(false);
-		}
+		private bool bRunAnimation = false;
 	}
 }

@@ -20,7 +20,7 @@
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Border x:Name="PART_HomeMenuItems" Grid.Column="0" Background="WhiteSmoke" BorderThickness="1" BorderBrush="#222933">
+        <Border x:Name="PART_HomeMenuItems" Grid.Column="0" Background="WhiteSmoke" BorderThickness="0,0,1,0" BorderBrush="#222933">
             <StackPanel>
                 <Grid x:Name="PART_HomeHeader" Height="35">
                     <Grid.ColumnDefinitions>

@@ -215,10 +215,8 @@
                         Background="Transparent" Visibility="Collapsed" Orientation="Vertical">
             </StackPanel>
         </Grid>
-        <Grid x:Name="PART_HomeMenuPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="100"
-              Visibility="{Binding HomeMenuVM.IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-            <views:HomeMenuPanel x:Name="PART_HomeMenuPanel_Content" DataContext="{Binding HomeMenuVM}">
-            </views:HomeMenuPanel>
-        </Grid>
+        <views:HomeMenuPanel x:Name="PART_HomeMenuPanel" DataContext="{Binding HomeMenuVM}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                             Visibility="{Binding IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
+        </views:HomeMenuPanel>
     </Grid>
 </Window>
