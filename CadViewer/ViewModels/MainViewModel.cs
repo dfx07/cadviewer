@@ -23,7 +23,10 @@ namespace CadViewer.ViewModels
 		public RibbonBarViewModel RibbonBarVM { get; set; }
 
 		public PropertiesPanelViewModel PropertiesPanelVM { get; set; }
+
 		public EditorPanelViewModel EditorPanelVM { get; set; }
+
+		public HomeMenuViewModel HomeMenuVM { get; set; }
 
 		public ICommand IBtnRegisterClickComand { get; }
 
@@ -34,6 +37,8 @@ namespace CadViewer.ViewModels
 			PropertiesPanelVM = new PropertiesPanelViewModel();
 
 			EditorPanelVM = new EditorPanelViewModel();
+
+			HomeMenuVM = new HomeMenuViewModel();
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 

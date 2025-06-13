@@ -88,7 +88,6 @@
     <Compile Include="API\PCBViewerAPI.cs" />
     <Compile Include="Common\ContextMenuBehavior.cs" />
     <Compile Include="Common\EnterAsTabBehavior.cs" />
-    <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\EventBehavior.cs" />
     <Compile Include="Common\EventDef.cs" />
     <Compile Include="Common\Logger.cs" />
@@ -168,6 +167,7 @@
     <Compile Include="ViewModels\EditorPanelViewModel.cs" />
     <Compile Include="ViewModels\Properties\RectPropertyViewModel.cs" />
     <Compile Include="ViewModels\Properties\LinePropertyViewModel.cs" />
+    <Compile Include="ViewModels\HomeMenuViewModel.cs" />
     <Compile Include="ViewModels\RibbonPanels\EditRibbonPanelViewModel.cs" />
     <Compile Include="ViewModels\RibbonPanels\HomeRibbonPanelViewModel.cs" />
     <Compile Include="ViewModels\PropertiesPanelViewModel.cs" />
@@ -198,6 +198,9 @@
     </Compile>
     <Compile Include="Views\Properties\RectPropertyView.xaml.cs">
       <DependentUpon>RectPropertyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeMenuPanel.xaml.cs">
+      <DependentUpon>HomeMenuPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RibbonBar.xaml.cs">
       <DependentUpon>RibbonBar.xaml</DependentUpon>
@@ -414,6 +417,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\HomeMenuPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\RibbonBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -526,6 +533,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\viewer32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\home35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\back_arrow35.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

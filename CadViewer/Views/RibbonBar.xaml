@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CadViewer.Views"
+             xmlns:ui="clr-namespace:CadViewer.UIControls"
              xmlns:rbviews="clr-namespace:CadViewer.Views.RibbonPanels"
              xmlns:vm="clr-namespace:CadViewer.ViewModels"
-             mc:Ignorable="d" 
+             xmlns:com="clr-namespace:CadViewer.Common" mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type vm:HomeRibbonPanelViewModel}">
@@ -22,10 +23,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="PART_GridRibbonTab" Grid.Row="0" Background="#222933">
-            <Border BorderBrush="#3b4453" BorderThickness="0,0,0,1"/>
-            <local:TabBar x:Name="xTabBar" RefTabBarInfos="{Binding TabBarInfos}"
-                          SelectedTabBarInfo="{Binding SelectedTab, Mode=TwoWay}" Padding="10,2,0,0">
-            </local:TabBar>
+
+            <Border BorderBrush="#3b4453" BorderThickness="0,0,0,1" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ui:CToggleButton x:Name="PART_HomeBtn" ButtonStyle="Normal" BorderThickness="0" ImageSource="{com:PackImage Path=Assets/Images/home35.png}"
+                                  Width="35" Margin="0,3,0,0" Grid.Column="0" Padding="10,2,0,0" IsChecked="{Binding IsCheckedHomeBtn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <local:TabBar x:Name="PART_Tabbar" Grid.Column="1" Padding="10,2,0,0" RefTabBarInfos="{Binding TabBarInfos}" SelectedTabBarInfo="{Binding SelectedTab, Mode=TwoWay}" />
+            </Grid>
         </Grid>
         <Grid x:Name="PART_GridRibbonContent" Grid.Row="1" Background="#f1f1f1">
             <ContentPresenter HorizontalAlignment="Left" Content="{Binding CurrentRibbonPanelViewModel}" />

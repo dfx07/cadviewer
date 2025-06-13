@@ -17,6 +17,12 @@ using System.Windows.Threading;
 
 namespace CadViewer.UIControls
 {
+	public enum ESlideDownDirection
+	{
+		WIDTH,
+		HEIGHT,
+	}
+
 	public class CSlideDownContainer : ContentControl
 	{
 		private Border _contentHost;
@@ -53,10 +59,21 @@ namespace CadViewer.UIControls
 				return;
 
 			_contentHost.Measure(new Size(_contentHost.ActualWidth, double.PositiveInfinity));
-			double targetHeight = _contentPresenter.DesiredSize.Height;
+			double targetValue = _contentPresenter.DesiredSize.Width;
 
-			double from = this.IsVisible ? 0 : targetHeight;
-			double to = this.IsVisible ? targetHeight : 0;
+			if(UseSelf)
+			{
+				targetValue = SliderDirection == ESlideDownDirection.HEIGHT ?
+					ActualHeight : ActualWidth;
+			}
+			else
+			{
+				targetValue = SliderDirection == ESlideDownDirection.HEIGHT ?
+					_contentPresenter.DesiredSize.Height : _contentPresenter.DesiredSize.Width;
+			}
+
+			double from = this.IsVisible ? 0 : targetValue;
+			double to = this.IsVisible ? targetValue : 0;
 
 			var animation = new DoubleAnimation
 			{
@@ -66,7 +83,14 @@ namespace CadViewer.UIControls
 				EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
 			};
 
-			_contentHost.BeginAnimation(Border.HeightProperty, animation);
+			if(SliderDirection == ESlideDownDirection.HEIGHT)
+			{
+				_contentHost.BeginAnimation(Border.HeightProperty, animation);
+			}
+			else
+			{
+				_contentHost.BeginAnimation(Border.WidthProperty, animation);
+			}
 		}
 
 		public static readonly DependencyProperty CornerRadiusProperty =
@@ -76,6 +100,25 @@ namespace CadViewer.UIControls
 		{
 			get => (CornerRadius)GetValue(CornerRadiusProperty);
 			set => SetValue(CornerRadiusProperty, value);
+		}
+
+		/* true : use the size of selfit | false : use the size of content*/
+		public static readonly DependencyProperty UseSelfProperty =
+		DependencyProperty.Register(nameof(UseSelf), typeof(bool), typeof(CSlideDownContainer), new PropertyMetadata(false));
+
+		public bool UseSelf
+		{
+			get => (bool)GetValue(UseSelfProperty);
+			set => SetValue(UseSelfProperty, value);
+		}
+
+		public static readonly DependencyProperty SliderDirectionProperty =
+		DependencyProperty.Register(nameof(SliderDirection), typeof(ESlideDownDirection), typeof(CSlideDownContainer), new PropertyMetadata(ESlideDownDirection.HEIGHT));
+
+		public ESlideDownDirection SliderDirection
+		{
+			get => (ESlideDownDirection)GetValue(SliderDirectionProperty);
+			set => SetValue(SliderDirectionProperty, value);
 		}
 	}
 }

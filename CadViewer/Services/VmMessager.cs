@@ -20,6 +20,11 @@ namespace CadViewer.Services
 		public string ActionType { get; set; } // e.g., "Create", "Update", "Delete"
 	}
 
+	public class HomeMenuActionMessageArgs : MessageArgs
+	{
+		public string Action { get; set; }
+	}
+
 	public class VmMessenger : IMessenger
 	{
 		private class StrongAction<TMessage>

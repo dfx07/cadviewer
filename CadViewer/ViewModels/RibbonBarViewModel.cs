@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using CadViewer.Services;
 
 namespace CadViewer.ViewModels
 {
@@ -31,6 +33,13 @@ namespace CadViewer.ViewModels
 		{
 			get => _currentRibbonPanelViewModel;
 			set => SetProperty(ref _currentRibbonPanelViewModel, value);
+		}
+
+		private bool _isCheckedHomeBtn = false;
+		public bool IsCheckedHomeBtn
+		{
+			get => _isCheckedHomeBtn;
+			set => SetProperty(ref _isCheckedHomeBtn, value, () => OnCheckedHome(_isCheckedHomeBtn));
 		}
 
 		public RibbonBarViewModel()
@@ -83,6 +92,16 @@ namespace CadViewer.ViewModels
 		private void OnTabChanged(TabBarItemInfo tabinfo)
 		{
 			LoadRibbonPanelForTab(tabinfo);
+		}
+
+		public void OnCheckedHome(bool bChecked)
+		{
+			Messenger.Send(new HomeMenuActionMessageArgs
+			{
+				MessageID = "RibbonAction",
+				Sender = this,
+				Action= bChecked ? "Show" : "Hide"
+			});
 		}
 	}
 }
