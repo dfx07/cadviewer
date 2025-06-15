@@ -40,13 +40,10 @@ namespace CadViewer
 		{
 			InitializeComponent();
 
-			_MainViewModel = new MainViewModel();
 			toastManager = new ToastManager();
 
 			this.DataContext = _MainViewModel;
 		}
-
-		public MainViewModel _MainViewModel;
 
 		private void OnToastClicked(IToast toast)
 		{

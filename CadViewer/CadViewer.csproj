@@ -119,6 +119,8 @@
     <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\PropertyView.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
+    <Compile Include="Services\OverlayService.cs" />
+    <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Services\VmMessager.cs" />
     <Compile Include="UIControls\CContextMenu.cs" />
     <Compile Include="UIControls\CColorPicker.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="UIControls\CInputBox.cs" />
     <Compile Include="UIControls\CToastContainer.cs" />
     <Compile Include="UIControls\CRibbonButton.cs" />
+    <Compile Include="UIControls\CFloatingWinFormsWindow.cs" />
     <Compile Include="UIControls\CWindow.cs" />
     <Compile Include="UIControls\CDropDownButton.cs" />
     <Compile Include="UIControls\CExpander.cs" />
@@ -163,6 +166,8 @@
     <Compile Include="Interfaces\NotificationHandler.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewNotify.cs" />
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
+    <Compile Include="UIControls\OverlayLayer.cs" />
+    <Compile Include="UIControls\OverlayWindow.cs" />
     <Compile Include="ViewModels\Editors\UIControlViewerViewModel.cs" />
     <Compile Include="ViewModels\EditorPanelViewModel.cs" />
     <Compile Include="ViewModels\Properties\RectPropertyViewModel.cs" />
@@ -286,6 +291,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIResources\CRibbonButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIResources\CFloatingWinFormsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -539,6 +548,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\back_arrow35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\go_back35.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -27,6 +27,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
 
     <Grid x:Name="PART_MainGrid">
@@ -215,8 +216,8 @@
                         Background="Transparent" Visibility="Collapsed" Orientation="Vertical">
             </StackPanel>
         </Grid>
-        <views:HomeMenuPanel x:Name="PART_HomeMenuPanel" DataContext="{Binding HomeMenuVM}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+        <!--<views:HomeMenuPanel x:Name="PART_HomeMenuPanel" DataContext="{Binding HomeMenuVM}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                              Visibility="{Binding IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
-        </views:HomeMenuPanel>
+        </views:HomeMenuPanel>-->
     </Grid>
 </Window>

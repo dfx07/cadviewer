@@ -7,6 +7,7 @@
     <cvt:ToggleButtonHeightToThumbWidthConverter x:Key="HeightToThumbWidthConverter" />
     <cvt:ToggleButtonCheckNSelectColorConverter x:Key="ToggleButtonCheckNSelectColorConverter" />
     <cvt:CommonSetDoubleDefaultConverter x:Key="SetDoubleDefaultConverter" />
+    <cvt:CommonSetImageDefaultConverter x:Key="SetImageDefaultConverter" />
 
     <Style TargetType="{x:Type local:CButton}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Template">
@@ -156,6 +157,46 @@
                                     <SolidColorBrush Color="{DynamicResource CompUI_Cmm_TextColor}" />
                                 </Setter.Value>
                             </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:CImageButton}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{DynamicResource Cmm_BackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Cmm_BorderBrush}" />
+        <Setter Property="HoverBackground" Value="{DynamicResource Cmm_BackgroundOverBrush}" />
+        <Setter Property="PressedBackground" Value="{DynamicResource Cmm_BackgroundPressedBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CImageButton}">
+                    <Border x:Name="PART_Border" Padding="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+                            Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                            CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image x:Name="PART_NormalImage" Source="{TemplateBinding NormalImage}" Stretch="Fill" />
+                            <Image x:Name="PART_HoverImage" Stretch="Fill" Opacity="0">
+                                <Image.Source>
+                                    <MultiBinding Converter="{StaticResource SetImageDefaultConverter}">
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="NormalImage" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="HoverImage" />
+                                    </MultiBinding>
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_HoverImage" Property="Opacity" Value="1" />
+                            <Setter TargetName="PART_NormalImage" Property="Opacity" Value="0" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverBackground}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedBackground}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

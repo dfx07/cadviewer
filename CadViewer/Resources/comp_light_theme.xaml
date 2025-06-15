@@ -4,7 +4,7 @@
     <Color x:Key="Cmm_BackgroundColor">#f3f3f3</Color>
 
     <Color x:Key="CompUI_Cmm_BackgroundColor">#fbfbfb</Color>
-    <Color x:Key="CompUI_Cmm_BackgroundOverColor">#f6f6f6</Color>
+    <Color x:Key="CompUI_Cmm_BackgroundOverColor">#dddddd</Color>
     <Color x:Key="CompUI_Cmm_BackgroundClickColor">#f8f8f8</Color>
     <Color x:Key="CompUI_Cmm_BackgroundDisableColor">#fbfbfb</Color>
 
@@ -14,6 +14,7 @@
     <Color x:Key="CompUI_Cmm_BorderClickColor">#dddddd</Color>
 
     <Color x:Key="CompUI_Cmm_TextColor">#000000</Color>
+    <Color x:Key="CompUI_Cmm_ReverseTextColor">#ffffff</Color>
     <Color x:Key="CompUI_Cmm_NotifyTextColor">#484848</Color>
     <Color x:Key="CompUI_Cmm_TextClickColor">#7b7b7b</Color>
     <Color x:Key="CompUI_Cmm_TextDisableColor">#aaaaaa</Color>
@@ -86,6 +87,13 @@
 
 
     <SolidColorBrush x:Key="Cmm_TextColor" Color="{DynamicResource CompUI_Cmm_TextColor}" />
+    <SolidColorBrush x:Key="Cmm_ReverseTextBrush" Color="{DynamicResource CompUI_Cmm_ReverseTextColor}" />
+    <SolidColorBrush x:Key="Cmm_BackgroundBrush" Color="{DynamicResource Cmm_BackgroundColor}" />
+    <SolidColorBrush x:Key="Cmm_BackgroundOverBrush" Color="{DynamicResource CompUI_Cmm_BackgroundOverColor}" />
+    <SolidColorBrush x:Key="Cmm_BackgroundPressedBrush" Color="{DynamicResource CompUI_Cmm_BackgroundClickColor}" />
+    <SolidColorBrush x:Key="Cmm_BackgroundCheckedBrush" Color="{DynamicResource CompUI_CheckBox_BackgroundCheckedColor}" />
+    <SolidColorBrush x:Key="Cmm_BorderBrush" Color="{DynamicResource CompUI_Cmm_BorderColor}" />
+
     <SolidColorBrush x:Key="Cmm_NotifyTextColor" Color="{DynamicResource CompUI_Cmm_NotifyTextColor}" />
     <Thickness x:Key="CompUI_BorderThickness">1</Thickness>
     <CornerRadius x:Key="CompUI_Cmm_CornerRadius">3</CornerRadius>

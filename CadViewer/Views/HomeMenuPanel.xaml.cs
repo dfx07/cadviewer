@@ -1,6 +1,8 @@
-﻿using CadViewer.ViewModels;
+﻿using CadViewer.UIControls;
+using CadViewer.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,22 +28,24 @@ namespace CadViewer.Views
 		{
 			InitializeComponent();
 
-			this.IsVisibleChanged += HomeMenuPanel_IsVisibleChanged;
+			Loaded += (s, e) =>
+			{
+				if (IsOpen)
+				{
+					OpenHomeMenuAnimation(true);
+				}
+				else
+				{
+					OpenHomeMenuAnimation(false);
+				}
+			};
 		}
-
-		private void HomeMenuPanel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-			if (bRunAnimation)
-				return;
-
-			OpenHomeMenuAnimation((bool)(e.NewValue));
-		}
-
 		void OpenHomeMenuAnimation(bool bOpen)
 		{
-			bRunAnimation = true;
+			if (bRunAnimation || ActualWidth == 0 || ActualHeight == 0)
+				return;
 
-			Visibility = Visibility.Visible;
+			bRunAnimation = true;
 
 			var anim = new DoubleAnimation
 			{
@@ -68,6 +72,23 @@ namespace CadViewer.Views
 			}
 
 			SlideTransform.BeginAnimation(TranslateTransform.XProperty, anim);
+		}
+
+		public static readonly DependencyProperty IsOpenProperty =
+		DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(HomeMenuPanel), new PropertyMetadata(false, OnIsOpenChanged));
+
+		public bool IsOpen
+		{
+			get => (bool)GetValue(IsOpenProperty);
+			set => SetValue(IsOpenProperty, value);
+		}
+
+		private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (d is HomeMenuPanel hp)
+			{
+				hp.OpenHomeMenuAnimation((bool)e.NewValue);
+			}
 		}
 
 		private bool bRunAnimation = false;

@@ -10,6 +10,7 @@ using CadViewer.API;
 using CadViewer.Common;
 using CadViewer.Implements;
 using CadViewer.Interfaces;
+using CadViewer.Services;
 using CadViewer.UIControls;
 using CadViewer.Views;
 
@@ -38,7 +39,7 @@ namespace CadViewer.ViewModels
 
 			EditorPanelVM = new EditorPanelViewModel();
 
-			HomeMenuVM = new HomeMenuViewModel();
+			HomeMenuVM = new HomeMenuViewModel(ServiceLocator.OverlayService);
 
 			IBtnRegisterClickComand = new RelayCommand(OnButtonRegisterClick);
 

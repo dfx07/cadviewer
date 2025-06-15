@@ -229,4 +229,65 @@ namespace CadViewer.UIControls
 			set => SetValue(BackgroundOverColorProperty, value);
 		}
 	}
+
+
+	public class CFlatToggleButton : ToggleButton
+	{
+		static CFlatToggleButton()
+		{
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(CFlatToggleButton),
+				new FrameworkPropertyMetadata(typeof(CFlatToggleButton)));
+		}
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+		}
+
+		public static readonly DependencyProperty CornerRadiusProperty =
+			DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(CFlatToggleButton),
+				new PropertyMetadata(new CornerRadius(0, 0, 0, 0)));
+
+		public CornerRadius CornerRadius
+		{
+			get => (CornerRadius)GetValue(CornerRadiusProperty);
+			set => SetValue(CornerRadiusProperty, value);
+		}
+
+		public Brush HoverBackground
+		{
+			get => (Brush)GetValue(HoverBackgroundProperty);
+			set => SetValue(HoverBackgroundProperty, value);
+		}
+
+		public static readonly DependencyProperty HoverBackgroundProperty =
+			DependencyProperty.Register(nameof(HoverBackground), typeof(Brush), typeof(CFlatToggleButton));
+
+		public Brush CheckedBackground
+		{
+			get => (Brush)GetValue(CheckedBackgroundProperty);
+			set => SetValue(CheckedBackgroundProperty, value);
+		}
+
+		public static readonly DependencyProperty CheckedBackgroundProperty =
+			DependencyProperty.Register(nameof(CheckedBackground), typeof(Brush), typeof(CFlatToggleButton));
+
+		public static readonly DependencyProperty ImageSourceProperty =
+			DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(CFlatToggleButton));
+
+		public ImageSource ImageSource
+		{
+			get => (ImageSource)GetValue(ImageSourceProperty);
+			set => SetValue(ImageSourceProperty, value);
+		}
+
+		public static readonly DependencyProperty ImageWidthProperty =
+			DependencyProperty.Register(nameof(ImageWidth), typeof(double), typeof(CFlatToggleButton), new PropertyMetadata(double.NaN));
+
+		public double ImageWidth
+		{
+			get => (double)GetValue(ImageWidthProperty);
+			set => SetValue(ImageWidthProperty, value);
+		}
+	}
 }

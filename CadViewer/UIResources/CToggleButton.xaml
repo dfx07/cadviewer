@@ -293,4 +293,55 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
+
+    <Style TargetType="{x:Type local:CFlatToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
+        <Setter Property="Background" Value="{DynamicResource Cmm_BackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Cmm_BorderBrush}" />
+        <Setter Property="HoverBackground" Value="{DynamicResource Cmm_BackgroundOverBrush}" />
+        <Setter Property="CheckedBackground" Value="{DynamicResource Cmm_BackgroundPressedBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="BorderThickness" Value="0" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CFlatToggleButton}">
+                    <Border x:Name="PART_Border" Padding="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                            CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="True">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Margin="0,2,0,2" x:Name="PART_Image" Source="{TemplateBinding ImageSource}">
+                                <Image.Width>
+                                    <MultiBinding Converter="{StaticResource SetDoubleDefaultConverter}">
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ImageWidth" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Height" />
+                                    </MultiBinding>
+                                </Image.Width>
+                            </Image>
+                            <TextBlock x:Name="PART_ContentText" Grid.Column="1" Margin="0,-1,1,1"
+                                       Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       TextElement.Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ImageSource, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="PART_Image" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverBackground}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBackground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

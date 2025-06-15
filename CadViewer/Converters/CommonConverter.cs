@@ -77,6 +77,22 @@ namespace CadViewer.Converters
 		}
 	}
 
+	public class CommonSetImageDefaultConverter : IMultiValueConverter
+	{
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			var Image1 = values[0] as ImageSource;
+			var Image2 = values[1] as ImageSource;
+
+			return Image1 ?? Image2;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotSupportedException();
+		}
+	}
+
 	public class CommonBooleanNegationConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

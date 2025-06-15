@@ -7,41 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CadViewer.Services;
+using CadViewer.Common;
 
 namespace CadViewer.ViewModels
 {
 	public class RibbonBarViewModel : ViewModelBase
 	{
-		private readonly Dictionary<string, object> _ribbonContentTabs = new Dictionary<string, object>();
-
-		private ObservableCollection<TabBarItemInfo> _tabBarInfos;
-		public ObservableCollection<TabBarItemInfo> TabBarInfos
-		{
-			get => _tabBarInfos;
-			set => SetProperty(ref _tabBarInfos, value);
-		}
-
-		private TabBarItemInfo _selectedTab;
-		public TabBarItemInfo SelectedTab
-		{
-			get => _selectedTab;
-			set => SetProperty(ref _selectedTab, value, () => OnTabChanged(_selectedTab));
-		}
-
-		private object _currentRibbonPanelViewModel;
-		public object CurrentRibbonPanelViewModel
-		{
-			get => _currentRibbonPanelViewModel;
-			set => SetProperty(ref _currentRibbonPanelViewModel, value);
-		}
-
-		private bool _isCheckedHomeBtn = false;
-		public bool IsCheckedHomeBtn
-		{
-			get => _isCheckedHomeBtn;
-			set => SetProperty(ref _isCheckedHomeBtn, value, () => OnCheckedHome(_isCheckedHomeBtn));
-		}
-
 		public RibbonBarViewModel()
 		{
 			TabBarInfos = new ObservableCollection<TabBarItemInfo>()
@@ -53,7 +24,13 @@ namespace CadViewer.ViewModels
 			};
 
 			SelectedTab = TabBarInfos.FirstOrDefault();
+
+			HomeButtonClickCommand = new RelayCommand(OnClickedHomeButton);
 		}
+
+
+
+
 		private void LoadRibbonPanelForTab(TabBarItemInfo tab)
 		{
 			if (tab == null)
@@ -94,14 +71,39 @@ namespace CadViewer.ViewModels
 			LoadRibbonPanelForTab(tabinfo);
 		}
 
-		public void OnCheckedHome(bool bChecked)
+		public void OnClickedHomeButton()
 		{
 			Messenger.Send(new HomeMenuActionMessageArgs
 			{
 				MessageID = "RibbonAction",
 				Sender = this,
-				Action= bChecked ? "Show" : "Hide"
+				Action = "Show"
 			});
+		}
+
+		public ICommand HomeButtonClickCommand { get; set; }
+
+		private readonly Dictionary<string, object> _ribbonContentTabs = new Dictionary<string, object>();
+
+		private ObservableCollection<TabBarItemInfo> _tabBarInfos;
+		public ObservableCollection<TabBarItemInfo> TabBarInfos
+		{
+			get => _tabBarInfos;
+			set => SetProperty(ref _tabBarInfos, value);
+		}
+
+		private TabBarItemInfo _selectedTab;
+		public TabBarItemInfo SelectedTab
+		{
+			get => _selectedTab;
+			set => SetProperty(ref _selectedTab, value, () => OnTabChanged(_selectedTab));
+		}
+
+		private object _currentRibbonPanelViewModel;
+		public object CurrentRibbonPanelViewModel
+		{
+			get => _currentRibbonPanelViewModel;
+			set => SetProperty(ref _currentRibbonPanelViewModel, value);
 		}
 	}
 }
