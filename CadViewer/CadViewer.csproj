@@ -93,6 +93,7 @@
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\MouseBehavior.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
+    <Compile Include="Common\ObjectFactoryCache.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ResourceLocator.cs" />
     <Compile Include="Components\Converter.cs" />
@@ -168,8 +169,10 @@
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
     <Compile Include="UIControls\OverlayLayer.cs" />
     <Compile Include="UIControls\OverlayWindow.cs" />
+    <Compile Include="ViewModels\Backstage\BackstageSaveViewModel.cs" />
     <Compile Include="ViewModels\Editors\UIControlViewerViewModel.cs" />
     <Compile Include="ViewModels\EditorPanelViewModel.cs" />
+    <Compile Include="ViewModels\Backstage\BackstageOpenViewModel.cs" />
     <Compile Include="ViewModels\Properties\RectPropertyViewModel.cs" />
     <Compile Include="ViewModels\Properties\LinePropertyViewModel.cs" />
     <Compile Include="ViewModels\HomeMenuViewModel.cs" />
@@ -185,6 +188,12 @@
     <Compile Include="ViewModels\ViewModelCallback.cs" />
     <Compile Include="Views\.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Backstage\BackstageSaveView.xaml.cs">
+      <DependentUpon>BackstageSaveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Backstage\BackstageOpenView.xaml.cs">
+      <DependentUpon>BackstageOpenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditorPanel.xaml.cs">
       <DependentUpon>EditorPanel.xaml</DependentUpon>
@@ -393,6 +402,14 @@
     <Page Include="Resources\fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Backstage\BackstageSaveView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Backstage\BackstageOpenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\EditorPanel.xaml">
       <SubType>Designer</SubType>

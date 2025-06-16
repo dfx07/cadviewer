@@ -42,7 +42,6 @@ namespace CadViewer
 
 			toastManager = new ToastManager();
 
-			this.DataContext = _MainViewModel;
 		}
 
 		private void OnToastClicked(IToast toast)

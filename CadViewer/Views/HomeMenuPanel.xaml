@@ -22,20 +22,27 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="CornerRadius" Value="3" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="Padding" Value="2" />
+            <Setter Property="Padding" Value="10,2,2,2" />
             <Setter Property="Height" Value="35" />
         </Style>
+        <cvt:CommonReferenceEqualityMultiConverter x:Key="ReferenceEqualityMultiConverter" />
+
+        <DataTemplate DataType="{x:Type vm:BackstageOpenViewModel}">
+            <views:BackstageOpenView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BackstageSaveViewModel}">
+            <views:BackstageSaveView />
+        </DataTemplate>
     </UserControl.Resources>
     <UserControl.RenderTransform>
         <TranslateTransform x:Name="SlideTransform" X="-300" />
     </UserControl.RenderTransform>
-    <Grid>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Border x:Name="PART_HomeMenuItems" Grid.Column="0" Background="#222933" 
-                BorderThickness="0,0,1,0" BorderBrush="#222933">
+        <Border x:Name="PART_HomeMenuItems" Grid.Column="0" Background="#222933">
             <StackPanel>
                 <Grid x:Name="PART_HomeHeader" Height="35">
                     <Grid.ColumnDefinitions>
@@ -55,17 +62,31 @@
                 </Grid>
                 <Border x:Name="PART_HomeContent" Padding="5,20,5,20">
                     <StackPanel>
-                        <ui:CFlatToggleButton Content="New" Style="{StaticResource xHomeMenuItemToggleButton}" ></ui:CFlatToggleButton>
-                        <ui:CFlatToggleButton Content="Open" Style="{StaticResource xHomeMenuItemToggleButton}" ></ui:CFlatToggleButton>
-                        <ui:CFlatToggleButton Content="Save" Style="{StaticResource xHomeMenuItemToggleButton}"></ui:CFlatToggleButton>
-                        <ui:CFlatToggleButton Content="Save as" Style="{StaticResource xHomeMenuItemToggleButton}"></ui:CFlatToggleButton>
-                        <ui:CFlatToggleButton Content="Option" Style="{StaticResource xHomeMenuItemToggleButton}"></ui:CFlatToggleButton>
+                        <ItemsControl ItemsSource="{Binding MenuItems}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ui:CFlatToggleButton Content="{Binding Header}" Style="{StaticResource xHomeMenuItemToggleButton}"
+                                                          IsChecked="{Binding IsSelected}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Checked">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SelectMenuItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                                                       CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ui:CFlatToggleButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </Border>
             </StackPanel>
         </Border>
-        <Grid x:Name="PART_HomeMenuContent" Grid.Column="1" 
-              Background="Wheat" ClipToBounds="True">
-        </Grid>
+        <Border x:Name="PART_HomeMenuContent" Grid.Column="1" BorderBrush="#222933" BorderThickness="1">
+            <ui:CPanel Background="{DynamicResource Cmm_BackgroundBrush}" ClipToBounds="True">
+                <ui:CPanel.Content>
+                    <ContentPresenter HorizontalAlignment="Left" Content="{Binding CurrentMenuItemViewModel}" />
+                </ui:CPanel.Content>
+            </ui:CPanel>
+        </Border>
     </Grid>
 </UserControl>

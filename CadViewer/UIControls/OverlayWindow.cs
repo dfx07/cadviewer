@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using CadViewer.ViewModels;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace CadViewer.UIControls
 {
@@ -62,6 +63,15 @@ namespace CadViewer.UIControls
 
 			_container.Children.Clear();
 
+			var bitmap = CaptureGridToBitmap(Owner.Content as FrameworkElement);
+
+			_container.Background = new ImageBrush(bitmap)
+			{
+				Stretch = Stretch.Fill,
+				AlignmentX = AlignmentX.Left,
+				AlignmentY = AlignmentY.Top
+			};
+
 			if (content is ViewModelBase)
 			{
 				var viewModel = content as ViewModelBase;
@@ -86,6 +96,8 @@ namespace CadViewer.UIControls
 			}
 
 			UpdateOverlayBounds();
+
+
 		}
 
 		private void UpdateOverlayBounds()
@@ -107,6 +119,24 @@ namespace CadViewer.UIControls
 				Width = content.ActualWidth;
 				Height = content.ActualHeight;
 			}
+		}
+
+		public static RenderTargetBitmap CaptureGridToBitmap(FrameworkElement element)
+		{
+			if (element == null)
+				return null;
+
+			int width = (int)element.ActualWidth;
+			int height = (int)element.ActualHeight;
+
+			if (width == 0 || height == 0)
+				return null;
+
+			var dpi = 96;
+
+			var rtb = new RenderTargetBitmap(width, height, dpi, dpi, PixelFormats.Pbgra32);
+			rtb.Render(element);
+			return rtb;
 		}
 
 		private void OnRendering(object sender, EventArgs e)
