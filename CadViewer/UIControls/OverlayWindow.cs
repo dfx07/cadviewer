@@ -16,21 +16,46 @@ using System.Windows.Media.Imaging;
 
 namespace CadViewer.UIControls
 {
+	public enum OverlayWindowType
+	{
+		Default,            // Default background color
+		Transparent,        // Transparent background
+		Backdrop            // Background image of the owner window
+	}
+
 	public class OverlayWindow : Window
 	{
 		protected readonly Grid _container;
 		private readonly Stack<UIElement> _viewStack = new Stack<UIElement>();
 
-		public OverlayWindow(Window owner)
+		public OverlayWindowType OverlayType { get; set; } = OverlayWindowType.Default;
+		public Brush OverlayBackground = null;
+
+		public OverlayWindow(Window owner, OverlayWindowType type)
 		{
 			Owner = owner;
 			WindowStyle = WindowStyle.None;
 			ResizeMode = ResizeMode.NoResize;
 			ShowInTaskbar = false;
 
+			OverlayType = type;
+
+			if(OverlayType == OverlayWindowType.Default)
+			{
+				OverlayBackground = new SolidColorBrush(Color.FromArgb(255, 243, 243, 243));
+			}
+			else if(OverlayType == OverlayWindowType.Transparent)
+			{
+				AllowsTransparency = true;
+				OverlayBackground = Brushes.Transparent;
+			}
+			else if(OverlayType == OverlayWindowType.Backdrop)
+			{
+				OverlayBackground = new SolidColorBrush(Color.FromArgb(128, 0, 0, 0));
+			}
+
 			_container = new Grid
 			{
-				Background = new SolidColorBrush(Color.FromArgb(255, 243, 243, 243)),
 				HorizontalAlignment = HorizontalAlignment.Stretch,
 				VerticalAlignment = VerticalAlignment.Stretch
 			};
@@ -53,7 +78,7 @@ namespace CadViewer.UIControls
 			if (background == null)
 				throw new ArgumentNullException(nameof(background));
 
-			_container.Background = background;
+			OverlayBackground = background;
 		}
 
 		public void SetOverlayContent(object content)
@@ -63,14 +88,30 @@ namespace CadViewer.UIControls
 
 			_container.Children.Clear();
 
-			var bitmap = CaptureGridToBitmap(Owner.Content as FrameworkElement);
-
-			_container.Background = new ImageBrush(bitmap)
+			if(OverlayWindowType.Transparent == OverlayType ||
+				OverlayWindowType.Default == OverlayType)
 			{
-				Stretch = Stretch.Fill,
-				AlignmentX = AlignmentX.Left,
-				AlignmentY = AlignmentY.Top
-			};
+				if(OverlayBackground != _container.Background)
+					_container.Background = OverlayBackground;
+			}
+			else if (OverlayWindowType.Backdrop == OverlayType)
+			{
+				var bitmap = CaptureGridToBitmap(Owner.Content as FrameworkElement);
+
+				_container.Background = new ImageBrush(bitmap)
+				{
+					Stretch = Stretch.Fill,
+					AlignmentX = AlignmentX.Left,
+					AlignmentY = AlignmentY.Top
+				};
+
+				_container.Children.Add(new Grid
+				{
+					Background = OverlayBackground,
+					HorizontalAlignment = HorizontalAlignment.Stretch,
+					VerticalAlignment = VerticalAlignment.Stretch
+				});
+			}
 
 			if (content is ViewModelBase)
 			{
@@ -94,10 +135,23 @@ namespace CadViewer.UIControls
 					throw new ArgumentException("Content must be a UIElement or ViewModelBase", nameof(content));
 				}
 			}
+		}
 
-			UpdateOverlayBounds();
+		public void UpdateBackdropImage()
+		{
+			if (OverlayType != OverlayWindowType.Backdrop || Owner == null)
+				return;
 
-
+			var bitmap = CaptureGridToBitmap(Owner.Content as FrameworkElement);
+			if (bitmap != null)
+			{
+				_container.Background = new ImageBrush(bitmap)
+				{
+					Stretch = Stretch.Fill,
+					AlignmentX = AlignmentX.Left,
+					AlignmentY = AlignmentY.Top
+				};
+			}
 		}
 
 		private void UpdateOverlayBounds()
@@ -135,78 +189,36 @@ namespace CadViewer.UIControls
 			var dpi = 96;
 
 			var rtb = new RenderTargetBitmap(width, height, dpi, dpi, PixelFormats.Pbgra32);
+
+			var oldMode = RenderOptions.GetBitmapScalingMode(element);
+			RenderOptions.SetBitmapScalingMode(element, BitmapScalingMode.HighQuality);
+
 			rtb.Render(element);
+
+			RenderOptions.SetBitmapScalingMode(element, oldMode);
+
 			return rtb;
 		}
 
 		private void OnRendering(object sender, EventArgs e)
 		{
-			if (Owner.WindowState == WindowState.Minimized || !this.IsVisible)
-				return;
+			UpdateOverlayBounds();
+		}
 
+		public void DoShow()
+		{
 			if (Owner == null)
-				return;
+				throw new InvalidOperationException("Owner window must be set before showing the overlay.");
 
-			var pos = Owner.PointToScreen(new Point(0, 0));
-			var content = Owner.Content as FrameworkElement;
-
-			if (Left != pos.X || Top != pos.Y ||
-				Width != content.ActualWidth || Height != content.ActualHeight)
-			{
-				Left = pos.X;
-				Top = pos.Y;
-				Width = content.ActualWidth;
-				Height = content.ActualHeight;
-			}
+			base.Show();
 		}
 
-		public void Push(UIElement view)
+		public void DoHide()
 		{
-			//if (!IsVisible)
-			//{
-			//	SyncWithOwner(null, null);
-			//	Show();
-			//}
+			if (Owner == null)
+				throw new InvalidOperationException("Owner window must be set before hiding the overlay.");
 
-			//_viewStack.Push(view);
-			//_container.Children.Add(view);
-		}
-
-		public void Pop()
-		{
-			//if (_viewStack.Count > 0)
-			//{
-			//	var top = _viewStack.Pop();
-			//	_container.Children.Remove(top);
-			//}
-
-			//if (_viewStack.Count == 0)
-			//{
-			//	Hide();
-			//}
-		}
-
-		public void Clear()
-		{
-			//_viewStack.Clear();
-			//_container.Children.Clear();
-			//Hide();
-		}
-	}
-
-	public class OverlayWindowTransparent : OverlayWindow
-	{
-		public OverlayWindowTransparent(Window owner):
-			base(owner)
-		{
-			Background = Brushes.Transparent;
-			AllowsTransparency = true;
-			CacheMode = new BitmapCache();
-
-			if (_container == null)
-				throw new InvalidOperationException("Container is not initialized.");
-
-			_container.Background = new SolidColorBrush(Color.FromArgb(128, 0, 0, 0));
+			base.Hide();
 		}
 	}
 }

@@ -127,7 +127,7 @@ namespace CadViewer.ViewModels
 
 			IsVisible = true;
 
-			m_overlayService.ShowOverlay(this);
+			m_overlayService.ShowOverlay(this, OverlayWindowType.Backdrop);
 
 			OnSelectedMenuItemChanged(MenuItems.First());
 		}
@@ -135,6 +135,8 @@ namespace CadViewer.ViewModels
 		void Hide()
 		{
 			IsVisible = false;
+
+			m_overlayService.UpdateOverlay();
 		}
 
 		private bool _isVisible = false;

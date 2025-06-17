@@ -14,15 +14,17 @@ namespace CadViewer.Services
 {
 	public interface IOverlayService
 	{
-		void ShowOverlayTransparent(object vm, Brush backgroundColor = null);
-		void ShowOverlay(object vm, Brush backgroundColor = null);
+		void ShowOverlay(object content, OverlayWindowType type, Brush backgroundColor = null);
+
+		void UpdateOverlay();
 		void HideOverlay();
 	}
 
 	public class OverlayService : IOverlayService
 	{
-		private OverlayWindow _overlayWindow;
-		private OverlayWindowTransparent _overlayWindowTrans;
+		private OverlayWindow _overlayWindow = null;
+		private OverlayWindow _overlayWindowTrans = null;
+		private OverlayWindow _overlayWindowBackdrop = null;
 
 		private readonly Window _owner;
 
@@ -31,52 +33,58 @@ namespace CadViewer.Services
 			_owner = owner;
 		}
 
-		private OverlayWindow GetOverlayWindow(bool bNew)
+		private OverlayWindow GetOverlayWindow(OverlayWindowType type, bool bFoceNew = false)
 		{
-			if (_overlayWindow == null || bNew)
-				_overlayWindow = new OverlayWindow(_owner);
+			if(type == OverlayWindowType.Backdrop)
+			{
+				if (_overlayWindowBackdrop == null || bFoceNew)
+					_overlayWindowBackdrop = new OverlayWindow(_owner, type);
+				return _overlayWindowBackdrop;
+			}
+			else if(type == OverlayWindowType.Transparent)
+			{
+				if (_overlayWindowTrans == null || bFoceNew)
+					_overlayWindowTrans = new OverlayWindow(_owner, type);
+				return _overlayWindowTrans;
+			}
+			else
+			{
+				if (_overlayWindow == null || bFoceNew)
+					_overlayWindow = new OverlayWindow(_owner, type);
+			}
 			return _overlayWindow;
 		}
-		private OverlayWindow GetOverlayWindowTrans(bool bNew)
+
+		public void ShowOverlay(object content, OverlayWindowType type, Brush backgroundColor = null)
 		{
-			if (_overlayWindowTrans == null || bNew)
-				_overlayWindowTrans = new OverlayWindowTransparent(_owner);
-			return _overlayWindowTrans;
-		}
-
-		public void ShowOverlayTransparent(object content, Brush backgroundColor = null)
-		{
-			var overlayWindow = GetOverlayWindowTrans(false);
-
-			SetOverlayContent(overlayWindow, content, backgroundColor);
-		}
-
-		public void ShowOverlay(object content, Brush backgroundColor = null)
-		{
-			var overlayWindow = GetOverlayWindow(false);
-
-			SetOverlayContent(overlayWindow, content, backgroundColor);
-		}
-
-		private void SetOverlayContent(OverlayWindow overlay, object content, Brush backgroundColor)
-		{
-			var contentControl = new ContentControl { Content = content };
+			var overlayWindow = GetOverlayWindow(type);
 
 			if (backgroundColor != null)
-				overlay.SetOverlayBackground(backgroundColor);
+				overlayWindow.SetOverlayBackground(backgroundColor);
 
-			overlay.SetOverlayContent(contentControl);
+			overlayWindow.SetOverlayContent(content);
 
-			overlay.Show();
+			overlayWindow.DoShow();
+		}
+
+		public void UpdateOverlay()
+		{
+			if(_overlayWindowBackdrop != null)
+			{
+				_overlayWindowBackdrop.UpdateBackdropImage();
+			}
 		}
 
 		public void HideOverlay()
 		{
 			if (_overlayWindow != null)
-				_overlayWindow?.Hide();
+				_overlayWindow?.DoHide();
 
 			if (_overlayWindowTrans != null)
-				_overlayWindowTrans?.Hide();
+				_overlayWindowTrans?.DoHide();
+
+			if (_overlayWindowBackdrop != null)
+				_overlayWindowBackdrop?.DoHide();
 		}
 	}
 }
