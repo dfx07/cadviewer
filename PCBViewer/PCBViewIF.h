@@ -39,5 +39,7 @@ C_STYLE
 	LIBRARY_API void OnKeyDown(IntPtr pPCB, _INT key, _INT flag);
 	LIBRARY_API void OnKeyUp(IntPtr pPCB, _INT key, _INT flag);
 
+	LIBRARY_API void OnSelect(IntPtr pPCB, _INT x, _INT y, _INT x1, _INT y1);
+
 	LIBRARY_API void ProcessKeyState(IntPtr pPCB, _INT keyFlags);
 }

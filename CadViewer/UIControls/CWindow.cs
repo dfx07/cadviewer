@@ -16,6 +16,7 @@ using System.Drawing.Printing;
 using System.Windows.Threading;
 using CadViewer.Interfaces;
 using System.Windows.Media.Effects;
+using CadViewer.Services;
 
 namespace CadViewer.UIControls
 {

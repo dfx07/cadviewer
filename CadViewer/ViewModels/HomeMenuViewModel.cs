@@ -84,6 +84,7 @@ namespace CadViewer.ViewModels
 			{
 				new HomeMenuItem { Header = "Open", ViewModelType = typeof(BackstageOpenViewModel) },
 				new HomeMenuItem { Header = "Save", ViewModelType = typeof(BackstageSaveViewModel) },
+				new HomeMenuItem { Header = "Option", ViewModelType = typeof(BackstageOptionViewModel) },
 			};
 
 			SelectMenuItemCommand = new RelayCommand<HomeMenuItem>(OnSelectedMenuItemChanged);

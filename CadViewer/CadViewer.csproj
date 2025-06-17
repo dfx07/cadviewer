@@ -112,7 +112,6 @@
     <Compile Include="Dialogs\DlgSetting.xaml.cs">
       <DependentUpon>DlgSetting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IMessenger.cs" />
     <Compile Include="Interfaces\IPropertyPalette.cs" />
     <Compile Include="Interfaces\IPropertyItem.cs" />
@@ -120,6 +119,7 @@
     <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\PropertyView.cs" />
     <Compile Include="Interfaces\ToastControl.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\OverlayService.cs" />
     <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Services\VmMessager.cs" />
@@ -169,6 +169,7 @@
     <Compile Include="Interfaces\PCBView\PCBViewHandler.cs" />
     <Compile Include="UIControls\OverlayLayer.cs" />
     <Compile Include="UIControls\OverlayWindow.cs" />
+    <Compile Include="ViewModels\Backstage\BackstageOptionViewModel.cs" />
     <Compile Include="ViewModels\Backstage\BackstageSaveViewModel.cs" />
     <Compile Include="ViewModels\Editors\UIControlViewerViewModel.cs" />
     <Compile Include="ViewModels\EditorPanelViewModel.cs" />
@@ -188,6 +189,9 @@
     <Compile Include="ViewModels\ViewModelCallback.cs" />
     <Compile Include="Views\.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Backstage\BackstageOptionView.xaml.cs">
+      <DependentUpon>BackstageOptionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Backstage\BackstageSaveView.xaml.cs">
       <DependentUpon>BackstageSaveView.xaml</DependentUpon>
@@ -402,6 +406,10 @@
     <Page Include="Resources\fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Backstage\BackstageOptionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Backstage\BackstageSaveView.xaml">
       <Generator>MSBuild:Compile</Generator>

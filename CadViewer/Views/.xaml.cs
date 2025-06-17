@@ -2,6 +2,7 @@
 using CadViewer.Common;
 using CadViewer.Dialogs;
 using CadViewer.Interfaces;
+using CadViewer.Services;
 using CadViewer.UIControls;
 using CadViewer.ViewModels;
 using System;
@@ -41,7 +42,6 @@ namespace CadViewer
 			InitializeComponent();
 
 			toastManager = new ToastManager();
-
 		}
 
 		private void OnToastClicked(IToast toast)

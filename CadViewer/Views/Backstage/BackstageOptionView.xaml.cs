@@ -1,6 +1,4 @@
-﻿using CadViewer.Interfaces;
-using CadViewer.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CadViewer.Dialogs
+namespace CadViewer.Views
 {
 	/// <summary>
-	/// Interaction logic for DlgSetting.xaml
+	/// Interaction logic for BackstageOptionView.xaml
 	/// </summary>
-	public partial class DlgSetting : ModalDialog
+	public partial class BackstageOptionView : UserControl
 	{
-		public DlgSetting(IDialogService dlgService):
-			base(dlgService)
+		public BackstageOptionView()
 		{
 			InitializeComponent();
 		}

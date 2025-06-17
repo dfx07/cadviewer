@@ -196,6 +196,16 @@ LIBRARY_API void OnKeyUp(IntPtr pPCB, _INT keyCode, _INT flag)
 	pView->OnKeyUp(&keyEvent);
 }
 
+LIBRARY_API void OnSelect(IntPtr pPCB, _INT x, _INT y, _INT x1, _INT y1)
+{
+	PCBView* pView = reinterpret_cast<PCBView*>(pPCB);
+	NULL_RETURN(pView);
+
+
+
+	return;
+}
+
 LIBRARY_API void ProcessKeyState(IntPtr pPCB, _INT keyFlags)
 {
 	PCBView* pView = reinterpret_cast<PCBView*>(pPCB);
