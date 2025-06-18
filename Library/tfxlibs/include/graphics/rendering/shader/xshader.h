@@ -12,6 +12,7 @@
 #define XSHADER_H
 
 #include <unordered_map>
+#include <string>
 
 __BEGIN_NAMESPACE__
 

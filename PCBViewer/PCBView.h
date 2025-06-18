@@ -76,8 +76,6 @@ protected:
 	EPCBViewState	m_ePCBViewState = EPCBViewState::none;
 	TFX_DevicePt	m_ptMouseLastClick = { 0,0 };
 	TFX_DevicePt	m_ptLastMouse = { 0,0 };
-	/*
-		1 : Move
-	*/
+
 };
 

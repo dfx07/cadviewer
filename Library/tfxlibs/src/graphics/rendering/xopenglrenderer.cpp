@@ -3,7 +3,8 @@
 
 __BEGIN_NAMESPACE__
 
-OpenGLRenderer::OpenGLRenderer()
+OpenGLRenderer::OpenGLRenderer() : TFXRenderer(),
+	m_v4ClearColor(1.0f, 1.0f, 1.0f, 1.0f) // Default clear color is white
 {
 
 }

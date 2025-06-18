@@ -183,8 +183,10 @@ static GLuint CreateProgram(std::vector<GLuint> vecShaders)
 		Logger.WriteLog(ShaderLogStatus::ERR, strErr);
 		Logger.WriteLog(ShaderLogStatus::ERR, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
 
-		return false;
+		return 0;
 	}
+
+	return nProgramID;
 }
 
 GLShaderLogger::GLShaderLogger(const std::string& path)

@@ -13,6 +13,7 @@
 
 #include "common/tfxdef.h"
 #include "xshader.h"
+#include <string>
 
 __BEGIN_NAMESPACE__
 
