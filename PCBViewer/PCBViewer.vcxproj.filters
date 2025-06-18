@@ -81,6 +81,15 @@
     <ClInclude Include="..\Library\tfxlibs\include\common\dllexports.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xglshader.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shape\xpolyrender.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -100,6 +109,12 @@
     </ClCompile>
     <ClCompile Include="WInputDeviceMap.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shape\xpolyrender.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

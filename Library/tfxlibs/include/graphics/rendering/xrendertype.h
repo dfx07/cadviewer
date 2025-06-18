@@ -34,6 +34,12 @@ typedef std::shared_ptr<Camera2D> Camera2DPtr;
 class Camera3D;
 typedef std::shared_ptr<Camera3D> Camera3DPtr;
 
+interface IShaderProgram;
+typedef std::shared_ptr<IShaderProgram> ShaderProgramPtr;
+
+interface IShaderDataBinder;
+typedef std::shared_ptr<IShaderDataBinder> IShaderDataBinderPtr;
+
 __END_NAMESPACE__
 
 #endif // !XRENDERTYPE_H

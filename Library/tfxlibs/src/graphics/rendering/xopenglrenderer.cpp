@@ -57,10 +57,10 @@ void OpenGLRenderer::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(tfx::ValuePtr(viewMat));
 
-	//for (auto pObjRenderable : m_ObjectRenders)
-	//{
-	//	pObjRenderable->Draw();
-	//}
+	for (auto& pObjRenderable : m_ObjectRenders)
+	{
+		pObjRenderable->Draw();
+	}
 
 	glPointSize(10.0);
 	glColor3f(0, 1, 0);

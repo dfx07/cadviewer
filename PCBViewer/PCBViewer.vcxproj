@@ -178,6 +178,9 @@
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xglshader.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shape\xpolyrender.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xopenglrenderer.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h" />
@@ -191,6 +194,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shape\xpolyrender.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\xopenglrenderer.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="PCBView.cpp" />

@@ -8,44 +8,42 @@
 * @create: June 10, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-#ifndef XRENDERABLE_H
-#define XRENDERABLE_H
+#ifndef XPOLYRENDER_H
+#define XPOLYRENDER_H
 
-#include <memory>
-#include "common/tfxtype.h"
+#include "graphics/rendering/xrenderable.h"
+#include "graphics/rendering/xrendertype.h"
 
 __BEGIN_NAMESPACE__
 
-class ObjectRenderable
+class PolyRender : public ObjectRenderable
 {
 public:
-	ObjectRenderable(const Mat4& modelMatrix = Mat4(1.0f))
-		: m_matModelMatrix(modelMatrix) { }
-
-	virtual ~ObjectRenderable() { }
-
-	void SetModelMatrix(const Mat4& modelMatrix)
-	{
-		m_matModelMatrix = modelMatrix;
-	}
-
-	const Mat4& GetModelMatrix() const
-	{
-		return m_matModelMatrix;
-	}
-
-public:
-	virtual void Draw() = 0;
-	virtual bool BindShader() = 0;
-	virtual void UnbindShader() = 0;
-
-	// Optional
-	virtual void Update(float deltaTime) {}
+	PolyRender();
+	~PolyRender();
 
 protected:
-	Mat4 m_matModelMatrix;
+	bool CreateShader();
+
+
+public:
+	virtual void Draw();
+
+	virtual bool BindShader();
+
+	virtual void UnbindShader();
+
+	virtual void Update(float deltaTime);
+
+protected:
+	ShaderProgramPtr m_pProgram = nullptr;
+	IShaderDataBinderPtr m_pBinder = nullptr;
+
+public:
+	std::vector<float> m_vecRenderData;
 };
+
 
 __END_NAMESPACE__
 
-#endif // !XRENDERABLE_H
+#endif // !XPOLYRENDER_H
