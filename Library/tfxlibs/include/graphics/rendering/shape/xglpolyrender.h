@@ -33,12 +33,10 @@ public:
 	~GLPolyRender();
 
 protected:
-	bool CreateShader();
-	bool CreateBuffers();
-	void UpdateVertexBuffer();
-
-
-	void ReleaseBuffer();
+	virtual bool CreateShader();
+	virtual bool CreateBuffers();
+	virtual void UpdateVertexBuffer();
+	virtual void ReleaseBuffer();
 
 public:
 	void AddPolyData(PolyShapeDrawData& polydata);
@@ -47,6 +45,8 @@ public:
 	virtual void Draw(const Mat4& view, const Mat4& proj);
 	virtual bool BindShader();
 	virtual void UnbindShader();
+	virtual void Remake();
+
 	virtual void Update(float deltaTime);
 
 public:
@@ -59,8 +59,6 @@ public:
 
 	bool m_bReloadBufferFlag = false;
 	bool m_bReloadIndexFlags = false;
-
-	size_t m_nOldSize = 0;
 };
 
 

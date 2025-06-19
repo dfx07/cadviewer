@@ -63,6 +63,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_pRenderer->SetClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Default clear color is white
 
 
+	m_pRenderer->AddObjectRenderable(std::make_shared<tfx::GLPolyRender>());
+
 	UpdateView();
 
 	return true;

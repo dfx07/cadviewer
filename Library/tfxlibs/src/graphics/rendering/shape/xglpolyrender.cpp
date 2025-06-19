@@ -60,6 +60,8 @@ bool GLPolyRender::CreateBuffers()
 	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(0);
+
+	return true;
 }
 
 void GLPolyRender::UpdateVertexBuffer()
@@ -112,31 +114,6 @@ void GLPolyRender::ReleaseBuffer()
 		glDeleteVertexArrays(1, &m_nVao);
 }
 
-void GLPolyRender::AddPolyData(PolyShapeDrawData& polydata)
-{
-	size_t nVertexCnt = polydata.m_vertices.size();
-
-	for (size_t i = 0; i < nVertexCnt; i++)
-	{
-		auto& vtxData = polydata.m_vertices[i];
-
-		m_vecRenderData.push_back({ vtxData.position, vtxData.color, polydata.m_thickness });
-
-		GLuint prev = (i + nVertexCnt - 1) % nVertexCnt;
-		GLuint cur1 = i;
-		GLuint cur2 = (i + 1) % nVertexCnt;
-		GLuint next = (i + 2) % nVertexCnt;
-
-		m_vecIndices.push_back(prev);
-		m_vecIndices.push_back(cur1);
-		m_vecIndices.push_back(cur2);
-		m_vecIndices.push_back(next);
-	}
-
-	m_bReloadBufferFlag = true;
-	m_bReloadIndexFlags = true;
-}
-
 void GLPolyRender::Draw(const Mat4& view, const Mat4& proj)
 {
 	if (!BindShader())
@@ -169,6 +146,11 @@ void GLPolyRender::UnbindShader()
 		return;
 
 	m_pProgram->UnUse();
+}
+
+void GLPolyRender::Remake()
+{
+	// TODO: Implement this method if needed
 }
 
 void GLPolyRender::Update(float deltaTime)

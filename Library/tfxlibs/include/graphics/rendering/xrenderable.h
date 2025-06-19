@@ -21,7 +21,8 @@ class ObjectRenderable
 {
 public:
 	ObjectRenderable(const Mat4& modelMatrix = Mat4(1.0f))
-		: m_matModel(modelMatrix) { }
+		: m_matModel(modelMatrix), m_nModelID(0)
+	{ }
 
 	virtual ~ObjectRenderable() { }
 
@@ -39,11 +40,13 @@ public:
 	virtual void Draw(const Mat4& view, const Mat4& proj) = 0;
 	virtual bool BindShader() = 0;
 	virtual void UnbindShader() = 0;
+	virtual void Remake() = 0;
 
 	// Optional
 	virtual void Update(float deltaTime) {}
 
 public:
+	int m_nModelID = 0;
 	Mat4 m_matModel;
 	ShaderProgramPtr m_pProgram = nullptr;
 	IShaderDataBinderPtr m_pBinder = nullptr;

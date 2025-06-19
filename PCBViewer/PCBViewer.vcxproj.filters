@@ -31,6 +31,18 @@
     <Filter Include="Source Files\modules">
       <UniqueIdentifier>{ca06c37a-8450-4284-9629-92a9f91e0e79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\render_objects">
+      <UniqueIdentifier>{ba16ffe8-b3ab-4803-8d06-89a5173a2c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render_objects">
+      <UniqueIdentifier>{f1a54e52-1cb0-4678-81f3-bca621c1e56f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\shape_objects">
+      <UniqueIdentifier>{7c9e8829-fb50-4577-883e-056883d1e014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shape_objects">
+      <UniqueIdentifier>{70a884e8-ae7f-4f78-b260-456710661fa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCBView.h">
@@ -93,6 +105,21 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shape\xglpolyrender.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="RenderModelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PCBViewType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PolyObjectDrawer.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PolyDrawObject.h">
+      <Filter>Header Files\shape_objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -118,6 +145,18 @@
     </ClCompile>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shape\xglpolyrender.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderModelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PolyObjectDrawer.cpp">
+      <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PolyDrawObject.cpp">
+      <Filter>Source Files\shape_objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

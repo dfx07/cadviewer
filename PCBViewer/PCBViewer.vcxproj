@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -187,9 +187,14 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xtfxrender.h" />
     <ClInclude Include="..\Library\tfxlibs\include\modules\inputdevice.h" />
+    <ClInclude Include="PolyDrawObject.h" />
+    <ClInclude Include="DrawObject.h" />
     <ClInclude Include="PCBView.h" />
     <ClInclude Include="PCBViewDef.h" />
     <ClInclude Include="PCBViewIF.h" />
+    <ClInclude Include="PCBViewType.h" />
+    <ClInclude Include="PolyObjectDrawer.h" />
+    <ClInclude Include="RenderModelManager.h" />
     <ClInclude Include="ViewBehavior.h" />
     <ClInclude Include="WInputDeviceMap.h" />
   </ItemGroup>
@@ -198,9 +203,13 @@
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shape\xglpolyrender.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\xopenglrenderer.cpp" />
+    <ClCompile Include="PolyDrawObject.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="DrawObject.cpp" />
     <ClCompile Include="PCBView.cpp" />
     <ClCompile Include="PCBViewIF.cpp" />
+    <ClCompile Include="PolyObjectDrawer.cpp" />
+    <ClCompile Include="RenderModelManager.cpp" />
     <ClCompile Include="WInputDeviceMap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
