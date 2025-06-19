@@ -13,6 +13,7 @@
 
 #include <memory>
 #include "common/tfxtype.h"
+#include "graphics/rendering/xrendertype.h"
 
 __BEGIN_NAMESPACE__
 
@@ -20,30 +21,32 @@ class ObjectRenderable
 {
 public:
 	ObjectRenderable(const Mat4& modelMatrix = Mat4(1.0f))
-		: m_matModelMatrix(modelMatrix) { }
+		: m_matModel(modelMatrix) { }
 
 	virtual ~ObjectRenderable() { }
 
 	void SetModelMatrix(const Mat4& modelMatrix)
 	{
-		m_matModelMatrix = modelMatrix;
+		m_matModel = modelMatrix;
 	}
 
 	const Mat4& GetModelMatrix() const
 	{
-		return m_matModelMatrix;
+		return m_matModel;
 	}
 
 public:
-	virtual void Draw() = 0;
+	virtual void Draw(const Mat4& view, const Mat4& proj) = 0;
 	virtual bool BindShader() = 0;
 	virtual void UnbindShader() = 0;
 
 	// Optional
 	virtual void Update(float deltaTime) {}
 
-protected:
-	Mat4 m_matModelMatrix;
+public:
+	Mat4 m_matModel;
+	ShaderProgramPtr m_pProgram = nullptr;
+	IShaderDataBinderPtr m_pBinder = nullptr;
 };
 
 __END_NAMESPACE__

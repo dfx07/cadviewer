@@ -85,6 +85,9 @@ typedef glm::mat2 Mat2;
 typedef glm::mat3 Mat3;
 typedef glm::mat4 Mat4;
 
+typedef glm::vec3 Color3;
+typedef glm::vec4 Color4;
+
 
 template<typename T>
 auto ValuePtr(const T& obj) -> decltype(glm::value_ptr(obj)) {

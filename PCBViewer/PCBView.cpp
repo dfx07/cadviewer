@@ -1,6 +1,9 @@
 #include "PCBView.h"
-#include "graphics/rendering/xopenglrenderer.h"
 #include "graphics/camera/xcamera.h"
+#include "graphics/rendering/xopenglrenderer.h"
+
+
+#include "graphics/rendering/shape/xglpolyrender.h"
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -58,6 +61,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_pRenderer = std::make_shared<tfx::OpenGLRenderer>(m_pCamera);
 	m_pRenderer->SetContext(m_pContext);
 	m_pRenderer->SetClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Default clear color is white
+
 
 	UpdateView();
 
