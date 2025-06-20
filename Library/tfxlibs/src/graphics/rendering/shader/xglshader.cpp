@@ -148,10 +148,9 @@ static GLuint CreateShader(GLenum type, const std::string& source)
 	if (IsErrorShader(nShader))
 	{
 		std::string strErr = GetShaderLog(nShader);
-		Logger.WriteLog(ShaderLogStatus::ERR, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-		Logger.WriteLog(ShaderLogStatus::ERR, "[SHADER] %s fail ! \n", mapShaderNames.at(static_cast<int>(type)).c_str());
-		Logger.WriteLog(ShaderLogStatus::ERR, strErr);
-		Logger.WriteLog(ShaderLogStatus::ERR, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+		Logger.WriteLog(ShaderLogStatus::ERR, "~~~~~~~~~~~~~~~~~~~[SHADER-ERR]~~~~~~~~~~~~~~~~~~~~\n");
+		Logger.WriteLog(ShaderLogStatus::ERR, strErr, true);
+		Logger.WriteLog(ShaderLogStatus::ERR, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
 
 		glDeleteShader(nShader);
 
@@ -178,10 +177,9 @@ static GLuint CreateProgram(std::vector<GLuint> vecShaders)
 	{
 		std::string strErr = GetProgramLog(nProgramID);
 
-		Logger.WriteLog(ShaderLogStatus::ERR, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-		Logger.WriteLog(ShaderLogStatus::ERR, "[PROGRAM] failed !\n");
-		Logger.WriteLog(ShaderLogStatus::ERR, strErr);
-		Logger.WriteLog(ShaderLogStatus::ERR, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+		Logger.WriteLog(ShaderLogStatus::ERR, "~~~~~~~~~~~~~~~~~~~~[PROGRAM-ERR]~~~~~~~~~~~~~~~~~~~~\n");
+		Logger.WriteLog(ShaderLogStatus::ERR, strErr, true);
+		Logger.WriteLog(ShaderLogStatus::ERR, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
 
 		return 0;
 	}
@@ -194,12 +192,19 @@ GLShaderLogger::GLShaderLogger(const std::string& path)
 	m_strLogPath = path;
 }
 
-void GLShaderLogger::WriteLog(ShaderLogStatus status, std::string& msg)
+void GLShaderLogger::WriteLog(ShaderLogStatus status, std::string& msg, bool bIngoreStatus/* = false*/)
 {
 	char msgLogData[MAX_LOG] = { 0 };
 
-	snprintf(&msgLogData[0], MAX_LOG, "[OPENGL][%s] : \n %s", strStatus[static_cast<int>(status)],
-		msg.c_str());
+	if (!bIngoreStatus)
+	{
+		snprintf(&msgLogData[0], MAX_LOG, "[OPENGL][%s] : \n %s", strStatus[static_cast<int>(status)],
+			msg.c_str());
+	}
+	else
+	{
+		snprintf(&msgLogData[0], MAX_LOG, "%s", msg.c_str());
+	}
 
 	std::cerr << msgLogData << std::endl;
 }
@@ -317,6 +322,12 @@ void GLShaderDataBinder::SetInt(const std::string& name, int value)
 {
 	GLint loc = glGetUniformLocation(m_nProgramID, name.c_str());
 	glUniform1i(loc, value);
+}
+
+void GLShaderDataBinder::SetVec2(const std::string& name, const float* vec2)
+{
+	GLint loc = glGetUniformLocation(m_nProgramID, name.c_str());
+	glUniform2fv(loc, 1, vec2);
 }
 
 void GLShaderDataBinder::SetVec3(const std::string& name, const float* vec3)

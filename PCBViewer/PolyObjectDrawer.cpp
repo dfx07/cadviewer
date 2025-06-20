@@ -1,20 +1,31 @@
 #include "PolyObjectDrawer.h"
 #include "PolyDrawObject.h"
 
-PolyObjectDrawer::PolyObjectDrawer()
+PolyObjectDrawer::PolyObjectDrawer(RenderModelManagerPtr pModelManager, int nID):
+	m_pModelManager(pModelManager)
 {
+	m_nModelID = nID;
 }
 
 PolyObjectDrawer::~PolyObjectDrawer()
 {
+
 }
 
 void PolyObjectDrawer::Remake()
 {
+	if (m_pModelManager == nullptr)
+		return;
+
 	auto pPolyData = std::dynamic_pointer_cast<PolyDrawObject>(m_pModelManager->GetModel(m_nModelID));
 
 	if (pPolyData == nullptr)
 		return;
+
+	m_vecRenderData.clear();
+	m_vecIndices.clear();
+
+	AddPolyData(pPolyData);
 
 	UpdateVertexBuffer();
 }

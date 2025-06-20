@@ -2,7 +2,7 @@
 
 int RenderModelManager::AddModel(const DrawObjectPtr pObj)
 {
-	int id = static_cast<int>(m_models.size());
+	int id = static_cast<int>(m_models.size()) + 1;
 	m_models[id] = pObj;
 	return id;
 }

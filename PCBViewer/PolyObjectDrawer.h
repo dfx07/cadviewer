@@ -6,11 +6,11 @@
 class PolyObjectDrawer : public tfx::GLPolyRender
 {
 public:
-	PolyObjectDrawer();
+	PolyObjectDrawer(RenderModelManagerPtr pModelManager, int nID);
 	virtual ~PolyObjectDrawer();
 
 
-public:
+protected:
 	void AddPolyData(PolyDrawObjectPtr polydata);
 
 public:

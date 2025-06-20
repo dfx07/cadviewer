@@ -82,6 +82,11 @@ void Camera::SetView(const int width, const int height)
 	m_iHeight = height;
 }
 
+Vec2 Camera::GetView() const
+{
+	return Vec2(m_iWidth, m_iHeight);
+}
+
 
 void Camera::SetDistPlane(const float _near, const float _far)
 {
@@ -178,7 +183,7 @@ Vec3 Camera2D::World2ScreenPoint(const Vec3& p) const
 Vec3 Camera2D::Screen2WorldPoint(const Vec3& p) const
 {
 	Vec3 point = { 0 , 0 , 0 };    // Để mặc định
-	point.x = m_position.x + (p.x - float(m_iWidth / 2)) / m_fZoom;
+	point.x = m_position.x - (p.x - float(m_iWidth / 2)) / m_fZoom;
 	point.y = m_position.y + (p.y - float(m_iHeight / 2)) / m_fZoom;
 	return point;
 }

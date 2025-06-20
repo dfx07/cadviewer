@@ -104,6 +104,12 @@ public:
 	void SetView(const int width, const int height);
 
 	/*******************************************************************************
+	*! @brief  : Get view size
+	*! @author : thuong.nv          - [Date] : 2025.06.20
+	*******************************************************************************/
+	Vec2 GetView() const;
+
+	/*******************************************************************************
 	*! @brief  : Set near and far distance camera
 	*! @param    [in] _near : near distace clip plane
 	*! @param    [in] _far  : far distance clip plane

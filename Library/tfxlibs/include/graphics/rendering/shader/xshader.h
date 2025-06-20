@@ -33,7 +33,7 @@ enum class ShaderLogStatus
 interface IShaderLogger
 {
 public:
-	virtual void WriteLog(ShaderLogStatus status, std::string& msg) = 0;
+	virtual void WriteLog(ShaderLogStatus status, std::string& msg, bool bIngoreStatus = false) = 0;
 };
 
 interface IShaderProgram
@@ -53,6 +53,7 @@ public:
 
 	virtual void SetFloat(const std::string& name, float value) = 0;
 	virtual void SetInt(const std::string& name, int value) = 0;
+	virtual void SetVec2(const std::string& name, const float* vec2) = 0;
 	virtual void SetVec3(const std::string& name, const float* vec3) = 0;
 	virtual void SetMat4(const std::string& name, const float* mat4) = 0;
 };

@@ -32,17 +32,14 @@ public:
 	GLPolyRender();
 	~GLPolyRender();
 
-protected:
+public:
 	virtual bool CreateShader();
 	virtual bool CreateBuffers();
 	virtual void UpdateVertexBuffer();
 	virtual void ReleaseBuffer();
 
 public:
-	void AddPolyData(PolyShapeDrawData& polydata);
-
-public:
-	virtual void Draw(const Mat4& view, const Mat4& proj);
+	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport);
 	virtual bool BindShader();
 	virtual void UnbindShader();
 	virtual void Remake();

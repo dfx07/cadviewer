@@ -23,7 +23,7 @@ public:
 	GLShaderLogger(const std::string& path = "");
 
 public:
-	virtual void WriteLog(ShaderLogStatus status, std::string& msg);
+	virtual void WriteLog(ShaderLogStatus status, std::string& msg, bool bIngoreStatus = false);
 	virtual void WriteLog(ShaderLogStatus status, const char* format, ...);
 
 public:
@@ -67,6 +67,7 @@ public:
 public:
 	virtual void SetFloat(const std::string& name, float value);
 	virtual void SetInt(const std::string& name, int value);
+	virtual void SetVec2(const std::string& name, const float* vec2);
 	virtual void SetVec3(const std::string& name, const float* vec3);
 	virtual void SetMat4(const std::string& name, const float* mat4);
 

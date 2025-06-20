@@ -5,6 +5,8 @@
 #include <modules/NotifyObject.h>
 #include "graphics/rendering/xctx.h"
 #include "graphics/rendering/xrendertype.h"
+#include "RenderModelManager.h"
+#include "PolyDrawObject.h"
 
 #include "ViewBehavior.h"
 
@@ -76,5 +78,9 @@ protected:
 	EPCBViewState	m_ePCBViewState = EPCBViewState::none;
 	TFX_DevicePt	m_ptMouseLastClick = { 0,0 };
 	TFX_DevicePt	m_ptLastMouse = { 0,0 };
+
+	PolyDrawObjectPtr m_poly = nullptr;
+	PolyObjectDrawerPtr m_polyDrawer = nullptr;
+	RenderModelManagerPtr m_pModelManager = nullptr;
 };
 

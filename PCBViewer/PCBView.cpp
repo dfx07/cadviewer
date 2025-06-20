@@ -3,7 +3,7 @@
 #include "graphics/rendering/xopenglrenderer.h"
 
 
-#include "graphics/rendering/shape/xglpolyrender.h"
+#include "PolyObjectDrawer.h"
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -55,15 +55,31 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	// create camera
 	m_pCamera = std::make_shared<tfx::Camera2D>();
-	m_pCamera->SetCamera({ 0.f, 0.f, 8.f }, { 0.f, 0.f, -1.f }, { 0.f, 1.f, 0.f });
-	m_pCamera->SetDistPlane(0, -1000.f);
+	m_pCamera->SetCamera({ 0.f, 0.f, 200.f }, { 0.f, 0.f, 1.f }, { 0.f, 1.f, 0.f });
+	m_pCamera->SetDistPlane(0.f, 1000.f);
 
 	m_pRenderer = std::make_shared<tfx::OpenGLRenderer>(m_pCamera);
 	m_pRenderer->SetContext(m_pContext);
 	m_pRenderer->SetClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Default clear color is white
 
+	m_pModelManager = std::make_shared<RenderModelManager>();
 
-	m_pRenderer->AddObjectRenderable(std::make_shared<tfx::GLPolyRender>());
+	m_poly = std::make_shared<PolyDrawObject>();
+
+	m_poly->m_vecPoints.push_back({ -100.f, 100.f });
+	m_poly->m_vecPoints.push_back({ 100.f, 100.f });
+	m_poly->m_vecPoints.push_back({ 100.f, -100.f });
+	m_poly->m_vecPoints.push_back({ -100.f, -100.f });
+
+	m_poly->m_clColor = Col4(1.f, 0.f, 0.f, 1.f);
+
+	int nID = m_pModelManager->AddModel(m_poly);
+
+	m_polyDrawer = std::make_shared<PolyObjectDrawer>(m_pModelManager, nID);
+	m_polyDrawer->CreateShader();
+	m_polyDrawer->CreateBuffers();
+
+	m_pRenderer->AddObjectRenderable(m_polyDrawer);
 
 	UpdateView();
 
@@ -128,6 +144,8 @@ void PCBView::OnMouseMove(TFXMouseEvent* event)
 
 void PCBView::OnMouseDown(TFXMouseEvent* event)
 {
+	m_polyDrawer->Remake();
+
 	if (m_ePCBViewState == EPCBViewState::none)
 	{
 		if (event->m_Button == TFXMouseButton::MID)

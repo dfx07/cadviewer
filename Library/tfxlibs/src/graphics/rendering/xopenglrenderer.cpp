@@ -51,6 +51,10 @@ void OpenGLRenderer::Render()
 
 	Mat4& viewMat = m_pCamera->GetViewMatrix();
 	Mat4& projMat = m_pCamera->GetProjMatrix();
+	Vec2 viewPort = m_pCamera->GetView();
+
+	//Mat4 viewMat = Mat4(1.f);
+	//Mat4 projMat = Mat4(1.f);
 
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadMatrixf(tfx::ValuePtr(projMat));
@@ -58,9 +62,15 @@ void OpenGLRenderer::Render()
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadMatrixf(tfx::ValuePtr(viewMat));
 
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+
 	for (auto& pObjRenderable : m_ObjectRenders)
 	{
-		pObjRenderable->Draw(viewMat, projMat);
+		pObjRenderable->Draw(viewMat, projMat, viewPort);
 	}
 
 	//glPointSize(10.0);
@@ -68,10 +78,10 @@ void OpenGLRenderer::Render()
 	//	glBegin(GL_POINTS);
 	//	glVertex2f(0.f, 0.f);
 	//glEnd();
-
+	//glColor3f(0, 1, 0);
 	//glBegin(GL_LINES);
-	//	glVertex2f(-200.5f, -100.5f);
-	//	glVertex2f(100.5f, 100.5f);
+	//	glVertex3f(-0.5f, -0.5f, 0.2f);
+	//	glVertex3f(0.5f, 0.5f, 0.2f);
 	//glEnd();
 
 	//glColor3f(0.5, 1, 1);

@@ -21,7 +21,7 @@ bool GLPolyRender::CreateShader()
 	std::unordered_map<ShaderStage, std::string> shaderSrc;
 	shaderSrc[ShaderStage::Vertex]   = "shaders/shape/poly.vert";
 	shaderSrc[ShaderStage::Fragment] = "shaders/shape/poly.frag";
-	//shaderSrc[ShaderStage::Geometry] = "shaders/shape/poly.geom";
+	shaderSrc[ShaderStage::Geometry] = "shaders/shape/poly.geom";
 
 	if (!pGLProgram->LoadShaders(shaderSrc))
 	{
@@ -66,21 +66,25 @@ bool GLPolyRender::CreateBuffers()
 
 void GLPolyRender::UpdateVertexBuffer()
 {
-	GLsizeiptr newSize = m_vecRenderData.size() * sizeof(PolyVertexData);
+	if (m_nVao == 0 || m_nEbo == 0 || m_nVbo == 0)
+	{
+		ReleaseBuffer();
+		if (CreateBuffers() == false)
+			return;
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
 	if (m_bReloadBufferFlag)
 	{
 		// Dung lượng thay đổi → cấp phát lại
-		glBufferData(GL_ARRAY_BUFFER, newSize, m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(PolyVertexData), m_vecRenderData.data(), GL_DYNAMIC_DRAW);
 	}
 	else
 	{
 		// Kích thước không đổi → update nhanh
-		glBufferSubData(GL_ARRAY_BUFFER, 0, newSize, m_vecRenderData.data());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(PolyVertexData), m_vecRenderData.data());
 	}
 
-	newSize = m_vecIndices.size() * sizeof(GLuint);
 
 	glBindVertexArray(m_nVao);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
@@ -88,12 +92,12 @@ void GLPolyRender::UpdateVertexBuffer()
 	if (m_bReloadIndexFlags)
 	{
 		// Dung lượng thay đổi → cấp phát lại
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, newSize, m_vecIndices.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_vecIndices.size() * sizeof(GLuint), m_vecIndices.data(), GL_DYNAMIC_DRAW);
 	}
 	else
 	{
 		// Kích thước không đổi → update nhanh
-		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, newSize, m_vecIndices.data());
+		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_vecIndices.size() * sizeof(GLuint), m_vecIndices.data());
 	}
 
 	glBindVertexArray(0);
@@ -114,7 +118,7 @@ void GLPolyRender::ReleaseBuffer()
 		glDeleteVertexArrays(1, &m_nVao);
 }
 
-void GLPolyRender::Draw(const Mat4& view, const Mat4& proj)
+void GLPolyRender::Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport)
 {
 	if (!BindShader())
 		return;
@@ -125,9 +129,13 @@ void GLPolyRender::Draw(const Mat4& view, const Mat4& proj)
 	m_pBinder->SetMat4("u_Proj", tfx::ValuePtr(proj));
 	m_pBinder->SetMat4("u_View", tfx::ValuePtr(view));
 	m_pBinder->SetMat4("u_Model", tfx::ValuePtr(m_matModel));
+	m_pBinder->SetVec2("u_Viewport", tfx::ValuePtr(viewport));
 
 	glBindVertexArray(m_nVao);
 	glDrawElements(GL_LINES_ADJACENCY, m_vecRenderData.size(), GL_UNSIGNED_INT, 0);
+
+	//glBindVertexArray(vao);
+	//glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
 
 	UnbindShader();
 }
