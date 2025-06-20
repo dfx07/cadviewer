@@ -67,11 +67,12 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_poly = std::make_shared<PolyDrawObject>();
 
 	m_poly->m_vecPoints.push_back({ -100.f, 100.f });
-	m_poly->m_vecPoints.push_back({ 100.f, 100.f });
+	m_poly->m_vecPoints.push_back({ 100.f, -100.f });
 	m_poly->m_vecPoints.push_back({ 100.f, -100.f });
 	m_poly->m_vecPoints.push_back({ -100.f, -100.f });
 
 	m_poly->m_clColor = Col4(1.f, 0.f, 0.f, 1.f);
+	m_poly->m_fThickness = 1.f;
 
 	int nID = m_pModelManager->AddModel(m_poly);
 

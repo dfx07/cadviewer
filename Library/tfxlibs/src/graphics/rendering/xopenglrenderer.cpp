@@ -80,8 +80,8 @@ void OpenGLRenderer::Render()
 	//glEnd();
 	//glColor3f(0, 1, 0);
 	//glBegin(GL_LINES);
-	//	glVertex3f(-0.5f, -0.5f, 0.2f);
-	//	glVertex3f(0.5f, 0.5f, 0.2f);
+	//	glVertex3f(-100.f, -100.f, 0.2f);
+	//	glVertex3f(100.f, -100.f, 0.2f);
 	//glEnd();
 
 	//glColor3f(0.5, 1, 1);
