@@ -16,7 +16,7 @@ const char strStatus[][6] {
 	"INFO",
 };
 
-const std::map<int, std::string> mapShaderNames
+std::map<int, std::string> mapShaderNames
 {
 	{GL_VERTEX_SHADER, "GL_VERTEX_SHADER"},
 	{GL_FRAGMENT_SHADER, "GL_FRAGMENT_SHADER"},
@@ -148,7 +148,7 @@ static GLuint CreateShader(GLenum type, const std::string& source)
 	if (IsErrorShader(nShader))
 	{
 		std::string strErr = GetShaderLog(nShader);
-		Logger.WriteLog(ShaderLogStatus::ERR, "~~~~~~~~~~~~~~~~~~~[SHADER-ERR]~~~~~~~~~~~~~~~~~~~~\n");
+		Logger.WriteLog(ShaderLogStatus::ERR, "~~~~~~~~~~~~~~~~~[SHADER-ERR(%s)]~~~~~~~~~~~~~~~~~\n", mapShaderNames[static_cast<int>(type)].c_str());
 		Logger.WriteLog(ShaderLogStatus::ERR, strErr, true);
 		Logger.WriteLog(ShaderLogStatus::ERR, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
 

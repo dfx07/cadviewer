@@ -19,7 +19,7 @@ void PolyObjectDrawer::Remake()
 
 	auto pPolyData = std::dynamic_pointer_cast<PolyDrawObject>(m_pModelManager->GetModel(m_nModelID));
 
-	if (pPolyData == nullptr)
+	if (pPolyData == nullptr || !m_vecRenderData.empty())
 		return;
 
 	m_vecRenderData.clear();

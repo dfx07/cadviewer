@@ -132,10 +132,7 @@ void GLPolyRender::Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport
 	m_pBinder->SetVec2("u_Viewport", tfx::ValuePtr(viewport));
 
 	glBindVertexArray(m_nVao);
-	glDrawElements(GL_LINES_ADJACENCY, m_vecRenderData.size(), GL_UNSIGNED_INT, 0);
-
-	//glBindVertexArray(vao);
-	//glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_LINES_ADJACENCY, m_vecRenderData.size() * 4, GL_UNSIGNED_INT, 0);
 
 	UnbindShader();
 }
