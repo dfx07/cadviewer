@@ -12,5 +12,8 @@ typedef std::shared_ptr<RenderModelManager> RenderModelManagerPtr;
 class PolyDrawObject;
 typedef std::shared_ptr<PolyDrawObject> PolyDrawObjectPtr;
 
+class PolyDrawObjectList;
+typedef std::shared_ptr<PolyDrawObjectList> PolyDrawObjectListPtr;
+
 class PolyObjectDrawer;
 typedef std::shared_ptr<PolyObjectDrawer> PolyObjectDrawerPtr;

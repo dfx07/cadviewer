@@ -52,6 +52,7 @@ void OpenGLRenderer::Render()
 	Mat4& viewMat = m_pCamera->GetViewMatrix();
 	Mat4& projMat = m_pCamera->GetProjMatrix();
 	Vec2 viewPort = m_pCamera->GetView();
+	float fZoom = m_pCamera->GetZoom();
 
 	//Mat4 viewMat = Mat4(1.f);
 	//Mat4 projMat = Mat4(1.f);
@@ -70,7 +71,7 @@ void OpenGLRenderer::Render()
 
 	for (auto& pObjRenderable : m_ObjectRenders)
 	{
-		pObjRenderable->Draw(viewMat, projMat, viewPort);
+		pObjRenderable->Draw(viewMat, projMat, viewPort, fZoom);
 	}
 
 	//glPointSize(10.0);

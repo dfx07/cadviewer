@@ -24,6 +24,7 @@ public:
 	Vec3 position;
 	Vec4 color;
 	float thickness;
+	int polygonID;
 };
 
 class GLPolyRender : public ObjectRenderable
@@ -39,7 +40,7 @@ public:
 	virtual void ReleaseBuffer();
 
 public:
-	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport);
+	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport, const float& zoom = 1.f);
 	virtual bool BindShader();
 	virtual void UnbindShader();
 	virtual void Remake();

@@ -208,6 +208,11 @@ void Camera2D::ZoomTo(Vec3 ptTarget, const float delta_z)
 	m_position.y += vMove.y;
 }
 
+float Camera2D::GetZoom() const
+{
+	return m_fZoom;
+}
+
 Mat4& Camera2D::GetProjMatrixNozoom()
 {
 	return m_projMatNozoom;
@@ -300,11 +305,6 @@ void Camera2D::UpdateZoom(float zDelta)
 CameraType Camera2D::GetType() const
 {
 	return CameraType::C2D;
-}
-
-float Camera2D::GetZoom() const
-{
-	return m_fZoom;
 }
 
 /*******************************************************************************

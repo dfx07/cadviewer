@@ -79,7 +79,7 @@ protected:
 	TFX_DevicePt	m_ptMouseLastClick = { 0,0 };
 	TFX_DevicePt	m_ptLastMouse = { 0,0 };
 
-	PolyDrawObjectPtr m_poly = nullptr;
+	PolyDrawObjectListPtr m_polys = nullptr;
 	PolyObjectDrawerPtr m_polyDrawer = nullptr;
 	RenderModelManagerPtr m_pModelManager = nullptr;
 };

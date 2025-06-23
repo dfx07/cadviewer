@@ -59,6 +59,9 @@ bool GLPolyRender::CreateBuffers()
 	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(PolyVertexData), (void*)offsetof(PolyVertexData, thickness));
 	glEnableVertexAttribArray(2);
 
+	glVertexAttribPointer(3, 1, GL_INT, GL_FALSE, sizeof(PolyVertexData), (void*)offsetof(PolyVertexData, polygonID));
+	glEnableVertexAttribArray(3);
+
 	glBindVertexArray(0);
 
 	return true;
@@ -84,7 +87,6 @@ void GLPolyRender::UpdateVertexBuffer()
 		// Kích thước không đổi → update nhanh
 		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(PolyVertexData), m_vecRenderData.data());
 	}
-
 
 	glBindVertexArray(m_nVao);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
@@ -118,7 +120,7 @@ void GLPolyRender::ReleaseBuffer()
 		glDeleteVertexArrays(1, &m_nVao);
 }
 
-void GLPolyRender::Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport)
+void GLPolyRender::Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport, const float& zoom /*= 1.f*/)
 {
 	if (!BindShader())
 		return;
@@ -130,6 +132,7 @@ void GLPolyRender::Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport
 	m_pBinder->SetMat4("u_View", tfx::ValuePtr(view));
 	m_pBinder->SetMat4("u_Model", tfx::ValuePtr(m_matModel));
 	m_pBinder->SetVec2("u_Viewport", tfx::ValuePtr(viewport));
+	m_pBinder->SetFloat("u_zZoom", zoom);
 
 	glBindVertexArray(m_nVao);
 	glDrawElements(GL_LINES_ADJACENCY, m_vecRenderData.size() * 4, GL_UNSIGNED_INT, 0);

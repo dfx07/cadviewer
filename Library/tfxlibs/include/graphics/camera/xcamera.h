@@ -156,6 +156,13 @@ public:
 	*******************************************************************************/
 	virtual void UpdateZoom(const float zDelta);
 
+	/*******************************************************************************
+	*! @brief  : Get zoom factor
+	*! @return : float zoom factor
+	*! @author : thuong.nv          - [Date] : 2025.06.23
+	*******************************************************************************/
+	virtual float GetZoom() const { return 1.0f; }
+
 protected:
 	Vec3		m_position;     // Vị trí camera
 	Vec3		m_direction;    // Hướng camera trỏ tới (ngược hướng với hướng camera thực tế) - Nó nên là vector đơn vị (normal)
@@ -193,7 +200,7 @@ public:
 	*! @author : thuong.nv          - [Date] : 2025.06.12
 	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 	*******************************************************************************/
-	virtual Vec3 World2ScreenPoint(const Vec3& p) const;
+	virtual Vec3 World2ScreenPoint(const Vec3& p) const override;
 
 	/*******************************************************************************
 	*! @brief  : Chuyển đổi tọa độ screen sang tọa độ thực tế
@@ -202,14 +209,21 @@ public:
 	*! @author : thuong.nv          - [Date] : 2025.06.12
 	*! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 	*******************************************************************************/
-	virtual Vec3 Screen2WorldPoint(const Vec3& p) const;
+	virtual Vec3 Screen2WorldPoint(const Vec3& p) const override;
 
 	/*******************************************************************************
 	*! @brief  : Target camera vào một vị trí (tọa độ local) với lượng zoom delta
 	*! @return : void
 	*! @author : thuong.nv          - [Date] : 2025.06.12
 	*******************************************************************************/
-	virtual void ZoomTo(Vec3 ptTarget, const float delta_z);
+	virtual void ZoomTo(Vec3 ptTarget, const float delta_z) override;
+
+	/*******************************************************************************
+	*! @brief  : Get zoom factor
+	*! @return : float zoom factor
+	*! @author : thuong.nv          - [Date] : 2025.06.23
+	*******************************************************************************/
+	virtual float GetZoom() const override;
 
 public:
 	/*******************************************************************************
@@ -256,8 +270,6 @@ protected:
 
 public:
 	virtual CameraType GetType() const;
-
-	float GetZoom() const;
 
 	/*******************************************************************************
 	*! @brief  : Dịch chuyển tọa độ camera đi một khoảng delta x và delta y

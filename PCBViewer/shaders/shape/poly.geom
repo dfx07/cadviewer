@@ -7,9 +7,11 @@ uniform mat4 u_Model;
 uniform mat4 u_View;
 uniform mat4 u_Proj;
 uniform vec2 u_Viewport;
+uniform float u_zZoom; // Tỷ lệ zoom, có thể dùng để điều chỉnh độ dày đường vẽ
 
 in vec4 vColor[];     // from vertex shader
 in float vThickness[]; // from vertex shader
+in int vPolygonID[];
 
 out vec4 fColor;
 
@@ -71,7 +73,7 @@ vec4 OffsetInClipSnap(vec4 clipPos, vec2 offsetPixel, vec2 viewport, bool snap)
     }
     else
     {
-        offsetScreen = offsetScreen - vec2(0.5, 0.5); // Snap to lower left corner pixel
+        offsetScreen = offsetScreen; // Snap to lower left corner pixel
     }
 
     // Quay lại clip space
@@ -92,6 +94,13 @@ void main()
     vec2 p1 = ClipToScreen(gl_in[1].gl_Position);
     vec2 p2 = ClipToScreen(gl_in[2].gl_Position);
     vec2 p3 = ClipToScreen(gl_in[3].gl_Position);
+
+
+    if(vPolygonID[0] != vPolygonID[1] || vPolygonID[0] != vPolygonID[2])
+    {
+        // Nếu polygon ID không khớp, không vẽ gì cả
+        return;
+    }
 
     // Calculate the direction vectors for the segments
     // p0 to p1, p1 to p2, and p2 to p3
@@ -115,7 +124,15 @@ void main()
     if (an1==0) an1 = 1;
     if (bn1==0) bn1 = 1;
 
+    // float thickness = vThickness[0] * 0.5 * (u_zZoom); // Nhân 2 vì pixel thickness
     float thickness = vThickness[0] * 0.5; // Nhân 2 vì pixel thickness
+
+    // thickness = floor(max(thickness, 0.5)); // Đảm bảo độ dày tối thiểu
+
+    // if (thickness < 0.5)
+    // {
+    //     thickness = 0.3;
+    // }
 
     // Kiểm tra xem v1 có phải là hướng chính (cardinal direction) không
     // Nếu là hướng chính thì sẽ snap về pixel, nếu không thì không snap
@@ -176,14 +193,50 @@ void main()
     vec2 offsetP1 = miter_p1 * length_a;
     vec2 offsetP2 = miter_p2 * length_b;
 
-    pos1 = OffsetInClipSnap(gl_in[1].gl_Position,  offsetP1, u_Viewport, bSnap);
-    pos2 = OffsetInClipSnap(gl_in[1].gl_Position, -offsetP1, u_Viewport, bSnap);
 
-    pos1 = OffsetClipByPixel(pos1, 0.5, -v1, u_Viewport);
-    pos2 = OffsetClipByPixel(pos2, 0.5, -v1, u_Viewport);
+    // Snap version
+    // pos1 = OffsetInClipSnap(gl_in[1].gl_Position,  offsetP1, u_Viewport, bSnap);
+    // pos2 = OffsetInClipSnap(gl_in[1].gl_Position, -offsetP1, u_Viewport, bSnap);
+    // pos1 = OffsetClipByPixel(pos1, 0.5, -v1, u_Viewport);
+    // pos2 = OffsetClipByPixel(pos2, 0.5, -v1, u_Viewport);
+    // pos3 = OffsetInClipSnap(gl_in[2].gl_Position,  offsetP2, u_Viewport, bSnap);
+    // pos4 = OffsetInClipSnap(gl_in[2].gl_Position, -offsetP2, u_Viewport, bSnap);
 
-    pos3 = OffsetInClipSnap(gl_in[2].gl_Position,  offsetP2, u_Viewport, bSnap);
-    pos4 = OffsetInClipSnap(gl_in[2].gl_Position, -offsetP2, u_Viewport, bSnap);
+    // No snap version
+    if(bSnap)
+    {
+        // Nếu là hướng chính thì snap về pixel
+        pos1 = OffsetInClipSnap(gl_in[1].gl_Position,  offsetP1, u_Viewport, true);
+        pos2 = OffsetInClipSnap(gl_in[1].gl_Position, -offsetP1, u_Viewport, true);
+
+        pos3 = OffsetInClipSnap(gl_in[2].gl_Position,  offsetP2, u_Viewport, true);
+        pos4 = OffsetInClipSnap(gl_in[2].gl_Position, -offsetP2, u_Viewport, true);
+        if(!IsCardinalDirection(v2))
+        {
+            pos3 = OffsetClipByPixel(pos3, 0.05f, v1, u_Viewport);
+            pos4 = OffsetClipByPixel(pos4, 0.05f, v1, u_Viewport);
+        }
+    }
+    else
+    {
+        // Nếu không phải hướng chính thì không snap
+        pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position,  offsetP1, u_Viewport);
+        pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, -offsetP1, u_Viewport);
+
+        if(IsCardinalDirection(v0))
+        {
+            pos1 = OffsetClipByPixel(pos1, 0.05f, -v1, u_Viewport);
+            pos2 = OffsetClipByPixel(pos2, 0.05f, -v1, u_Viewport);
+        }
+
+        pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position,  offsetP2, u_Viewport);
+        pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, -offsetP2, u_Viewport);
+    }
+
+    // pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position,  offsetP1, u_Viewport);
+    // pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, -offsetP1, u_Viewport);
+    // pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position,  offsetP2, u_Viewport);
+    // pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, -offsetP2, u_Viewport);
 
     fColor = vColor[0];
     gl_Position = pos1;
