@@ -4,6 +4,7 @@
 
 
 #include "PolyObjectDrawer.h"
+#include <random>
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -32,6 +33,13 @@ bool PCBView::Create(HWND hWnd, const int nWidth, const int nHeight)
 void PCBView::Destroy()
 {
 	DeleteContext();
+}
+
+int RandomInt(int min, int max)
+{
+	static std::mt19937 rng(std::random_device{}());
+	std::uniform_int_distribution<int> dist(min, max);
+	return dist(rng);
 }
 
 bool PCBView::CreateContext(ContextConfig ctx_conf)
@@ -86,6 +94,21 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	poly2->m_vecPoints.push_back({ -150.f, 200.f });
 	poly2->m_vecPoints.push_back({ -150.f, 100.f });
 	poly2->m_vecPoints.push_back({ -200.f, 100.f });
+
+	for (int i = 0; i < 10; i++)
+	{
+		auto pNPoly = std::dynamic_pointer_cast<PolyDrawObject>(poly2->Clone());
+
+		float x = RandomInt(100, 200);
+		float y = RandomInt(-300, 100);
+
+		if (pNPoly != nullptr)
+		{
+			pNPoly->Move(Vec2(x, y));
+
+			m_polys->AddPolyDrawObject(pNPoly);
+		}
+	}
 
 
 	int nID = m_pModelManager->AddModel(m_polys);

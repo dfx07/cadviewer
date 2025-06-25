@@ -134,8 +134,15 @@ void GLPolyRender::Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport
 	m_pBinder->SetVec2("u_Viewport", tfx::ValuePtr(viewport));
 	m_pBinder->SetFloat("u_zZoom", zoom);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glDisable(GL_MULTISAMPLE);
+
 	glBindVertexArray(m_nVao);
 	glDrawElements(GL_LINES_ADJACENCY, m_vecRenderData.size() * 4, GL_UNSIGNED_INT, 0);
+
+	glEnable(GL_MULTISAMPLE);
 
 	UnbindShader();
 }
