@@ -130,7 +130,7 @@ void main()
     bool bSnap = IsCardinalDirection(v1);
 
     // float thickness = vThickness[0] * 0.5 * (u_zZoom); // Nhân 2 vì pixel thickness
-    float thickness = vThickness[0] * 0.5 + 0; // Nhân 2 vì pixel thickness
+    float thickness = vThickness[0] * 0.5 + 1.f; // Nhân 2 vì pixel thickness
 
     // Kiểm tra xem v1 có phải là hướng chính (cardinal direction) không
     // Nếu là hướng chính thì sẽ snap về pixel, nếu không thì không snap

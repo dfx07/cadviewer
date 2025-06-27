@@ -25,21 +25,23 @@ bool is_cardinal_direction(vec2 v)
 
 void main()
 {
+    float dist = distance_to_segment(vLoc, vSLine, vELine);
+    float alpha;
+
     if(fThickness == 1.f)
     {
-        float dist = distance_to_segment(vLoc, vSLine, vELine);
         float aa = max(fwidth(dist), 1.0);
-        float alpha = smoothstep(0.502, 0.5, dist);
-
-        FragColor = vec4(fColor.rgb, alpha);
+        alpha = smoothstep(0.501, 0.5, dist);
     }
     else
     {
-        float _thickness = fThickness* 0.5; // Adjusted thickness for non-cardinal lines
-        float dist = distance_to_segment(vLoc, vSLine, vELine);
+        float _thickness = fThickness * 0.5; // Adjusted thickness for non-cardinal lines
         float aa = max(fwidth(dist), 1.0);
-        float alpha = smoothstep(_thickness + aa, _thickness - aa, dist);
-
-        FragColor = vec4(fColor.rgb, alpha);
+        alpha = smoothstep(_thickness + aa, _thickness - aa, dist);
     }
+
+    if (alpha < 0.01)
+        discard;
+
+    FragColor = vec4(fColor.rgb, alpha);
 }

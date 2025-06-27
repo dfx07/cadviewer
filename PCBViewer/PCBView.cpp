@@ -73,18 +73,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_pModelManager = std::make_shared<RenderModelManager>();
 
 	m_polys = std::make_shared<PolyDrawObjectList>();
-	auto poly = m_polys->CreatePolyDrawObject();
 
-	poly->m_clColor = Col4(1.f, 0.f, 0.f, 1.f);
-	poly->m_fThickness = 2.f;
-	poly->m_vecPoints.push_back({ -100.f, 100.f });
-	poly->m_vecPoints.push_back({ 50.f, 100.f });
-	poly->m_vecPoints.push_back({ 100.f, -100.f });
-	poly->m_vecPoints.push_back({ 150.f, -100.f });
-	poly->m_vecPoints.push_back({ 150.f, -150.f });
-	poly->m_vecPoints.push_back({ 120.f, -150.f });
-	poly->m_vecPoints.push_back({ 180.f, -200.f });
-	poly->m_vecPoints.push_back({ -100.f, -100.f });
 
 	auto poly2 = m_polys->CreatePolyDrawObject();
 
@@ -99,8 +88,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	{
 		auto pNPoly = std::dynamic_pointer_cast<PolyDrawObject>(poly2->Clone());
 
-		float x = RandomInt(100, 200);
-		float y = RandomInt(-300, 100);
+		float x = RandomInt(100, 300);
+		float y = RandomInt(-200, 100);
 
 		if (pNPoly != nullptr)
 		{
@@ -110,6 +99,18 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 		}
 	}
 
+	auto poly = m_polys->CreatePolyDrawObject();
+
+	poly->m_clColor = Col4(1.f, 0.f, 0.f, 1.f);
+	poly->m_fThickness = 2.f;
+	poly->m_vecPoints.push_back({ -100.f, 100.f });
+	poly->m_vecPoints.push_back({ 50.f, 100.f });
+	poly->m_vecPoints.push_back({ 100.f, -100.f });
+	poly->m_vecPoints.push_back({ 150.f, -100.f });
+	poly->m_vecPoints.push_back({ 150.f, -150.f });
+	poly->m_vecPoints.push_back({ 120.f, -150.f });
+	poly->m_vecPoints.push_back({ 180.f, -200.f });
+	poly->m_vecPoints.push_back({ -100.f, -100.f });
 
 	int nID = m_pModelManager->AddModel(m_polys);
 
