@@ -116,9 +116,15 @@ void main()
     vec2 n1 = vec2(-v1.y, v1.x);
     vec2 n2 = vec2(-v2.y, v2.x);
 
+    vec2 ori_miter_p1;
+    vec2 ori_miter_p2;
+
     // Calculate the miter vector
     vec2 miter_p1 = normalize(n0 + n1);
     vec2 miter_p2 = normalize(n1 + n2);
+
+    ori_miter_p1 = miter_p1;
+    ori_miter_p2 = miter_p2;
 
     // Dot của 2 vector đơn vị chính là cos(a) của góc miter_p1, n1 với n1 là cạnh huyền
     float an1 = dot(miter_p1, n1);
@@ -127,7 +133,7 @@ void main()
     if (an1==0) an1 = 1;
     if (bn1==0) bn1 = 1;
 
-    bool bSnap = IsCardinalDirection(v1);
+    // bool bSnap = IsCardinalDirection(v1);
 
     // float thickness = vThickness[0] * 0.5 * (u_zZoom); // Nhân 2 vì pixel thickness
     float thickness = vThickness[0] * 0.5 + 1.f; // Nhân 2 vì pixel thickness
@@ -141,91 +147,24 @@ void main()
 
     vec4 pos1, pos2, pos3, pos4;
 
-    // if(dot( v0, v1 ) < -MiterLimit)
-    // {
-    //     miter_p1 = n1;
-    //     length_a = thickness;
+    if(dot( v0, v1 ) < -MiterLimit)
+    {
+        miter_p1 = n1;
+        length_a = thickness;
+    }
 
-    //     /* close the gap */
-    //     if( dot( v0, n1 ) > 0 )
-    //     {
-    //         pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position,  thickness * n0 , u_Viewport);
-    //         fColor = vColor[0];
-    //         vLoc = ClipToScreen(pos1);
-    //         vSLine = p1;
-    //         vELine = p2;
-    //         fThickness = vThickness[0];
-    //         gl_Position = pos1;
-
-    //         EmitVertex();
-
- 
-    //         pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position,  thickness * n1 , u_Viewport);
-    //         fColor = vColor[0];
-    //         vLoc = ClipToScreen(pos2);
-    //         vSLine = p1;
-    //         vELine = p2;
-    //         fThickness = vThickness[0];
-    //         gl_Position = pos2;
-
-    //         EmitVertex();
-
-    //         pos3 = gl_in[1].gl_Position;
-    //         fColor = vColor[0];
-    //         vLoc = ClipToScreen(pos3);
-    //         vSLine = p1;
-    //         vELine = p2;
-    //         fThickness = vThickness[0];
-    //         gl_Position = pos3;
-
-    //         EmitVertex();
-
-    //         EndPrimitive();
-    //     }
-    //     else 
-    //     {
-
-    //         pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position, -thickness * n1 , u_Viewport);
-
-    //         fColor = vColor[0];
-    //         vLoc = ClipToScreen(pos1);
-    //         vSLine = p1;
-    //         vELine = p2;
-    //         fThickness = vThickness[0];
-    //         gl_Position = pos1;
-
-    //         EmitVertex();
-
-    //         pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, -thickness * n0 , u_Viewport);
-    //         fColor = vColor[0];
-    //         vLoc = ClipToScreen(pos2);
-    //         vSLine = p1;
-    //         vELine = p2;
-    //         fThickness = vThickness[0];
-    //         gl_Position = pos2;
-    //         EmitVertex();
-
-    //         fColor = vColor[0];
-    //         gl_Position = gl_in[1].gl_Position;
-    //         EmitVertex();
-
-    //         EndPrimitive();
-    //     }
-    // }
-
-    // if( dot( v1, v2 ) < -MiterLimit )
-    // {
-    //     miter_p2 = n1;
-    //     length_b = thickness;
-    // }
-
+    if( dot( v1, v2 ) < -MiterLimit )
+    {
+        miter_p2 = n1;
+        length_b = thickness;
+    }
 
     vec2 offsetP1 = miter_p1 * length_a;
     vec2 offsetP2 = miter_p2 * length_b;
 
-    pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position,  offsetP1, u_Viewport);
+    pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position, offsetP1, u_Viewport);
     pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, -offsetP1, u_Viewport);
-    pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position,  offsetP2, u_Viewport);
+    pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position, offsetP2, u_Viewport);
     pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, -offsetP2, u_Viewport);
 
     fColor = vColor[0];

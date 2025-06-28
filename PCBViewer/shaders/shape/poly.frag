@@ -1,6 +1,5 @@
 #version 150 core
 
-
 in vec4 fColor;
 in vec2 vLoc;
 flat in vec2 vSLine;
@@ -23,25 +22,45 @@ bool is_cardinal_direction(vec2 v)
     return abs(v.x) < epsilon || abs(v.y) < epsilon;
 }
 
+float signed_distance_to_line(vec2 P, vec2 A, vec2 B)
+{
+    vec2 dir = normalize(B - A);
+    vec2 normal = vec2(-dir.y, dir.x);
+    return dot(P - A, normal);
+}
+
+float distance_to_line(vec2 P, vec2 A, vec2 B)
+{
+    return abs(signed_distance_to_line(P, A, B));
+}
+
 void main()
 {
-    float dist = distance_to_segment(vLoc, vSLine, vELine);
+    float halfthickness = fThickness * 0.5;
+    float dist = distance_to_line(vLoc, vSLine, vELine);
+    float aa = max(fwidth(dist), 1.0);
     float alpha;
 
-    if(fThickness == 1.f)
+    if(is_cardinal_direction(vSLine - vELine))
     {
-        float aa = max(fwidth(dist), 1.0);
-        alpha = smoothstep(0.501, 0.5, dist);
+        alpha = smoothstep(halfthickness + aa * 0.5, halfthickness - aa * 0.5, dist);
+
+        if(alpha < 0.49) alpha = 0.07f;
+        else if( alpha > 0.51) alpha = 1.f;
+        else 
+        {
+            float side = signed_distance_to_line(vLoc, vSLine, vELine);
+
+            if(side >= 0.0)
+                alpha = 1.f;
+            else
+                alpha = 0.07f;
+        }
     }
     else
     {
-        float _thickness = fThickness * 0.5; // Adjusted thickness for non-cardinal lines
-        float aa = max(fwidth(dist), 1.0);
-        alpha = smoothstep(_thickness + aa, _thickness - aa, dist);
+        alpha = smoothstep(halfthickness + aa - 0.3, halfthickness - aa, dist);
     }
-
-    if (alpha < 0.01)
-        discard;
 
     FragColor = vec4(fColor.rgb, alpha);
 }
