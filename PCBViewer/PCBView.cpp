@@ -102,14 +102,17 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	auto poly = m_polys->CreatePolyDrawObject();
 
 	poly->m_clColor = Col4(1.f, 0.f, 0.f, 1.f);
-	poly->m_fThickness = 1.f;
+	poly->m_fThickness = 5.f;
 	poly->m_vecPoints.push_back({ -100.f, 100.f });
 	poly->m_vecPoints.push_back({ 50.f, 100.f });
 	poly->m_vecPoints.push_back({ 100.f, -100.f });
 	poly->m_vecPoints.push_back({ 150.f, -100.f });
 	poly->m_vecPoints.push_back({ 150.f, -150.f });
 	poly->m_vecPoints.push_back({ 120.f, -150.f });
-	poly->m_vecPoints.push_back({ 180.f, -200.f });
+	poly->m_vecPoints.push_back({ 250.f, -200.f });
+	poly->m_vecPoints.push_back({ 100.f, -150.f });
+	poly->m_vecPoints.push_back({ 90.f, -180.f });
+	poly->m_vecPoints.push_back({ 95.f, -130.f });
 	poly->m_vecPoints.push_back({ -100.f, -100.f });
 
 	int nID = m_pModelManager->AddModel(m_polys);
