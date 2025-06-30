@@ -15,6 +15,7 @@ out int vPolygonID;
 
 void main() {
     gl_Position = u_Proj * u_View * u_Model * vec4(aPos, 1.0);
+
     vColor = aColor;
     vThickness = aThickness;
     vPolygonID = aPolygonID;

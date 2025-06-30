@@ -19,7 +19,8 @@ flat out vec2 vSLine;
 flat out vec2 vELine;
 flat out float fThickness;
 
-float MiterLimit = 0.75; // Giới hạn miter, có thể điều chỉnh
+flat out int nStartJoin;
+flat out int nEndJoin;
 
 // Clip Space   : Sau MVP, trước chia w
 // NDC Space    : Sau chia w, [-1, 1] x [-1, 1]
@@ -92,18 +93,20 @@ vec4 OffsetInClipNoSnap(vec4 clipPos, vec2 offsetPixel, vec2 viewport)
     return clipPos + vec4(ndcOffset * clipPos.w, 0.0, 0.0);
 }
 
+bool IsOrthogonal2D(vec2 a, vec2 b)
+{
+    return abs(dot(a, b)) < 1e-6;
+}
+
 void main()
 {
+    if(vPolygonID[0] != vPolygonID[1] || vPolygonID[0] != vPolygonID[2])
+        return;
+
     vec2 p0 = ClipToScreen(gl_in[0].gl_Position);
     vec2 p1 = ClipToScreen(gl_in[1].gl_Position);
     vec2 p2 = ClipToScreen(gl_in[2].gl_Position);
     vec2 p3 = ClipToScreen(gl_in[3].gl_Position);
-
-    if(vPolygonID[0] != vPolygonID[1] || vPolygonID[0] != vPolygonID[2])
-    {
-        // Nếu polygon ID không khớp, không vẽ gì cả
-        return;
-    }
 
     // Calculate the direction vectors for the segments
     // p0 to p1, p1 to p2, and p2 to p3
@@ -112,60 +115,40 @@ void main()
     vec2 v2 = normalize(p3 - p2);
 
     // Calculate the normal vectors for the segments
-    vec2 n0 = vec2(-v0.y, v0.x);
+    // vec2 n0 = vec2(-v0.y, v0.x);
     vec2 n1 = vec2(-v1.y, v1.x);
-    vec2 n2 = vec2(-v2.y, v2.x);
-
-    vec2 ori_miter_p1;
-    vec2 ori_miter_p2;
-
-    // Calculate the miter vector
-    vec2 miter_p1 = normalize(n0 + n1);
-    vec2 miter_p2 = normalize(n1 + n2);
-
-    ori_miter_p1 = miter_p1;
-    ori_miter_p2 = miter_p2;
-
-    // Dot của 2 vector đơn vị chính là cos(a) của góc miter_p1, n1 với n1 là cạnh huyền
-    float an1 = dot(miter_p1, n1);
-    float bn1 = dot(miter_p2, n2);
-
-    if (an1==0) an1 = 1;
-    if (bn1==0) bn1 = 1;
-
-    // bool bSnap = IsCardinalDirection(v1);
+    // vec2 n2 = vec2(-v2.y, v2.x);
 
     // float thickness = vThickness[0] * 0.5 * (u_zZoom); // Nhân 2 vì pixel thickness
     float thickness = vThickness[0] * 0.5 + 1.f; // Nhân 2 vì pixel thickness
-
-    // Kiểm tra xem v1 có phải là hướng chính (cardinal direction) không
-    // Nếu là hướng chính thì sẽ snap về pixel, nếu không thì không snap
-
-    // Tính toán độ dài của đoạn thẳng theo miter
-    float length_a = thickness / an1;
-    float length_b = thickness / bn1;
+    float half_thickness = vThickness[0] * 0.5;
 
     vec4 pos1, pos2, pos3, pos4;
 
-    if(dot( v0, v1 ) < -MiterLimit)
-    {
-        miter_p1 = n1;
-        length_a = thickness;
-    }
+    vec2 miter_p1 = n1;
+    float length_a = thickness;
 
-    if( dot( v1, v2 ) < -MiterLimit )
-    {
-        miter_p2 = n1;
-        length_b = thickness;
-    }
+    vec2 miter_p2 = n1;
+    float length_b = thickness;
 
     vec2 offsetP1 = miter_p1 * length_a;
     vec2 offsetP2 = miter_p2 * length_b;
 
-    pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position, offsetP1, u_Viewport);
-    pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, -offsetP1, u_Viewport);
-    pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position, offsetP2, u_Viewport);
-    pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, -offsetP2, u_Viewport);
+    nStartJoin = IsOrthogonal2D(v0, v1) ? 0 : 1;
+    pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position, - v1 * half_thickness + offsetP1, u_Viewport);
+    pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, - v1 * half_thickness - offsetP1, u_Viewport);
+
+    nEndJoin = IsOrthogonal2D(v1, v2) ? 0 : 1;
+    if(nEndJoin == 1)
+    {
+        pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * (half_thickness + 0.8f) + offsetP2, u_Viewport);
+        pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * (half_thickness + 0.8f) - offsetP2, u_Viewport);
+    }
+    else 
+    {
+        pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * half_thickness + offsetP2, u_Viewport);
+        pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * half_thickness - offsetP2, u_Viewport);
+    }
 
     fColor = vColor[0];
     vLoc = ClipToScreen(pos1);
@@ -190,7 +173,7 @@ void main()
     fThickness = vThickness[0];
     gl_Position = pos3;
     EmitVertex();
-
+   
     fColor = vColor[0];
     vLoc = ClipToScreen(pos4);
     vSLine = p1;

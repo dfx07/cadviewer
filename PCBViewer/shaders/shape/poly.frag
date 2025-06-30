@@ -6,6 +6,9 @@ flat in vec2 vSLine;
 flat in vec2 vELine;
 flat in float fThickness;
 
+flat in int nStartJoin;
+flat in int nEndJoin;
+
 out vec4 FragColor;
 
 float distance_to_segment(vec2 P, vec2 A, vec2 B)
@@ -37,30 +40,48 @@ float distance_to_line(vec2 P, vec2 A, vec2 B)
 void main()
 {
     float halfthickness = fThickness * 0.5;
-    float dist = distance_to_line(vLoc, vSLine, vELine);
-    float aa = max(fwidth(dist), 1.0);
     float alpha;
 
-    if(is_cardinal_direction(vSLine - vELine))
+    if(nStartJoin == 0 && nEndJoin == 0)
     {
+        float dist = distance_to_line(vLoc, vSLine, vELine);
+        float aa = max(fwidth(dist), 1.0);
         alpha = smoothstep(halfthickness + aa * 0.5, halfthickness - aa * 0.5, dist);
-
         if(alpha < 0.49) alpha = 0.07f;
         else if( alpha > 0.51) alpha = 1.f;
-        else 
+        else
         {
             float side = signed_distance_to_line(vLoc, vSLine, vELine);
-
             if(side >= 0.0)
                 alpha = 1.f;
             else
                 alpha = 0.07f;
         }
     }
-    else
+    else if(nStartJoin == 1 && nEndJoin == 1)
     {
-        alpha = smoothstep(halfthickness + aa - 0.3, halfthickness - aa, dist);
+        float dist = distance_to_segment(vLoc, vSLine, vELine);
+        float aa = max(fwidth(dist), 1.0);
+        alpha = smoothstep(halfthickness + aa - 0.1, halfthickness - aa - 0.2, dist);
+        alpha = pow(alpha, 1.0/1.1);
+    }
+    else 
+    {
+        float dist = distance_to_segment(vLoc, vSLine, vELine);
+        float aa = max(fwidth(dist), 1.0);
+        alpha = smoothstep(halfthickness + aa - 0.1, halfthickness - aa - 0.2, dist);
+        alpha = pow(alpha, 1.0/1.2);
     }
 
     FragColor = vec4(fColor.rgb, alpha);
+
+    // if(is_cardinal_direction(vSLine - vELine))
+    // {
+    //     FragColor = vec4(fColor.rgb, 0.5);
+    // }
+    // else
+    // {
+    //     FragColor = vec4(vec3(0.f), 0.5);
+    // }
+
 }

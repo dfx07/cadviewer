@@ -46,7 +46,7 @@ void PolyObjectDrawer::AddPolyData(PolyDrawObjectPtr polydata)
 	{
 		auto& vtxData = polydata->m_vecPoints[i];
 
-		float z = m_nNextPolygonID + float(i) / nVertexCnt + 20;
+		float z = float(m_nNextPolygonID);
 
 		m_vecRenderData.push_back({ tfx::Vec3(vtxData.x, vtxData.y, z), polydata->m_clColor, polydata->m_fThickness, m_nNextPolygonID });
 

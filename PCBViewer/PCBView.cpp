@@ -63,7 +63,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	// create camera
 	m_pCamera = std::make_shared<tfx::Camera2D>();
-	m_pCamera->SetCamera({ 0.f, 0.f, 200.f }, { 0.f, 0.f, 1.f }, { 0.f, 1.f, 0.f });
+	m_pCamera->SetCamera({ 0.f, 0.f, 10000.f }, { 0.f, 0.f, 1.f }, { 0.f, 1.f, 0.f });
 	m_pCamera->SetDistPlane(0.f, 10000.f);
 
 	m_pRenderer = std::make_shared<tfx::OpenGLRenderer>(m_pCamera);
@@ -78,18 +78,18 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	auto poly2 = m_polys->CreatePolyDrawObject();
 
 	poly2->m_clColor = Col4(0.f, 0.f, 0.f, 1.f);
-	poly2->m_fThickness = 3.f;
+	poly2->m_fThickness = 1.f;
 	poly2->m_vecPoints.push_back({ -200.f, 200.f });
 	poly2->m_vecPoints.push_back({ -150.f, 200.f });
 	poly2->m_vecPoints.push_back({ -150.f, 100.f });
 	poly2->m_vecPoints.push_back({ -200.f, 100.f });
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		auto pNPoly = std::dynamic_pointer_cast<PolyDrawObject>(poly2->Clone());
 
-		float x = RandomInt(100, 300);
-		float y = RandomInt(-200, 100);
+		float x = RandomInt(-100, 300);
+		float y = RandomInt(-100, 200);
 
 		if (pNPoly != nullptr)
 		{
@@ -102,7 +102,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	auto poly = m_polys->CreatePolyDrawObject();
 
 	poly->m_clColor = Col4(1.f, 0.f, 0.f, 1.f);
-	poly->m_fThickness = 5.f;
+	poly->m_fThickness = 1.f;
 	poly->m_vecPoints.push_back({ -100.f, 100.f });
 	poly->m_vecPoints.push_back({ 50.f, 100.f });
 	poly->m_vecPoints.push_back({ 100.f, -100.f });

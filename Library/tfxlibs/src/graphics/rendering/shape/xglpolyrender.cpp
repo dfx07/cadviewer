@@ -136,11 +136,14 @@ void GLPolyRender::Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_MULTISAMPLE);
+	glDepthMask(GL_FALSE);
+	//glDisable(GL_DEPTH_TEST);
 
 	glBindVertexArray(m_nVao);
 	glDrawElements(GL_LINES_ADJACENCY, m_vecRenderData.size() * 4, GL_UNSIGNED_INT, 0);
 
 	glEnable(GL_MULTISAMPLE);
+	glEnable(GL_DEPTH_TEST);
 
 	UnbindShader();
 }
