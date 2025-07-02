@@ -6,6 +6,7 @@
 
 typedef tfx::Vec2 Vec2;
 typedef tfx::Vec3 Vec3;
+typedef tfx::Vec4 Vec4;
 typedef tfx::Vec4 Col4;
 
 class DrawObject;

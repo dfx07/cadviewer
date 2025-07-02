@@ -17,3 +17,6 @@ typedef std::shared_ptr<PolyDrawObjectList> PolyDrawObjectListPtr;
 
 class PolyObjectDrawer;
 typedef std::shared_ptr<PolyObjectDrawer> PolyObjectDrawerPtr;
+
+class RenderData;
+typedef std::shared_ptr<RenderData> RenderDataPtr;
