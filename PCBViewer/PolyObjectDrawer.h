@@ -1,22 +1,24 @@
 #pragma once
-#include "DrawObject.h"
+#include "PCBViewType.h"
 #include "RenderModelManager.h"
-#include "graphics/rendering/shape/xglpolyrender.h"
+#include "graphics/rendering/xrenderable.h"
 
-class PolyObjectDrawer : public tfx::GLPolyRender
+class PolyObjectDrawer : public tfx::ObjectRenderable
 {
 public:
 	PolyObjectDrawer(RenderModelManagerPtr pModelManager, int nID);
 	virtual ~PolyObjectDrawer();
-
 
 protected:
 	void AddPolyData(PolyDrawObjectPtr polydata);
 	void AddListPolyData(PolyDrawObjectListPtr polydataList);
 
 public:
-	void Clear();
+	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport, const float& zoom = 1.f);
 	virtual void Remake() override;
+
+public:
+	void Clear();
 
 protected:
 	RenderModelManagerPtr m_pModelManager;

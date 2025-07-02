@@ -1,16 +1,15 @@
 #pragma once
 
-
-#include "common/tfxtype.h"
 #include <memory>
-
-typedef tfx::Vec2 Vec2;
-typedef tfx::Vec3 Vec3;
-typedef tfx::Vec4 Vec4;
-typedef tfx::Vec4 Col4;
 
 class DrawObject;
 typedef std::shared_ptr<DrawObject> DrawObjectPtr;
+
+class RenderData;
+typedef std::shared_ptr<RenderData> RenderDataPtr;
+
+class IRenderDataBuilder;
+typedef std::shared_ptr<IRenderDataBuilder> RenderDataBuilderPtr;
 
 class DrawObject
 {
@@ -22,7 +21,22 @@ public:
 	virtual DrawObjectPtr Clone() = 0;
 	virtual void Copy(DrawObject* pSource) = 0;
 
-private:
-	// Add any private members or methods if needed
+public:
+	int GetObjectID() const
+	{
+		return m_nObjectID;
+	}
+
+	void SetObjectID(const int nID)
+	{
+		m_nObjectID = nID;
+	}
+
+public:
+	virtual RenderDataPtr Make(RenderDataBuilderPtr builder) const;
+
+protected:
+	int m_nObjectID{ -1 };
+
 };
 

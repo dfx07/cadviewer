@@ -120,10 +120,13 @@
     <ClInclude Include="PolyDrawObject.h">
       <Filter>Header Files\shape_objects</Filter>
     </ClInclude>
-    <ClInclude Include="RenderDataBuilder.h">
+    <ClInclude Include="GLRenderDataBuilder.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
-    <ClInclude Include="GLRenderDataBuilder.h">
+    <ClInclude Include="GLRenderCache.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GLRenderer.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -164,10 +167,13 @@
     <ClCompile Include="PolyDrawObject.cpp">
       <Filter>Source Files\shape_objects</Filter>
     </ClCompile>
-    <ClCompile Include="RenderDataBuilder.cpp">
+    <ClCompile Include="GLRenderDataBuilder.cpp">
       <Filter>Source Files\render_objects</Filter>
     </ClCompile>
-    <ClCompile Include="GLRenderDataBuilder.cpp">
+    <ClCompile Include="GLRenderCache.cpp">
+      <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GLRenderer.cpp">
       <Filter>Source Files\render_objects</Filter>
     </ClCompile>
   </ItemGroup>

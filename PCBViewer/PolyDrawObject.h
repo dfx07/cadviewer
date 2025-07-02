@@ -99,6 +99,8 @@ public:
 
 	}
 
+	RenderDataPtr Make(RenderDataBuilderPtr builder) const override;
+
 public:
 	std::vector<PolyDrawObjectPtr> m_vecPolys; // List of polygon draw objects
 };

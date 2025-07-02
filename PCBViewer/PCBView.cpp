@@ -88,8 +88,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	{
 		auto pNPoly = std::dynamic_pointer_cast<PolyDrawObject>(poly2->Clone());
 
-		float x = RandomInt(-100, 300);
-		float y = RandomInt(-100, 200);
+		float x = (float)RandomInt(-100, 300);
+		float y = (float)RandomInt(-100, 200);
 
 		if (pNPoly != nullptr)
 		{
@@ -118,8 +118,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	int nID = m_pModelManager->AddModel(m_polys);
 
 	m_polyDrawer = std::make_shared<PolyObjectDrawer>(m_pModelManager, nID);
-	m_polyDrawer->CreateShader();
-	m_polyDrawer->CreateBuffers();
+	//m_polyDrawer->CreateShader();
+	//m_polyDrawer->CreateBuffers();
 
 	m_pRenderer->AddObjectRenderable(m_polyDrawer);
 

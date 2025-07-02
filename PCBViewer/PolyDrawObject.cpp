@@ -1,4 +1,5 @@
 #include "PolyDrawObject.h"
+#include "GLRenderDataBuilder.h"
 
 PolyDrawObject::PolyDrawObject()
 	: DrawObject()
@@ -36,4 +37,12 @@ PolyDrawObjectPtr PolyDrawObjectList::CreatePolyDrawObject()
 	auto poly = std::make_shared<PolyDrawObject>();
 	m_vecPolys.push_back(poly);
 	return poly;
+}
+
+RenderDataPtr PolyDrawObjectList::Make(RenderDataBuilderPtr builder) const
+{
+	if (!builder)
+		return nullptr;
+
+	return builder->Make(this);
 }

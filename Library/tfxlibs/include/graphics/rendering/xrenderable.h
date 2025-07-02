@@ -38,8 +38,8 @@ public:
 
 public:
 	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport, const float& zoom = 1.f) = 0;
-	virtual bool BindShader() = 0;
-	virtual void UnbindShader() = 0;
+	//virtual bool BindShader() = 0;
+	//virtual void UnbindShader() = 0;
 	virtual void Remake() = 0;
 
 	// Optional

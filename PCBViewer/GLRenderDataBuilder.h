@@ -12,6 +12,7 @@
 #pragma once
 #include "RenderDataBuilder.h"
 #include <memory>
+#include <vector>
 
 class GLPolyRenderData;
 typedef std::shared_ptr<GLPolyRenderData> GLPolyRenderDataPtr;
@@ -27,8 +28,20 @@ struct PolyVertexData
 class GLPolyRenderData : public RenderData
 {
 public:
+	enum Flags
+	{
+		UpdateVertex = 1 << 0,
+		UpdateIndex  = 1 << 1,
+	};
+
+public:
 	GLPolyRenderData();
 	virtual ~GLPolyRenderData();
+
+public:
+	virtual bool CreateBuffers();
+	virtual void UpdateVertexBuffer();
+	virtual void ReleaseBuffer();
 
 public:
 	unsigned int m_nVao = 0;
@@ -43,6 +56,11 @@ class GLRenderDataBuilder : public IRenderDataBuilder
 {
 private:
 	int m_nPolyIndex = 0;
+	float m_fCurrentZ = 0.f;
+	float m_fZStep = 0.01f;
+
+public:
+	float NextZ();
 
 public:
 	virtual RenderDataPtr Make(const PolyDrawObjectList* model);

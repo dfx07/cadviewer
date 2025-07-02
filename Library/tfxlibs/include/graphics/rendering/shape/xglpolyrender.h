@@ -18,46 +18,46 @@
 __BEGIN_NAMESPACE__
 
 
-struct PolyVertexData
-{
-public:
-	Vec3 position;
-	Vec4 color;
-	float thickness;
-	int polygonID;
-};
-
-class GLPolyRender : public ObjectRenderable
-{
-public:
-	GLPolyRender();
-	~GLPolyRender();
-
-public:
-	virtual bool CreateShader();
-	virtual bool CreateBuffers();
-	virtual void UpdateVertexBuffer();
-	virtual void ReleaseBuffer();
-
-public:
-	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport, const float& zoom = 1.f);
-	virtual bool BindShader();
-	virtual void UnbindShader();
-	virtual void Remake();
-
-	virtual void Update(float deltaTime);
-
-public:
-	std::vector<PolyVertexData> m_vecRenderData;
-	std::vector<unsigned int> m_vecIndices;
-
-	unsigned int m_nVao = 0;
-	unsigned int m_nVbo = 0;
-	unsigned int m_nEbo = 0;
-
-	bool m_bReloadBufferFlag = false;
-	bool m_bReloadIndexFlags = false;
-};
+//struct PolyVertexData
+//{
+//public:
+//	Vec3 position;
+//	Vec4 color;
+//	float thickness;
+//	int polygonID;
+//};
+//
+//class GLPolyRender : public ObjectRenderable
+//{
+//public:
+//	GLPolyRender();
+//	~GLPolyRender();
+//
+//public:
+//	virtual bool CreateShader();
+//	virtual bool CreateBuffers();
+//	virtual void UpdateVertexBuffer();
+//	virtual void ReleaseBuffer();
+//
+//public:
+//	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport, const float& zoom = 1.f);
+//	virtual bool BindShader();
+//	virtual void UnbindShader();
+//	virtual void Remake();
+//
+//	virtual void Update(float deltaTime);
+//
+//public:
+//	std::vector<PolyVertexData> m_vecRenderData;
+//	std::vector<unsigned int> m_vecIndices;
+//
+//	unsigned int m_nVao = 0;
+//	unsigned int m_nVbo = 0;
+//	unsigned int m_nEbo = 0;
+//
+//	bool m_bReloadBufferFlag = false;
+//	bool m_bReloadIndexFlags = false;
+//};
 
 
 __END_NAMESPACE__
