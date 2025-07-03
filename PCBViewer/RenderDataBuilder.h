@@ -8,32 +8,11 @@
 * @create: July 02, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-
 #pragma once
-
 
 #include "PCBViewType.h"
 
-
-class RenderData
-{
-public:
-	virtual ~RenderData()
-	{
-
-	}
-
-public:
-	void SetUpdateFlags(int nFlags)
-	{
-		m_nUpdateFlags = nFlags;
-	}
-
-protected:
-	int m_nUpdateFlags;
-};
-
-class IRenderDataBuilder
+class RenderDataBuilder
 {
 public:
 	virtual RenderDataPtr Make(const PolyDrawObjectList* model) = 0;

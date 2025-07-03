@@ -21,18 +21,6 @@ typedef std::shared_ptr<PolyDrawObjectList> PolyDrawObjectListPtr;
 class PolyObjectDrawer;
 typedef std::shared_ptr<PolyObjectDrawer> PolyObjectDrawerPtr;
 
-class RenderData;
-typedef std::shared_ptr<RenderData> RenderDataPtr;
-
-
-#include "common/tfxtype.h"
-
-typedef tfx::Vec2 Vec2;
-typedef tfx::Vec3 Vec3;
-typedef tfx::Vec4 Vec4;
-typedef tfx::Vec4 Col4;
-typedef tfx::Mat4 Mat4;
-
 
 template <typename T>
 struct SharedPtrAddrHash {

@@ -1,36 +1,43 @@
-﻿#include "GLRenderCache.h"
-#include "DrawObject.h"
+﻿#include "GLRenderer.h"
+#include "GLRenderEngine.h"
 
-RenderCache::RenderCache(RenderDataBuilderPtr pBuilder):
-	m_builder(pBuilder)
+GLRenderer::GLRenderer()
 {
-
 }
 
-RenderCache::~RenderCache()
+GLRenderer::~GLRenderer()
 {
-
 }
 
-RenderDataPtr RenderCache::GetOrCreateRenderData(DrawObjectPtr model)
+void GLRenderer::SetViewPort(const int x, const int y, const int width, const int height)
 {
-	auto it = m_cache.find(model);
-	if (it != m_cache.end())
-		return it->second;
-
-	auto pRenderData = model->Make(m_builder);
-	m_cache[model] = pRenderData;
-
-
-	return pRenderData;
+	m_viewPort.x = x;
+	m_viewPort.y = x;
+	m_viewPort.width = width;
+	m_viewPort.height = height;
 }
 
-void RenderCache::Invalidate(DrawObjectPtr model)
+void GLRenderer::SetClearColor(const float r, const float g, const float b, const float a)
 {
-	//auto it = m_cache.find(model);
-	//if (it != m_cache.end())
-	//{
-	//	m_backend->DestroyRenderData(it->second);
-	//	m_cache.erase(it);
-	//}
+	m_v4ClearColor = Vec4(r, g, b, a);
+}
+
+void GLRenderer::Render(std::vector<DrawObjectPtr>& model)
+{
+	glViewport(m_viewPort.x, m_viewPort.y, m_viewPort.width, m_viewPort.height);
+
+	for (auto& pModel : model)
+	{
+		RenderDataPtr pRenderData = m_RenderCache->GetOrCreateRenderData(pModel);
+
+		if (pRenderData)
+		{
+			m_RenderEngine->DrawRenderData(pRenderData, Mat4(1.f));
+		}
+	}
+}
+
+
+void GLRenderer::Update(float deltaTime)
+{
 }

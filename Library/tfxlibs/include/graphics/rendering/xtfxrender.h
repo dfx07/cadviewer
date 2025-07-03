@@ -40,19 +40,8 @@ public:
 
 	virtual void SetViewPort(const int x, const int y, const int width, const int height) = 0;
 	virtual void SetClearColor(const float r, const float g, const float b, const float a) = 0;
-	virtual void Init() = 0;
-	virtual void Render() = 0;
+	virtual void Render(std::vector<DrawObjectPtr>& model) = 0;
 	virtual void Update(float deltaTime) = 0;
-
-	virtual void AddObjectRenderable(ObjectRenderablePtr pObject)
-	{
-		m_ObjectRenders.push_back(pObject);
-	}
-
-	virtual void ReserveObject(const size_t szObj)
-	{
-		m_ObjectRenders.reserve(szObj);
-	}
 
 	virtual void SetContext(DeviceContextPtr pContext)
 	{
@@ -65,9 +54,8 @@ public:
 	}
 
 protected:
-	DeviceContextPtr			m_pContext = nullptr;
-	CameraPtr					m_pCamera = nullptr;
-	ObjectRenderablePtrList		m_ObjectRenders;
+	DeviceContextPtr m_pContext = nullptr;
+	CameraPtr		 m_pCamera = nullptr;
 };
 
 __END_NAMESPACE__

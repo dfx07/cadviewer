@@ -2,6 +2,7 @@
 #include "PCBViewType.h"
 #include "RenderModelManager.h"
 #include "graphics/rendering/xrenderable.h"
+#include "RenderDef.h"
 
 class PolyObjectDrawer : public tfx::ObjectRenderable
 {

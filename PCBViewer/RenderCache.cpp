@@ -1,4 +1,4 @@
-﻿#include "GLRenderCache.h"
+﻿#include "RenderCache.h"
 #include "DrawObject.h"
 
 RenderCache::RenderCache(RenderDataBuilderPtr pBuilder):

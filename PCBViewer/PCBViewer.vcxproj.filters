@@ -123,10 +123,28 @@
     <ClInclude Include="GLRenderDataBuilder.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
-    <ClInclude Include="GLRenderCache.h">
+    <ClInclude Include="GLRenderer.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
-    <ClInclude Include="GLRenderer.h">
+    <ClInclude Include="RenderDef.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCache.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderEngine.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GLRenderData.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderData.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderDataBuilder.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GLRenderEngine.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -170,10 +188,19 @@
     <ClCompile Include="GLRenderDataBuilder.cpp">
       <Filter>Source Files\render_objects</Filter>
     </ClCompile>
-    <ClCompile Include="GLRenderCache.cpp">
+    <ClCompile Include="GLRenderer.cpp">
       <Filter>Source Files\render_objects</Filter>
     </ClCompile>
-    <ClCompile Include="GLRenderer.cpp">
+    <ClCompile Include="RenderCache.cpp">
+      <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine.cpp">
+      <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GLRenderData.cpp">
+      <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GLRenderEngine.cpp">
       <Filter>Source Files\render_objects</Filter>
     </ClCompile>
   </ItemGroup>

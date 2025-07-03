@@ -3,28 +3,22 @@
 *         Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
 *                   MIT software Licencs, see the accompanying
 ************************************************************************************
-* @brief : Build object data to use on Render OpenGL engine
-* @file  : GLRenderDataBuilder
-* @create: July 02, 2025
+* @brief : Render engine for OpenGL
+* @file  : GLRenderEngine.h
+* @create: July 03, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-
 #pragma once
-#include "RenderDataBuilder.h"
-#include <memory>
-#include <vector>
 
+#include "RenderEngine.h"
 
-class GLRenderDataBuilder : public RenderDataBuilder
+class GLRenderEngine : public RenderEngine
 {
-private:
-	int m_nPolyIndex = 0;
-	float m_fCurrentZ = 0.f;
-	float m_fZStep = 0.01f;
+public:
+	GLRenderEngine();
+	~GLRenderEngine();
 
 public:
-	float NextZ();
-
-public:
-	virtual RenderDataPtr Make(const PolyDrawObjectList* model);
+	virtual void DrawRenderData(RenderDataPtr pRenderData, const Mat4& transform = Mat4(1.f));
 };
+

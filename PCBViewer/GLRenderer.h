@@ -3,43 +3,37 @@
 *         Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
 *                   MIT software Licencs, see the accompanying
 ************************************************************************************
-* @brief : Contain render data cache
-* @file  : RenderCache
+* @brief : Render object
+* @file  : GLRenderer.h
 * @create: July 02, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
 #ifndef GLRENDERER_H
-#define XOPENGLRENDER_H
+#define GLRENDERER_H
 
-#include "OpenGL/glew.h"
-#include "graphics/rendering/xrendertype.h"
+#include "RenderDef.h"
 #include "graphics/rendering/xtfxrender.h"
 
-__BEGIN_NAMESPACE__
+#include "RenderCache.h"
 
-class OpenGLRenderer : public TFXRenderer
+class GLRenderer : public tfx::TFXRenderer
 {
 public:
-	OpenGLRenderer();
+	GLRenderer();
+	~GLRenderer();
 
-	OpenGLRenderer(CameraPtr pCamera);
-
-	~OpenGLRenderer();
-
-	virtual void SetViewPort(const int x, const int y, const int width, const int height);
-
-	virtual void SetClearColor(const float r, const float g, const float b, const float a);
-
-	virtual void Init();
-
-	virtual void Render();
-
-	virtual void Update(float deltaTime);
+public:
+	virtual void SetViewPort(const int x, const int y, const int width, const int height) override;
+	virtual void SetClearColor(const float r, const float g, const float b, const float a) override;
+	virtual void Render(std::vector<DrawObjectPtr>& model) override;
+	virtual void Update(float deltaTime) override;
 
 protected:
-	Vec4	m_v4ClearColor;
+	RenderCachePtr m_RenderCache;
+	RenderEnginePtr m_RenderEngine;
+
+	Vec4 m_v4ClearColor;
+	ViewPort m_viewPort;
 };
 
-__END_NAMESPACE__
-
-#endif // !XOPENGLRENDER_H
+#endif // !GLRENDERER_H

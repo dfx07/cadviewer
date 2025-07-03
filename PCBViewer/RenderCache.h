@@ -8,7 +8,6 @@
 * @create: July 02, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-
 #pragma once
 
 #include "PCBViewType.h"
@@ -22,6 +21,9 @@ using unordered_map_shared_ptr = std::unordered_map<
 	SharedPtrAddrEqual<T>
 >;
 
+class RenderCache;
+typedef std::shared_ptr<RenderCache> RenderCachePtr;
+
 class RenderCache
 {
 public:
@@ -30,11 +32,9 @@ public:
 
 public:
 	RenderDataPtr GetOrCreateRenderData(DrawObjectPtr model);
-
 	void Invalidate(DrawObjectPtr model);
 
 public:
-	// cache data
 	unordered_map_shared_ptr<DrawObject, RenderDataPtr> m_cache;
 
 protected:
