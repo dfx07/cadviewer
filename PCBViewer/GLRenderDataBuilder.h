@@ -10,9 +10,12 @@
 ************************************************************************************/
 
 #pragma once
-#include "RenderDataBuilder.h"
+
 #include <memory>
 #include <vector>
+
+#include "RenderDataBuilder.h"
+#include "PCBViewType.h"
 
 
 class GLRenderDataBuilder : public RenderDataBuilder
@@ -26,5 +29,5 @@ public:
 	float NextZ();
 
 public:
-	virtual RenderDataPtr Make(const PolyDrawObjectList* model);
+	virtual RenderDataPtr Make(PolyDrawObjectList* pModel);
 };

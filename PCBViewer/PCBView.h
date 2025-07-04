@@ -6,7 +6,7 @@
 #include "graphics/rendering/xctx.h"
 #include "graphics/rendering/xrendertype.h"
 #include "RenderModelManager.h"
-#include "PolyDrawObject.h"
+#include "RenderDef.h"
 
 #include "ViewBehavior.h"
 
@@ -66,9 +66,9 @@ public:
 	DeviceContextPtr GetContext() const;
 
 protected:
-	DeviceContextPtr		m_pContext = nullptr;
-	tfx::TFXRendererPtr		m_pRenderer = nullptr;
-	tfx::CameraPtr			m_pCamera = nullptr;
+	DeviceContextPtr m_pContext = nullptr;
+	RendererPtr		 m_pRenderer = nullptr;
+	tfx::CameraPtr	 m_pCamera = nullptr;
 	
 	HWND			m_hHandle;
 	int				m_nWidth;
@@ -80,7 +80,6 @@ protected:
 	TFX_DevicePt	m_ptLastMouse = { 0,0 };
 
 	PolyDrawObjectListPtr m_polys = nullptr;
-	PolyObjectDrawerPtr m_polyDrawer = nullptr;
 	RenderModelManagerPtr m_pModelManager = nullptr;
 };
 

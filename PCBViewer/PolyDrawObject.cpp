@@ -39,7 +39,7 @@ PolyDrawObjectPtr PolyDrawObjectList::CreatePolyDrawObject()
 	return poly;
 }
 
-RenderDataPtr PolyDrawObjectList::Make(RenderDataBuilderPtr builder) const
+RenderDataPtr PolyDrawObjectList::Make(RenderDataBuilderPtr builder)
 {
 	if (!builder)
 		return nullptr;

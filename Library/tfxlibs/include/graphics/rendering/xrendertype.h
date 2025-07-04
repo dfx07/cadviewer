@@ -21,9 +21,15 @@ __BEGIN_NAMESPACE__
 class TFXRenderer;
 typedef std::shared_ptr<TFXRenderer> TFXRendererPtr;
 
-class ObjectRenderable;
-typedef std::shared_ptr<ObjectRenderable> ObjectRenderablePtr;
-typedef std::vector<ObjectRenderablePtr> ObjectRenderablePtrList;
+class TFXObjectRenderable;
+typedef std::shared_ptr<TFXObjectRenderable> TFXObjectRenderablePtr;
+typedef std::vector<TFXObjectRenderablePtr> TFXObjectRenderablePtrList;
+
+class TFXRenderData;
+typedef std::shared_ptr<TFXRenderData> TFXRenderDataPtr;
+
+class TFXRenderDataBuilder;
+typedef std::shared_ptr<TFXRenderDataBuilder> TFXRenderDataBuilderPtr;
 
 class Camera;
 typedef std::shared_ptr<Camera> CameraPtr;
@@ -38,7 +44,7 @@ interface IShaderProgram;
 typedef std::shared_ptr<IShaderProgram> ShaderProgramPtr;
 
 interface IShaderDataBinder;
-typedef std::shared_ptr<IShaderDataBinder> IShaderDataBinderPtr;
+typedef std::shared_ptr<IShaderDataBinder> ShaderDataBinderPtr;
 
 __END_NAMESPACE__
 

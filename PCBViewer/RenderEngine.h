@@ -11,7 +11,15 @@
 #pragma once
 
 #include "RenderDef.h"
-#include "RenderData.h"
+
+class RenderContext
+{
+public:
+	Mat4 m_View;
+	Mat4 m_Proj;
+	Vec2 m_ViewPort;
+	float m_Zoom;
+};
 
 class RenderEngine
 {
@@ -19,6 +27,6 @@ public:
 	virtual ~RenderEngine() = default;
 
 public:
-	virtual void DrawRenderData(RenderDataPtr pRenderData, const Mat4& transform) = 0;
+	virtual void DrawRenderData(RenderDataPtr pRenderData, RenderContextPtr pContext, MaterialComponentPtr pMaterial, TransformComponentPtr pTranform) = 0;
 };
 

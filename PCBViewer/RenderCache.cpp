@@ -1,10 +1,13 @@
 ﻿#include "RenderCache.h"
 #include "DrawObject.h"
+#include "RenderCache.h"
+
+#include "graphics/rendering/xrenderable.h"
 
 RenderCache::RenderCache(RenderDataBuilderPtr pBuilder):
 	m_builder(pBuilder)
 {
-
+	//m_cache = std::make_shared<RenderCache>(m_builder);
 }
 
 RenderCache::~RenderCache()
@@ -12,20 +15,19 @@ RenderCache::~RenderCache()
 
 }
 
-RenderDataPtr RenderCache::GetOrCreateRenderData(DrawObjectPtr model)
+RenderDataPtr RenderCache::GetOrCreateRenderData(DrawObjectPtr pModel)
 {
-	auto it = m_cache.find(model);
+	auto it = m_cache.find(pModel);
 	if (it != m_cache.end())
 		return it->second;
 
-	auto pRenderData = model->Make(m_builder);
-	m_cache[model] = pRenderData;
-
+	auto pRenderData = pModel->Make(m_builder);
+	m_cache[pModel] = pRenderData;
 
 	return pRenderData;
 }
 
-void RenderCache::Invalidate(DrawObjectPtr model)
+void RenderCache::Invalidate(DrawObjectPtr pModel)
 {
 	//auto it = m_cache.find(model);
 	//if (it != m_cache.end())

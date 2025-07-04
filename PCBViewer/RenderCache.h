@@ -10,19 +10,10 @@
 ************************************************************************************/
 #pragma once
 
+#include "RenderDef.h"
+
 #include "PCBViewType.h"
-#include <unordered_map>
 
-template <typename T, typename V>
-using unordered_map_shared_ptr = std::unordered_map<
-	std::shared_ptr<T>,
-	V,
-	SharedPtrAddrHash<T>,
-	SharedPtrAddrEqual<T>
->;
-
-class RenderCache;
-typedef std::shared_ptr<RenderCache> RenderCachePtr;
 
 class RenderCache
 {
@@ -31,7 +22,7 @@ public:
 	virtual ~RenderCache();
 
 public:
-	RenderDataPtr GetOrCreateRenderData(DrawObjectPtr model);
+	RenderDataPtr GetOrCreateRenderData(DrawObjectPtr pModel);
 	void Invalidate(DrawObjectPtr model);
 
 public:

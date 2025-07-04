@@ -10,7 +10,7 @@ DrawObject::~DrawObject()
 {
 }
 
-RenderDataPtr DrawObject::Make(RenderDataBuilderPtr builder) const
+RenderDataPtr DrawObject::Make(RenderDataBuilderPtr builder)
 {
 	return nullptr;
 }

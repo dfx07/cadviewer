@@ -1,10 +1,11 @@
 #include "PCBView.h"
 #include "graphics/camera/xcamera.h"
-#include "graphics/rendering/xopenglrenderer.h"
+#include "GLRenderer.h"
+#include "PolyDrawObject.h"
+#include "Renderer.h"
 
-
-#include "PolyObjectDrawer.h"
 #include <random>
+#include <graphics/rendering/xopenglctx.h>
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -66,7 +67,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_pCamera->SetCamera({ 0.f, 0.f, 10000.f }, { 0.f, 0.f, 1.f }, { 0.f, 1.f, 0.f });
 	m_pCamera->SetDistPlane(0.f, 10000.f);
 
-	m_pRenderer = std::make_shared<tfx::OpenGLRenderer>(m_pCamera);
+	//m_pRenderer = std::make_shared<tfx::OpenGLRenderer>(m_pCamera);
+	m_pRenderer = std::make_shared<GLRenderer>(m_pCamera);
 	m_pRenderer->SetContext(m_pContext);
 	m_pRenderer->SetClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Default clear color is white
 
@@ -117,11 +119,11 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	int nID = m_pModelManager->AddModel(m_polys);
 
-	m_polyDrawer = std::make_shared<PolyObjectDrawer>(m_pModelManager, nID);
+	//m_polyDrawer = std::make_shared<PolyObjectDrawer>(m_pModelManager, nID);
 	//m_polyDrawer->CreateShader();
 	//m_polyDrawer->CreateBuffers();
 
-	m_pRenderer->AddObjectRenderable(m_polyDrawer);
+	//m_pRenderer->AddObjectRenderable(m_polyDrawer);
 
 	UpdateView();
 
@@ -141,7 +143,10 @@ void PCBView::DeleteContext()
 
 void PCBView::Draw()
 {
-	m_pRenderer->Render();
+	std::vector<DrawObjectPtr> model;
+
+	model.push_back(m_polys);
+	m_pRenderer->Render(model);
 }
 
 void PCBView::UpdateView()
@@ -186,7 +191,7 @@ void PCBView::OnMouseMove(TFXMouseEvent* event)
 
 void PCBView::OnMouseDown(TFXMouseEvent* event)
 {
-	m_polyDrawer->Remake();
+	//m_polyDrawer->Remake();
 
 	if (m_ePCBViewState == EPCBViewState::none)
 	{

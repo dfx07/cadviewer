@@ -12,14 +12,14 @@
 #define GLRENDERER_H
 
 #include "RenderDef.h"
-#include "graphics/rendering/xtfxrender.h"
+#include "PCBViewType.h"
 
-#include "RenderCache.h"
+#include "Renderer.h"
 
-class GLRenderer : public tfx::TFXRenderer
+class GLRenderer : public Renderer
 {
 public:
-	GLRenderer();
+	GLRenderer(tfx::CameraPtr pCamera);
 	~GLRenderer();
 
 public:
@@ -31,6 +31,8 @@ public:
 protected:
 	RenderCachePtr m_RenderCache;
 	RenderEnginePtr m_RenderEngine;
+
+	RenderDataBuilderPtr m_RenderBuilder;
 
 	Vec4 m_v4ClearColor;
 	ViewPort m_viewPort;

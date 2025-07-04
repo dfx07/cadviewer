@@ -1,39 +1,35 @@
 ﻿////////////////////////////////////////////////////////////////////////////////////
 /*!*********************************************************************************
-*         Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>               
-*                   MIT software Licencs, see the accompanying                      
+*         Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
+*                   MIT software Licencs, see the accompanying
 ************************************************************************************
-* @brief : Interface define object for rendering
-* @file  : xtfxrenderer.h
-* @create: June 10, 2025
+* @brief : Render object
+* @file  : GLRenderer.h
+* @create: July 02, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-#ifndef XTFXRENDERER_H
-#define XTFXRENDERER_H
+#pragma once
 
-#include <vector>
-
-#include "graphics/rendering/xrenderable.h"
-#include "graphics/rendering/xopenglctx.h"
 #include "graphics/rendering/xrendertype.h"
+#include "graphics/rendering/xctx.h"
+#include "PCBViewType.h"
 
-__BEGIN_NAMESPACE__
-
-class TFXRenderer
+class Renderer
 {
 public:
-	TFXRenderer() : m_pCamera(nullptr)
+	Renderer() :
+		m_pCamera(nullptr)
 	{
 
 	}
 
-	TFXRenderer(CameraPtr pCamera)
+	Renderer(tfx::CameraPtr pCamera)
 		: m_pCamera(pCamera)
 	{
 
 	}
 
-	virtual ~TFXRenderer()
+	virtual ~Renderer()
 	{
 
 	}
@@ -48,16 +44,12 @@ public:
 		m_pContext = pContext;
 	}
 
-	virtual void SetCamera(CameraPtr pCamera)
+	virtual void SetCamera(tfx::CameraPtr pCamera)
 	{
 		m_pCamera = pCamera;
 	}
 
 protected:
 	DeviceContextPtr m_pContext = nullptr;
-	CameraPtr		 m_pCamera = nullptr;
+	tfx::CameraPtr	 m_pCamera = nullptr;
 };
-
-__END_NAMESPACE__
-
-#endif // !XTFXRENDERER_H

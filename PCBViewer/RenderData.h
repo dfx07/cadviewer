@@ -26,6 +26,7 @@ public:
 	virtual bool Create()
 	{
 		// Implement the logic to create render data
+		return true;
 	}
 
 	virtual void Release()

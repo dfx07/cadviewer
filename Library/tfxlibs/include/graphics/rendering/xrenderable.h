@@ -13,18 +13,17 @@
 
 #include <memory>
 #include "common/tfxtype.h"
-#include "graphics/rendering/xrendertype.h"
 
 __BEGIN_NAMESPACE__
 
-class ObjectRenderable
+class TFXObjectRenderable
 {
 public:
-	ObjectRenderable(const Mat4& modelMatrix = Mat4(1.0f))
+	TFXObjectRenderable(const Mat4& modelMatrix = Mat4(1.0f))
 		: m_matModel(modelMatrix), m_nModelID(0)
 	{ }
 
-	virtual ~ObjectRenderable() { }
+	virtual ~TFXObjectRenderable() { }
 
 	void SetModelMatrix(const Mat4& modelMatrix)
 	{
@@ -37,19 +36,12 @@ public:
 	}
 
 public:
-	virtual void Draw(const Mat4& view, const Mat4& proj, const Vec2& viewport, const float& zoom = 1.f) = 0;
-	//virtual bool BindShader() = 0;
-	//virtual void UnbindShader() = 0;
-	virtual void Remake() = 0;
-
-	// Optional
+	//virtual TFXRenderDataPtr Make(TFXRenderDataBuilderPtr builder) const = 0;
 	virtual void Update(float deltaTime) {}
 
 public:
 	int m_nModelID = 0;
 	Mat4 m_matModel;
-	ShaderProgramPtr m_pProgram = nullptr;
-	IShaderDataBinderPtr m_pBinder = nullptr;
 };
 
 __END_NAMESPACE__

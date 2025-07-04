@@ -3,7 +3,11 @@
 #include "DrawObject.h"
 #include "PCBViewType.h"
 
+
+#include "RenderDef.h"
+
 #include <vector>
+#include <cassert>
 
 class PolyDrawObject : public DrawObject
 {
@@ -99,7 +103,7 @@ public:
 
 	}
 
-	RenderDataPtr Make(RenderDataBuilderPtr builder) const override;
+	RenderDataPtr Make(RenderDataBuilderPtr builder) override;
 
 public:
 	std::vector<PolyDrawObjectPtr> m_vecPolys; // List of polygon draw objects

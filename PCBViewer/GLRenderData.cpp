@@ -10,17 +10,6 @@ GLPolyRenderData::~GLPolyRenderData()
 	ReleaseBuffer();
 }
 
-
-GLPolyRenderData::GLPolyRenderData()
-{
-
-}
-
-GLPolyRenderData::~GLPolyRenderData()
-{
-
-}
-
 void GLPolyRenderData::UpdateVertexBuffer()
 {
 

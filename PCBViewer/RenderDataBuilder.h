@@ -10,10 +10,11 @@
 ************************************************************************************/
 #pragma once
 
+#include "RenderDef.h"
 #include "PCBViewType.h"
 
 class RenderDataBuilder
 {
 public:
-	virtual RenderDataPtr Make(const PolyDrawObjectList* model) = 0;
+	virtual RenderDataPtr Make(PolyDrawObjectList* pModel) = 0;
 };

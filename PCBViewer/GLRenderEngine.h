@@ -19,6 +19,6 @@ public:
 	~GLRenderEngine();
 
 public:
-	virtual void DrawRenderData(RenderDataPtr pRenderData, const Mat4& transform = Mat4(1.f));
+	virtual void DrawRenderData(RenderDataPtr pRenderData, RenderContextPtr pContext,  MaterialComponentPtr pMaterial, TransformComponentPtr pTranform);
 };
 
