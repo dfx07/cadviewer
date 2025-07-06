@@ -17,4 +17,5 @@ class RenderDataBuilder
 {
 public:
 	virtual RenderDataPtr Make(PolyDrawObjectList* pModel) = 0;
+	virtual RenderDataPtr Make(LineDrawObjectList* pModel) = 0;
 };

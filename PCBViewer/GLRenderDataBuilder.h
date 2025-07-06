@@ -29,5 +29,6 @@ public:
 	float NextZ();
 
 public:
-	virtual RenderDataPtr Make(PolyDrawObjectList* pModel);
+	virtual RenderDataPtr Make(PolyDrawObjectList* pDrawObject);
+	virtual RenderDataPtr Make(LineDrawObjectList* pDrawObject);
 };

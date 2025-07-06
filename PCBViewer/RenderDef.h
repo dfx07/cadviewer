@@ -16,6 +16,7 @@
 #include <memory>
 
 typedef tfx::Vec2 Vec2;
+typedef tfx::Vec2 Point2;
 typedef tfx::Vec3 Vec3;
 typedef tfx::Vec4 Vec4;
 typedef tfx::Vec4 Col4;
@@ -55,6 +56,9 @@ typedef std::shared_ptr<RenderDataBuilder> RenderDataBuilderPtr;
 
 class GLPolyRenderData;
 typedef std::shared_ptr<GLPolyRenderData> GLPolyRenderDataPtr;
+
+class GLineRenderData;
+typedef std::shared_ptr<GLineRenderData> GLineRenderDataPtr;
 
 template <typename T>
 struct SharedPtrAddrHash {

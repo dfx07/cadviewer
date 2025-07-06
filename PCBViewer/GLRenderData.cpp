@@ -114,3 +114,11 @@ void GLPolyRenderData::Release()
 	m_nUpdateFlags = 0;
 }
 
+
+GLineRenderData::GLineRenderData()
+{
+}
+
+GLineRenderData::~GLineRenderData()
+{
+}

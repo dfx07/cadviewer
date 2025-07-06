@@ -14,3 +14,9 @@ typedef std::shared_ptr<PolyDrawObject> PolyDrawObjectPtr;
 
 class PolyDrawObjectList;
 typedef std::shared_ptr<PolyDrawObjectList> PolyDrawObjectListPtr;
+
+class LineDrawObject;
+typedef std::shared_ptr<LineDrawObject> LineDrawObjectPtr;
+
+class LineDrawObjectList;
+typedef std::shared_ptr<LineDrawObjectList> LineDrawObjectListPtr;

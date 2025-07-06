@@ -159,6 +159,12 @@
     <ClInclude Include="RenderContext.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
+    <ClInclude Include="LineDrawObject.h">
+      <Filter>Header Files\shape_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="LineDrawSystem.h">
+      <Filter>Header Files\draw_systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -210,6 +216,12 @@
       <Filter>Source Files\render_objects</Filter>
     </ClCompile>
     <ClCompile Include="PolyDrawSystem.cpp">
+      <Filter>Source Files\draw_systems</Filter>
+    </ClCompile>
+    <ClCompile Include="LineDrawObject.cpp">
+      <Filter>Source Files\shape_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="LineDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
   </ItemGroup>

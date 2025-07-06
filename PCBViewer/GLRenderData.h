@@ -58,3 +58,32 @@ public:
 	std::vector<PolyVertexData> m_vecRenderData;
 	std::vector<unsigned int> m_vecIndices;
 };
+
+struct LineVertexData
+{
+	Vec3 position;
+	Vec4 color;
+	float thickness;
+};
+
+class GLineRenderData : public RenderData
+{
+public:
+	enum Flags
+	{
+		UpdateVertex = 1 << 0,
+		UpdateIndex = 1 << 1,
+	};
+
+public:
+	GLineRenderData();
+	virtual ~GLineRenderData();
+
+public:
+	unsigned int m_nVao = 0;
+	unsigned int m_nVbo = 0;
+	unsigned int m_nEbo = 0;
+
+	std::vector<LineVertexData> m_vecRenderData;
+	std::vector<unsigned int> m_vecIndices;
+};

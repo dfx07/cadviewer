@@ -6,6 +6,44 @@ PolyDrawObject::PolyDrawObject()
 {
 }
 
+DrawObjectPtr PolyDrawObject::Clone()
+{
+	auto pNewObject = std::make_shared<PolyDrawObject>();
+	pNewObject->Copy(this);
+	return pNewObject;
+}
+
+void PolyDrawObject::Copy(DrawObject* pSource)
+{
+	if (!pSource)
+	{
+		assert(0);
+		return;
+	}
+
+	auto pSrcObj = dynamic_cast<PolyDrawObject*>(pSource);
+
+	if (!pSrcObj)
+	{
+		assert(0);
+		return;
+	}
+
+	m_vecPoints.clear();
+
+	if (!pSrcObj->m_vecPoints.empty())
+	{
+		m_vecPoints.reserve(pSrcObj->m_vecPoints.size());
+		m_vecPoints.insert(m_vecPoints.end(),
+			pSrcObj->m_vecPoints.begin(),
+			pSrcObj->m_vecPoints.end());
+	}
+
+	m_vecPoints = pSrcObj->m_vecPoints;
+	m_clColor = pSrcObj->m_clColor;
+	m_fThickness = pSrcObj->m_fThickness;
+}
+
 void PolyDrawObjectList::AddPolyDrawObject(const PolyDrawObjectPtr& poly)
 {
 	if (poly)
@@ -37,6 +75,17 @@ PolyDrawObjectPtr PolyDrawObjectList::CreatePolyDrawObject()
 	auto poly = std::make_shared<PolyDrawObject>();
 	m_vecPolys.push_back(poly);
 	return poly;
+}
+
+DrawObjectPtr PolyDrawObjectList::Clone()
+{
+	auto pNewObject = std::make_shared<PolyDrawObjectList>();
+	pNewObject->Copy(this);
+	return pNewObject;
+}
+
+void PolyDrawObjectList::Copy(DrawObject* pSource)
+{
 }
 
 RenderDataPtr PolyDrawObjectList::Make(RenderDataBuilderPtr builder)

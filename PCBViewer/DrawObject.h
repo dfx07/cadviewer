@@ -18,6 +18,12 @@ typedef std::shared_ptr<RenderData> RenderDataPtr;
 class RenderDataBuilder;
 typedef std::shared_ptr<RenderDataBuilder> RenderDataBuilderPtr;
 
+#define IMPL_CLONE_DRAW_OBJECT(_class_) DrawObjectPtr _class_##::Clone() {\
+	auto pNewObject = std::make_shared<_class_>();\
+	pNewObject->Copy(this);\
+	return pNewObject;\
+}\
+
 
 class DrawObject
 {
