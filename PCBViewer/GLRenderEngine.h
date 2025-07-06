@@ -20,5 +20,8 @@ public:
 
 public:
 	virtual void DrawRenderData(RenderDataPtr pRenderData, RenderContextPtr pContext,  MaterialComponentPtr pMaterial, TransformComponentPtr pTranform);
+
+protected:
+	DrawSystemRegistryPtr m_pDrawSystemRegistry;
 };
 

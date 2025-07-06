@@ -10,10 +10,12 @@
 ************************************************************************************/
 #pragma once
 
-#include "RenderData.h"
-#include "RenderDef.h"
 #include <vector>
 #include <memory>
+
+#include "RenderDef.h"
+#include "RenderData.h"
+
 
 /***********************************************************************************/
 // Poly Draw Object Data

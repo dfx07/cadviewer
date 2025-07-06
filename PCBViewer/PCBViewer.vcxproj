@@ -185,6 +185,7 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\modules\inputdevice.h" />
+    <ClInclude Include="DrawSystem.h" />
     <ClInclude Include="GLRenderData.h" />
     <ClInclude Include="GLRenderDataBuilder.h" />
     <ClInclude Include="GLRenderEngine.h" />
@@ -195,8 +196,10 @@
     <ClInclude Include="PCBViewDef.h" />
     <ClInclude Include="PCBViewIF.h" />
     <ClInclude Include="PCBViewType.h" />
+    <ClInclude Include="PolyDrawSystem.h" />
     <ClInclude Include="RenderCache.h" />
     <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="RenderContext.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="RenderDataBuilder.h" />
     <ClInclude Include="RenderDef.h" />
@@ -219,6 +222,7 @@
     <ClCompile Include="DrawObject.cpp" />
     <ClCompile Include="PCBView.cpp" />
     <ClCompile Include="PCBViewIF.cpp" />
+    <ClCompile Include="PolyDrawSystem.cpp" />
     <ClCompile Include="RenderCache.cpp" />
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderModelManager.cpp" />

@@ -2,12 +2,14 @@
 #include "GLRenderEngine.h"
 #include "RenderCache.h"
 #include "GLRenderDataBuilder.h"
+#include "RenderContext.h"
 
 #include "graphics/camera/xcamera.h"
+#include "graphics/rendering/OpenGL/glew.h"
 
 #include "DrawObject.h"
 
-#include "graphics/rendering/OpenGL/glew.h"
+
 
 GLRenderer::GLRenderer(tfx::CameraPtr pCamera)
 	: Renderer(pCamera)

@@ -21,6 +21,12 @@ typedef tfx::Vec4 Vec4;
 typedef tfx::Vec4 Col4;
 typedef tfx::Mat4 Mat4;
 
+
+template<typename T>
+auto RENPTR(const T& obj) -> decltype(tfx::ValuePtr(obj)) {
+	return tfx::ValuePtr(obj);
+};
+
 struct ViewPort
 {
 	int x;
@@ -82,5 +88,14 @@ typedef std::shared_ptr<MaterialComponent> MaterialComponentPtr;
 
 class TransformComponent;
 typedef std::shared_ptr<TransformComponent> TransformComponentPtr;
+
+class DrawSystem;
+typedef std::shared_ptr<DrawSystem> DrawSystemPtr;
+
+class PolyDrawSystem;
+typedef std::shared_ptr<PolyDrawSystem> PolyDrawSystemPtr;
+
+class DrawSystemRegistry;
+typedef std::shared_ptr<DrawSystemRegistry> DrawSystemRegistryPtr;
 
 #endif // !RENDERDEF_H

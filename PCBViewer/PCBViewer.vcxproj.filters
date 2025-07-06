@@ -43,6 +43,12 @@
     <Filter Include="Source Files\shape_objects">
       <UniqueIdentifier>{70a884e8-ae7f-4f78-b260-456710661fa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\draw_systems">
+      <UniqueIdentifier>{b942678f-48a9-4b35-b820-bcd7d728c9e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\draw_systems">
+      <UniqueIdentifier>{ff93a040-2f9a-4c82-9fdf-0c973c84f151}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCBView.h">
@@ -144,6 +150,15 @@
     <ClInclude Include="RenderComponent.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
+    <ClInclude Include="PolyDrawSystem.h">
+      <Filter>Header Files\draw_systems</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawSystem.h">
+      <Filter>Header Files\draw_systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderContext.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -193,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="GLRenderEngine.cpp">
       <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PolyDrawSystem.cpp">
+      <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

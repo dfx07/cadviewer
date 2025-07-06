@@ -12,15 +12,6 @@
 
 #include "RenderDef.h"
 
-class RenderContext
-{
-public:
-	Mat4 m_View;
-	Mat4 m_Proj;
-	Vec2 m_ViewPort;
-	float m_Zoom;
-};
-
 class RenderEngine
 {
 public:
