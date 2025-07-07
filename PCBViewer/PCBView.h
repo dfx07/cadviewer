@@ -1,11 +1,12 @@
 #pragma once
 
 #include "PCBViewDef.h"
+#include "PCBViewType.h"
+
 #include <common/dllexports.h>
 #include <modules/NotifyObject.h>
 #include "graphics/rendering/xctx.h"
 #include "graphics/rendering/xrendertype.h"
-#include "RenderModelManager.h"
 #include "RenderDef.h"
 
 #include "ViewBehavior.h"
@@ -80,6 +81,9 @@ protected:
 	TFX_DevicePt	m_ptLastMouse = { 0,0 };
 
 	PolyDrawObjectListPtr m_polys = nullptr;
-	RenderModelManagerPtr m_pModelManager = nullptr;
+	LineDrawObjectListPtr m_lines = nullptr;
+
+
+	//RenderModelManagerPtr m_pModelManager = nullptr;
 };
 

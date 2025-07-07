@@ -1,4 +1,4 @@
-﻿#include "PolyDrawSystem.h"
+﻿#include "LineDrawSystem.h"
 
 #include "graphics/rendering/OpenGL/glew.h"
 #include "graphics/rendering/shader/xglshader.h"
@@ -10,21 +10,21 @@
 #include "RenderComponent.h"
 
 
-PolyDrawSystem::PolyDrawSystem()
+LineDrawSystem::LineDrawSystem()
 {
 }
 
-PolyDrawSystem::~PolyDrawSystem()
+LineDrawSystem::~LineDrawSystem()
 {
 }
 
-void PolyDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
+void LineDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 {
 	if (!pRenderData)
 		return;
 
-	GLPolyRenderDataPtr pPolyData = std::dynamic_pointer_cast<GLPolyRenderData>(pRenderData);
-	if (!pPolyData)
+	GLLineRenderDataPtr pLineData = std::dynamic_pointer_cast<GLLineRenderData>(pRenderData);
+	if (!pLineData)
 		return;
 
 	auto pContext = params.context;
@@ -50,8 +50,8 @@ void PolyDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 	glDisable(GL_MULTISAMPLE);
 	glDepthMask(GL_FALSE);
 
-	glBindVertexArray(pPolyData->m_nVao);
-	glDrawElements(GL_LINES_ADJACENCY, GLsizei(pPolyData->m_vecRenderData.size()) * 4, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(pLineData->m_nVao);
+	glDrawArrays(GL_LINES, 0, GLsizei(pLineData->m_vecRenderData.size()));
 
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);

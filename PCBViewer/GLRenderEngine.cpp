@@ -9,6 +9,7 @@
 
 #include "DrawSystem.h"
 #include "PolyDrawSystem.h"
+#include "LineDrawSystem.h"
 
 
 GLRenderEngine::GLRenderEngine()
@@ -19,6 +20,7 @@ GLRenderEngine::GLRenderEngine()
 
 	// TODO : add if you add a new draw object
 	m_pDrawSystemRegistry->RegisterSystem<GLPolyRenderData>(std::make_shared<PolyDrawSystem>());
+	m_pDrawSystemRegistry->RegisterSystem<GLLineRenderData>(std::make_shared<LineDrawSystem>());
 }
 
 GLRenderEngine::~GLRenderEngine()

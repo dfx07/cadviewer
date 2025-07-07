@@ -220,13 +220,13 @@
     <ClCompile Include="GLRenderEngine.cpp" />
     <ClCompile Include="GLRenderer.cpp" />
     <ClCompile Include="LineDrawObject.cpp" />
-    <ClCompile Include="LineDrawSystem.cpp" />
+    <ClCompile Include="PolyDrawSystem.cpp" />
     <ClCompile Include="PolyDrawObject.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="DrawObject.cpp" />
     <ClCompile Include="PCBView.cpp" />
     <ClCompile Include="PCBViewIF.cpp" />
-    <ClCompile Include="PolyDrawSystem.cpp" />
+    <ClCompile Include="LineDrawSystem.cpp" />
     <ClCompile Include="RenderCache.cpp" />
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderModelManager.cpp" />

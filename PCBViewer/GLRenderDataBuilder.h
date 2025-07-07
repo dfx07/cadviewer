@@ -22,7 +22,7 @@ class GLRenderDataBuilder : public RenderDataBuilder
 {
 private:
 	int m_nPolyIndex = 0;
-	float m_fCurrentZ = 0.f;
+	float m_fCurrentZ = 10.f;
 	float m_fZStep = 0.01f;
 
 public:

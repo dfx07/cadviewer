@@ -47,7 +47,7 @@ void main()
         float dist = distance_to_line(vLoc, vSLine, vELine);
         float aa = max(fwidth(dist), 1.0);
         alpha = smoothstep(halfthickness + aa * 0.5, halfthickness - aa * 0.5, dist);
-        if(alpha < 0.49) alpha = 0.07f;
+        if(alpha < 0.49) alpha = 0.02f;
         else if( alpha > 0.51) alpha = 1.f;
         else
         {
@@ -55,22 +55,49 @@ void main()
             if(side >= 0.0)
                 alpha = 1.f;
             else
-                alpha = 0.07f;
+                alpha = 0.02f;
         }
     }
     else if(nStartJoin == 1 && nEndJoin == 1)
     {
         float dist = distance_to_segment(vLoc, vSLine, vELine);
         float aa = max(fwidth(dist), 1.0);
-        alpha = smoothstep(halfthickness + aa - 0.1, halfthickness - aa - 0.2, dist);
-        alpha = pow(alpha, 1.0/1.1);
+        alpha = smoothstep(halfthickness + aa - 0.3, halfthickness - aa - 0.5, dist);
+        alpha = pow(alpha, 1.0/1.2);
+
+        // float dist = distance_to_line(vLoc, vSLine, vELine);
+        // float aa = max(fwidth(dist), 1.0);
+        // alpha = smoothstep(halfthickness + aa * 0.5, halfthickness - aa * 0.5, dist);
+        // if(alpha < 0.49) alpha = 0.02f;
+        // else if( alpha > 0.51) alpha = 1.f;
+        // else
+        // {
+        //     float side = signed_distance_to_line(vLoc, vSLine, vELine);
+        //     if(side >= 0.0)
+        //         alpha = 1.f;
+        //     else
+        //         alpha = 0.02f;
+        // }
     }
     else 
     {
-        float dist = distance_to_segment(vLoc, vSLine, vELine);
+        // float dist = distance_to_segment(vLoc, vSLine, vELine);
+        // float aa = max(fwidth(dist), 1.0);
+        // alpha = smoothstep(halfthickness + aa - 0.6, halfthickness - aa - 0.1, dist);
+        // alpha = pow(alpha, 1.0/2.0);
+        float dist = distance_to_line(vLoc, vSLine, vELine);
         float aa = max(fwidth(dist), 1.0);
-        alpha = smoothstep(halfthickness + aa - 0.1, halfthickness - aa - 0.2, dist);
-        alpha = pow(alpha, 1.0/1.2);
+        alpha = smoothstep(halfthickness + aa * 0.5, halfthickness - aa * 0.5, dist);
+        if(alpha < 0.49) alpha = 0.02f;
+        else if( alpha > 0.51) alpha = 1.f;
+        else
+        {
+            float side = signed_distance_to_line(vLoc, vSLine, vELine);
+            if(side >= 0.0)
+                alpha = 1.f;
+            else
+                alpha = 0.02f;
+        }
     }
 
     FragColor = vec4(fColor.rgb, alpha);

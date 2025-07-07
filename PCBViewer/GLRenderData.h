@@ -66,7 +66,7 @@ struct LineVertexData
 	float thickness;
 };
 
-class GLineRenderData : public RenderData
+class GLLineRenderData : public RenderData
 {
 public:
 	enum Flags
@@ -76,14 +76,17 @@ public:
 	};
 
 public:
-	GLineRenderData();
-	virtual ~GLineRenderData();
+	GLLineRenderData();
+	virtual ~GLLineRenderData();
+
+public:
+	virtual bool Create();
+	virtual void Update();
+	virtual void Release();
 
 public:
 	unsigned int m_nVao = 0;
 	unsigned int m_nVbo = 0;
-	unsigned int m_nEbo = 0;
 
 	std::vector<LineVertexData> m_vecRenderData;
-	std::vector<unsigned int> m_vecIndices;
 };

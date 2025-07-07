@@ -115,10 +115,61 @@ void GLPolyRenderData::Release()
 }
 
 
-GLineRenderData::GLineRenderData()
+GLLineRenderData::GLLineRenderData()
 {
 }
 
-GLineRenderData::~GLineRenderData()
+GLLineRenderData::~GLLineRenderData()
 {
+}
+
+bool GLLineRenderData::Create()
+{
+	glGenVertexArrays(1, &m_nVao);
+	glBindVertexArray(m_nVao);
+
+	glGenBuffers(1, &m_nVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+	glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(LineVertexData), m_vecRenderData.data(), GL_STATIC_DRAW);
+
+	// Layout
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, position));
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, color));
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, thickness));
+	glEnableVertexAttribArray(2);
+
+	glBindVertexArray(0);
+
+	return true;
+}
+
+void GLLineRenderData::Update()
+{
+	if (m_nVao == 0 || m_nVbo == 0)
+	{
+		if (Create() == false)
+			return;
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+	if (m_nUpdateFlags & Flags::UpdateVertex)
+	{
+		// Dung lượng thay đổi → cấp phát lại
+		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(LineVertexData), m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+	}
+	else
+	{
+		// Kích thước không đổi → update nhanh
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(LineVertexData), m_vecRenderData.data());
+	}
+}
+
+void GLLineRenderData::Release()
+{
+	m_vecRenderData.clear();
+	m_nUpdateFlags = 0;
 }

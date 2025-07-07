@@ -2,6 +2,7 @@
 #include "graphics/camera/xcamera.h"
 #include "GLRenderer.h"
 #include "PolyDrawObject.h"
+#include "LineDrawObject.h"
 #include "Renderer.h"
 
 #include <random>
@@ -72,7 +73,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_pRenderer->SetContext(m_pContext);
 	m_pRenderer->SetClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Default clear color is white
 
-	m_pModelManager = std::make_shared<RenderModelManager>();
+	//m_pModelManager = std::make_shared<RenderModelManager>();
 
 	m_polys = std::make_shared<PolyDrawObjectList>();
 
@@ -85,21 +86,22 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	poly2->m_vecPoints.push_back({ -150.f, 200.f });
 	poly2->m_vecPoints.push_back({ -150.f, 100.f });
 	poly2->m_vecPoints.push_back({ -200.f, 100.f });
+	poly2->SetObjectID(1);
 
-	for (int i = 0; i < 20; i++)
-	{
-		auto pNPoly = std::dynamic_pointer_cast<PolyDrawObject>(poly2->Clone());
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	auto pNPoly = std::dynamic_pointer_cast<PolyDrawObject>(poly2->Clone());
 
-		float x = (float)RandomInt(-100, 300);
-		float y = (float)RandomInt(-100, 200);
+	//	float x = (float)RandomInt(-100, 300);
+	//	float y = (float)RandomInt(-100, 200);
 
-		if (pNPoly != nullptr)
-		{
-			pNPoly->Move(Vec2(x, y));
+	//	if (pNPoly != nullptr)
+	//	{
+	//		pNPoly->Move(Vec2(x, y));
 
-			m_polys->AddPolyDrawObject(pNPoly);
-		}
-	}
+	//		m_polys->AddPolyDrawObject(pNPoly);
+	//	}
+	//}
 
 	auto poly = m_polys->CreatePolyDrawObject();
 
@@ -116,8 +118,25 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	poly->m_vecPoints.push_back({ 90.f, -180.f });
 	poly->m_vecPoints.push_back({ 95.f, -130.f });
 	poly->m_vecPoints.push_back({ -100.f, -100.f });
+	poly2->SetObjectID(2);
 
-	int nID = m_pModelManager->AddModel(m_polys);
+	//int nID = m_pModelManager->AddModel(m_polys);
+
+	m_lines = std::make_shared<LineDrawObjectList>();
+
+	LineDrawObjectPtr pLine = m_lines->CreateLineDrawObject();
+
+	pLine->m_ptS = { 100, 100 };
+	pLine->m_ptE = { 100, -100 };
+	pLine->m_clColor = Col4(0.f, 0.f, 0.f, 1.f);
+	pLine->m_fThickness = 1.f;
+
+	LineDrawObjectPtr pLine2 = m_lines->CreateLineDrawObject();
+
+	pLine2->m_ptS = { -100, 100 };
+	pLine2->m_ptE = { -100, -50 };
+	pLine2->m_clColor = Col4(0.f, 0.f, 0.f, 1.f);
+	pLine2->m_fThickness = 1.f;
 
 	//m_polyDrawer = std::make_shared<PolyObjectDrawer>(m_pModelManager, nID);
 	//m_polyDrawer->CreateShader();
@@ -146,6 +165,8 @@ void PCBView::Draw()
 	std::vector<DrawObjectPtr> model;
 
 	model.push_back(m_polys);
+	model.push_back(m_lines);
+
 	m_pRenderer->Render(model);
 }
 

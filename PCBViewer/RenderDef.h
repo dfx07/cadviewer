@@ -57,8 +57,8 @@ typedef std::shared_ptr<RenderDataBuilder> RenderDataBuilderPtr;
 class GLPolyRenderData;
 typedef std::shared_ptr<GLPolyRenderData> GLPolyRenderDataPtr;
 
-class GLineRenderData;
-typedef std::shared_ptr<GLineRenderData> GLineRenderDataPtr;
+class GLLineRenderData;
+typedef std::shared_ptr<GLLineRenderData> GLLineRenderDataPtr;
 
 template <typename T>
 struct SharedPtrAddrHash {

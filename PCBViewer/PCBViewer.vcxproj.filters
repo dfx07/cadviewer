@@ -215,13 +215,13 @@
     <ClCompile Include="GLRenderEngine.cpp">
       <Filter>Source Files\render_objects</Filter>
     </ClCompile>
-    <ClCompile Include="PolyDrawSystem.cpp">
+    <ClCompile Include="LineDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
     <ClCompile Include="LineDrawObject.cpp">
       <Filter>Source Files\shape_objects</Filter>
     </ClCompile>
-    <ClCompile Include="LineDrawSystem.cpp">
+    <ClCompile Include="PolyDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
   </ItemGroup>

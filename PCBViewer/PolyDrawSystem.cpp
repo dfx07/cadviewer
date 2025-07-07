@@ -1,4 +1,4 @@
-﻿#include "LineDrawSystem.h"
+﻿#include "PolyDrawSystem.h"
 
 #include "graphics/rendering/OpenGL/glew.h"
 #include "graphics/rendering/shader/xglshader.h"
@@ -10,15 +10,15 @@
 #include "RenderComponent.h"
 
 
-LineDrawSystem::LineDrawSystem()
+PolyDrawSystem::PolyDrawSystem()
 {
 }
 
-LineDrawSystem::~LineDrawSystem()
+PolyDrawSystem::~PolyDrawSystem()
 {
 }
 
-void LineDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
+void PolyDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 {
 	if (!pRenderData)
 		return;
