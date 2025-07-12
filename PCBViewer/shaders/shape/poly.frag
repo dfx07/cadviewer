@@ -2,9 +2,6 @@
 
 in vec4 fColor;
 in vec2 vLoc;
-in float vDistanceToCenter;
-
-uniform float u_zZoom;
 
 flat in vec2 vSLine;
 flat in vec2 vELine;
@@ -22,12 +19,6 @@ float distance_to_segment(vec2 P, vec2 A, vec2 B)
    vec2 h = P - A;
    float d = length(h - g * clamp(dot(g, h) / dot(g,g), 0.0, 1.0));
    return d;
-}
-
-bool is_cardinal_direction(vec2 v)
-{
-    const float epsilon = 0.001;
-    return abs(v.x) < epsilon || abs(v.y) < epsilon;
 }
 
 float signed_distance_to_line(vec2 P, vec2 A, vec2 B)
@@ -88,20 +79,21 @@ void main()
 
         if(fblur == 1)
         {
-            float aa = max(fwidth(dist), 1.0);
-            alpha = smoothstep(halfthickness + aa + 0.01, halfthickness - aa - 0.01, dist);
+            // float aa = max(fwidth(dist), 1.0);
+            // alpha = smoothstep(halfthickness + aa + 0.01, halfthickness - aa - 0.01, dist);
+            alpha = 0.12;
         }
         else
         {
             if(dist <= halfthickness - 0.01)
-                alpha = 1.f;
+                alpha = 0.8f;
             else if(dist >= halfthickness + 0.01)
                 alpha = 0.f;
             else 
             {
                 float side = signed_distance_to_line(vLoc, vSLine, vELine);
                 if(side >= 0.0)
-                    alpha = 1.f;
+                    alpha = 0.8f;
                 else
                     alpha = 0.f;
             }
@@ -109,14 +101,4 @@ void main()
     }
 
     FragColor = vec4(1.0, 0.0, 0.0, alpha);
-
-
-    // if(is_cardinal_direction(vSLine - vELine))
-    // {
-    //     FragColor = vec4(fColor.rgb, 0.5);
-    // }
-    // else
-    // {
-    //     FragColor = vec4(vec3(0.f), 0.5);
-    // }
 }

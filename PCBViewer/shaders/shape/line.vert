@@ -8,12 +8,12 @@ uniform mat4 u_Model;
 uniform mat4 u_View;
 uniform mat4 u_Proj;
 
-out vec4 fColor;
-out float fThickness;
+out vec4 vColor;
+out float vThickness;
 
 void main() {
     gl_Position = u_Proj * u_View * u_Model * vec4(aPos, 1.0);
 
-    fColor = aColor;
-    fThickness = aThickness;
+    vColor = aColor;
+    vThickness = aThickness;
 }

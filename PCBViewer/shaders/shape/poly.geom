@@ -27,13 +27,13 @@ flat out int nEndJoin;
 // Clip Space   : Sau MVP, trước chia w
 // NDC Space    : Sau chia w, [-1, 1] x [-1, 1]
 // Screen Space : [0, width] x [0, height] (view port)
-vec2 ClipToScreen(vec4 vtx)
+vec2 clip_2_screen(vec4 vtx)
 {
     vec2 ndc = vtx.xy / vtx.w;
     return (ndc * 0.5 + 0.5) * u_Viewport;
 }
 
-vec2 ClipToNDC(vec4 clipPosition)
+vec2 clip_2_ndc(vec4 clipPosition)
 {
     return clipPosition.xy / clipPosition.w;
 }
@@ -42,18 +42,6 @@ vec2 ScreenToClip(vec2 screenPos, float w)
 {
     vec2 ndc = (screenPos / u_Viewport) * 2.0 - 1.0;
     return ndc * w;
-}
-
-bool IsCardinalDirection(vec2 dir)
-{
-    const float epsilon = 0.0001;
-
-    bool right = abs(dir.x - 1.0) < epsilon && abs(dir.y) < epsilon;
-    bool left  = abs(dir.x + 1.0) < epsilon && abs(dir.y) < epsilon;
-    bool up    = abs(dir.y - 1.0) < epsilon && abs(dir.x) < epsilon;
-    bool down  = abs(dir.y + 1.0) < epsilon && abs(dir.x) < epsilon;
-
-    return right || left || up || down;
 }
 
 vec4 OffsetClipByPixel(vec4 clipPos, float offset, vec2 normal, vec2 viewport)
@@ -73,7 +61,7 @@ vec4 OffsetClipByPixel(vec4 clipPos, float offset, vec2 normal, vec2 viewport)
 vec4 OffsetInClipSnap(vec4 clipPos, vec2 offsetPixel, vec2 viewport, bool snap)
 {
     // Chuyển clip → screen
-    vec2 screen = ClipToScreen(clipPos);
+    vec2 screen = clip_2_screen(clipPos);
 
     // Thêm offset theo pixel
     vec2 offsetScreen = screen + offsetPixel;
@@ -110,36 +98,29 @@ void main()
     if(vPolygonID[0] != vPolygonID[1] || vPolygonID[0] != vPolygonID[2])
         return;
 
-    vec2 p0 = ClipToScreen(gl_in[0].gl_Position);
-    vec2 p1 = ClipToScreen(gl_in[1].gl_Position);
-    vec2 p2 = ClipToScreen(gl_in[2].gl_Position);
-    vec2 p3 = ClipToScreen(gl_in[3].gl_Position);
-
-    vec2 p01 = ClipToNDC(gl_in[0].gl_Position);
-    vec2 p11 = ClipToNDC(gl_in[1].gl_Position);
-    vec2 p21 = ClipToNDC(gl_in[2].gl_Position);
-    vec2 p31 = ClipToNDC(gl_in[3].gl_Position);
+    vec2 p0 = clip_2_ndc(gl_in[0].gl_Position);
+    vec2 p1 = clip_2_ndc(gl_in[1].gl_Position);
+    vec2 p2 = clip_2_ndc(gl_in[2].gl_Position);
+    vec2 p3 = clip_2_ndc(gl_in[3].gl_Position);
 
     // Calculate the direction vectors for the segments
     // p0 to p1, p1 to p2, and p2 to p3
-    vec2 v0 = normalize(p11 - p01);
-    vec2 v1 = normalize(p21 - p11);
-    vec2 v2 = normalize(p31 - p21);
+    vec2 v0 = normalize(p1 - p0);
+    vec2 v1 = normalize(p2 - p1);
+    vec2 v2 = normalize(p3 - p2);
 
     // Calculate the normal vectors for the segments
-    // vec2 n0 = vec2(-v0.y, v0.x);
-    vec2 n1 = vec2(-v1.y, v1.x);
-    // vec2 n2 = vec2(-v2.y, v2.x);
+    vec2 n = vec2(-v1.y, v1.x);
 
-    float thickness = vThickness[0] * 0.5 + 1.f; // Nhân 2 vì pixel thickness
+    float thickness = vThickness[0] * 0.5 + 1.f;
     float half_thickness = vThickness[0] * 0.5;
 
     vec4 pos1, pos2, pos3, pos4;
 
-    vec2 miter_p1 = n1;
+    vec2 miter_p1 = n;
     float length_a = thickness;
 
-    vec2 miter_p2 = n1;
+    vec2 miter_p2 = n;
     float length_b = thickness;
 
     vec2 offsetP1 = miter_p1 * length_a;
@@ -161,10 +142,13 @@ void main()
         pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * half_thickness - offsetP2, u_Viewport);
     }
 
-    vec2 locPix1 = ClipToScreen(pos1);
-    vec2 locPix2 = ClipToScreen(pos2);
-    vec2 locPix3 = ClipToScreen(pos3);
-    vec2 locPix4 = ClipToScreen(pos4);
+    vec2 locPix1 = clip_2_screen(pos1);
+    vec2 locPix2 = clip_2_screen(pos2);
+    vec2 locPix3 = clip_2_screen(pos3);
+    vec2 locPix4 = clip_2_screen(pos4);
+
+    p1 = clip_2_screen(gl_in[1].gl_Position);
+    p2 = clip_2_screen(gl_in[2].gl_Position);
 
     // blur
     if(!(nStartJoin == 0 && nEndJoin == 0))
