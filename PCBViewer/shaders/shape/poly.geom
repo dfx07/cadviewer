@@ -1,7 +1,7 @@
 #version 150 core
 
 layout(lines_adjacency) in;
-layout(triangle_strip, max_vertices = 7) out;
+layout(triangle_strip, max_vertices = 11) out;
 
 uniform mat4 u_Model;
 uniform mat4 u_View;
@@ -15,9 +15,11 @@ in int vPolygonID[];
 
 out vec4 fColor;
 out vec2 vLoc;
+
 flat out vec2 vSLine;
 flat out vec2 vELine;
 flat out float fThickness;
+flat out int fblur;
 
 flat out int nStartJoin;
 flat out int nEndJoin;
@@ -29,6 +31,11 @@ vec2 ClipToScreen(vec4 vtx)
 {
     vec2 ndc = vtx.xy / vtx.w;
     return (ndc * 0.5 + 0.5) * u_Viewport;
+}
+
+vec2 ClipToNDC(vec4 clipPosition)
+{
+    return clipPosition.xy / clipPosition.w;
 }
 
 vec2 ScreenToClip(vec2 screenPos, float w)
@@ -108,18 +115,22 @@ void main()
     vec2 p2 = ClipToScreen(gl_in[2].gl_Position);
     vec2 p3 = ClipToScreen(gl_in[3].gl_Position);
 
+    vec2 p01 = ClipToNDC(gl_in[0].gl_Position);
+    vec2 p11 = ClipToNDC(gl_in[1].gl_Position);
+    vec2 p21 = ClipToNDC(gl_in[2].gl_Position);
+    vec2 p31 = ClipToNDC(gl_in[3].gl_Position);
+
     // Calculate the direction vectors for the segments
     // p0 to p1, p1 to p2, and p2 to p3
-    vec2 v0 = normalize(p1 - p0);
-    vec2 v1 = normalize(p2 - p1);
-    vec2 v2 = normalize(p3 - p2);
+    vec2 v0 = normalize(p11 - p01);
+    vec2 v1 = normalize(p21 - p11);
+    vec2 v2 = normalize(p31 - p21);
 
     // Calculate the normal vectors for the segments
     // vec2 n0 = vec2(-v0.y, v0.x);
     vec2 n1 = vec2(-v1.y, v1.x);
     // vec2 n2 = vec2(-v2.y, v2.x);
 
-    // float thickness = vThickness[0] * 0.5 * (u_zZoom); // Nhân 2 vì pixel thickness
     float thickness = vThickness[0] * 0.5 + 1.f; // Nhân 2 vì pixel thickness
     float half_thickness = vThickness[0] * 0.5;
 
@@ -135,14 +146,14 @@ void main()
     vec2 offsetP2 = miter_p2 * length_b;
 
     nStartJoin = IsOrthogonal2D(v0, v1) ? 0 : 1;
+    nEndJoin = IsOrthogonal2D(v1, v2) ? 0 : 1;
+
     pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position, - v1 * half_thickness + offsetP1, u_Viewport);
     pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, - v1 * half_thickness - offsetP1, u_Viewport);
-
-    nEndJoin = IsOrthogonal2D(v1, v2) ? 0 : 1;
     if(nEndJoin == 1)
     {
-        pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * (half_thickness + 0.8f) + offsetP2, u_Viewport);
-        pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * (half_thickness + 0.8f) - offsetP2, u_Viewport);
+        pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * (half_thickness + 0.5f) + offsetP2, u_Viewport);
+        pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * (half_thickness + 0.5f) - offsetP2, u_Viewport);
     }
     else 
     {
@@ -150,34 +161,70 @@ void main()
         pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * half_thickness - offsetP2, u_Viewport);
     }
 
-    fColor = vColor[0];
-    vLoc = ClipToScreen(pos1);
+    vec2 locPix1 = ClipToScreen(pos1);
+    vec2 locPix2 = ClipToScreen(pos2);
+    vec2 locPix3 = ClipToScreen(pos3);
+    vec2 locPix4 = ClipToScreen(pos4);
+
+    // blur
+    if(!(nStartJoin == 0 && nEndJoin == 0))
+    {
+        vSLine = p1;
+        vELine = p2;
+        fblur = 1;
+
+        fColor = vColor[0];
+        vLoc = locPix1;
+        fThickness = vThickness[0];
+        gl_Position = pos1;
+        EmitVertex();
+
+        fColor = vColor[0];
+        vLoc = locPix2;
+        fThickness = vThickness[0];
+        gl_Position = pos2;
+        EmitVertex();
+
+        fColor = vColor[0];
+        vLoc = locPix3;
+        fThickness = vThickness[0];
+        gl_Position = pos3;
+        EmitVertex();
+
+        fColor = vColor[0];
+        vLoc = locPix4;
+        fThickness = vThickness[0];
+        gl_Position = pos4;
+        EmitVertex();
+
+        EndPrimitive();
+    }
+ 
+    // stroke
     vSLine = p1;
     vELine = p2;
+    fblur = 0;
+
+    fColor = vColor[0];
+    vLoc = locPix1;
     fThickness = vThickness[0];
     gl_Position = pos1;
     EmitVertex();
 
     fColor = vColor[0];
-    vLoc =  ClipToScreen(pos2);
-    vSLine = p1;
-    vELine = p2;
+    vLoc = locPix2;
     fThickness = vThickness[0];
     gl_Position = pos2;
     EmitVertex();
 
     fColor = vColor[0];
-    vLoc = ClipToScreen(pos3);
-    vSLine = p1;
-    vELine = p2;
+    vLoc = locPix3;
     fThickness = vThickness[0];
     gl_Position = pos3;
     EmitVertex();
-   
+
     fColor = vColor[0];
-    vLoc = ClipToScreen(pos4);
-    vSLine = p1;
-    vELine = p2;
+    vLoc = locPix4;
     fThickness = vThickness[0];
     gl_Position = pos4;
     EmitVertex();
