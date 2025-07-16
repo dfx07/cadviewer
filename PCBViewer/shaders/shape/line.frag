@@ -63,7 +63,7 @@ void main()
         if(fblur == 1)
         {
             float aa = max(fwidth(dist), 1.0);
-            alpha = smoothstep(halfthickness + aa + 0.01, halfthickness - aa - 0.04, dist) - 0.1;
+            alpha = smoothstep(halfthickness + aa + 0.01, halfthickness - aa - 0.06, dist) - 0.05;
         }
         else
         {

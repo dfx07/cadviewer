@@ -60,6 +60,9 @@ typedef std::shared_ptr<GLPolyRenderData> GLPolyRenderDataPtr;
 class GLLineRenderData;
 typedef std::shared_ptr<GLLineRenderData> GLLineRenderDataPtr;
 
+class GLCircleRenderData;
+typedef std::shared_ptr<GLCircleRenderData> GLCircleRenderDataPtr;
+
 template <typename T>
 struct SharedPtrAddrHash {
 	std::size_t operator()(const std::shared_ptr<T>& ptr) const {

@@ -20,3 +20,9 @@ typedef std::shared_ptr<LineDrawObject> LineDrawObjectPtr;
 
 class LineDrawObjectList;
 typedef std::shared_ptr<LineDrawObjectList> LineDrawObjectListPtr;
+
+class CircleDrawObject;
+typedef std::shared_ptr<CircleDrawObject> CircleDrawObjectPtr;
+
+class CircleDrawObjectList;
+typedef std::shared_ptr<CircleDrawObjectList> CircleDrawObjectListPtr;

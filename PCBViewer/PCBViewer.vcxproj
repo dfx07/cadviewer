@@ -185,6 +185,8 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\modules\inputdevice.h" />
+    <ClInclude Include="CircleDrawObject.h" />
+    <ClInclude Include="CircleDrawSystem.h" />
     <ClInclude Include="DrawSystem.h" />
     <ClInclude Include="GLRenderData.h" />
     <ClInclude Include="GLRenderDataBuilder.h" />
@@ -215,6 +217,8 @@
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shape\xglpolyrender.cpp" />
+    <ClCompile Include="CircleDrawObject.cpp" />
+    <ClCompile Include="CircleDrawSystem.cpp" />
     <ClCompile Include="GLRenderData.cpp" />
     <ClCompile Include="GLRenderDataBuilder.cpp" />
     <ClCompile Include="GLRenderEngine.cpp" />

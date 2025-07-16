@@ -10,6 +10,7 @@
 #include "DrawSystem.h"
 #include "PolyDrawSystem.h"
 #include "LineDrawSystem.h"
+#include "CircleDrawSystem.h"
 
 
 GLRenderEngine::GLRenderEngine()
@@ -21,6 +22,7 @@ GLRenderEngine::GLRenderEngine()
 	// TODO : add if you add a new draw object
 	m_pDrawSystemRegistry->RegisterSystem<GLPolyRenderData>(std::make_shared<PolyDrawSystem>());
 	m_pDrawSystemRegistry->RegisterSystem<GLLineRenderData>(std::make_shared<LineDrawSystem>());
+	m_pDrawSystemRegistry->RegisterSystem<GLCircleRenderData>(std::make_shared<CircleDrawSystem>());
 }
 
 GLRenderEngine::~GLRenderEngine()

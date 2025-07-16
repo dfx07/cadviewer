@@ -165,6 +165,12 @@
     <ClInclude Include="LineDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
+    <ClInclude Include="CircleDrawSystem.h">
+      <Filter>Header Files\draw_systems</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleDrawObject.h">
+      <Filter>Header Files\shape_objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -223,6 +229,12 @@
     </ClCompile>
     <ClCompile Include="PolyDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleDrawSystem.cpp">
+      <Filter>Source Files\draw_systems</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleDrawObject.cpp">
+      <Filter>Source Files\shape_objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

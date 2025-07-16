@@ -3,20 +3,22 @@
 *         Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
 *                   MIT software Licencs, see the accompanying
 ************************************************************************************
-* @brief : Build object data to use on Render engine
-* @file  : RenderDataBuilder
-* @create: July 02, 2025
+* @brief : Define interface for circle
+* @file  : CircleDrawSystem.h
+* @create: July 06, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
 #pragma once
 
-#include "RenderDef.h"
-#include "PCBViewType.h"
+#include "DrawSystem.h"
 
-class RenderDataBuilder
+
+class CircleDrawSystem : public DrawSystem
 {
 public:
-	virtual RenderDataPtr Make(PolyDrawObjectList* pModel) = 0;
-	virtual RenderDataPtr Make(LineDrawObjectList* pModel) = 0;
-	virtual RenderDataPtr Make(CircleDrawObjectList* pModel) = 0;
+	CircleDrawSystem();
+	~CircleDrawSystem();
+
+public:
+	virtual void Draw(RenderDataPtr data, const DrawParams& params);
 };

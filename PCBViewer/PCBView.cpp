@@ -3,6 +3,7 @@
 #include "GLRenderer.h"
 #include "PolyDrawObject.h"
 #include "LineDrawObject.h"
+#include "CircleDrawObject.h"
 #include "Renderer.h"
 
 #include <random>
@@ -126,23 +127,30 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	LineDrawObjectPtr pLine = m_lines->CreateLineDrawObject();
 
-	pLine->m_ptS = { 100, 100 };
+	pLine->m_ptS = { 60, 100 };
 	pLine->m_ptE = { 100, -100 };
 	pLine->m_clColor = Col4(0.f, 0.f, 0.f, 1.f);
 	pLine->m_fThickness = 1.f;
+	pLine->Move({ 0, 300 });
 
 	LineDrawObjectPtr pLine2 = m_lines->CreateLineDrawObject();
 
 	pLine2->m_ptS = { -100, 100 };
 	pLine2->m_ptE = { -100, -50 };
 	pLine2->m_clColor = Col4(0.f, 0.f, 0.f, 1.f);
-	pLine2->m_fThickness = 1.f;
+	pLine2->m_fThickness = 2.f;
 
-	//m_polyDrawer = std::make_shared<PolyObjectDrawer>(m_pModelManager, nID);
-	//m_polyDrawer->CreateShader();
-	//m_polyDrawer->CreateBuffers();
+	pLine2->Move({ 0, 300 });
 
-	//m_pRenderer->AddObjectRenderable(m_polyDrawer);
+	m_circles = std::make_shared<CircleDrawObjectList>();
+
+	CircleDrawObjectPtr pCircle = m_circles->CreateCircleDrawObject();
+
+	pCircle->m_ptCenter = { 150, 100 };
+	pCircle->m_fRadius = 50.f;
+	pCircle->m_fThickness = 4.f;
+	pCircle->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
+
 
 	UpdateView();
 
@@ -166,6 +174,7 @@ void PCBView::Draw()
 
 	model.push_back(m_polys);
 	model.push_back(m_lines);
+	model.push_back(m_circles);
 
 	m_pRenderer->Render(model);
 }

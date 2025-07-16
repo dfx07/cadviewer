@@ -59,6 +59,11 @@ public:
 	std::vector<unsigned int> m_vecIndices;
 };
 
+/*********************************************************************************/
+// Line
+/*********************************************************************************/
+
+
 struct LineVertexData
 {
 	Vec3 position;
@@ -89,4 +94,48 @@ public:
 	unsigned int m_nVbo = 0;
 
 	std::vector<LineVertexData> m_vecRenderData;
+};
+
+/*********************************************************************************/
+// Circle
+/*********************************************************************************/
+
+struct CircleVertexData
+{
+	Vec3 center;
+	float radius;
+	float thickness;
+	Vec4 thickness_color;
+	Vec4 fill_color;
+};
+
+class GLCircleRenderData : public RenderData
+{
+public:
+
+
+public:
+	enum Flags
+	{
+		UpdateVertex = 1 << 0,
+		UpdateIndex = 1 << 1,
+	};
+
+public:
+	GLCircleRenderData();
+	virtual ~GLCircleRenderData();
+
+public:
+	virtual bool Create();
+	virtual void Update();
+	virtual void Release();
+
+public:
+	unsigned int m_nVao = 0;
+	unsigned int m_nVbo = 0;
+	unsigned int m_nQuadVbo = 0;
+	unsigned int m_nEbo = 0;
+
+	std::vector<CircleVertexData> m_vecRenderData;
+	int m_nInstances = 0;
 };

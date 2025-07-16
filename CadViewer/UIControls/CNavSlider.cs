@@ -38,11 +38,11 @@ namespace CadViewer.UIControls
 
 			_Translate = GetTemplateChild("PART_Translate") as TranslateTransform;
 
+			_LastWidth = _InitWidth = Width;
+			_LastHeight = _InitHeight = Height;
+
 			Loaded += (s, e) =>
 			{
-				_LastWidth  = _InitWidth = ActualWidth;
-				_LastHeight = _InitHeight = ActualHeight;
-
 				if (_Translate != null)
 				{
 					if(Orientation == Orientation.Vertical)
