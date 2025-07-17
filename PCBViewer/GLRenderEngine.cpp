@@ -11,6 +11,7 @@
 #include "PolyDrawSystem.h"
 #include "LineDrawSystem.h"
 #include "CircleDrawSystem.h"
+#include "RectDrawSystem.h"
 
 
 GLRenderEngine::GLRenderEngine()
@@ -23,6 +24,7 @@ GLRenderEngine::GLRenderEngine()
 	m_pDrawSystemRegistry->RegisterSystem<GLPolyRenderData>(std::make_shared<PolyDrawSystem>());
 	m_pDrawSystemRegistry->RegisterSystem<GLLineRenderData>(std::make_shared<LineDrawSystem>());
 	m_pDrawSystemRegistry->RegisterSystem<GLCircleRenderData>(std::make_shared<CircleDrawSystem>());
+	m_pDrawSystemRegistry->RegisterSystem<GLRectRenderData>(std::make_shared<RectDrawSystem>());
 }
 
 GLRenderEngine::~GLRenderEngine()

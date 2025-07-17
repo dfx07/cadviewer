@@ -139,3 +139,40 @@ public:
 	std::vector<CircleVertexData> m_vecRenderData;
 	int m_nInstances = 0;
 };
+
+/*********************************************************************************/
+// Rectangle
+/*********************************************************************************/
+struct RectVertexData
+{
+	Vec3 position;
+	Vec2 size;
+	float thickness;
+	Vec4 thickness_color;
+	Vec4 fill_color;
+};
+
+class GLRectRenderData : public RenderData
+{
+public:
+	enum Flags
+	{
+		UpdateVertex = 1 << 0,
+		UpdateIndex = 1 << 1,
+	};
+public:
+	GLRectRenderData();
+	virtual ~GLRectRenderData();
+public:
+	virtual bool Create();
+	virtual void Update();
+	virtual void Release();
+
+public:
+	unsigned int m_nVao = 0;
+	unsigned int m_nVbo = 0;
+	unsigned int m_nEbo = 0;
+
+	std::vector<RectVertexData> m_vecRenderData;
+	int m_nInstances = 0;
+};

@@ -32,4 +32,5 @@ public:
 	virtual RenderDataPtr Make(PolyDrawObjectList* pDrawObject);
 	virtual RenderDataPtr Make(LineDrawObjectList* pDrawObject);
 	virtual RenderDataPtr Make(CircleDrawObjectList* pDrawObject);
+	virtual RenderDataPtr Make(RectDrawObjectList* pDrawObject);
 };

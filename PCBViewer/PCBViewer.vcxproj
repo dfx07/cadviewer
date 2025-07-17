@@ -201,6 +201,8 @@
     <ClInclude Include="PCBViewIF.h" />
     <ClInclude Include="PCBViewType.h" />
     <ClInclude Include="PolyDrawSystem.h" />
+    <ClInclude Include="RectDrawObject.h" />
+    <ClInclude Include="RectDrawSystem.h" />
     <ClInclude Include="RenderCache.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderContext.h" />
@@ -231,6 +233,8 @@
     <ClCompile Include="PCBView.cpp" />
     <ClCompile Include="PCBViewIF.cpp" />
     <ClCompile Include="LineDrawSystem.cpp" />
+    <ClCompile Include="RectDrawObject.cpp" />
+    <ClCompile Include="RectDrawSystem.cpp" />
     <ClCompile Include="RenderCache.cpp" />
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderModelManager.cpp" />

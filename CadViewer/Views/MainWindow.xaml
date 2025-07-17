@@ -77,7 +77,7 @@
                                         <ScaleTransform ScaleY="-1" CenterY="200" />
                                     </Polygon.RenderTransform>
                                 </Polygon>
-                                <Ellipse Stroke="Red" Width="100" Height="100" StrokeThickness="4" Fill="Yellow" Canvas.Left="60" Canvas.Top="400">
+                                <Ellipse Stroke="Black" Width="100" Height="100" StrokeThickness="1" Fill="Transparent" Canvas.Left="60" Canvas.Top="400">
                                 </Ellipse>
                             </Canvas>
                         </StackPanel>

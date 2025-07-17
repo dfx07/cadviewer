@@ -11,6 +11,7 @@
 #include "PolyDrawObject.h"
 #include "LineDrawObject.h"
 #include "CircleDrawObject.h"
+#include "RectDrawObject.h"
 
 
 float GLRenderDataBuilder::NextZ()
@@ -149,6 +150,55 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 	shaderSrc[tfx::ShaderStage::Vertex]   = "shaders/shape/circle.vert";
 	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/circle.frag";
 	//shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/circle.geom";
+
+	if (!pShader->LoadShaders(shaderSrc))
+	{
+		assert(0);
+	}
+
+	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+
+	auto pMaterial = std::make_shared<MaterialComponent>(pShader, pBinder);
+
+	pDrawObject->AddComponent(pMaterial);
+
+	return pData;
+}
+
+RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
+{
+	GLRectRenderDataPtr pData = std::make_shared<GLRectRenderData>();
+
+	// TODO : implement create buffer
+	for (auto& pRect : pDrawObject->m_vecRects)
+	{
+		Point2 pt = { pRect->m_X, pRect->m_Y };
+		Vec2 sz = { pRect->m_Width, pRect->m_Height};
+		float thickness = pRect->m_fThickness;
+		Vec4 thicknessColor = pRect->m_clThicknessColor;
+		Vec4 fillColor = pRect->m_clFillColor;
+
+		float z = NextZ();
+
+		pData->m_vecRenderData.push_back({
+			Vec3(pt.x, pt.y, z),
+			sz,
+			thickness,
+			thicknessColor,
+			fillColor,
+			});
+
+		pData->m_nInstances++;
+	}
+
+	pData->Create();
+	pData->SetUpdateFlags(0);
+
+	auto pShader = std::make_shared<tfx::GLShaderProgram>();
+
+	std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
+	shaderSrc[tfx::ShaderStage::Vertex]  = "shaders/shape/rect.vert";
+	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect.frag";
 
 	if (!pShader->LoadShaders(shaderSrc))
 	{

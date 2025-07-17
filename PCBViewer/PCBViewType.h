@@ -26,3 +26,9 @@ typedef std::shared_ptr<CircleDrawObject> CircleDrawObjectPtr;
 
 class CircleDrawObjectList;
 typedef std::shared_ptr<CircleDrawObjectList> CircleDrawObjectListPtr;
+
+class RectDrawObject;
+typedef std::shared_ptr<RectDrawObject> RectDrawObjectPtr;
+
+class RectDrawObjectList;
+typedef std::shared_ptr<RectDrawObjectList> RectDrawObjectListPtr;

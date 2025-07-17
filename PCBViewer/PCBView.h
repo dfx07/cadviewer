@@ -83,6 +83,7 @@ protected:
 	PolyDrawObjectListPtr m_polys = nullptr;
 	LineDrawObjectListPtr m_lines = nullptr;
 	CircleDrawObjectListPtr m_circles = nullptr;
+	RectDrawObjectListPtr m_rects = nullptr;
 
 
 	//RenderModelManagerPtr m_pModelManager = nullptr;

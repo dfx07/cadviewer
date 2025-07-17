@@ -121,6 +121,7 @@ GLLineRenderData::GLLineRenderData()
 
 GLLineRenderData::~GLLineRenderData()
 {
+	Release();
 }
 
 bool GLLineRenderData::Create()
@@ -175,15 +176,7 @@ void GLLineRenderData::Release()
 }
 
 
-GLCircleRenderData::GLCircleRenderData()
-{
-}
-
-GLCircleRenderData::~GLCircleRenderData()
-{
-}
-
-float quadVertices[8]
+static float quadVertices[8]
 {
 	-1.0f, -1.0f, // Bottom-left
 	 1.0f, -1.0f, // Bottom-right
@@ -191,29 +184,20 @@ float quadVertices[8]
 	 1.0f,  1.0f  // Top-right
 };
 
-unsigned int quadIndices[6]
+static unsigned int quadIndices[6]
 {
 	0, 1, 2,
 	2, 1, 3
 };
 
+GLCircleRenderData::GLCircleRenderData()
+{
+}
 
-float pointVertex[] = {
-	0.0f, 0.0f
-};
-
-// Dùng chỉ số EBO (chỉ 1 đỉnh)
-unsigned int indices[] = {
-	0
-};
-
-
-glm::vec2 instanceOffsets[] = {
-	{0.f, 0.f},
-	{ 0.1f, -0.1f},
-	{-0.1f,  0.1f},
-	{ 0.1f,  0.1f}
-};
+GLCircleRenderData::~GLCircleRenderData()
+{
+	Release();
+}
 
 bool GLCircleRenderData::Create()
 {
@@ -262,32 +246,6 @@ bool GLCircleRenderData::Create()
 
 	glBindVertexArray(0);
 
-
-	//glGenVertexArrays(1, &m_nVao);
-	//glBindVertexArray(m_nVao);
-
-	//// Vertex buffer (1 đỉnh)
-	//glGenBuffers(1, &m_nVbo);
-	//glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(pointVertex), pointVertex, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(0); // layout 0
-	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-
-	//// Element buffer
-	//glGenBuffers(1, &m_nEbo);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	//// Instance buffer
-	//glGenBuffers(1, &m_nQuadVbo);
-	//glBindBuffer(GL_ARRAY_BUFFER, m_nQuadVbo);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(instanceOffsets), instanceOffsets, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(1); // layout 1
-	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	//glVertexAttribDivisor(1, 1); // Mỗi instance dùng 1 offset
-
-	//glBindVertexArray(0);
-
 	return true;
 }
 
@@ -313,6 +271,85 @@ void GLCircleRenderData::Update()
 }
 
 void GLCircleRenderData::Release()
+{
+	m_vecRenderData.clear();
+	m_nUpdateFlags = 0;
+}
+
+
+static unsigned int RectIndices[6]
+{
+	0, 1, 3,
+	1, 2, 3
+};
+
+GLRectRenderData::GLRectRenderData()
+{
+}
+
+GLRectRenderData::~GLRectRenderData()
+{
+	Release();
+}
+
+
+bool GLRectRenderData::Create()
+{
+	glGenVertexArrays(1, &m_nVao);
+	glBindVertexArray(m_nVao);
+
+	glGenBuffers(1, &m_nEbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RectIndices), RectIndices, GL_STATIC_DRAW);
+
+	// Create intances buffer
+	glGenBuffers(1, &m_nVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+	glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data(), GL_STATIC_DRAW);
+
+	// Layout
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, position));
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, size));
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness));
+
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness_color));
+
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, fill_color));
+
+	glBindVertexArray(0);
+
+	return true;
+}
+
+void GLRectRenderData::Update()
+{
+	if (m_nVao == 0 || m_nVbo == 0)
+	{
+		if (Create() == false)
+			return;
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+	if (m_nUpdateFlags & Flags::UpdateVertex)
+	{
+		// Dung lượng thay đổi → cấp phát lại
+		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+	}
+	else
+	{
+		// Kích thước không đổi → update nhanh
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data());
+	}
+}
+
+void GLRectRenderData::Release()
 {
 	m_vecRenderData.clear();
 	m_nUpdateFlags = 0;

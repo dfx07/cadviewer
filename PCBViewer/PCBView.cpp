@@ -4,6 +4,7 @@
 #include "PolyDrawObject.h"
 #include "LineDrawObject.h"
 #include "CircleDrawObject.h"
+#include "RectDrawObject.h"
 #include "Renderer.h"
 
 #include <random>
@@ -148,8 +149,18 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	pCircle->m_ptCenter = { 150, 100 };
 	pCircle->m_fRadius = 50.f;
-	pCircle->m_fThickness = 4.f;
+	pCircle->m_fThickness = 1.f;
 	pCircle->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
+
+	m_rects = std::make_shared<RectDrawObjectList>();
+	RectDrawObjectPtr pRect = m_rects->CreateRectDrawObject();
+
+	pRect->m_X = 100.f;
+	pRect->m_Y = 100.f;
+	pRect->m_Width = 100.f;
+	pRect->m_Height = 100.f;
+	pRect->m_fThickness = 1.f;
+	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 
 
 	UpdateView();
