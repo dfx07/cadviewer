@@ -25,7 +25,7 @@ uniform vec2 u_Viewport;
 
 void main()
 {
-    vec3 worldPos = aCenter + (aRadius + aThickness / 2.f) * aLocalUV;
+    vec3 worldPos = aCenter + vec3((aRadius + aThickness / 2.f) * aLocalUV, aCenter.z);
     gl_Position = u_Proj * u_View * u_Model * vec4(worldPos, 1.0);
 
     vClipCenter = u_Proj * u_View * u_Model * vec4(aCenter, 1.0);

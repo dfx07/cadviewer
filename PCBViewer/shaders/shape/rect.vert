@@ -1,22 +1,15 @@
 #version 330 core
 
-layout(location = 0) in vec2 aLocalUV;
-layout(location = 1) in vec3 aCenter;
-layout(location = 2) in float aRadius;
-layout(location = 3) in float aThickness;
-layout(location = 4) in vec4 aBorderColor;
-layout(location = 5) in vec4 aFillColor;
+layout(location = 0) in vec3 aPosition;
+layout(location = 1) in vec2 aSize;
+layout(location = 2) in float aThickness;
+layout(location = 3) in vec4 aThinknessColor;
+layout(location = 4) in vec4 aFillColor;
 
-out vec2 vLocalUV;
-flat out vec4 vCenterClipPos;
-out float vRadius;
+out vec2 vSize;
 out float vThickness;
-out vec4 vBorderColor;
+out vec4 vThinkessColor;
 out vec4 vFillColor;
-
-flat out vec4 vClipCenter;
-flat out vec4 vClipEdge;
-
 
 uniform mat4 u_Model;
 uniform mat4 u_View;
@@ -33,9 +26,8 @@ void main()
     vec3 edgeWorld = aCenter + vec3(aRadius, 0.0, 0.0);
     vClipEdge   = u_Proj * u_View * u_Model * vec4(edgeWorld, 1.0);
 
-    vLocalUV = aLocalUV;
-    vRadius = aRadius;
+    vSize = aSize;
     vThickness = aThickness;
-    vBorderColor = aBorderColor;
+    vThinkessColor = aThinknessColor;
     vFillColor = aFillColor;
 }

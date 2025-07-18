@@ -23,8 +23,8 @@ void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 	if (!pRenderData)
 		return;
 
-	GLPolyRenderDataPtr pPolyData = std::dynamic_pointer_cast<GLPolyRenderData>(pRenderData);
-	if (!pPolyData)
+	GLRectRenderDataPtr pRectData = std::dynamic_pointer_cast<GLRectRenderData>(pRenderData);
+	if (!pRectData)
 		return;
 
 	auto pContext = params.context;
@@ -50,8 +50,8 @@ void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 	glDisable(GL_MULTISAMPLE);
 	glDepthMask(GL_FALSE);
 
-	glBindVertexArray(pPolyData->m_nVao);
-	glDrawElements(GL_LINES_ADJACENCY, GLsizei(pPolyData->m_vecRenderData.size()) * 4, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(pRectData->m_nVao);
+	glDrawElements(GL_TRIANGLES, GLsizei(pRectData->m_vecRenderData.size()) * 6, GL_UNSIGNED_INT, 0);
 
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
