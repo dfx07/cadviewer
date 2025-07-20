@@ -173,6 +173,8 @@ public:
 	unsigned int m_nVbo = 0;
 	unsigned int m_nEbo = 0;
 
+	unsigned int m_nVboRender = 0;
+
 	std::vector<RectVertexData> m_vecRenderData;
 	int m_nInstances = 0;
 };

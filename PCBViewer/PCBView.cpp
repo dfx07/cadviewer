@@ -124,6 +124,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	//int nID = m_pModelManager->AddModel(m_polys);
 
+	// ********************************************************************
+	// Lines 
 	m_lines = std::make_shared<LineDrawObjectList>();
 
 	LineDrawObjectPtr pLine = m_lines->CreateLineDrawObject();
@@ -143,6 +145,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	pLine2->Move({ 0, 300 });
 
+	// ********************************************************************
+	// Circles 
 	m_circles = std::make_shared<CircleDrawObjectList>();
 
 	CircleDrawObjectPtr pCircle = m_circles->CreateCircleDrawObject();
@@ -150,17 +154,37 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pCircle->m_ptCenter = { 150, 100 };
 	pCircle->m_fRadius = 50.f;
 	pCircle->m_fThickness = 1.f;
-	pCircle->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
+	pCircle->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
 
+	//for (int i = 0; i < 10000; i++)
+	//{
+	//	auto pNCircle = std::dynamic_pointer_cast<CircleDrawObject>(pCircle->Clone());
+
+	//	float x = (float)RandomInt(-2000, 2000);
+	//	float y = (float)RandomInt(-2000, 2000);
+
+	//	if (pNCircle != nullptr)
+	//	{
+	//		pNCircle->Move(Vec2(x, y));
+
+	//		m_circles->Add(pNCircle);
+	//	}
+	//}
+
+
+	// ********************************************************************
+	// Rectangles
 	m_rects = std::make_shared<RectDrawObjectList>();
 	RectDrawObjectPtr pRect = m_rects->CreateRectDrawObject();
 
-	pRect->m_X = 100.f;
-	pRect->m_Y = 100.f;
-	pRect->m_Width = 100.f;
-	pRect->m_Height = 100.f;
+	pRect->m_ptX = 160.f;
+	pRect->m_ptY = 150.f;
+	pRect->m_fWidth = 100.f;
+	pRect->m_fHeight = 100.f;
 	pRect->m_fThickness = 1.f;
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
+	//pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
 
 
 	UpdateView();
@@ -183,9 +207,10 @@ void PCBView::Draw()
 {
 	std::vector<DrawObjectPtr> model;
 
-	model.push_back(m_polys);
-	model.push_back(m_lines);
+	//model.push_back(m_polys);
+	//model.push_back(m_lines);
 	model.push_back(m_circles);
+	model.push_back(m_rects);
 
 	m_pRenderer->Render(model);
 }

@@ -20,15 +20,15 @@ public:
 public:
 	void Move(Vec2 offset)
 	{
-		m_X += offset.x;
-		m_Y += offset.x;
+		m_ptX += offset.x;
+		m_ptY += offset.x;
 	}
 
 public:
-	float	m_X{ 0.f }; // Left X coordinate
-	float	m_Y{ 0.f }; // Top Y coordinate
-	float	m_Width{ 100.f }; // Width of the rectangle
-	float	m_Height{ 100.f }; // Height of the rectangle
+	float	m_ptX{ 0.f }; // Left X coordinate
+	float	m_ptY{ 0.f }; // Top Y coordinate
+	float	m_fWidth{ 100.f }; // Width of the rectangle
+	float	m_fHeight{ 100.f }; // Height of the rectangle
 	float	m_fThickness{ 1.0f };
 	Col4	m_clThicknessColor{ 0.f };
 	Col4	m_clFillColor{ 0.f };

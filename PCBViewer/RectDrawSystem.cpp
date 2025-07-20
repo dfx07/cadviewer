@@ -51,7 +51,7 @@ void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 	glDepthMask(GL_FALSE);
 
 	glBindVertexArray(pRectData->m_nVao);
-	glDrawElements(GL_TRIANGLES, GLsizei(pRectData->m_vecRenderData.size()) * 6, GL_UNSIGNED_INT, 0);
+	glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, pRectData->m_nInstances);
 
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);

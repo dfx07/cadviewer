@@ -30,10 +30,10 @@ void RectDrawObject::Copy(DrawObject* pSource)
 		return;
 	}
 
-	m_X					= pSrcObj->m_X;
-	m_Y					= pSrcObj->m_Y;
-	m_Width				= pSrcObj->m_Width;
-	m_Height			= pSrcObj->m_Height;
+	m_ptX				= pSrcObj->m_ptX;
+	m_ptY				= pSrcObj->m_ptY;
+	m_fWidth			= pSrcObj->m_fWidth;
+	m_fHeight			= pSrcObj->m_fHeight;
 	m_fThickness		= pSrcObj->m_fThickness;
 	m_clThicknessColor	= pSrcObj->m_clThicknessColor;
 	m_clFillColor		= pSrcObj->m_clFillColor;

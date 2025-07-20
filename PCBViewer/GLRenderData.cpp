@@ -277,10 +277,17 @@ void GLCircleRenderData::Release()
 }
 
 
+float RectVertices[] = {
+	-0.5f, -0.5f, // Bottom-left
+	 0.5f, -0.5f, // Bottom-right
+	-0.5f,  0.5f, // Top-left
+	 0.5f,  0.5f  // Top-right
+};
+
 static unsigned int RectIndices[6]
 {
-	0, 1, 3,
-	1, 2, 3
+	0, 1, 2,
+	2, 1, 3
 };
 
 GLRectRenderData::GLRectRenderData()
@@ -298,30 +305,43 @@ bool GLRectRenderData::Create()
 	glGenVertexArrays(1, &m_nVao);
 	glBindVertexArray(m_nVao);
 
+	glGenBuffers(1, &m_nVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(RectVertices), RectVertices, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glVertexAttribDivisor(0, 0);
+
 	glGenBuffers(1, &m_nEbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RectIndices), RectIndices, GL_STATIC_DRAW);
 
 	// Create intances buffer
-	glGenBuffers(1, &m_nVbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+	glGenBuffers(1, &m_nVboRender);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nVboRender);
 	glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data(), GL_STATIC_DRAW);
 
 	// Layout
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, position));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, position));
+	glVertexAttribDivisor(1, 1);
 
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, size));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, size));
+	glVertexAttribDivisor(2, 1);
 
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness));
+	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness));
+	glVertexAttribDivisor(3, 1);
 
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness_color));
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness_color));
+	glVertexAttribDivisor(4, 1);
 
 	glEnableVertexAttribArray(5);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, fill_color));
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, fill_color));
+	glVertexAttribDivisor(5, 1);
 
 	glBindVertexArray(0);
 

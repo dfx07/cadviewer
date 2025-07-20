@@ -37,9 +37,9 @@ void main()
     float borderAlpha = smoothstep(outer, outer - aa - 0.25f, distPx) *
                         smoothstep(inner, inner + aa + 0.25f, distPx);
 
-    float fillAlpha = smoothstep(inner + 2.f, inner, distPx + 0.5);
+    float fillAlpha = smoothstep(inner + 3.f, inner, distPx + 1.0);
 
-    if(distPx < inner + 0.1)
+    if(distPx < inner + 0.3)
     {
         if(vFillColor.a <= 0)
             discard;
