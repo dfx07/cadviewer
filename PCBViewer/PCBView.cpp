@@ -182,7 +182,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pRect->m_ptY = 150.f;
 	pRect->m_fWidth = 100.f;
 	pRect->m_fHeight = 100.f;
-	pRect->m_fThickness = 1.f;
+	pRect->m_fThickness = 2.f;
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 	//pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
 
