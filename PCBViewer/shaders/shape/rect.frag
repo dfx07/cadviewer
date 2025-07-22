@@ -39,10 +39,7 @@ void main()
     vec2 localPx = centerPx - gl_FragCoord.xy;
 
     float radius = 10.f * u_zZoom;
-
-    vec2 offset = vThickness == 1 ? vec2(0.5) : vec2(vThickness - 1);
-
-    float dist = sdRoundBox(localPx, sizePx - offset, vec4(radius));
+    float dist = sdRoundBox(localPx, sizePx - vec2(vThickness / 2.0), vec4(radius));
 
     float aa = fwidth(dist);
 
@@ -52,43 +49,47 @@ void main()
     vec2 inner = sizePx - vec2(vThickness) - vec2(radius);
     bool inCorner = absP.x > inner.x && absP.y > inner.y;
 
-    float fill = 1.0 - smoothstep(-aa, aa, dist);
-
     if(vFillColor.a <= 0)
     {
-        if(inCorner)
-        {
-            border = 1.0 - smoothstep(vThickness * 0.5 - aa* 0.4, vThickness * 0.5 + aa * 0.3, abs(dist));
-        }
-        else 
-        {
-            border = 1.0 - step(vThickness * 0.5, abs(dist));
-        }
+        border = 1.0 - (inCorner ? smoothstep(vThickness * 0.5 - aa * 0.7, vThickness * 0.5 + aa * 0.4, abs(dist)) :
+                                  step(vThickness * 0.5, abs(dist)));
 
-        FragColor = vec4(vThinkessColor.rgb, vThinkessColor.a * border);
+        float alpha = vThinkessColor.a * border;
+        FragColor = vec4(vThinkessColor.rgb, alpha);
     }
     else if(vThickness <= 0 || vThinkessColor.a <= 0)
     {
+        float fill = 1.0 - smoothstep(-aa, aa, dist);
         FragColor = vec4(vFillColor.rgb, vFillColor.a * fill);
     }
     else 
     {
+        float fill = 1.0 - smoothstep(-aa - 1, aa + 0.5, dist);
+
         if(inCorner)
         {
-            border = 1.0 - smoothstep(vThickness * 0.5 - aa * 0.4, vThickness * 0.5 + aa * 0.3, abs(dist));
+            border = 1.0 - smoothstep(vThickness * 0.5 - aa, vThickness * 0.7 + aa * (vThickness == 1 ? 0.1 : 0.1), abs(dist));
+            border = pow(border, vThickness == 1 ? 0.15 : 0.5); 
         }
         else 
         {
             border = 1.0 - step(vThickness * 0.5, abs(dist));
         }
-        float borderStrong = pow(border, 0.5); 
 
+        float alpha = 1.0;
+        vec3 color;
 
-        float blend = pow(fill * (1.0 - border), 0.6);
-        vec3 color = mix(vThinkessColor.rgb, vFillColor.rgb, blend);
-
-        float alpha = max(borderStrong, fill);
-
-        FragColor = vec4(color, alpha);
+        if(inCorner)
+        {
+            color = mix(vThinkessColor.rgb, vFillColor.rgb, fill * (1.0 - border));
+            alpha = max(border, fill);
+            FragColor = vec4(color, alpha);
+        }
+        else 
+        {
+            color = (fill >= border) ? vFillColor.rgb : vThinkessColor.rgb;
+            alpha = (fill >= border) ? fill : border;
+            FragColor = vec4(color, alpha);
+        }
     }
 }
