@@ -24,8 +24,17 @@ uniform vec2 u_Viewport;
 
 void main()
 {
-    vec2 sizeRel;
-    vec3 worldPos = aPosCenter + vec3((aSize) * aLocalUV, aPosCenter.z);
+    float angle = radians(35);
+    float c = cos(angle);
+    float s = sin(angle);
+
+    mat3 rotZ = mat3(
+        c, -s, 0.0,
+        s,  c, 0.0,
+        0.0, 0.0, 1.0
+    );
+
+    vec3 worldPos = aPosCenter + vec3((aSize) * aLocalUV, aPosCenter.z) * rotZ;
 
     gl_Position = u_Proj * u_View * u_Model * vec4(worldPos, 1.0);
 
