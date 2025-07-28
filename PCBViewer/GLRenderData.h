@@ -145,7 +145,8 @@ public:
 /*********************************************************************************/
 struct RectVertexData
 {
-	Vec3 position;
+	Vec3 position;		// world
+	float angle;		// radian
 	Vec2 size;
 	float thickness;
 	Vec4 thickness_color;

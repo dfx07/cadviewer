@@ -173,14 +173,15 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 	for (auto& pRect : pDrawObject->m_vecRects)
 	{
 		Vec2 sz = { pRect->m_fWidth + pRect->m_fThickness, pRect->m_fHeight + pRect->m_fThickness};
-		Point2 pt = Vec2(pRect->m_ptY, pRect->m_ptY) + (sz / 2.f);
+		Point2 pt = Vec2(pRect->m_ptY, pRect->m_ptY) + Vec2(pRect->m_fWidth, pRect->m_fHeight) / 2.f;
 		float thickness = pRect->m_fThickness;
 		Vec4 thicknessColor = pRect->m_clThicknessColor;
 		Vec4 fillColor = pRect->m_clFillColor;
+		float angle = pRect->m_fAngle;
 
 		float z = NextZ();
 
-		pData->m_vecRenderData.push_back({Vec3(pt.x, pt.y, z), sz, thickness, thicknessColor, fillColor});
+		pData->m_vecRenderData.push_back({Vec3(pt.x, pt.y, z), angle, sz, thickness, thicknessColor, fillColor});
 
 		pData->m_nInstances++;
 	}

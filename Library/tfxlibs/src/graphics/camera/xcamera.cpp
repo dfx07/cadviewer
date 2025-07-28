@@ -183,8 +183,8 @@ Vec3 Camera2D::World2ScreenPoint(const Vec3& p) const
 Vec3 Camera2D::Screen2WorldPoint(const Vec3& p) const
 {
 	Vec3 point = { 0 , 0 , 0 };    // Để mặc định
-	point.x = m_position.x - (p.x - float(m_iWidth / 2)) / m_fZoom;
-	point.y = m_position.y + (p.y - float(m_iHeight / 2)) / m_fZoom;
+	point.x = m_position.x + (p.x - float(m_iWidth / 2)) / m_fZoom;
+	point.y = m_position.y - (p.y - float(m_iHeight / 2)) / m_fZoom;
 	return point;
 }
 
@@ -204,8 +204,8 @@ void Camera2D::ZoomTo(Vec3 ptTarget, const float delta_z)
 	Vec2 vMove = pGlobalNew - pGlobalOld;
 
 	// Di chuyển vị trí của camera một đoạn vì vị trí x, y được giữ nguyên
-	m_position.x += vMove.x;
-	m_position.y += vMove.y;
+	m_position.x -= vMove.x;
+	m_position.y -= vMove.y;
 }
 
 float Camera2D::GetZoom() const

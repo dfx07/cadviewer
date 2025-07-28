@@ -3,29 +3,30 @@
 * @Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
 *            All rights reserved.
 ************************************************************************************
-* @file     tfxdef.h
-* @create   June 09, 2025
+* @file     tfxutil.h
+* @create   July 23, 2025
+* @brief    Define utility
 * @note     For conditions of distribution and use, see copyright notice in readme.txt
 ***********************************************************************************/
-#ifndef TFXDEF_H
-#define TFXDEF_H
 
-#define TFX_VERSION "1.0.0"
+#ifndef TFXUTIL_H
+#define TFXUTIL_H
 
-#define __NAME_SPACE__ tfx
+#include "tfxdef.h"
 
-#define __BEGIN_NAMESPACE__ namespace __NAME_SPACE__ {
-#define __BEGIN_NAMESPACE_NO_TFX_ namespace {
-#define __END_NAMESPACE__ }
+__BEGIN_NAMESPACE__
 
-#define USING_NAMESPACE using namespace __NAME_SPACE__;
 
-#ifndef interface
-#define interface struct
-#endif // !interface
+float Deg2Rad(const float fAngleDeg)
+{
+	return fAngleDeg * M_PI / 180.0;
+}
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif // !M_PI
+float Rad2Deg(const float fAngleRad)
+{
+	return fAngleRad * 180.0 / M_PI;
+}
 
-#endif // !TFXDEF_H
+__END_NAMESPACE__
+
+#endif // !TFXUTIL_H

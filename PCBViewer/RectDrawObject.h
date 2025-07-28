@@ -32,6 +32,8 @@ public:
 	float	m_fThickness{ 1.0f };
 	Col4	m_clThicknessColor{ 0.f };
 	Col4	m_clFillColor{ 0.f };
+
+	float	m_fAngle{ 0.f }; // angle radian
 };
 
 class RectDrawObjectList : public DrawObject

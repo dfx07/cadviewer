@@ -177,6 +177,7 @@
     <ClInclude Include="..\Library\tfxlibs\include\common\dllexports.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfxutil.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xglshader.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h" />

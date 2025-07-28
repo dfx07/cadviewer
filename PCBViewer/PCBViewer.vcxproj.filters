@@ -177,6 +177,9 @@
     <ClInclude Include="RectDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfxutil.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
