@@ -51,6 +51,7 @@ public:
 	virtual void Copy(DrawObject* pSource) override;
 
 	RenderDataPtr Make(RenderDataBuilderPtr builder) override;
+	bool Update(RenderDataPtr pData, RenderDataBuilderPtr builder) override;
 
 public:
 	std::vector<CircleDrawObjectPtr> m_vecCircles; // List of polygon draw objects

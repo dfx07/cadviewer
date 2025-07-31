@@ -89,3 +89,11 @@ RenderDataPtr CircleDrawObjectList::Make(RenderDataBuilderPtr builder)
 
 	return builder->Make(this);
 }
+
+bool CircleDrawObjectList::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
+{
+	if (!builder || pData)
+		return false;
+
+	return builder->Update(pData, this);
+}

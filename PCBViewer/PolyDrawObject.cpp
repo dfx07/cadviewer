@@ -95,3 +95,11 @@ RenderDataPtr PolyDrawObjectList::Make(RenderDataBuilderPtr builder)
 
 	return builder->Make(this);
 }
+
+bool PolyDrawObjectList::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
+{
+	if (!builder || pData)
+		return false;
+
+	return builder->Update(pData, this);
+}

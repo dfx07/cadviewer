@@ -76,6 +76,11 @@ RenderDataPtr GLRenderDataBuilder::Make(PolyDrawObjectList* pDrawObject)
 	return pData;
 }
 
+bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, PolyDrawObjectList* pDrawObject)
+{
+	return false;
+}
+
 RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 {
 	GLLineRenderDataPtr pData = std::make_shared<GLLineRenderData>();
@@ -113,6 +118,11 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 	pDrawObject->AddComponent(pMaterial);
 
 	return pData;
+}
+
+bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, LineDrawObjectList* pDrawObject)
+{
+	return false;
 }
 
 RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
@@ -165,6 +175,11 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 	return pData;
 }
 
+bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, CircleDrawObjectList* pDrawObject)
+{
+	return false;
+}
+
 RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 {
 	GLRectRenderDataPtr pData = std::make_shared<GLRectRenderData>();
@@ -207,5 +222,10 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 	pDrawObject->AddComponent(pMaterial);
 
 	return pData;
+}
+
+bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject)
+{
+	return false;
 }
 

@@ -90,3 +90,11 @@ RenderDataPtr LineDrawObjectList::Make(RenderDataBuilderPtr builder)
 
 	return builder->Make(this);
 }
+
+bool LineDrawObjectList::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
+{
+	if (!builder || pData)
+		return false;
+
+	return builder->Update(pData, this);
+}

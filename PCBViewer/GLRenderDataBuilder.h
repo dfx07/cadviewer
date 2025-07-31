@@ -30,7 +30,14 @@ public:
 
 public:
 	virtual RenderDataPtr Make(PolyDrawObjectList* pDrawObject);
+	virtual bool Update(RenderDataPtr pRenderData, PolyDrawObjectList* pDrawObject);
+
 	virtual RenderDataPtr Make(LineDrawObjectList* pDrawObject);
+	virtual bool Update(RenderDataPtr pRenderData, LineDrawObjectList* pDrawObject);
+
 	virtual RenderDataPtr Make(CircleDrawObjectList* pDrawObject);
+	virtual bool Update(RenderDataPtr pRenderData, CircleDrawObjectList* pDrawObject);
+
 	virtual RenderDataPtr Make(RectDrawObjectList* pDrawObject);
+	virtual bool Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject);
 };

@@ -16,8 +16,15 @@
 class RenderDataBuilder
 {
 public:
-	virtual RenderDataPtr Make(PolyDrawObjectList* pModel) = 0;
-	virtual RenderDataPtr Make(LineDrawObjectList* pModel) = 0;
-	virtual RenderDataPtr Make(CircleDrawObjectList* pModel) = 0;
-	virtual RenderDataPtr Make(RectDrawObjectList* pModel) = 0;
+	virtual RenderDataPtr Make(PolyDrawObjectList* pDrawObject) = 0;
+	virtual bool Update(RenderDataPtr pRenderData, PolyDrawObjectList* pDrawObject) = 0;
+
+	virtual RenderDataPtr Make(LineDrawObjectList* pDrawObject) = 0;
+	virtual bool Update(RenderDataPtr pRenderData, LineDrawObjectList* pDrawObject) = 0;
+
+	virtual RenderDataPtr Make(CircleDrawObjectList* pDrawObject) = 0;
+	virtual bool Update(RenderDataPtr pRenderData, CircleDrawObjectList* pDrawObject) = 0;
+
+	virtual RenderDataPtr Make(RectDrawObjectList* pDrawObject) = 0;
+	virtual bool Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject) = 0;
 };
