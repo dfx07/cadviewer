@@ -160,6 +160,32 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pCircle->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
 	pCircle->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
 
+
+	CircleDrawObjectPtr pCircle2 = m_circles->CreateCircleDrawObject();
+
+	pCircle2->m_ptCenter = { 192.24, 233.98 };
+	pCircle2->m_fRadius = 2.f;
+	pCircle2->m_fThickness = 1.f;
+	pCircle2->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle2->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
+
+	CircleDrawObjectPtr pCircle3 = m_circles->CreateCircleDrawObject();
+
+	pCircle3->m_ptCenter = { 315.12,147.94 };
+	pCircle3->m_fRadius = 2.f;
+	pCircle3->m_fThickness = 1.f;
+	pCircle3->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle3->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
+
+
+	CircleDrawObjectPtr pCircle4 = m_circles->CreateCircleDrawObject();
+
+	pCircle4->m_ptCenter = { 257.75, 66.02 };
+	pCircle4->m_fRadius = 2.f;
+	pCircle4->m_fThickness = 1.f;
+	pCircle4->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle4->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
+
 	//for (int i = 0; i < 10000; i++)
 	//{
 	//	auto pNCircle = std::dynamic_pointer_cast<CircleDrawObject>(pCircle->Clone());
@@ -181,15 +207,28 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	m_rects = std::make_shared<RectDrawObjectList>();
 	RectDrawObjectPtr pRect = m_rects->CreateRectDrawObject();
 
-	pRect->m_ptX = 160.f;
-	pRect->m_ptY = 150.f;
-	pRect->m_fWidth = 100.f;
+	pRect->m_ptX = 150.f;
+	pRect->m_ptY = 100.f;
+	pRect->m_fWidth = 150.f;
 	pRect->m_fHeight = 100.f;
-	pRect->m_fThickness = 1.f;
+	pRect->m_fAngle = tfx::Deg2Rad(45.0);
+	pRect->m_fThickness = 4.f;
+
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 	//pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
 
-	pRect->m_fAngle = tfx::Deg2Rad(0.0);
+	//RectDrawObjectPtr pRect2 = m_rects->CreateRectDrawObject();
+
+	//pRect2->m_ptX = 150.f;
+	//pRect2->m_ptY = 100.f;
+	//pRect2->m_fWidth = 150.f;
+	//pRect2->m_fHeight = 100.f;
+	//pRect2->m_fAngle = tfx::Deg2Rad(35.0);
+	//pRect2->m_fThickness = 1.f;
+
+	//pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
+
+
 
 
 	UpdateView();
@@ -254,6 +293,8 @@ void PCBView::OnMouseMove(TFXMouseEvent* event)
 {
 	if (m_ePCBViewState == EPCBViewState::move)
 	{
+		m_rects->MarkDirty(1);
+
 		HandleMoveView(event->m_Pt);
 
 		m_ptLastMouse = event->m_Pt;

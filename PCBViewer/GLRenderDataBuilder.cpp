@@ -12,6 +12,7 @@
 #include "LineDrawObject.h"
 #include "CircleDrawObject.h"
 #include "RectDrawObject.h"
+#include "RenderUtil.h"
 
 
 float GLRenderDataBuilder::NextZ()
@@ -69,7 +70,10 @@ RenderDataPtr GLRenderDataBuilder::Make(PolyDrawObjectList* pDrawObject)
 
 	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
 
-	auto pMaterial = std::make_shared<MaterialComponent>(pShader, pBinder);
+	auto pMaterial = std::make_shared<MaterialComponent>();
+
+	// Add the material component to the draw object
+	pMaterial->Add("main", pShader, pBinder);
 
 	pDrawObject->AddComponent(pMaterial);
 
@@ -113,7 +117,10 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 
 	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
 
-	auto pMaterial = std::make_shared<MaterialComponent>(pShader, pBinder);
+	auto pMaterial = std::make_shared<MaterialComponent>();
+
+	// Add the material component to the draw object
+	pMaterial->Add("main", pShader, pBinder);
 
 	pDrawObject->AddComponent(pMaterial);
 
@@ -168,7 +175,10 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 
 	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
 
-	auto pMaterial = std::make_shared<MaterialComponent>(pShader, pBinder);
+	auto pMaterial = std::make_shared<MaterialComponent>();
+
+	// Add the material component to the draw object
+	pMaterial->Add("main", pShader, pBinder);
 
 	pDrawObject->AddComponent(pMaterial);
 
@@ -184,19 +194,55 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 {
 	GLRectRenderDataPtr pData = std::make_shared<GLRectRenderData>();
 
-	// TODO : implement create buffer
+	Point2 ptVertices[4] = {
+		{ -0.5f, -0.5f },
+		{  0.5f, -0.5f },
+		{  0.5f,  0.5f },
+		{ -0.5f,  0.5f }
+	};
+
 	for (auto& pRect : pDrawObject->m_vecRects)
 	{
-		Vec2 sz = { pRect->m_fWidth + pRect->m_fThickness, pRect->m_fHeight + pRect->m_fThickness};
-		Point2 pt = Vec2(pRect->m_ptY, pRect->m_ptY) + Vec2(pRect->m_fWidth, pRect->m_fHeight) / 2.f;
-		float thickness = pRect->m_fThickness;
-		Vec4 thicknessColor = pRect->m_clThicknessColor;
-		Vec4 fillColor = pRect->m_clFillColor;
-		float angle = pRect->m_fAngle;
+		Vec2 szRect = { pRect->m_fWidth, pRect->m_fHeight };
+		Point2 ptCenter = Vec2(pRect->m_ptX, pRect->m_ptY) + szRect / 2.f;
 
 		float z = NextZ();
 
-		pData->m_vecRenderData.push_back({Vec3(pt.x, pt.y, z), angle, sz, thickness, thicknessColor, fillColor});
+		pData->m_vecFillRenderData.push_back({
+			Vec3(ptCenter.x, ptCenter.y, z),
+			pRect->m_fAngle,
+			szRect,
+			pRect->m_clFillColor
+		});
+
+		// Create border data
+		size_t nStartIndex = pData->m_vecBorderRenderData.size();
+		int nVertexCnt = sizeof(ptVertices) / sizeof(ptVertices[0]);
+
+		for (size_t i = 0; i < nVertexCnt; i++)
+		{
+			Point2 ptVertex = ptVertices[i] * szRect;
+
+			// Rotate
+			ptVertex = ptCenter + Rotate(ptVertex, Point2(0, 0), pRect->m_fAngle);
+
+			pData->m_vecBorderRenderData.push_back({
+				Vec3(ptVertex.x, ptVertex.y, z),
+				pRect->m_fThickness,
+				pRect->m_clThicknessColor,
+				pRect->GetObjectID()
+			});
+
+			size_t prev = nStartIndex + (i + nVertexCnt - 1) % nVertexCnt;
+			size_t cur1 = nStartIndex + i;
+			size_t cur2 = nStartIndex + (i + 1) % nVertexCnt;
+			size_t next = nStartIndex + (i + 2) % nVertexCnt;
+
+			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(prev));
+			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur1));
+			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur2));
+			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(next));
+		}
 
 		pData->m_nInstances++;
 	}
@@ -204,20 +250,42 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 	pData->Create();
 	pData->SetUpdateFlags(0);
 
-	auto pShader = std::make_shared<tfx::GLShaderProgram>();
+	auto pMaterial = std::make_shared<MaterialComponent>();
 
-	std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-	shaderSrc[tfx::ShaderStage::Vertex]  = "shaders/shape/rect.vert";
-	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect.frag";
-
-	if (!pShader->LoadShaders(shaderSrc))
+	// Load fill shader
 	{
-		assert(0);
+		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+
+		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
+		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect.vert";
+		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect.frag";
+
+		if (!pShader->LoadShaders(shaderSrc))
+			assert(0);
+
+		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+
+		// Add the material component to the draw object
+		pMaterial->Add("rect_f", pShader, pBinder);
 	}
 
-	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+	// Load border shader
+	{
+		auto pShader = std::make_shared<tfx::GLShaderProgram>();
 
-	auto pMaterial = std::make_shared<MaterialComponent>(pShader, pBinder);
+		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
+		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect_b.vert";
+		shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/rect_b.geo";
+		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect_b.frag";
+
+		if (!pShader->LoadShaders(shaderSrc))
+			assert(0);
+
+		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+
+		// Add the material component to the draw object
+		pMaterial->Add("rect_b", pShader, pBinder);
+	}
 
 	pDrawObject->AddComponent(pMaterial);
 

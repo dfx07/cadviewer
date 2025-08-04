@@ -143,14 +143,20 @@ public:
 /*********************************************************************************/
 // Rectangle
 /*********************************************************************************/
-struct RectVertexData
+struct RectFillVertexData
 {
 	Vec3 position;		// world
 	float angle;		// radian
 	Vec2 size;
+	Vec4 color;
+};
+
+struct RectBorderVertexData
+{
+	Vec3 position;
 	float thickness;
-	Vec4 thickness_color;
-	Vec4 fill_color;
+	Vec4 color;
+	int rectID;
 };
 
 class GLRectRenderData : public RenderData
@@ -164,6 +170,16 @@ public:
 public:
 	GLRectRenderData();
 	virtual ~GLRectRenderData();
+
+protected:
+	bool CreateBorderRender();
+	bool CreateFillRender();
+
+	void ReleaseBorderRender();
+	void ReleaseFillRender();
+
+	void RemoveData();
+
 public:
 	virtual bool Create();
 	virtual void Update();
@@ -173,9 +189,17 @@ public:
 	unsigned int m_nVao = 0;
 	unsigned int m_nVbo = 0;
 	unsigned int m_nEbo = 0;
+	unsigned int m_nIncVbo = 0;
 
-	unsigned int m_nVboRender = 0;
+	unsigned int m_nBorderVao = 0;
+	unsigned int m_nBorderVbo = 0;
+	unsigned int m_nBorderEbo = 0;
 
-	std::vector<RectVertexData> m_vecRenderData;
+	// Fill render data
+	std::vector<RectFillVertexData> m_vecFillRenderData;
 	int m_nInstances = 0;
+
+	// Border render data
+	std::vector<RectBorderVertexData> m_vecBorderRenderData;
+	std::vector<unsigned int> m_vecBorderIndices;
 };

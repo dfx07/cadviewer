@@ -299,8 +299,40 @@ GLRectRenderData::~GLRectRenderData()
 	Release();
 }
 
+bool GLRectRenderData::CreateBorderRender()
+{
+	glGenVertexArrays(1, &m_nBorderVao);
+	glBindVertexArray(m_nVao);
 
-bool GLRectRenderData::Create()
+	glGenBuffers(1, &m_nBorderVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nBorderVbo);
+	glBufferData(GL_ARRAY_BUFFER, m_vecBorderRenderData.size() * sizeof(RectBorderVertexData),
+		m_vecBorderRenderData.data(), GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_nBorderEbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nBorderEbo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_vecBorderIndices.size() * sizeof(GLuint),
+		m_vecBorderIndices.data(), GL_STATIC_DRAW);
+
+	// Layout
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, position));
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, color));
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, thickness));
+	glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(3, 1, GL_INT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, rectID));
+	glEnableVertexAttribArray(3);
+
+	glBindVertexArray(0);
+
+	return true;
+}
+
+bool GLRectRenderData::CreateFillRender()
 {
 	glGenVertexArrays(1, &m_nVao);
 	glBindVertexArray(m_nVao);
@@ -318,36 +350,96 @@ bool GLRectRenderData::Create()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RectIndices), RectIndices, GL_STATIC_DRAW);
 
 	// Create intances buffer
-	glGenBuffers(1, &m_nVboRender);
-	glBindBuffer(GL_ARRAY_BUFFER, m_nVboRender);
-	glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data(), GL_STATIC_DRAW);
+	glGenBuffers(1, &m_nIncVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nIncVbo);
+	glBufferData(GL_ARRAY_BUFFER, m_vecFillRenderData.size() * sizeof(RectFillVertexData),
+		m_vecFillRenderData.data(), GL_STATIC_DRAW);
 
 	// Layout
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, position));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, position));
 	glVertexAttribDivisor(1, 1);
 
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, angle));
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, angle));
 	glVertexAttribDivisor(2, 1);
 
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, size));
+	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, size));
 	glVertexAttribDivisor(3, 1);
 
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness));
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, color));
 	glVertexAttribDivisor(4, 1);
 
-	glEnableVertexAttribArray(5);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, thickness_color));
-	glVertexAttribDivisor(5, 1);
-
-	glEnableVertexAttribArray(6);
-	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(RectVertexData), (void*)offsetof(RectVertexData, fill_color));
-	glVertexAttribDivisor(6, 1);
-
 	glBindVertexArray(0);
+
+	return true;
+}
+
+void GLRectRenderData::ReleaseBorderRender()
+{
+	if (m_nBorderVao != 0)
+	{
+		glDeleteVertexArrays(1, &m_nBorderVao);
+		m_nBorderVao = 0;
+	}
+	if (m_nBorderVbo != 0)
+	{
+		glDeleteBuffers(1, &m_nBorderVbo);
+		m_nBorderVbo = 0;
+	}
+	if (m_nBorderEbo != 0)
+	{
+		glDeleteBuffers(1, &m_nBorderEbo);
+		m_nBorderEbo = 0;
+	}
+}
+
+void GLRectRenderData::ReleaseFillRender()
+{
+	if (m_nVao != 0)
+	{
+		glDeleteVertexArrays(1, &m_nVao);
+		m_nVao = 0;
+	}
+	if (m_nVbo != 0)
+	{
+		glDeleteBuffers(1, &m_nVbo);
+		m_nVbo = 0;
+	}
+	if (m_nEbo != 0)
+	{
+		glDeleteBuffers(1, &m_nEbo);
+		m_nEbo = 0;
+	}
+	if (m_nIncVbo != 0)
+	{
+		glDeleteBuffers(1, &m_nIncVbo);
+		m_nIncVbo = 0;
+	}
+}
+
+void GLRectRenderData::RemoveData()
+{
+	m_vecFillRenderData.clear();
+	m_vecBorderRenderData.clear();
+
+	m_vecBorderIndices.clear();
+}
+
+bool GLRectRenderData::Create()
+{
+	if (m_nVao != 0 || m_nVbo != 0 || m_nEbo != 0)
+	{
+		Release();
+	}
+
+	if (CreateBorderRender() == false)
+		return false;
+
+	if (CreateFillRender() == false)
+		return false;
 
 	return true;
 }
@@ -364,17 +456,23 @@ void GLRectRenderData::Update()
 	if (m_nUpdateFlags & Flags::UpdateVertex)
 	{
 		// Dung lượng thay đổi → cấp phát lại
-		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_vecFillRenderData.size() * sizeof(RectFillVertexData),
+			m_vecFillRenderData.data(), GL_DYNAMIC_DRAW);
 	}
 	else
 	{
 		// Kích thước không đổi → update nhanh
-		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecFillRenderData.size() * sizeof(RectFillVertexData),
+			m_vecFillRenderData.data());
 	}
 }
 
 void GLRectRenderData::Release()
 {
-	m_vecRenderData.clear();
+	ReleaseFillRender();
+	ReleaseBorderRender();
+
+	RemoveData();
+
 	m_nUpdateFlags = 0;
 }

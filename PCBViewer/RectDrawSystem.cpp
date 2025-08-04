@@ -34,27 +34,58 @@ void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 	if (!pRenderData || !pMaterial)
 		return;
 
-	auto pShader = pMaterial->GetShader();
-	auto pBinder = pMaterial->GetBinder();
+	// Draw fill
+	{
+		auto pShader = pMaterial->GetShader("rect_f");
+		auto pBinder = pMaterial->GetBinder("rect_f");
 
-	if (!pShader->Use())
-		return;
+		if (!pShader->Use())
+			return;
 
-	pBinder->SetMat4("u_Proj", RENPTR(pContext->m_Proj));
-	pBinder->SetMat4("u_View", RENPTR(pContext->m_View));
-	pBinder->SetMat4("u_Model", RENPTR(Mat4(1.f)));
-	pBinder->SetVec2("u_Viewport", RENPTR(pContext->m_ViewPort));
-	pBinder->SetFloat("u_zZoom", pContext->m_Zoom);
+		pBinder->SetMat4("u_Proj", RENPTR(pContext->m_Proj));
+		pBinder->SetMat4("u_View", RENPTR(pContext->m_View));
+		pBinder->SetMat4("u_Model", RENPTR(Mat4(1.f)));
+		pBinder->SetVec2("u_Viewport", RENPTR(pContext->m_ViewPort));
+		pBinder->SetFloat("u_zZoom", pContext->m_Zoom);
 
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_MULTISAMPLE);
-	glDepthMask(GL_FALSE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_MULTISAMPLE);
+		glDepthMask(GL_FALSE);
 
-	glBindVertexArray(pRectData->m_nVao);
-	glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, pRectData->m_nInstances);
+		glBindVertexArray(pRectData->m_nVao);
+		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, pRectData->m_nInstances);
 
-	glEnable(GL_MULTISAMPLE);
-	glEnable(GL_DEPTH_TEST);
+		glEnable(GL_MULTISAMPLE);
+		glEnable(GL_DEPTH_TEST);
 
-	pShader->UnUse();
+		pShader->UnUse();
+	}
+
+	// Draw border
+	{
+		auto pShader = pMaterial->GetShader("rect_b");
+		auto pBinder = pMaterial->GetBinder("rect_b");
+
+		if (!pShader->Use())
+			return;
+
+		pBinder->SetMat4("u_Proj", RENPTR(pContext->m_Proj));
+		pBinder->SetMat4("u_View", RENPTR(pContext->m_View));
+		pBinder->SetMat4("u_Model", RENPTR(Mat4(1.f)));
+		pBinder->SetVec2("u_Viewport", RENPTR(pContext->m_ViewPort));
+		pBinder->SetFloat("u_zZoom", pContext->m_Zoom);
+
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_MULTISAMPLE);
+		glDepthMask(GL_FALSE);
+
+		glBindVertexArray(pRectData->m_nBorderVao);
+		glDrawElements(GL_LINES_ADJACENCY, GLsizei(pRectData->m_vecBorderRenderData.size()) * 4, GL_UNSIGNED_INT, 0);
+
+		glEnable(GL_MULTISAMPLE);
+		glEnable(GL_DEPTH_TEST);
+
+		pShader->UnUse();
+	}
+
 }
