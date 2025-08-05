@@ -10,8 +10,8 @@ Point2 Rotate(Point2 point, Point2 center, float angleRad)
 	point.y -= center.y;
 
 	// Rotate point
-	double xNew = (double)point.x * cosAngle - (double)point.y * sinAngle;
-	double yNew = (double)point.x * sinAngle + (double)point.y * cosAngle;
+	double xNew = (double)point.x * cosAngle + (double)point.y * sinAngle;
+	double yNew = -(double)point.x * sinAngle + (double)point.y * cosAngle;
 
 	// Translate point back
 	point.x = xNew + center.x;

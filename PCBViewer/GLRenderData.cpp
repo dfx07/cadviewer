@@ -302,7 +302,7 @@ GLRectRenderData::~GLRectRenderData()
 bool GLRectRenderData::CreateBorderRender()
 {
 	glGenVertexArrays(1, &m_nBorderVao);
-	glBindVertexArray(m_nVao);
+	glBindVertexArray(m_nBorderVao);
 
 	glGenBuffers(1, &m_nBorderVbo);
 	glBindBuffer(GL_ARRAY_BUFFER, m_nBorderVbo);

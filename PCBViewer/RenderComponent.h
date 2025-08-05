@@ -41,14 +41,17 @@ public:
 public:
 	void Add(const char* strName, tfx::ShaderProgramPtr shader, tfx::ShaderDataBinderPtr binder)
 	{
-		if (shader != nullptr && strName != nullptr)
+		if (strName == nullptr)
+			return;
+
+		if (shader != nullptr)
 		{
 			m_pShaders[strName] = shader;
+		}
 
-			if (binder == nullptr)
-			{
-				m_pBinders[strName] = binder;
-			}
+		if (binder != nullptr)
+		{
+			m_pBinders[strName] = binder;
 		}
 	}
 

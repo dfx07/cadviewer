@@ -73,7 +73,7 @@ RenderDataPtr GLRenderDataBuilder::Make(PolyDrawObjectList* pDrawObject)
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
 	// Add the material component to the draw object
-	pMaterial->Add("main", pShader, pBinder);
+	pMaterial->Add("poly", pShader, pBinder);
 
 	pDrawObject->AddComponent(pMaterial);
 
@@ -120,7 +120,7 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
 	// Add the material component to the draw object
-	pMaterial->Add("main", pShader, pBinder);
+	pMaterial->Add("line", pShader, pBinder);
 
 	pDrawObject->AddComponent(pMaterial);
 
@@ -166,7 +166,6 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 	std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
 	shaderSrc[tfx::ShaderStage::Vertex]   = "shaders/shape/circle.vert";
 	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/circle.frag";
-	//shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/circle.geom";
 
 	if (!pShader->LoadShaders(shaderSrc))
 	{
@@ -178,7 +177,7 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
 	// Add the material component to the draw object
-	pMaterial->Add("main", pShader, pBinder);
+	pMaterial->Add("circle", pShader, pBinder);
 
 	pDrawObject->AddComponent(pMaterial);
 
@@ -257,8 +256,8 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 		auto pShader = std::make_shared<tfx::GLShaderProgram>();
 
 		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect.vert";
-		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect.frag";
+		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect_f.vert";
+		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect_f.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))
 			assert(0);
@@ -275,7 +274,7 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
 		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect_b.vert";
-		shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/rect_b.geo";
+		//shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/rect_b.geom";
 		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect_b.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))

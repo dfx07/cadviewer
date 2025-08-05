@@ -87,5 +87,4 @@ void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 
 		pShader->UnUse();
 	}
-
 }

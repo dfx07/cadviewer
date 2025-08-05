@@ -211,11 +211,12 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pRect->m_ptY = 100.f;
 	pRect->m_fWidth = 150.f;
 	pRect->m_fHeight = 100.f;
-	pRect->m_fAngle = tfx::Deg2Rad(45.0);
+	pRect->m_fAngle = tfx::Deg2Rad(35.0);
 	pRect->m_fThickness = 4.f;
 
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
-	//pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pRect->SetObjectID(3);
 
 	//RectDrawObjectPtr pRect2 = m_rects->CreateRectDrawObject();
 
