@@ -3,7 +3,9 @@
 in vec2  vLocalUV;
 in vec2  vSize;
 in vec4  vFillColor;
+in vec2  vRealPos;
 
+flat in vec2 vRealPosCenter;
 flat in vec4 vPosCenter;
 flat in vec4 vRealSize;
 flat in vec4 vPosBorder;
@@ -73,7 +75,7 @@ void main()
     vec2 sizePx = abs(borderPx - centerPx);
 
     float radius = 10.0;
-    float dist = sdBoxRotatedPixel(gl_FragCoord.xy, centerPx, sizePx, vNegRotAngle);
+    float dist = sdBoxRotatedPixel(vRealPos, vRealPosCenter, vSize / 2.f, vNegRotAngle);
 
     float aa = fwidth(dist) * 0.5;
     float fill = 1.0 - smoothstep(-aa, aa, dist);

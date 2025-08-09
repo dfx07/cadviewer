@@ -10,6 +10,8 @@ layout(location = 3) in vec2 aSize;
 layout(location = 4) in vec4 aFillColor;
 
 out vec2  vLocalUV;
+out vec2  vRealPos;
+
 out vec2  vSize;
 out float vThickness;
 out vec4  vThinkessColor;
@@ -18,6 +20,7 @@ out vec4  vFillColor;
 flat out vec4 vPosCenter;
 flat out vec4 vRealSize;
 flat out vec4 vPosBorder;
+flat out vec2 vRealPosCenter;
 flat out vec2 vNegRotAngle;
 flat out int nLevelAA;
 
@@ -53,11 +56,6 @@ vec2 GetRotatedBoundSize(vec2 size, float angleRad)
     float boundHeight = abs(w * s) + abs(h * c);
 
     return vec2(boundWidth, boundHeight);
-}
-
-float PixelToWorld(float pixel, float zoom)
-{
-    return pixel * zoom;
 }
 
 vec3 PixelToWorldOffset(vec3 worldPos, float pixel, vec2 viewSize, float zoom)
@@ -101,12 +99,12 @@ void main()
 
     vRealSize = u_Proj * u_View * u_Model * vec4(aSize.x, aSize.y, 0.0, 1.0);
 
-    // vec2 newLocalUV2 = RotateAround((aSize) * vec2(0.5, 0.5), vec2(0, 0), aAngleRad);
-    // vec3 worldPosBorder = aPosCenter + vec3(newLocalUV2 * 0.5, aPosCenter.z);
-
     vec3 worldPosBorder = aPosCenter + vec3(aSize * 0.5, aPosCenter.z);
 
     vPosBorder = u_Proj * u_View * u_Model * vec4(worldPosBorder, 1.0);
+
+    vRealPosCenter = aPosCenter.xy;
+    vRealPos     = newLocalUV + aPosCenter.xy;
 
     vLocalUV     = aLocalUV;
     vSize        = aSize;

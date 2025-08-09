@@ -218,6 +218,8 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 		size_t nStartIndex = pData->m_vecBorderRenderData.size();
 		int nVertexCnt = sizeof(ptVertices) / sizeof(ptVertices[0]);
 
+		z = NextZ();
+
 		for (size_t i = 0; i < nVertexCnt; i++)
 		{
 			Point2 ptVertex = ptVertices[i] * szRect;
@@ -274,7 +276,7 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
 		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect_b.vert";
-		//shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/rect_b.geom";
+		shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/rect_b.geom";
 		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect_b.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))

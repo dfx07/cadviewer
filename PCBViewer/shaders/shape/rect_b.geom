@@ -3,23 +3,25 @@
 layout(lines_adjacency) in;
 layout(triangle_strip, max_vertices = 7) out;
 
+uniform mat4 u_Model;
+uniform mat4 u_View;
+uniform mat4 u_Proj;
 uniform vec2 u_Viewport;
 uniform float u_zZoom;
 
-in vec4 vColor[];
-in float vThickness[];
-in int vRectID[];
+in vec4  v_v4Color[];
+in float v_fThickness[];
+in float v_fWorldThickness[];
+in int   v_nRectID[];
+in vec2  v_v2WorldPos[];
 
-out vec4 fColor;
-out vec2 vLoc;
+out vec4  g_v4Color;
+out vec2  g_v2PosPx;
 
-flat out vec2 vSLine;
-flat out vec2 vELine;
-flat out float fThickness;
-// flat out int fblur;
-
-// flat out int nStartJoin;
-// flat out int nEndJoin;
+flat out vec2  gf_v2StartPosPx;
+flat out vec2  gf_v2EndPosPx;
+flat out float gf_fThicknessPx;
+flat out int   gf_nAxisAligned;
 
 // Clip Space   : Sau MVP, trước chia w
 // NDC Space    : Sau chia w, [-1, 1] x [-1, 1]
@@ -41,18 +43,6 @@ vec2 ScreenToClip(vec2 screenPos, float w)
     return ndc * w;
 }
 
-vec4 OffsetClipByPixel(vec4 clipPos, float offset, vec2 normal, vec2 viewport)
-{
-    // Convert normal (pixel space) to NDC
-    vec2 ndcOffset = (offset * normalize(normal) / viewport) * 2.0;
-
-    // Convert NDC offset to clip space offset (multiply by w)
-    vec2 clipOffset = ndcOffset * clipPos.w;
-
-    // Apply offset to clipPos
-    return clipPos + vec4(clipOffset, 0.0, 0.0);
-}
-
 vec4 OffsetInClipNoSnap(vec4 clipPos, vec2 offsetPixel, vec2 viewport)
 {
     vec2 ndcOffset = (offsetPixel / viewport) * 2.0;
@@ -64,9 +54,29 @@ bool IsOrthogonal2D(vec2 a, vec2 b)
     return abs(dot(a, b)) < 1e-6;
 }
 
+bool is_horizontal(vec2 p1, vec2 p2, float epsilon)
+{
+    return abs(p1.y - p2.y) <= epsilon;
+}
+
+bool is_vertical(vec2 p1, vec2 p2, float epsilon)
+{
+    return abs(p1.x - p2.x) <= epsilon;
+}
+
+bool is_axis_aligned_line(vec2 p1, vec2 p2)
+{
+    float eps = 0.001;
+    return is_horizontal(p1, p2, eps) || is_vertical(p1, p2, eps);
+}
+
+vec4 WorldToClip(vec3 worldPos) {
+    return u_Proj * u_View * u_Model * vec4(worldPos, 1.0);
+}
+
 void main()
 {
-    if(vRectID[0] != vRectID[1] || vRectID[0] != vRectID[2])
+    if(v_nRectID[0] != v_nRectID[1] || v_nRectID[0] != v_nRectID[2])
         return;
 
     vec2 p0 = clip_2_ndc(gl_in[0].gl_Position);
@@ -81,123 +91,64 @@ void main()
     vec2 v2 = normalize(p3 - p2);
 
     // Calculate the normal vectors for the segments
-    vec2 n = vec2(-v1.y, v1.x);
+    vec2 n0 = vec2(-v0.y, v0.x);
+    vec2 n1 = vec2(-v1.y, v1.x);
+    vec2 n2 = vec2(-v2.y, v2.x);
 
-    float thickness = vThickness[0] * 0.5 + 1.f;
-    float half_thickness = vThickness[0] * 0.5;
+    // Calculate the miter vector
+    vec2 v2Miter1 = normalize(n0 + n1);
+    vec2 v2Miter2 = normalize(n1 + n2);
 
-    vec4 pos1, pos2, pos3, pos4;
+    float an1 = dot(v2Miter1, n1);
+    float bn1 = dot(v2Miter2, n2);
 
-    vec2 offsetP1 = n * thickness;
-    vec2 offsetP2 = n * thickness;
+    if(abs(an1) < 0.2)
+        an1 = 1;
 
-    // nStartJoin = IsOrthogonal2D(v0, v1) ? 0 : 1;
-    // nEndJoin = IsOrthogonal2D(v1, v2) ? 0 : 1;
+    if(abs(bn1) < 0.2)
+        bn1 = 1;
 
-    pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position, - v1 * half_thickness + offsetP1, u_Viewport);
-    pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, - v1 * half_thickness - offsetP1, u_Viewport);
+    gf_v2StartPosPx = clip_2_screen(gl_in[1].gl_Position);
+    gf_v2EndPosPx = clip_2_screen(gl_in[2].gl_Position);
+    gf_fThicknessPx = v_fThickness[0];
+    gf_nAxisAligned = is_axis_aligned_line(gf_v2StartPosPx, gf_v2EndPosPx) ? 1 : 0;
 
-    pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * half_thickness + offsetP2, u_Viewport);
-    pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, v1 * half_thickness - offsetP2, u_Viewport);
+    float fHalfThickness = (v_fThickness[0] * 0.5 ) + (gf_nAxisAligned == 1 ? 0.0 : 1.0);
 
-    vec2 locPix1 = clip_2_screen(pos1);
-    vec2 locPix2 = clip_2_screen(pos2);
-    vec2 locPix3 = clip_2_screen(pos3);
-    vec2 locPix4 = clip_2_screen(pos4);
+    float fThickness0 = fHalfThickness / an1;
+    float fThickness1 = fHalfThickness / bn1;
 
-    p1 = clip_2_screen(gl_in[1].gl_Position);
-    p2 = clip_2_screen(gl_in[2].gl_Position);
+    vec2 v2Offset1 = v2Miter1 * fThickness0;
+    vec2 v2Offset2 = v2Miter2 * fThickness1;
+    
+    vec4 pos1 = OffsetInClipNoSnap(gl_in[1].gl_Position,  v2Offset1, u_Viewport);
+    vec4 pos2 = OffsetInClipNoSnap(gl_in[1].gl_Position, -v2Offset1, u_Viewport);
+    vec4 pos3 = OffsetInClipNoSnap(gl_in[2].gl_Position,  v2Offset2, u_Viewport);
+    vec4 pos4 = OffsetInClipNoSnap(gl_in[2].gl_Position, -v2Offset2, u_Viewport);
 
-    vSLine = p1;
-    vELine = p2;
+    vec2 PixLoc1 = clip_2_screen(pos1);
+    vec2 PixLoc2 = clip_2_screen(pos2);
+    vec2 PixLoc3 = clip_2_screen(pos3);
+    vec2 PixLoc4 = clip_2_screen(pos4);
 
-    vLoc = locPix1;
-    fThickness = vThickness[0];
+    g_v2PosPx = PixLoc1;
+    g_v4Color = v_v4Color[0];
     gl_Position = pos1;
     EmitVertex();
-    fColor = vColor[0];
 
-    vLoc = locPix2;
-    fThickness = vThickness[0];
+    g_v2PosPx = PixLoc2;
+    g_v4Color = v_v4Color[0];
     gl_Position = pos2;
     EmitVertex();
-    fColor = vColor[0];
 
-    vLoc = locPix3;
-    fThickness = vThickness[0];
+    g_v2PosPx = PixLoc3;
+    g_v4Color = v_v4Color[0];
     gl_Position = pos3;
     EmitVertex();
-    fColor = vColor[0];
 
-    vLoc = locPix4;
-    fThickness = vThickness[0];
+    g_v2PosPx = PixLoc4;
+    g_v4Color = v_v4Color[0];
     gl_Position = pos4;
     EmitVertex();
     EndPrimitive();
-
-
-    // // blur
-    // if(!(nStartJoin == 0 && nEndJoin == 0))
-    // {
-    //     vSLine = p1;
-    //     vELine = p2;
-    //     fblur = 1;
-
-    //     fColor = vColor[0];
-    //     vLoc = locPix1;
-    //     fThickness = vThickness[0];
-    //     gl_Position = pos1;
-    //     EmitVertex();
-
-    //     fColor = vColor[0];
-    //     vLoc = locPix2;
-    //     fThickness = vThickness[0];
-    //     gl_Position = pos2;
-    //     EmitVertex();
-
-    //     fColor = vColor[0];
-    //     vLoc = locPix3;
-    //     fThickness = vThickness[0];
-    //     gl_Position = pos3;
-    //     EmitVertex();
-
-    //     fColor = vColor[0];
-    //     vLoc = locPix4;
-    //     fThickness = vThickness[0];
-    //     gl_Position = pos4;
-    //     EmitVertex();
-
-    //     EndPrimitive();
-    // }
- 
-    // // stroke
-    // vSLine = p1;
-    // vELine = p2;
-    // fblur = 0;
-
-    // fColor = vColor[0];
-    // vLoc = locPix1;
-    // fThickness = vThickness[0];
-    // gl_Position = pos1;
-    // EmitVertex();
-
-    // fColor = vColor[0];
-    // vLoc = locPix2;
-    // fThickness = vThickness[0];
-    // gl_Position = pos2;
-    // EmitVertex();
-
-    // fColor = vColor[0];
-    // vLoc = locPix3;
-    // fThickness = vThickness[0];
-    // gl_Position = pos3;
-    // EmitVertex();
-
-    // fColor = vColor[0];
-    // vLoc = locPix4;
-    // fThickness = vThickness[0];
-    // gl_Position = pos4;
-    // EmitVertex();
-
-    // EndPrimitive();
 }

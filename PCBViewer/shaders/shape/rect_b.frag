@@ -1,15 +1,12 @@
 #version 150 core
 
-in vec4 vColor;
-// in vec2 vLoc;
+in vec4  g_v4Color;
+in vec2  g_v2PosPx;
 
-// flat in vec2 vSLine;
-// flat in vec2 vELine;
-// flat in float fThickness;
-// flat in int fblur;
-
-// flat in int nStartJoin;
-// flat in int nEndJoin;
+flat in vec2  gf_v2StartPosPx;
+flat in vec2  gf_v2EndPosPx;
+flat in float gf_fThicknessPx;
+flat in int   gf_nAxisAligned;
 
 out vec4 FragColor;
 
@@ -35,72 +32,18 @@ float distance_to_line(vec2 P, vec2 A, vec2 B)
 
 void main()
 {
-    FragColor = vColor;
+    if(gf_nAxisAligned == 0)
+    {
+        float fHalfThickness = gf_fThicknessPx * 0.5;
+        float dist = distance_to_line(g_v2PosPx, gf_v2StartPosPx, gf_v2EndPosPx);
+        
+        float aa = max(fwidth(dist), 1.0) * 0.4;
+        float alpha = smoothstep(fHalfThickness + aa, fHalfThickness - aa, dist);
 
-    // float halfthickness = fThickness * 0.5;
-    // float alpha;
-
-    // if(nStartJoin == 0 && nEndJoin == 0)
-    // {
-    //     float dist = distance_to_line(vLoc, vSLine, vELine);
-
-    //     if(dist <= halfthickness - 0.01)
-    //         alpha = 1.f;
-    //     else if(dist >= halfthickness + 0.01)
-    //         alpha = 0.f;
-    //     else 
-    //     {
-    //         float side = signed_distance_to_line(vLoc, vSLine, vELine);
-    //         if(side >= 0.0)
-    //             alpha = 1.f;
-    //         else
-    //             alpha = 0.f;
-    //     }
-    //     FragColor = vec4(1.0, 0.0, 0.0, alpha);
-    // }
-    // else if(nStartJoin == 1 && nEndJoin == 1)
-    // {
-    //     float dist = distance_to_segment(vLoc, vSLine, vELine);
-
-    //     if(fblur == 1)
-    //     {
-    //         float aa = max(fwidth(dist), 1.0);
-    //         alpha = smoothstep(halfthickness + aa + 0.01, halfthickness - aa - 0.01, dist) - 0.05;
-    //     }
-    //     else
-    //     {
-    //         if(dist <= halfthickness)
-    //             alpha = 0.6f;
-    //         else 
-    //             alpha = 0.f;
-    //     }
-    // }
-    // else 
-    // {
-    //     float dist = distance_to_segment(vLoc, vSLine, vELine);
-
-    //     if(fblur == 1)
-    //     {
-    //         // float aa = max(fwidth(dist), 1.0);
-    //         // alpha = smoothstep(halfthickness + aa + 0.01, halfthickness - aa - 0.01, dist);
-    //         alpha = 0.12;
-    //     }
-    //     else
-    //     {
-    //         if(dist <= halfthickness - 0.01)
-    //             alpha = 0.8f;
-    //         else if(dist >= halfthickness + 0.01)
-    //             alpha = 0.f;
-    //         else 
-    //         {
-    //             float side = signed_distance_to_line(vLoc, vSLine, vELine);
-    //             if(side >= 0.0)
-    //                 alpha = 0.8f;
-    //             else
-    //                 alpha = 0.f;
-    //         }
-    //     }
-    // }
-
-    // FragColor = vec4(1.0, 0.0, 0.0, alpha);
+        FragColor = vec4(g_v4Color.rgb, g_v4Color.a * alpha);
+    }
+    else
+    {
+        FragColor = vec4(g_v4Color.rgb, g_v4Color.a);
+    }
 }
