@@ -100,13 +100,19 @@ public:
 // Circle
 /*********************************************************************************/
 
-struct CircleVertexData
+struct CircleFillVertexData
+{
+	Vec3 center;
+	float radius;
+	Vec4 color;
+};
+
+struct CircleBorderVertexData
 {
 	Vec3 center;
 	float radius;
 	float thickness;
-	Vec4 thickness_color;
-	Vec4 fill_color;
+	Vec4 color;
 };
 
 class GLCircleRenderData : public RenderData
@@ -125,6 +131,15 @@ public:
 	GLCircleRenderData();
 	virtual ~GLCircleRenderData();
 
+protected:
+	bool CreateBorderRender();
+	bool CreateFillRender();
+
+	void ReleaseBorderRender();
+	void ReleaseFillRender();
+
+	void RemoveData();
+
 public:
 	virtual bool Create();
 	virtual void Update();
@@ -133,10 +148,14 @@ public:
 public:
 	unsigned int m_nVao = 0;
 	unsigned int m_nVbo = 0;
-	unsigned int m_nQuadVbo = 0;
+	unsigned int m_nIncVbo = 0; // Quad
 	unsigned int m_nEbo = 0;
 
-	std::vector<CircleVertexData> m_vecRenderData;
+	unsigned int m_nBorderVao = 0;
+	unsigned int m_nBorderVbo = 0;
+
+	std::vector<CircleFillVertexData> m_vecFillRenderData;
+	std::vector<CircleBorderVertexData> m_vecBorderRenderData;
 	int m_nInstances = 0;
 };
 

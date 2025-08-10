@@ -199,15 +199,69 @@ GLCircleRenderData::~GLCircleRenderData()
 	Release();
 }
 
-bool GLCircleRenderData::Create()
+bool GLCircleRenderData::CreateBorderRender()
+{
+	glGenVertexArrays(1, &m_nBorderVao);
+	glBindVertexArray(m_nBorderVao);
+
+	// Create draw buffer is quad = (2 triangle)
+
+	if (m_nIncVbo == 0)
+	{
+		glGenBuffers(1, &m_nIncVbo);
+		glBindBuffer(GL_ARRAY_BUFFER, m_nIncVbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glVertexAttribDivisor(0, 0);
+
+		glGenBuffers(1, &m_nEbo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+	}
+	else
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_nIncVbo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
+	}
+
+	// Create intances buffer
+	glGenBuffers(1, &m_nBorderVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nBorderVbo);
+	glBufferData(GL_ARRAY_BUFFER, m_vecBorderRenderData.size() * sizeof(CircleBorderVertexData),
+		m_vecBorderRenderData.data(), GL_STATIC_DRAW);
+
+	// Layout
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(CircleBorderVertexData), (void*)offsetof(CircleBorderVertexData, center));
+	glVertexAttribDivisor(1, 1);
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(CircleBorderVertexData), (void*)offsetof(CircleBorderVertexData, radius));
+	glVertexAttribDivisor(2, 1);
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(CircleBorderVertexData), (void*)offsetof(CircleBorderVertexData, thickness));
+	glVertexAttribDivisor(3, 1);
+
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(CircleBorderVertexData), (void*)offsetof(CircleBorderVertexData, color));
+	glVertexAttribDivisor(4, 1);
+
+	glBindVertexArray(0);
+
+	return true;
+}
+
+bool GLCircleRenderData::CreateFillRender()
 {
 	glGenVertexArrays(1, &m_nVao);
 	glBindVertexArray(m_nVao);
 
 	// Create draw buffer is quad = (2 triangle)
-
-	glGenBuffers(1, &m_nQuadVbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_nQuadVbo);
+	glGenBuffers(1, &m_nIncVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_nIncVbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
@@ -221,30 +275,82 @@ bool GLCircleRenderData::Create()
 	// Create intances buffer
 	glGenBuffers(1, &m_nVbo);
 	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
-	glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(CircleVertexData), m_vecRenderData.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_vecFillRenderData.size() * sizeof(CircleFillVertexData), m_vecFillRenderData.data(), GL_STATIC_DRAW);
 
 	// Layout
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(CircleVertexData), (void*)offsetof(CircleVertexData, center));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(CircleFillVertexData), (void*)offsetof(CircleFillVertexData, center));
 	glVertexAttribDivisor(1, 1);
 
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(CircleVertexData), (void*)offsetof(CircleVertexData, radius));
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(CircleFillVertexData), (void*)offsetof(CircleFillVertexData, radius));
 	glVertexAttribDivisor(2, 1);
 
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(CircleVertexData), (void*)offsetof(CircleVertexData, thickness));
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(CircleFillVertexData), (void*)offsetof(CircleFillVertexData, color));
 	glVertexAttribDivisor(3, 1);
 
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(CircleVertexData), (void*)offsetof(CircleVertexData, thickness_color));
-	glVertexAttribDivisor(4, 1);
-
-	glEnableVertexAttribArray(5);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(CircleVertexData), (void*)offsetof(CircleVertexData, fill_color));
-	glVertexAttribDivisor(5, 1);
-
 	glBindVertexArray(0);
+
+	return true;
+}
+
+void GLCircleRenderData::ReleaseBorderRender()
+{
+	if (m_nBorderVao != 0)
+	{
+		glDeleteVertexArrays(1, &m_nBorderVao);
+		m_nBorderVao = 0;
+	}
+	if (m_nBorderVbo != 0)
+	{
+		glDeleteBuffers(1, &m_nBorderVbo);
+		m_nBorderVbo = 0;
+	}
+}
+
+void GLCircleRenderData::ReleaseFillRender()
+{
+	if (m_nVao != 0)
+	{
+		glDeleteVertexArrays(1, &m_nVao);
+		m_nVao = 0;
+	}
+	if (m_nVbo != 0)
+	{
+		glDeleteBuffers(1, &m_nVbo);
+		m_nVbo = 0;
+	}
+	if (m_nEbo != 0)
+	{
+		glDeleteBuffers(1, &m_nEbo);
+		m_nEbo = 0;
+	}
+	if (m_nIncVbo != 0)
+	{
+		glDeleteBuffers(1, &m_nIncVbo);
+		m_nIncVbo = 0;
+	}
+}
+
+void GLCircleRenderData::RemoveData()
+{
+	m_vecFillRenderData.clear();
+	m_vecBorderRenderData.clear();
+}
+
+bool GLCircleRenderData::Create()
+{
+	if (m_nVao != 0 || m_nVbo != 0 || m_nEbo != 0)
+	{
+		Release();
+	}
+
+	if (CreateBorderRender() == false)
+		return false;
+
+	if (CreateFillRender() == false)
+		return false;
 
 	return true;
 }
@@ -261,18 +367,20 @@ void GLCircleRenderData::Update()
 	if (m_nUpdateFlags & Flags::UpdateVertex)
 	{
 		// Dung lượng thay đổi → cấp phát lại
-		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(CircleVertexData), m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_vecFillRenderData.size() * sizeof(CircleFillVertexData), m_vecFillRenderData.data(), GL_DYNAMIC_DRAW);
 	}
 	else
 	{
 		// Kích thước không đổi → update nhanh
-		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(CircleVertexData), m_vecRenderData.data());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecFillRenderData.size() * sizeof(CircleFillVertexData), m_vecFillRenderData.data());
 	}
 }
 
 void GLCircleRenderData::Release()
 {
-	m_vecRenderData.clear();
+	ReleaseBorderRender();
+	ReleaseFillRender();
+
 	m_nUpdateFlags = 0;
 }
 

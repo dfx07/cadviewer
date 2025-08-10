@@ -140,19 +140,23 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 	for (auto& pCircle : pDrawObject->m_vecCircles)
 	{
 		Point2& ptCenter = pCircle->m_ptCenter;
-		float radius = pCircle->m_fRadius;
-		float thickness = pCircle->m_fThickness;
-		Vec4 thicknessColor = pCircle->m_clThicknessColor;
-		Vec4 fillColor = pCircle->m_clFillColor;
-
 		float z = NextZ();
 
-		pData->m_vecRenderData.push_back({ 
+		pData->m_vecFillRenderData.push_back({ 
 			Vec3(ptCenter.x, ptCenter.y, z),
-			radius,
-			thickness,
-			thicknessColor,
-			fillColor,
+			pCircle->m_fRadius,
+			pCircle->m_clFillColor,
+		});
+
+
+		z = NextZ();
+
+		// Create border data
+		pData->m_vecBorderRenderData.push_back({
+			Vec3(ptCenter.x, ptCenter.y, z),
+			pCircle->m_fRadius,
+			pCircle->m_fThickness,
+			pCircle->m_clThicknessColor,
 		});
 
 		pData->m_nInstances++;
@@ -161,23 +165,41 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 	pData->Create();
 	pData->SetUpdateFlags(0);
 
-	auto pShader = std::make_shared<tfx::GLShaderProgram>();
-
-	std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-	shaderSrc[tfx::ShaderStage::Vertex]   = "shaders/shape/circle.vert";
-	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/circle.frag";
-
-	if (!pShader->LoadShaders(shaderSrc))
-	{
-		assert(0);
-	}
-
-	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
-
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
-	// Add the material component to the draw object
-	pMaterial->Add("circle", pShader, pBinder);
+	// Load fill shader
+	{
+		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+
+		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
+		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/circle_f.vert";
+		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/circle_f.frag";
+
+		if (!pShader->LoadShaders(shaderSrc))
+			assert(0);
+
+		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+
+		// Add the material component to the draw object
+		pMaterial->Add("circle_f", pShader, pBinder);
+	}
+
+	// Load border shader
+	{
+		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+
+		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
+		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/circle_b.vert";
+		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/circle_b.frag";
+
+		if (!pShader->LoadShaders(shaderSrc))
+			assert(0);
+
+		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+
+		// Add the material component to the draw object
+		pMaterial->Add("circle_b", pShader, pBinder);
+	}
 
 	pDrawObject->AddComponent(pMaterial);
 
