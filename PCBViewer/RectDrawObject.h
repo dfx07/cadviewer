@@ -21,7 +21,7 @@ public:
 	void Move(Vec2 offset)
 	{
 		m_ptX += offset.x;
-		m_ptY += offset.x;
+		m_ptY += offset.y;
 	}
 
 public:

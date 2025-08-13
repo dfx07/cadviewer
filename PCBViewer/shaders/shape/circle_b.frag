@@ -1,51 +1,28 @@
 #version 330 core
 
-in vec2 vLocalUV;
-flat in vec4 vCenterClipPos;
-in float vRadius;
-in float vThickness;
-in vec4 vBorderColor;
-in vec4 vFillColor;
+in vec4 v_v4Color;
+in float v_fThickness;
 
-flat in vec4 vClipCenter;
-flat in vec4 vClipEdge;
-
-uniform vec2 u_Viewport;
+flat in vec2  vf_v2CenterPosPx;
+flat in float vf_fRadius;
 
 out vec4 FragColor;
 
-vec2 clip_2_screen(vec4 vtx)
-{
-    vec2 ndc = vtx.xy / vtx.w;
-    return (ndc * 0.5 + 0.5) * u_Viewport;
-}
-
 void main()
 {
-    vec2 centerPx = clip_2_screen(vClipCenter);
-    vec2 edgePx   = clip_2_screen(vClipEdge);
+    FragColor = vec4(v_v4Color.rgb, 1.0);
 
-    float radiusPx = length(centerPx - edgePx);
+    vec2 v2PosPx = gl_FragCoord.xy;
 
-    float distPx = length(gl_FragCoord.xy - centerPx);
+    float fDist = length(v2PosPx - vf_v2CenterPosPx);
 
-    float outer = radiusPx;
-    float inner = radiusPx - (vThickness + 1.3f);
+    float fOuter = vf_fRadius + v_fThickness * 0.5;
+    float fInner = vf_fRadius - v_fThickness * 0.5;
 
-    float aa = fwidth(distPx);
+    float aa = fwidth(fDist);
 
-    float borderAlpha = smoothstep(outer, outer - aa - 0.25f, distPx) *
-                        smoothstep(inner, inner + aa + 0.25f, distPx);
+    float fBorderAlpha = smoothstep(fOuter, fOuter - aa, fDist) *
+                         smoothstep(fInner, fInner + aa, fDist);
 
-    float fillAlpha = smoothstep(inner + 3.f, inner, distPx + 1.0);
-
-    if(distPx < inner + 0.3)
-    {
-        if(vFillColor.a <= 0)
-            discard;
-        else
-            FragColor = vec4(vFillColor.rgb, fillAlpha);
-    }
-    else
-        FragColor = vec4(vBorderColor.rgb, borderAlpha);
+    FragColor = vec4(v_v4Color.rgb, v_v4Color.a * fBorderAlpha);
 }

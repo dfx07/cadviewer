@@ -50,16 +50,8 @@ vec3 PixelToWorldOffset(vec3 worldPos, float pixel, vec2 viewSize, float zoom)
 
 void main()
 {
-    vec3 v3WorldPos = a_v3WorldCenterPos + vec3(a_fRadius * a_v2LocalUV, a_v3WorldCenterPos.z);
+    vec3 v3WorldPos = a_v3WorldCenterPos + vec3((a_fRadius + 2.0) * a_v2LocalUV, a_v3WorldCenterPos.z);
     gl_Position = u_Proj * u_View * u_Model * vec4(v3WorldPos, 1.0);
-
-    // vClipCenter = u_Proj * u_View * u_Model * vec4(aCenter, 1.0);
-
-    // vec3 edgeWorld = aCenter + vec3(aRadius, 0.0, 0.0);
-    // vClipEdge   = u_Proj * u_View * u_Model * vec4(edgeWorld, 1.0);
-
-    vec3 v3WorldRadius = PixelToWorldOffset(a_v3WorldCenterPos, a_fRadius * u_zZoom, u_Viewport, 1.0);
-    float fWorldRadius = length(v3WorldRadius);
 
     vf_v3WorldCenterPos = a_v3WorldCenterPos;
     v_v3WorldPos = v3WorldPos;
