@@ -61,28 +61,28 @@ void CircleDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 	}
 
 	// Draw border
-	//{
-	//	auto pShader = pMaterial->GetShader("circle_b");
-	//	auto pBinder = pMaterial->GetBinder("circle_b");
+	{
+		auto pShader = pMaterial->GetShader("circle_b");
+		auto pBinder = pMaterial->GetBinder("circle_b");
 
-	//	if (pShader->Use())
-	//	{
-	//		pBinder->SetMat4("u_Proj", RENPTR(pContext->m_Proj));
-	//		pBinder->SetMat4("u_View", RENPTR(pContext->m_View));
-	//		pBinder->SetMat4("u_Model", RENPTR(Mat4(1.f)));
-	//		pBinder->SetVec2("u_Viewport", RENPTR(pContext->m_ViewPort));
-	//		pBinder->SetFloat("u_zZoom", pContext->m_Zoom);
+		if (pShader->Use())
+		{
+			pBinder->SetMat4("u_Proj", RENPTR(pContext->m_Proj));
+			pBinder->SetMat4("u_View", RENPTR(pContext->m_View));
+			pBinder->SetMat4("u_Model", RENPTR(Mat4(1.f)));
+			pBinder->SetVec2("u_Viewport", RENPTR(pContext->m_ViewPort));
+			pBinder->SetFloat("u_zZoom", pContext->m_Zoom);
 
-	//		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//		glDisable(GL_MULTISAMPLE);
-	//		glDepthMask(GL_FALSE);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glDisable(GL_MULTISAMPLE);
+			glDepthMask(GL_FALSE);
 
-	//		glBindVertexArray(pCircleData->m_nBorderVao);
-	//		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, pCircleData->m_nInstances);
+			glBindVertexArray(pCircleData->m_nBorderVao);
+			glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, pCircleData->m_nInstances);
 
-	//		glEnable(GL_MULTISAMPLE);
-	//		glEnable(GL_DEPTH_TEST);
-	//	}
-	//	pShader->UnUse();
-	//}
+			glEnable(GL_MULTISAMPLE);
+			glEnable(GL_DEPTH_TEST);
+		}
+		pShader->UnUse();
+	}
 }
