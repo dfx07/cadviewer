@@ -1,16 +1,17 @@
 #version 330 core
 
-in vec2  vLocalUV;
-in vec2  vSize;
-in vec4  vFillColor;
-in vec2  vRealPos;
+// flat in vec2 vRealPosCenter;
+// flat in vec4 vPosCenter;
+// flat in vec4 vRealSize;
+// flat in vec4 vPosBorder;
+// flat in vec2 vNegRotAngle;
+// flat in int nLevelAA;
 
-flat in vec2 vRealPosCenter;
-flat in vec4 vPosCenter;
-flat in vec4 vRealSize;
-flat in vec4 vPosBorder;
-flat in vec2 vNegRotAngle;
-flat in int nLevelAA;
+in vec4  v_v4FillColor;
+
+flat in vec2  vf_v2CenterPosPx;
+flat in vec2  vf_v2SizePx;
+flat in vec2  vf_v2NegRotAngle;
 
 uniform vec2 u_Viewport;
 uniform float u_zZoom;
@@ -51,33 +52,34 @@ float sdBoxRotatedPixel(vec2 fragCoord, vec2 center, vec2 halfSize, vec2 vAngleS
     return sdBox(local, halfSize);
 }
 
+
 void main()
 {
     // Disable anti-aliasing for debugging purposes
-    if(nLevelAA == 0)
-    {
-        FragColor = vFillColor;
-        return;
-    }
+    // if(nLevelAA == 0)
+    // {
+    //     FragColor = vFillColor;
+    //     return;
+    // }
 
-    vec2 centerPx = clip_2_screen(vPosCenter);
-    vec2 borderPx = clip_2_screen(vPosBorder);
+    // vec2 centerPx = clip_2_screen(vPosCenter);
+    // vec2 borderPx = clip_2_screen(vPosBorder);
 
-    // vec2 halfRectPx = borderPx - centerPx;
+    // vec2 sizePx = abs(borderPx - centerPx);
 
-    // mat2 rot = mat2(vNegRotAngle.x, -vNegRotAngle.y,
-    //                 vNegRotAngle.y,  vNegRotAngle.x);
+    // float radius = 10.0;
+    // float dist = sdBoxRotatedPixel(vRealPos, vRealPosCenter, vSize / 2.f, vNegRotAngle);
 
-    // vec2 local = rot * halfRectPx;
+    // float aa = fwidth(dist) * 0.5;
+    // float fill = 1.0 - smoothstep(-aa, aa, dist);
+    // FragColor = vec4(vFillColor.rgb, vFillColor.a * fill);
 
-    // vec2 sizePx = 2.0 * abs(local);
+    vec2 v2PosPx = gl_FragCoord.xy;
 
-    vec2 sizePx = abs(borderPx - centerPx);
+    float fDist = sdBoxRotatedPixel(v2PosPx, vf_v2CenterPosPx, vf_v2SizePx / 2.f, vf_v2NegRotAngle);
 
-    float radius = 10.0;
-    float dist = sdBoxRotatedPixel(vRealPos, vRealPosCenter, vSize / 2.f, vNegRotAngle);
+    float aa = fwidth(fDist) * 0.5;
+    float fFillAlpha = 1.0 - smoothstep(-aa, aa, fDist);
 
-    float aa = fwidth(dist) * 0.5;
-    float fill = 1.0 - smoothstep(-aa, aa, dist);
-    FragColor = vec4(vFillColor.rgb, vFillColor.a * fill);
+    FragColor = vec4(v_v4FillColor.rgb, v_v4FillColor.a * fFillAlpha);
 }

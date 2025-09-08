@@ -229,43 +229,53 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 		float z = NextZ();
 
-		pData->m_vecFillRenderData.push_back({
+		pData->m_vecRenderData.push_back({
 			Vec3(ptCenter.x, ptCenter.y, z),
 			pRect->m_fAngle,
 			szRect,
+			pRect->m_fThickness,
+			pRect->m_clThicknessColor,
 			pRect->m_clFillColor
 		});
 
-		// Create border data
-		size_t nStartIndex = pData->m_vecBorderRenderData.size();
-		int nVertexCnt = sizeof(ptVertices) / sizeof(ptVertices[0]);
 
-		z = NextZ();
+		//pData->m_vecFillRenderData.push_back({
+		//	Vec3(ptCenter.x, ptCenter.y, z),
+		//	pRect->m_fAngle,
+		//	szRect,
+		//	pRect->m_clFillColor
+		//});
 
-		for (size_t i = 0; i < nVertexCnt; i++)
-		{
-			Point2 ptVertex = ptVertices[i] * szRect;
+		//// Create border data
+		//size_t nStartIndex = pData->m_vecBorderRenderData.size();
+		//int nVertexCnt = sizeof(ptVertices) / sizeof(ptVertices[0]);
 
-			// Rotate
-			ptVertex = ptCenter + Rotate(ptVertex, Point2(0, 0), pRect->m_fAngle);
+		//z = NextZ();
 
-			pData->m_vecBorderRenderData.push_back({
-				Vec3(ptVertex.x, ptVertex.y, z),
-				pRect->m_fThickness,
-				pRect->m_clThicknessColor,
-				pRect->GetObjectID()
-			});
+		//for (size_t i = 0; i < nVertexCnt; i++)
+		//{
+		//	Point2 ptVertex = ptVertices[i] * szRect;
 
-			size_t prev = nStartIndex + (i + nVertexCnt - 1) % nVertexCnt;
-			size_t cur1 = nStartIndex + i;
-			size_t cur2 = nStartIndex + (i + 1) % nVertexCnt;
-			size_t next = nStartIndex + (i + 2) % nVertexCnt;
+		//	// Rotate
+		//	ptVertex = ptCenter + Rotate(ptVertex, Point2(0, 0), pRect->m_fAngle);
 
-			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(prev));
-			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur1));
-			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur2));
-			pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(next));
-		}
+		//	pData->m_vecBorderRenderData.push_back({
+		//		Vec3(ptVertex.x, ptVertex.y, z),
+		//		pRect->m_fThickness,
+		//		pRect->m_clThicknessColor,
+		//		pRect->GetObjectID()
+		//	});
+
+		//	size_t prev = nStartIndex + (i + nVertexCnt - 1) % nVertexCnt;
+		//	size_t cur1 = nStartIndex + i;
+		//	size_t cur2 = nStartIndex + (i + 1) % nVertexCnt;
+		//	size_t next = nStartIndex + (i + 2) % nVertexCnt;
+
+		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(prev));
+		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur1));
+		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur2));
+		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(next));
+		//}
 
 		pData->m_nInstances++;
 	}

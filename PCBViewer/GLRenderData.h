@@ -162,6 +162,16 @@ public:
 /*********************************************************************************/
 // Rectangle
 /*********************************************************************************/
+struct RectVertexData
+{
+	Vec3 position;		// world
+	float angle;		// radian
+	Vec2 size;
+	float thickness;
+	Vec4 thickness_color;
+	Vec4 fill_color;
+};
+
 struct RectFillVertexData
 {
 	Vec3 position;		// world
@@ -194,6 +204,9 @@ protected:
 	bool CreateBorderRender();
 	bool CreateFillRender();
 
+	bool CreateBuffersAndVAO();
+	bool BuildRenderData();
+
 	void ReleaseBorderRender();
 	void ReleaseFillRender();
 
@@ -208,15 +221,22 @@ public:
 	unsigned int m_nVao = 0;
 	unsigned int m_nVbo = 0;
 	unsigned int m_nEbo = 0;
-	unsigned int m_nIncVbo = 0;
+	unsigned int m_nVboInst = 0;
+	unsigned int m_nEboInst = 0;
 
 	unsigned int m_nBorderVao = 0;
 	unsigned int m_nBorderVbo = 0;
 	unsigned int m_nBorderEbo = 0;
 
+	static float s_quadVertices[8];
+	static unsigned int s_quadIndices[8];
+
+	std::vector<RectVertexData> m_vecRenderData;
+	int m_nInstances = 0;
+
+
 	// Fill render data
 	std::vector<RectFillVertexData> m_vecFillRenderData;
-	int m_nInstances = 0;
 
 	// Border render data
 	std::vector<RectBorderVertexData> m_vecBorderRenderData;
