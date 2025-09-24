@@ -1,49 +1,92 @@
-#version 150 core
+#version 330 core
 
-in vec4  g_v4Color;
-in vec2  g_v2PosPx;
+in vec4  v_v4ThicknessColor;
+in vec3  v_v3Pos;
 
-flat in vec2  gf_v2StartPosPx;
-flat in vec2  gf_v2EndPosPx;
-flat in float gf_fThicknessPx;
-flat in int   gf_nAxisAligned;
+flat in vec2   vf_v2CenterPosPx;
+flat in vec3   vf_v3CenterPos;
+flat in vec2   vf_v2SizePx;
+flat in vec2   vf_v2Size;
+flat in vec2   vf_v2NegRotAngle;
+flat in float  vf_fThickness;
+flat in float  vf_fThicknessPx;
+flat in int    vf_nAA;
+
+uniform vec2 u_Viewport;
+uniform float u_zZoom;
 
 out vec4 FragColor;
 
-float distance_to_segment(vec2 P, vec2 A, vec2 B)
+float sdRoundBox(vec2 p, vec2 b, vec4 r)
 {
-   vec2 g = B - A;
-   vec2 h = P - A;
-   float d = length(h - g * clamp(dot(g, h) / dot(g,g), 0.0, 1.0));
-   return d;
+	r.xy = (p.x > 0.0) ? r.xy : r.zw;
+	r.x = (p.y > 0.0) ? r.x : r.y;
+
+	vec2 q = abs(p) - b + r.x;
+	return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r.x;
 }
 
-float signed_distance_to_line(vec2 P, vec2 A, vec2 B)
+float sdBox(vec2 p, vec2 b)
 {
-    vec2 dir = normalize(B - A);
-    vec2 normal = vec2(-dir.y, dir.x);
-    return dot(P - A, normal);
+	vec2 d = abs(p) - b - vf_fThicknessPx;
+	return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0) + vf_fThicknessPx;
 }
 
-float distance_to_line(vec2 P, vec2 A, vec2 B)
+float sdBoxRotated(vec2 fragCoord, vec2 center, vec2 halfSize, vec2 vAngleSC)
 {
-    return abs(signed_distance_to_line(P, A, B));
+    vec2 p = fragCoord - center;
+
+    float c = vAngleSC.x;
+    float s = vAngleSC.y;
+    mat2 rot = mat2(c, -s, s, c);
+
+    vec2 local = rot * p;
+
+    return sdBox(local, halfSize);
+}
+
+float map_range_or_keep(float value, float inMin, float inMax, float outMin, float outMax)
+{
+    if (value < inMin || value > inMax)
+        return value;
+
+    float t = (value - inMin) / (inMax - inMin);
+    return mix(outMin, outMax, t);
 }
 
 void main()
 {
-    if(gf_nAxisAligned == 0)
+    if(vf_nAA == 1)
     {
-        float fHalfThickness = gf_fThicknessPx * 0.5;
-        float dist = distance_to_line(g_v2PosPx, gf_v2StartPosPx, gf_v2EndPosPx);
-        
-        float aa = max(fwidth(dist), 1.0) * 0.4;
-        float alpha = smoothstep(fHalfThickness + aa, fHalfThickness - aa, dist);
+        float fHalfThickness = vf_fThickness * 0.3;
 
-        FragColor = vec4(g_v4Color.rgb, g_v4Color.a * alpha);
+        vec2 v2Pos = v_v3Pos.xy;
+        float fDist = sdBoxRotated(v2Pos, vf_v3CenterPos.xy, vf_v2Size / 2.f, vf_v2NegRotAngle);
+
+        float aa = fwidth(fDist) * 0.5;
+        float fBorderAlpha = 1 - smoothstep(fHalfThickness - aa, fHalfThickness + aa, abs(fDist));
+
+        FragColor = vec4(v_v4ThicknessColor.rgb, v_v4ThicknessColor.a * fBorderAlpha);
     }
-    else
+    else 
     {
-        FragColor = vec4(g_v4Color.rgb, g_v4Color.a);
+        float fHalfThicknessPx = vf_fThicknessPx * 0.5;
+
+        vec2 vSize = vf_v2SizePx;
+
+        vSize.x += 0.5;
+        vSize.y += 0.5;
+
+        vec2 v2Pos = gl_FragCoord.xy;
+        float fDist = sdBoxRotated(v2Pos, vf_v2CenterPosPx, vSize / 2.f, vf_v2NegRotAngle);
+
+        if(abs(fDist) <= fHalfThicknessPx)
+        {
+            FragColor = vec4(v_v4ThicknessColor.rgb, v_v4ThicknessColor.a);
+        }
+        else 
+        {
+            discard;
+        }
     }
 }

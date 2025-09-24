@@ -1,28 +1,15 @@
 #version 330 core
 
-// flat in vec2 vRealPosCenter;
-// flat in vec4 vPosCenter;
-// flat in vec4 vRealSize;
-// flat in vec4 vPosBorder;
-// flat in vec2 vNegRotAngle;
-// flat in int nLevelAA;
-
 in vec4  v_v4FillColor;
+in vec3  v_v3WorldPos;
 
 flat in vec2  vf_v2CenterPosPx;
+flat in vec3  vf_v3CenterPos;
 flat in vec2  vf_v2SizePx;
+flat in vec2  vf_v2Size;
 flat in vec2  vf_v2NegRotAngle;
 
-uniform vec2 u_Viewport;
-uniform float u_zZoom;
-
 out vec4 FragColor;
-
-vec2 clip_2_screen(vec4 vtx)
-{
-    vec2 ndc = vtx.xy / vtx.w;
-    return (ndc * 0.5 + 0.5) * u_Viewport;
-}
 
 float sdRoundBox(vec2 p, vec2 b, vec4 r)
 {
@@ -52,31 +39,14 @@ float sdBoxRotatedPixel(vec2 fragCoord, vec2 center, vec2 halfSize, vec2 vAngleS
     return sdBox(local, halfSize);
 }
 
-
 void main()
 {
-    // Disable anti-aliasing for debugging purposes
-    // if(nLevelAA == 0)
-    // {
-    //     FragColor = vFillColor;
-    //     return;
-    // }
+    // vec2 v2PosPx = gl_FragCoord.xy;
 
-    // vec2 centerPx = clip_2_screen(vPosCenter);
-    // vec2 borderPx = clip_2_screen(vPosBorder);
+    // float fDist = sdBoxRotatedPixel(v2PosPx, vf_v2CenterPosPx, vf_v2SizePx / 2.f, vf_v2NegRotAngle);
 
-    // vec2 sizePx = abs(borderPx - centerPx);
-
-    // float radius = 10.0;
-    // float dist = sdBoxRotatedPixel(vRealPos, vRealPosCenter, vSize / 2.f, vNegRotAngle);
-
-    // float aa = fwidth(dist) * 0.5;
-    // float fill = 1.0 - smoothstep(-aa, aa, dist);
-    // FragColor = vec4(vFillColor.rgb, vFillColor.a * fill);
-
-    vec2 v2PosPx = gl_FragCoord.xy;
-
-    float fDist = sdBoxRotatedPixel(v2PosPx, vf_v2CenterPosPx, vf_v2SizePx / 2.f, vf_v2NegRotAngle);
+    vec2 v2Pos = v_v3WorldPos.xy;
+    float fDist = sdBoxRotatedPixel(v2Pos, vf_v3CenterPos.xy, vf_v2Size / 2.f, vf_v2NegRotAngle);
 
     float aa = fwidth(fDist) * 0.5;
     float fFillAlpha = 1.0 - smoothstep(-aa, aa, fDist);

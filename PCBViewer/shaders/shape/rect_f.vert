@@ -12,17 +12,13 @@ layout(location = 5) in vec4  a_v4ThicknessColor;
 layout(location = 6) in vec4  a_v4FillColor;
 
 out vec4  v_v4FillColor;
+out vec3  v_v3WorldPos;
 
 flat out vec2  vf_v2CenterPosPx;
+flat out vec3  vf_v3CenterPos;
 flat out vec2  vf_v2SizePx;
+flat out vec2  vf_v2Size;
 flat out vec2  vf_v2NegRotAngle;
-
-// flat out vec4 vPosCenter;
-// flat out vec4 vRealSize;
-// flat out vec4 vPosBorder;
-// flat out vec2 vRealPosCenter;
-// flat out vec2 vNegRotAngle;
-// flat out int nLevelAA;
 
 uniform mat4  u_Model;
 uniform mat4  u_View;
@@ -105,43 +101,29 @@ vec2 WorldToPixel(vec3 worldPos, vec2 viewSize)
 
 void main()
 {
-    // vec3 margin3 = PixelToWorld(a_v3WorldCenterPos, 2.0, u_Viewport);
-    // float margin = length(margin3);
+    if(a_v4FillColor.a <= 0.0)
+        return;
 
-    vec2 v2NewLocalUV = RotateAround(a_v2Size * 0.5f * a_v2LocalUV, vec2(0, 0), a_fAngleRad);
+    vec3 v3Padding = PixelToWorld(a_v3WorldCenterPos, 2.0, u_Viewport);
+    float fPadding = length(v3Padding);
+
+    vec2 v2NewLocalUV = RotateAround((a_v2Size + vec2(fPadding)) * 0.5f * a_v2LocalUV, vec2(0, 0), a_fAngleRad);
+    vec2 v2NewLocalUVNo = RotateAround(a_v2Size * 0.5f * a_v2LocalUV, vec2(0, 0), a_fAngleRad);
+
+    v_v3WorldPos = a_v3WorldCenterPos + vec3(v2NewLocalUV, 0.0);
 
     gl_Position = u_Proj * u_View * u_Model * vec4(a_v3WorldCenterPos + vec3(v2NewLocalUV, a_v3WorldCenterPos.z) , 1.0);
 
     vf_v2CenterPosPx = WorldToPixel(a_v3WorldCenterPos, u_Viewport);
     vec2 v2EdgePosPx = WorldToPixel(a_v3WorldCenterPos + vec3(a_v2Size, 0.0), u_Viewport);
 
+    vf_v3CenterPos = a_v3WorldCenterPos;
+
     vf_v2SizePx = abs(v2EdgePosPx - vf_v2CenterPosPx);
+    vf_v2Size = a_v2Size;
+
+
     vf_v2NegRotAngle = vec2(cos(-a_fAngleRad), sin(-a_fAngleRad));
 
-
     v_v4FillColor = a_v4FillColor;
-
-    // vec2 newLocalUV = RotateAround((aSize + vec2(margin)) * aLocalUV, vec2(0, 0), aAngleRad);
-
-    // vec3 worldPos = aPosCenter + vec3(newLocalUV, aPosCenter.z);
-
-    // gl_Position = u_Proj * u_View * u_Model * vec4(worldPos, 1.0);
-
-    // vPosCenter = u_Proj * u_View * u_Model * vec4(aPosCenter, 1.0);
-
-    // vRealSize = u_Proj * u_View * u_Model * vec4(aSize.x, aSize.y, 0.0, 1.0);
-
-    // vec3 worldPosBorder = aPosCenter + vec3(aSize * 0.5, aPosCenter.z);
-
-    // vPosBorder = u_Proj * u_View * u_Model * vec4(worldPosBorder, 1.0);
-
-    // vRealPosCenter = aPosCenter.xy;
-    // vRealPos     = newLocalUV + aPosCenter.xy;
-
-    // vLocalUV     = aLocalUV;
-    // vSize        = aSize;
-    // vFillColor   = aFillColor;
-    // vNegRotAngle = vec2(cos(-aAngleRad), sin(-aAngleRad));
-
-    // nLevelAA     = 1;
 }

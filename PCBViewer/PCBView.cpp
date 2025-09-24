@@ -157,7 +157,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pCircle->m_ptCenter = { 150, 100 };
 	pCircle->m_fRadius = 50.f;
 	pCircle->m_fThickness = 1.f;
-	pCircle->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 	pCircle->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
 
 
@@ -166,7 +166,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pCircle2->m_ptCenter = { 192.24, 233.98 };
 	pCircle2->m_fRadius = 2.f;
 	pCircle2->m_fThickness = 1.f;
-	pCircle2->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle2->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 	pCircle2->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
 
 	CircleDrawObjectPtr pCircle3 = m_circles->CreateCircleDrawObject();
@@ -174,7 +174,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pCircle3->m_ptCenter = { 315.12,147.94 };
 	pCircle3->m_fRadius = 2.f;
 	pCircle3->m_fThickness = 1.f;
-	pCircle3->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle3->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 	pCircle3->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
 
 
@@ -183,7 +183,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pCircle4->m_ptCenter = { 257.75, 66.02 };
 	pCircle4->m_fRadius = 2.f;
 	pCircle4->m_fThickness = 1.f;
-	pCircle4->m_clThicknessColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pCircle4->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 	pCircle4->m_clFillColor = Col4(0.f, 1.f, 0.f, 1.f);
 
 	//for (int i = 0; i < 10000; i++)
@@ -212,10 +212,10 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pRect->m_fWidth = 150.f;
 	pRect->m_fHeight = 100.f;
 	pRect->m_fAngle = tfx::Deg2Rad(35.0);
-	pRect->m_fThickness = 2.f;
+	pRect->m_fThickness = 1.f;
 
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
-	pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
+	//pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
 	pRect->SetObjectID(3);
 
 	//RectDrawObjectPtr pRect2 = m_rects->CreateRectDrawObject();
