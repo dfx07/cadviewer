@@ -17,15 +17,18 @@
 __BEGIN_NAMESPACE__
 
 
-float Deg2Rad(const float fAngleDeg)
+template<typename U, typename T = U>
+constexpr T Deg2Rad(const U dbAngleDeg)
 {
-	return fAngleDeg * M_PI / 180.0;
-}
+	return static_cast<T>(dbAngleDeg) * static_cast<T>(M_PI) / static_cast<T>(180.0);
+};
 
-float Rad2Deg(const float fAngleRad)
+template<typename U, typename T = U>
+constexpr T Rad2Deg(const U dbAngleRad)
 {
-	return fAngleRad * 180.0 / M_PI;
-}
+	return static_cast<T>(dbAngleRad) * static_cast<T>(180.0) / static_cast<T>(M_PI);
+};
+
 
 __END_NAMESPACE__
 

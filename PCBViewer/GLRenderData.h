@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <memory>
+#include <unordered_map>
 
 #include "RenderDef.h"
 #include "RenderData.h"
@@ -232,8 +233,8 @@ public:
 	static unsigned int s_quadIndices[8];
 
 	std::vector<RectVertexData> m_vecRenderData;
-	int m_nInstances = 0;
-
+	std::unordered_map<size_t, size_t> m_mapOffset;		// map object id and render data offset.
+	size_t m_nInstances = 0;
 
 	// Fill render data
 	std::vector<RectFillVertexData> m_vecFillRenderData;

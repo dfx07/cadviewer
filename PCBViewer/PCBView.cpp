@@ -211,7 +211,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pRect->m_ptY = 100.f;
 	pRect->m_fWidth = 150.f;
 	pRect->m_fHeight = 100.f;
-	pRect->m_fAngle = tfx::Deg2Rad(35.0);
+	pRect->m_fAngle = tfx::Deg2Rad(0.f);
 	pRect->m_fThickness = 1.f;
 
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
@@ -228,9 +228,6 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	//pRect2->m_fThickness = 1.f;
 
 	//pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
-
-
-
 
 	UpdateView();
 
@@ -300,7 +297,6 @@ void PCBView::OnMouseMove(TFXMouseEvent* event)
 
 		m_ptLastMouse = event->m_Pt;
 	}
-
 
 	tfx::Vec2 ptNewReal = m_pCamera->Screen2WorldPoint({ event->m_Pt.x, event->m_Pt.y, 0 });
 	std::wstring msg = L"World move: ";

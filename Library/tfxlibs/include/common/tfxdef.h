@@ -20,9 +20,10 @@
 
 #define USING_NAMESPACE using namespace __NAME_SPACE__;
 
-#ifndef interface
-#define interface struct
-#endif // !interface
+#ifdef _interface
+#undef _interface
+#endif
+#define _interface struct
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

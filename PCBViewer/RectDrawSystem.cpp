@@ -53,7 +53,7 @@ void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 		glDepthMask(GL_FALSE);
 
 		glBindVertexArray(pRectData->m_nVao);
-		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, pRectData->m_nInstances);
+		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)pRectData->m_nInstances);
 
 		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_DEPTH_TEST);
@@ -80,7 +80,7 @@ void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 		glDepthMask(GL_FALSE);
 
 		glBindVertexArray(pRectData->m_nVao);
-		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, pRectData->m_nInstances);
+		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)pRectData->m_nInstances);
 
 		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_DEPTH_TEST);

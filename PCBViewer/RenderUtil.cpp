@@ -14,8 +14,8 @@ Point2 Rotate(Point2 point, Point2 center, float angleRad)
 	double yNew = -(double)point.x * sinAngle + (double)point.y * cosAngle;
 
 	// Translate point back
-	point.x = xNew + center.x;
-	point.y = yNew + center.y;
+	point.x = (float)xNew + center.x;
+	point.y = (float)yNew + center.y;
 
 	return point;
 }

@@ -12,19 +12,17 @@
 #define XCTX_H
 
 #include <memory>
+#include "common/tfxdef.h"
 
-#ifndef interface
-#define interface struct
-#endif
 
-interface DeviceContext;
+_interface DeviceContext;
 typedef std::shared_ptr<DeviceContext> DeviceContextPtr;
 
 /////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************/
 // IContext class
 
-interface IContext
+_interface IContext
 {
 	virtual bool CreateContext(void* hHandle) = 0;
 	virtual void DeleteContext() noexcept = 0;
@@ -70,7 +68,7 @@ protected:
 /***********************************************************************************/
 // DeviceContextConfig class
 
-interface DeviceContext : public IContext
+_interface DeviceContext : public IContext
 {
 	virtual void* Render() const noexcept = 0;
 	virtual bool  IsValid() const noexcept = 0;

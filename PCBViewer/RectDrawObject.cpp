@@ -39,6 +39,16 @@ void RectDrawObject::Copy(DrawObject* pSource)
 	m_clFillColor		= pSrcObj->m_clFillColor;
 }
 
+RenderDataPtr RectDrawObject::DoMake(RenderDataBuilderPtr builder)
+{
+	return RenderDataPtr();
+}
+
+bool RectDrawObject::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
+{
+	return false;
+}
+
 void RectDrawObjectList::Add(const RectDrawObjectPtr& poly)
 {
 	if (poly)
@@ -84,18 +94,12 @@ void RectDrawObjectList::Copy(DrawObject* pSource)
 
 }
 
-RenderDataPtr RectDrawObjectList::Make(RenderDataBuilderPtr builder)
+RenderDataPtr RectDrawObjectList::DoMake(RenderDataBuilderPtr builder)
 {
-	if (!builder)
-		return nullptr;
-
 	return builder->Make(this);
 }
 
-bool RectDrawObjectList::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
+bool RectDrawObjectList::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
 {
-	if (!builder || pData)
-		return false;
-
 	return builder->Update(pData, this);
 }

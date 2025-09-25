@@ -30,13 +30,13 @@ enum class ShaderLogStatus
 	INFO = 2,
 };
 
-interface IShaderLogger
+_interface IShaderLogger
 {
 public:
 	virtual void WriteLog(ShaderLogStatus status, std::string& msg, bool bIngoreStatus = false) = 0;
 };
 
-interface IShaderProgram
+_interface IShaderProgram
 {
 public:
 	virtual ~IShaderProgram() = default;
@@ -46,7 +46,7 @@ public:
 	virtual void UnUse() const = 0;
 };
 
-interface IShaderDataBinder
+_interface IShaderDataBinder
 {
 public:
 	virtual ~IShaderDataBinder() = default;

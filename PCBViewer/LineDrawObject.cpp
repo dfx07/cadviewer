@@ -38,6 +38,16 @@ void LineDrawObject::Copy(DrawObject* pSource)
 	m_fThickness = pSrcObj->m_fThickness;
 }
 
+RenderDataPtr LineDrawObject::DoMake(RenderDataBuilderPtr builder)
+{
+	return RenderDataPtr();
+}
+
+bool LineDrawObject::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
+{
+	return false;
+}
+
 void LineDrawObjectList::Add(const LineDrawObjectPtr& poly)
 {
 	if (poly)
@@ -83,18 +93,12 @@ void LineDrawObjectList::Copy(DrawObject* pSource)
 
 }
 
-RenderDataPtr LineDrawObjectList::Make(RenderDataBuilderPtr builder)
+RenderDataPtr LineDrawObjectList::DoMake(RenderDataBuilderPtr builder)
 {
-	if (!builder)
-		return nullptr;
-
 	return builder->Make(this);
 }
 
-bool LineDrawObjectList::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
+bool LineDrawObjectList::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
 {
-	if (!builder || pData)
-		return false;
-
 	return builder->Update(pData, this);
 }

@@ -44,6 +44,16 @@ void PolyDrawObject::Copy(DrawObject* pSource)
 	m_fThickness = pSrcObj->m_fThickness;
 }
 
+RenderDataPtr PolyDrawObject::DoMake(RenderDataBuilderPtr builder)
+{
+	return RenderDataPtr();
+}
+
+bool PolyDrawObject::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
+{
+	return false;
+}
+
 void PolyDrawObjectList::AddPolyDrawObject(const PolyDrawObjectPtr& poly)
 {
 	if (poly)
@@ -86,20 +96,15 @@ DrawObjectPtr PolyDrawObjectList::Clone()
 
 void PolyDrawObjectList::Copy(DrawObject* pSource)
 {
+
 }
 
-RenderDataPtr PolyDrawObjectList::Make(RenderDataBuilderPtr builder)
+RenderDataPtr PolyDrawObjectList::DoMake(RenderDataBuilderPtr builder)
 {
-	if (!builder)
-		return nullptr;
-
 	return builder->Make(this);
 }
 
-bool PolyDrawObjectList::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
+bool PolyDrawObjectList::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
 {
-	if (!builder || pData)
-		return false;
-
 	return builder->Update(pData, this);
 }

@@ -40,10 +40,10 @@ typedef std::shared_ptr<Camera2D> Camera2DPtr;
 class Camera3D;
 typedef std::shared_ptr<Camera3D> Camera3DPtr;
 
-interface IShaderProgram;
+_interface IShaderProgram;
 typedef std::shared_ptr<IShaderProgram> ShaderProgramPtr;
 
-interface IShaderDataBinder;
+_interface IShaderDataBinder;
 typedef std::shared_ptr<IShaderDataBinder> ShaderDataBinderPtr;
 
 __END_NAMESPACE__

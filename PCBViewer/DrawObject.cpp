@@ -12,7 +12,7 @@ DrawObject::~DrawObject()
 
 void DrawObject::MarkDirty(int nFlags)
 {
-	m_nDirtyFlags &= nFlags;
+	m_nDirtyFlags |= nFlags;
 }
 
 void DrawObject::ClearDirty()
@@ -22,15 +22,24 @@ void DrawObject::ClearDirty()
 
 bool DrawObject::IsDirty(int nFlags) const
 {
+	if (nFlags == 0)
+		return (m_nDirtyFlags != 0);
+
 	return (m_nDirtyFlags & nFlags) == nFlags;
 }
 
 RenderDataPtr DrawObject::Make(RenderDataBuilderPtr builder)
 {
-	return nullptr;
+	if (!builder)
+		return nullptr;
+
+	return this->DoMake(builder);
 }
 
 bool DrawObject::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
 {
-	return false;
+	if (!pData || !builder)
+		return false;
+
+	return this->DoUpdate(pData, builder);
 }

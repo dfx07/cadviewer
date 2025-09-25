@@ -17,6 +17,9 @@ public:
 	virtual DrawObjectPtr Clone() override;
 	virtual void Copy(DrawObject* pSource) override;
 
+	virtual RenderDataPtr DoMake(RenderDataBuilderPtr builder) override;
+	virtual bool DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder) override;
+
 public:
 	void Move(Vec2 offset)
 	{
@@ -51,8 +54,8 @@ public:
 	virtual DrawObjectPtr Clone() override;
 	virtual void Copy(DrawObject* pSource) override;
 
-	RenderDataPtr Make(RenderDataBuilderPtr builder) override;
-	bool Update(RenderDataPtr pData, RenderDataBuilderPtr builder) override;
+	virtual RenderDataPtr DoMake(RenderDataBuilderPtr builder) override;
+	virtual bool DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder) override;
 
 public:
 	std::vector<PolyDrawObjectPtr> m_vecPolys; // List of polygon draw objects

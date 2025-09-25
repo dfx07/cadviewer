@@ -38,7 +38,8 @@ RenderDataPtr GLRenderDataBuilder::Make(PolyDrawObjectList* pDrawObject)
 		{
 			auto& vtxData = poly->m_vecPoints[i];
 
-			pData->m_vecRenderData.push_back({ Vec3(vtxData.x, vtxData.y, z), poly->m_clColor, poly->m_fThickness, poly->GetObjectID()});
+			pData->m_vecRenderData.push_back({ Vec3(vtxData.x, vtxData.y, z), poly->m_clColor
+				, poly->m_fThickness, (int)poly->GetObjectID()});
 
 			size_t prev = nStartIndex + (i + nVertexCnt - 1) % nVertexCnt;
 			size_t cur1 = nStartIndex + i;
@@ -229,6 +230,8 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 		float z = NextZ();
 
+		size_t nSizeOffset = pData->m_vecRenderData.size();
+
 		pData->m_vecRenderData.push_back({
 			Vec3(ptCenter.x, ptCenter.y, z),
 			pRect->m_fAngle,
@@ -238,44 +241,7 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 			pRect->m_clFillColor
 		});
 
-
-		//pData->m_vecFillRenderData.push_back({
-		//	Vec3(ptCenter.x, ptCenter.y, z),
-		//	pRect->m_fAngle,
-		//	szRect,
-		//	pRect->m_clFillColor
-		//});
-
-		//// Create border data
-		//size_t nStartIndex = pData->m_vecBorderRenderData.size();
-		//int nVertexCnt = sizeof(ptVertices) / sizeof(ptVertices[0]);
-
-		//z = NextZ();
-
-		//for (size_t i = 0; i < nVertexCnt; i++)
-		//{
-		//	Point2 ptVertex = ptVertices[i] * szRect;
-
-		//	// Rotate
-		//	ptVertex = ptCenter + Rotate(ptVertex, Point2(0, 0), pRect->m_fAngle);
-
-		//	pData->m_vecBorderRenderData.push_back({
-		//		Vec3(ptVertex.x, ptVertex.y, z),
-		//		pRect->m_fThickness,
-		//		pRect->m_clThicknessColor,
-		//		pRect->GetObjectID()
-		//	});
-
-		//	size_t prev = nStartIndex + (i + nVertexCnt - 1) % nVertexCnt;
-		//	size_t cur1 = nStartIndex + i;
-		//	size_t cur2 = nStartIndex + (i + 1) % nVertexCnt;
-		//	size_t next = nStartIndex + (i + 2) % nVertexCnt;
-
-		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(prev));
-		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur1));
-		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(cur2));
-		//	pData->m_vecBorderIndices.push_back(static_cast<unsigned int>(next));
-		//}
+		pData->m_mapOffset.insert(std::make_pair(pRect->GetObjectID(), nSizeOffset));
 
 		pData->m_nInstances++;
 	}
@@ -326,6 +292,7 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject)
 {
+	//pDrawObject->Update(pRenderData, this);
 	return false;
 }
 

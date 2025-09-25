@@ -19,12 +19,24 @@ RenderDataPtr RenderCache::GetOrCreateRenderData(DrawObjectPtr pModel)
 {
 	auto it = m_cache.find(pModel);
 	if (it != m_cache.end())
+	{
+		if (pModel->IsDirty())
+		{
+			if (pModel->Update(it->second, m_builder))
+			{
+				pModel->ClearDirty();
+			}
+		}
+
 		return it->second;
+	}
+	else
+	{
+		auto pRenderData = pModel->Make(m_builder);
+		m_cache[pModel] = pRenderData;
 
-	auto pRenderData = pModel->Make(m_builder);
-	m_cache[pModel] = pRenderData;
-
-	return pRenderData;
+		return pRenderData;
+	}
 }
 
 void RenderCache::Invalidate(DrawObjectPtr pModel)

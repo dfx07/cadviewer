@@ -18,12 +18,13 @@ typedef std::shared_ptr<RenderData> RenderDataPtr;
 class RenderDataBuilder;
 typedef std::shared_ptr<RenderDataBuilder> RenderDataBuilderPtr;
 
+typedef size_t ObjectID;
+
 #define IMPL_CLONE_DRAW_OBJECT(_class_) DrawObjectPtr _class_##::Clone() {\
 	auto pNewObject = std::make_shared<_class_>();\
 	pNewObject->Copy(this);\
 	return pNewObject;\
 }\
-
 
 class DrawObject
 {
@@ -36,7 +37,7 @@ public:
 	virtual void Copy(DrawObject* pSource) = 0;
 
 public:
-	int GetObjectID() const
+	ObjectID GetObjectID() const
 	{
 		return m_nObjectID;
 	}
@@ -49,7 +50,7 @@ public:
 public:
 	virtual void MarkDirty(int nFlags);
 	virtual void ClearDirty();
-	virtual bool IsDirty(int nFlags) const;
+	virtual bool IsDirty(int nFlags = 0) const;
 
 public:
 	void* GetModel() const { return m_pModel; }
@@ -61,11 +62,14 @@ public:
 	void AddComponent(std::shared_ptr<T> comp);
 
 public:
-	virtual RenderDataPtr Make(RenderDataBuilderPtr builder);
-	virtual bool Update(RenderDataPtr pData, RenderDataBuilderPtr builder);
+	RenderDataPtr Make(RenderDataBuilderPtr builder);
+	bool Update(RenderDataPtr pData, RenderDataBuilderPtr builder);
+
+	virtual RenderDataPtr DoMake(RenderDataBuilderPtr builder) = 0;
+	virtual bool DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder) = 0;
 
 protected:
-	int m_nObjectID{ -1 };
+	ObjectID m_nObjectID{ 0 };
 	void* m_pModel{ nullptr };
 	int m_nDirtyFlags{ 0 };
 

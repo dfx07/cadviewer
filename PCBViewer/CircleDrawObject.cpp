@@ -4,7 +4,7 @@
 CircleDrawObject::CircleDrawObject()
 	: DrawObject()
 {
-
+	static_assert(!std::is_abstract<CircleDrawObject>::value, "CircleDrawObject is still abstract!");
 }
 
 DrawObjectPtr CircleDrawObject::Clone()
@@ -35,6 +35,16 @@ void CircleDrawObject::Copy(DrawObject* pSource)
 	m_fThickness = pSrcObj->m_fThickness;
 	m_clFillColor = pSrcObj->m_clFillColor;
 	m_clThicknessColor = pSrcObj->m_clThicknessColor;
+}
+
+RenderDataPtr CircleDrawObject::DoMake(RenderDataBuilderPtr builder)
+{
+	return RenderDataPtr();
+}
+
+bool CircleDrawObject::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
+{
+	return false;
 }
 
 void CircleDrawObjectList::Add(const CircleDrawObjectPtr& poly)
@@ -82,18 +92,12 @@ void CircleDrawObjectList::Copy(DrawObject* pSource)
 
 }
 
-RenderDataPtr CircleDrawObjectList::Make(RenderDataBuilderPtr builder)
+RenderDataPtr CircleDrawObjectList::DoMake(RenderDataBuilderPtr builder)
 {
-	if (!builder)
-		return nullptr;
-
 	return builder->Make(this);
 }
 
-bool CircleDrawObjectList::Update(RenderDataPtr pData, RenderDataBuilderPtr builder)
+bool CircleDrawObjectList::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
 {
-	if (!builder || pData)
-		return false;
-
 	return builder->Update(pData, this);
 }

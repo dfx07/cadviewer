@@ -14,7 +14,7 @@
 #include <common/tfxdef.h>
 #include <modules/inputdevice.h>
 
-interface ITFXMouseInteractiveView
+_interface ITFXMouseInteractiveView
 {
 public:
 	virtual ~ITFXMouseInteractiveView() {}
@@ -27,7 +27,7 @@ public:
 	virtual void OnMouseWheel(TFXMouseEvent* event) = 0;
 };
 
-interface ITFXKeyboardInteractiveView
+_interface ITFXKeyboardInteractiveView
 {
 public:
 	virtual ~ITFXKeyboardInteractiveView() {}
