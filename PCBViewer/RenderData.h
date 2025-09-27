@@ -22,9 +22,14 @@ public:
 	virtual ~RenderData() { };
 
 public:
-	void SetUpdateFlags(int nFlags)
+	void SetFlags(const int nFlags)
 	{
 		m_nUpdateFlags = nFlags;
+	}
+
+	void ClearFlags()
+	{
+		m_nUpdateFlags = 0;
 	}
 
 public:

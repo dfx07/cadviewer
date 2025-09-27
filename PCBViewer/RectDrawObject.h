@@ -53,6 +53,9 @@ public:
 	void Clear();
 
 	RectDrawObjectPtr CreateRectDrawObject();
+	RectDrawObjectPtr GetDrawObject(const int nIdx) const;
+	const std::vector<RectDrawObjectPtr>& GetUpdateList() const;
+	void ClearUpdateList();
 
 public:
 	virtual DrawObjectPtr Clone() override;
@@ -63,4 +66,5 @@ public:
 
 public:
 	std::vector<RectDrawObjectPtr> m_vecRects; // List of polygon draw objects
+	std::vector<RectDrawObjectPtr> m_vecUpdateRects;
 };

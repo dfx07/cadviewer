@@ -205,6 +205,8 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	// ********************************************************************
 	// Rectangles
 	m_rects = std::make_shared<RectDrawObjectList>();
+	m_rects->SetObjectID(3);
+
 	RectDrawObjectPtr pRect = m_rects->CreateRectDrawObject();
 
 	pRect->m_ptX = 150.f;
@@ -216,7 +218,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 	//pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
-	pRect->SetObjectID(3);
+	pRect->SetObjectID(4);
 
 	//RectDrawObjectPtr pRect2 = m_rects->CreateRectDrawObject();
 
@@ -292,6 +294,12 @@ void PCBView::OnMouseMove(TFXMouseEvent* event)
 	if (m_ePCBViewState == EPCBViewState::move)
 	{
 		m_rects->MarkDirty(1);
+
+		auto pRect = m_rects->GetDrawObject(0);
+
+		pRect->m_fAngle += 0.1f;
+
+		m_rects->m_vecUpdateRects.push_back(pRect);
 
 		HandleMoveView(event->m_Pt);
 

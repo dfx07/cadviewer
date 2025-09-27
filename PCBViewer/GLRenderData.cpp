@@ -534,7 +534,7 @@ bool GLRectRenderData::BuildRenderData()
 	// Create intances buffer
 	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
 	{
-		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData), m_vecRenderData.data(), GL_DYNAMIC_DRAW);
 
 		// Layout
 		glEnableVertexAttribArray(1);
@@ -618,6 +618,17 @@ void GLRectRenderData::RemoveData()
 	m_vecBorderIndices.clear();
 }
 
+bool GLRectRenderData::UpdateSection(size_t offset, const RectVertexData& data)
+{
+	if (offset >= m_vecRenderData.size())
+	{
+		return false;
+	}
+
+	memcpy(&m_vecRenderData[offset], &data, sizeof(RectVertexData));
+	return true;
+}
+
 bool GLRectRenderData::Create()
 {
 	if (m_nVao != 0 || m_nVbo != 0 || m_nEbo != 0)
@@ -638,22 +649,29 @@ void GLRectRenderData::Update()
 {
 	if (m_nVao == 0 || m_nVbo == 0)
 	{
-		if (Create() == false)
-			return;
+		assert(0);
+		return;
+
+		//if (Create() == false)
+		//	return;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
 	if (m_nUpdateFlags & Flags::UpdateVertex)
 	{
 		// Dung lượng thay đổi → cấp phát lại
-		glBufferData(GL_ARRAY_BUFFER, m_vecFillRenderData.size() * sizeof(RectFillVertexData),
-			m_vecFillRenderData.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectFillVertexData),
+			m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+
+		m_nUpdateFlags &=~Flags::UpdateVertex;
 	}
-	else
+	else if(m_nUpdateFlags & Flags::UpdateData)
 	{
 		// Kích thước không đổi → update nhanh
-		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecFillRenderData.size() * sizeof(RectFillVertexData),
-			m_vecFillRenderData.data());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(RectFillVertexData),
+			m_vecRenderData.data());
+
+		m_nUpdateFlags &= ~Flags::UpdateData;
 	}
 }
 

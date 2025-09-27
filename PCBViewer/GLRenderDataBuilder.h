@@ -16,14 +16,13 @@
 
 #include "RenderDataBuilder.h"
 #include "PCBViewType.h"
+#include "GLRenderData.h"
 
 
 class GLRenderDataBuilder : public RenderDataBuilder
 {
 private:
-	int m_nPolyIndex = 0;
-	float m_fCurrentZ = 10.f;
-	float m_fZStep = 0.01f;
+	RectVertexData Build(RectDrawObject* pObject);
 
 public:
 	float NextZ();
@@ -40,4 +39,9 @@ public:
 
 	virtual RenderDataPtr Make(RectDrawObjectList* pDrawObject);
 	virtual bool Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject);
+
+private:
+	int m_nPolyIndex = 0;
+	float m_fCurrentZ = 10.f;
+	float m_fZStep = 0.01f;
 };

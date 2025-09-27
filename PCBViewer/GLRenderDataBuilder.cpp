@@ -1,7 +1,6 @@
 ﻿#include "GLRenderDataBuilder.h"
 
 #include "DrawObject.h"
-#include "GLRenderData.h"
 #include "RenderComponent.h"
 
 #include "graphics/rendering/shader/xglshader.h"
@@ -14,6 +13,23 @@
 #include "RectDrawObject.h"
 #include "RenderUtil.h"
 
+
+RectVertexData GLRenderDataBuilder::Build(RectDrawObject* pRectObj)
+{
+	float z = NextZ();
+
+	Vec2 szRect = { pRectObj->m_fWidth, pRectObj->m_fHeight };
+	Point2 ptCenter = Vec2(pRectObj->m_ptX, pRectObj->m_ptY) + szRect / 2.f;
+
+	return RectVertexData({
+		Vec3(ptCenter.x, ptCenter.y, z),
+		pRectObj->m_fAngle,
+		szRect,
+		pRectObj->m_fThickness,
+		pRectObj->m_clThicknessColor,
+		pRectObj->m_clFillColor
+	});
+}
 
 float GLRenderDataBuilder::NextZ()
 {
@@ -55,7 +71,7 @@ RenderDataPtr GLRenderDataBuilder::Make(PolyDrawObjectList* pDrawObject)
 
 	pData->Create();
 	pData->UpdateVertexBuffer();
-	pData->SetUpdateFlags(0);
+	pData->SetFlags(0);
 
 	auto pShader = std::make_shared<tfx::GLShaderProgram>();
 
@@ -91,18 +107,28 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 	GLLineRenderDataPtr pData = std::make_shared<GLLineRenderData>();
 
 	// TODO : implement create buffer
+	//for (auto& line : pDrawObject->m_vecLines)
+	//{
+	//	Point2& ptStart = line->m_ptS;
+	//	Point2& ptEnd = line->m_ptE;
+	//	float z = NextZ();
+
+	//	pData->m_vecRenderData.push_back({ Vec3(ptStart.x, ptStart.y, z), line->m_clColor, line->m_fThickness});
+	//	pData->m_vecRenderData.push_back({ Vec3(ptEnd.x, ptEnd.y, z), line->m_clColor, line->m_fThickness});
+	//}
+
 	for (auto& line : pDrawObject->m_vecLines)
 	{
 		Point2& ptStart = line->m_ptS;
 		Point2& ptEnd = line->m_ptE;
 		float z = NextZ();
 
-		pData->m_vecRenderData.push_back({ Vec3(ptStart.x, ptStart.y, z), line->m_clColor, line->m_fThickness});
-		pData->m_vecRenderData.push_back({ Vec3(ptEnd.x, ptEnd.y, z), line->m_clColor, line->m_fThickness});
+		pData->m_vecRenderData.push_back({ Vec3(ptStart.x, ptStart.y, z), line->m_clColor, line->m_fThickness });
+		pData->m_vecRenderData.push_back({ Vec3(ptEnd.x, ptEnd.y, z), line->m_clColor, line->m_fThickness });
 	}
 
 	pData->Create();
-	pData->SetUpdateFlags(0);
+	pData->SetFlags(0);
 
 	auto pShader = std::make_shared<tfx::GLShaderProgram>();
 
@@ -164,7 +190,7 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 	}
 
 	pData->Create();
-	pData->SetUpdateFlags(0);
+	pData->SetFlags(0);
 
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
@@ -216,13 +242,6 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 {
 	GLRectRenderDataPtr pData = std::make_shared<GLRectRenderData>();
 
-	Point2 ptVertices[4] = {
-		{ -0.5f, -0.5f },
-		{  0.5f, -0.5f },
-		{  0.5f,  0.5f },
-		{ -0.5f,  0.5f }
-	};
-
 	for (auto& pRect : pDrawObject->m_vecRects)
 	{
 		Vec2 szRect = { pRect->m_fWidth, pRect->m_fHeight };
@@ -247,7 +266,7 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 	}
 
 	pData->Create();
-	pData->SetUpdateFlags(0);
+	pData->SetFlags(0);
 
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
@@ -292,7 +311,42 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject)
 {
-	//pDrawObject->Update(pRenderData, this);
-	return false;
+	auto pRectRenderData = std::dynamic_pointer_cast<GLRectRenderDataPtr::element_type>(pRenderData);
+	NULL_RETURN(pRectRenderData, false);
+
+	const std::vector<RectDrawObjectPtr>& vecUpdateRects = pDrawObject->GetUpdateList();
+	auto& mapOffset = pRectRenderData->m_mapOffset;
+
+	size_t szUpdateObjCnt = 0;
+
+	// Update the render data for set of update objects.
+	for (auto pRectObj : vecUpdateRects)
+	{
+		if (!pRectObj)
+			continue;
+
+		ObjectID id = pRectObj->GetObjectID();
+
+		auto itOffsetFound = mapOffset.find(id);
+
+		if (itOffsetFound == mapOffset.end())
+			continue;
+
+		size_t szOffset = itOffsetFound->second;
+		auto rectData = Build(pRectObj.get());
+
+		pRectRenderData->UpdateSection(szOffset, rectData);
+
+		szUpdateObjCnt++;
+	}
+
+	if (szUpdateObjCnt > 0)
+		pRectRenderData->SetFlags(GLRectRenderData::Flags::UpdateData);
+
+	pRectRenderData->Update();
+
+	pDrawObject->ClearUpdateList();
+
+	return true;
 }
 

@@ -82,6 +82,21 @@ RectDrawObjectPtr RectDrawObjectList::CreateRectDrawObject()
 	return poly;
 }
 
+RectDrawObjectPtr RectDrawObjectList::GetDrawObject(const int nIdx) const
+{
+	return m_vecRects[nIdx];
+}
+
+const std::vector<RectDrawObjectPtr>& RectDrawObjectList::GetUpdateList() const
+{
+	return m_vecUpdateRects;
+}
+
+void RectDrawObjectList::ClearUpdateList()
+{
+	m_vecUpdateRects.clear();
+}
+
 DrawObjectPtr RectDrawObjectList::Clone()
 {
 	auto pNewObject = std::make_shared<RectDrawObjectList>();

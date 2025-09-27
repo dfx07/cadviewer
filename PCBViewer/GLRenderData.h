@@ -195,7 +195,7 @@ public:
 	enum Flags
 	{
 		UpdateVertex = 1 << 0,
-		UpdateIndex = 1 << 1,
+		UpdateData = 1 << 1,
 	};
 public:
 	GLRectRenderData();
@@ -217,6 +217,9 @@ public:
 	virtual bool Create();
 	virtual void Update();
 	virtual void Release();
+
+public:
+	bool UpdateSection(size_t offset, const RectVertexData& data);
 
 public:
 	unsigned int m_nVao = 0;
