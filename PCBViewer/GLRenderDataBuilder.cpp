@@ -123,8 +123,15 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 		Point2& ptEnd = line->m_ptE;
 		float z = NextZ();
 
-		pData->m_vecRenderData.push_back({ Vec3(ptStart.x, ptStart.y, z), line->m_clColor, line->m_fThickness });
-		pData->m_vecRenderData.push_back({ Vec3(ptEnd.x, ptEnd.y, z), line->m_clColor, line->m_fThickness });
+		pData->m_vecRenderData.push_back(
+			{ 
+				Vec3(ptStart.x, ptStart.y, z),
+				Vec3(ptEnd.x , ptEnd.y, z),
+				Vec4(line->m_clColor),
+				Vec4(line->m_clColor),
+				line->m_fThickness 
+			}
+		);
 	}
 
 	pData->Create();
@@ -135,7 +142,7 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 	std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
 	shaderSrc[tfx::ShaderStage::Vertex]   = "shaders/shape/line.vert";
 	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/line.frag";
-	shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/line.geom";
+	//shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/line.geom";
 
 	if (!pShader->LoadShaders(shaderSrc))
 	{

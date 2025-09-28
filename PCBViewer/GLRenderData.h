@@ -67,8 +67,10 @@ public:
 
 struct LineVertexData
 {
-	Vec3 position;
-	Vec4 color;
+	Vec3 pos_s;
+	Vec3 pos_e;
+	Vec4 color_s;
+	Vec4 color_e;
 	float thickness;
 };
 
@@ -78,12 +80,16 @@ public:
 	enum Flags
 	{
 		UpdateVertex = 1 << 0,
-		UpdateIndex = 1 << 1,
+		UpdateData = 1 << 1,
 	};
 
 public:
 	GLLineRenderData();
 	virtual ~GLLineRenderData();
+
+protected:
+	bool CreateBuffersAndVAO();
+	bool BuildRenderData();
 
 public:
 	virtual bool Create();
@@ -93,6 +99,12 @@ public:
 public:
 	unsigned int m_nVao = 0;
 	unsigned int m_nVbo = 0;
+
+	unsigned int m_nVboInst = 0;
+	unsigned int m_nEboInst = 0;
+
+	static float s_quadVertices[8];
+	static unsigned int s_quadIndices[8];
 
 	std::vector<LineVertexData> m_vecRenderData;
 };
