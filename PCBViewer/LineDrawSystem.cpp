@@ -51,7 +51,7 @@ void LineDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 	glDepthMask(GL_FALSE);
 
 	glBindVertexArray(pLineData->m_nVao);
-	glDrawArrays(GL_LINES, 0, GLsizei(pLineData->m_vecRenderData.size()));
+	glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)pLineData->m_nInstances);
 
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);

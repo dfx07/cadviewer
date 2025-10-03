@@ -7,11 +7,11 @@
 #include <vector>
 #include <cassert>
 
-class CircleDrawObject : public DrawObject
+class TriangleDrawObject : public DrawObject
 {
 public:
-	CircleDrawObject();
-	virtual ~CircleDrawObject() = default;
+	TriangleDrawObject();
+	virtual ~TriangleDrawObject() = default;
 
 public:
 	virtual DrawObjectPtr Clone() override;
@@ -23,31 +23,34 @@ public:
 public:
 	void Move(Vec2 offset)
 	{
-		m_ptCenter += offset;
+		m_pt1 += offset;
+		m_pt2 += offset;
+		m_pt3 += offset;
 	}
 
 public:
-	Point2	m_ptCenter{ 0.f };
+	Point2	m_pt1{ 0.f };
+	Point2	m_pt2{ 0.f };
+	Point2	m_pt3{ 0.f };
+	Col4	m_clColor{ 0.f };
 	float	m_fThickness{ 1.0f };
-	float	m_fRadius{ 10.0f };
-	Col4	m_clThicknessColor{ 0.f };
-	Col4	m_clFillColor{ 0.f };
+	Col4	m_clThicknessColor{ 1.0f };
 };
 
-class CircleDrawObjectList : public DrawObject
+class TriangleDrawObjectList : public DrawObject
 {
 public:
-	CircleDrawObjectList() = default;
-	virtual ~CircleDrawObjectList() = default;
+	TriangleDrawObjectList() = default;
+	virtual ~TriangleDrawObjectList() = default;
 
 public:
-	void Add(const CircleDrawObjectPtr pCircle);
+	void Add(const TriangleDrawObjectPtr pTri);
 
-	void Remove(const CircleDrawObjectPtr pCircle);
+	void Remove(const TriangleDrawObjectPtr pTri);
 
 	void Clear();
 
-	CircleDrawObjectPtr CreateCircleDrawObject();
+	TriangleDrawObjectPtr CreateTriangleDrawObject();
 
 public:
 	virtual DrawObjectPtr Clone() override;
@@ -57,5 +60,5 @@ public:
 	virtual bool DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder) override;
 
 public:
-	std::vector<CircleDrawObjectPtr> m_vecCircles; // List of polygon draw objects
+	std::vector<TriangleDrawObjectPtr> m_vecTrigs; // List of polygon draw objects
 };

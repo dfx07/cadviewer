@@ -72,17 +72,14 @@ void main()
     {
         float fHalfThicknessPx = vf_fThicknessPx * 0.5;
 
-        vec2 vSize = vf_v2SizePx;
-
-        vSize.x += 0.5;
-        vSize.y += 0.5;
-
+        vec2 vSize = vf_v2SizePx + vec2(0.5);
         vec2 v2Pos = gl_FragCoord.xy;
+
         float fDist = sdBoxRotated(v2Pos, vf_v2CenterPosPx, vSize / 2.f, vf_v2NegRotAngle);
 
         if(abs(fDist) <= fHalfThicknessPx)
         {
-            FragColor = vec4(v_v4ThicknessColor.rgb, v_v4ThicknessColor.a);
+            FragColor = v_v4ThicknessColor;
         }
         else 
         {

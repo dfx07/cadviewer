@@ -41,10 +41,6 @@ float sdBoxRotatedPixel(vec2 fragCoord, vec2 center, vec2 halfSize, vec2 vAngleS
 
 void main()
 {
-    // vec2 v2PosPx = gl_FragCoord.xy;
-
-    // float fDist = sdBoxRotatedPixel(v2PosPx, vf_v2CenterPosPx, vf_v2SizePx / 2.f, vf_v2NegRotAngle);
-
     vec2 v2Pos = v_v3WorldPos.xy;
     float fDist = sdBoxRotatedPixel(v2Pos, vf_v3CenterPos.xy, vf_v2Size / 2.f, vf_v2NegRotAngle);
 

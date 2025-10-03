@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -214,6 +214,8 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderModelManager.h" />
     <ClInclude Include="RenderUtil.h" />
+    <ClInclude Include="TriangleDrawObject.h" />
+    <ClInclude Include="TriangleDrawSystem.h" />
     <ClInclude Include="ViewBehavior.h" />
     <ClInclude Include="WInputDeviceMap.h" />
   </ItemGroup>
@@ -241,6 +243,8 @@
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderModelManager.cpp" />
     <ClCompile Include="RenderUtil.cpp" />
+    <ClCompile Include="TriangleDrawObject.cpp" />
+    <ClCompile Include="TriangleDrawSystem.cpp" />
     <ClCompile Include="WInputDeviceMap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

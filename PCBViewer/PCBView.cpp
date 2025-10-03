@@ -5,6 +5,7 @@
 #include "LineDrawObject.h"
 #include "CircleDrawObject.h"
 #include "RectDrawObject.h"
+#include "TriangleDrawObject.h"
 #include "Renderer.h"
 
 #include "common/tfxutil.h"
@@ -144,9 +145,18 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pLine2->m_ptS = { -100, 100 };
 	pLine2->m_ptE = { -100, -50 };
 	pLine2->m_clColor = Col4(0.f, 0.f, 0.f, 1.f);
-	pLine2->m_fThickness = 2.f;
+	pLine2->m_fThickness = 1.f;
 
 	pLine2->Move({ 0, 300 });
+
+	LineDrawObjectPtr pLine3 = m_lines->CreateLineDrawObject();
+
+	pLine3->m_ptS = { 0, 100 };
+	pLine3->m_ptE = { 100, 0 };
+	pLine3->m_clColor = Col4(0.f, 0.f, 0.f, 1.f);
+	pLine3->m_fThickness = 1.f;
+
+	pLine3->Move({ 0, 200 });
 
 	// ********************************************************************
 	// Circles 
@@ -231,7 +241,34 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	//pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 
+	// ********************************************************************
+	// Rectangles
+	m_triangles = std::make_shared<TriangleDrawObjectList>();
+
+	auto pTrig = m_triangles->CreateTriangleDrawObject();
+
+	pTrig->m_pt1 = { 100, 100 };
+	pTrig->m_pt2 = { 0, 100 };
+	pTrig->m_pt3 = { 100, -60 };
+
+	pTrig->m_fThickness = 10.f;
+	pTrig->m_clColor = Col4(0.5f, 1.f, 0.f, 1.f);
+	pTrig->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
+
+	pTrig->Move({ -100.f, -100 });
+
 	UpdateView();
+
+	//vec e0 = p1 - p0, e1 = p2 - p1, e2 = p0 - p2;
+	//vec2 v0 = p - p0, v1 = p - p1, v2 = p - p2;
+	//vec2 pq0 = v0 - e0 * clamp(dot(v0, e0) / dot(e0, e0), 0.0, 1.0);
+	//vec2 pq1 = v1 - e1 * clamp(dot(v1, e1) / dot(e1, e1), 0.0, 1.0);
+	//vec2 pq2 = v2 - e2 * clamp(dot(v2, e2) / dot(e2, e2), 0.0, 1.0);
+	//float s = sign(e0.x * e2.y - e0.y * e2.x);
+	//vec2 d = min(min(vec2(dot(pq0, pq0), s * (v0.x * e0.y - v0.y * e0.x)),
+	//	vec2(dot(pq1, pq1), s * (v1.x * e1.y - v1.y * e1.x))),
+	//	vec2(dot(pq2, pq2), s * (v2.x * e2.y - v2.y * e2.x)));
+	//return -sqrt(d.x) * sign(d.y);
 
 	return true;
 }
@@ -252,9 +289,10 @@ void PCBView::Draw()
 	std::vector<DrawObjectPtr> model;
 
 	//model.push_back(m_polys);
-	//model.push_back(m_lines);
+	model.push_back(m_lines);
 	model.push_back(m_circles);
 	model.push_back(m_rects);
+	model.push_back(m_triangles);
 
 	m_pRenderer->Render(model);
 }

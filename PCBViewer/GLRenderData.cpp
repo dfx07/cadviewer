@@ -182,27 +182,27 @@ bool GLLineRenderData::BuildRenderData()
 			// That way, when the attribute goes live, it already knows where and how to fetch its data.
 
 			// Describe the data
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, pos_s));
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, pos_s));
 			// Turn it on attribute 
-			glEnableVertexAttribArray(0);
-			// Using for draw intances and the frequency an attribute changes
-			glVertexAttribDivisor(0, 1);
-
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, pos_e));
 			glEnableVertexAttribArray(1);
+			// Using for draw intances and the frequency an attribute changes
 			glVertexAttribDivisor(1, 1);
 
-			glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, color_s));
+			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, pos_e));
 			glEnableVertexAttribArray(2);
 			glVertexAttribDivisor(2, 1);
 
-			glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, color_e));
+			glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, color_s));
 			glEnableVertexAttribArray(3);
 			glVertexAttribDivisor(3, 1);
 
-			glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, thickness));
+			glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, color_e));
 			glEnableVertexAttribArray(4);
 			glVertexAttribDivisor(4, 1);
+
+			glVertexAttribPointer(5, 1, GL_FLOAT, GL_FALSE, sizeof(LineVertexData), (void*)offsetof(LineVertexData, thickness));
+			glEnableVertexAttribArray(5);
+			glVertexAttribDivisor(5, 1);
 		}
 	}
 	glBindVertexArray(0);
@@ -501,84 +501,6 @@ unsigned int GLRectRenderData::s_quadIndices[]
 	2, 1, 3
 };
 
-bool GLRectRenderData::CreateBorderRender()
-{
-	glGenVertexArrays(1, &m_nBorderVao);
-	glBindVertexArray(m_nBorderVao);
-
-	glGenBuffers(1, &m_nBorderVbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_nBorderVbo);
-	glBufferData(GL_ARRAY_BUFFER, m_vecBorderRenderData.size() * sizeof(RectBorderVertexData),
-		m_vecBorderRenderData.data(), GL_STATIC_DRAW);
-
-	glGenBuffers(1, &m_nBorderEbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nBorderEbo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_vecBorderIndices.size() * sizeof(GLuint),
-		m_vecBorderIndices.data(), GL_STATIC_DRAW);
-
-	// Layout
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, position));
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, color));
-	glEnableVertexAttribArray(1);
-
-	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, thickness));
-	glEnableVertexAttribArray(2);
-
-	glVertexAttribPointer(3, 1, GL_INT, GL_FALSE, sizeof(RectBorderVertexData), (void*)offsetof(RectBorderVertexData, rectID));
-	glEnableVertexAttribArray(3);
-
-	glBindVertexArray(0);
-
-	return true;
-}
-
-bool GLRectRenderData::CreateFillRender()
-{
-	glGenVertexArrays(1, &m_nVao);
-	glBindVertexArray(m_nVao);
-
-	glGenBuffers(1, &m_nVbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(RectVertices), RectVertices, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	glVertexAttribDivisor(0, 0);
-
-	glGenBuffers(1, &m_nEbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEbo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RectIndices), RectIndices, GL_STATIC_DRAW);
-
-	// Create intances buffer
-	glGenBuffers(1, &m_nVboInst);
-	glBindBuffer(GL_ARRAY_BUFFER, m_nVboInst);
-	glBufferData(GL_ARRAY_BUFFER, m_vecFillRenderData.size() * sizeof(RectFillVertexData),
-		m_vecFillRenderData.data(), GL_STATIC_DRAW);
-
-	// Layout
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, position));
-	glVertexAttribDivisor(1, 1);
-
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, angle));
-	glVertexAttribDivisor(2, 1);
-
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, size));
-	glVertexAttribDivisor(3, 1);
-
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(RectFillVertexData), (void*)offsetof(RectFillVertexData, color));
-	glVertexAttribDivisor(4, 1);
-
-	glBindVertexArray(0);
-
-	return true;
-}
-
 bool GLRectRenderData::CreateBuffersAndVAO()
 {
 	glGenVertexArrays(1, &m_nVao);
@@ -692,13 +614,10 @@ void GLRectRenderData::ReleaseFillRender()
 
 void GLRectRenderData::RemoveData()
 {
-	m_vecFillRenderData.clear();
-	m_vecBorderRenderData.clear();
-
-	m_vecBorderIndices.clear();
+	m_vecRenderData.clear();
 }
 
-bool GLRectRenderData::UpdateSection(size_t offset, const RectVertexData& data)
+bool GLRectRenderData::UpdateData(size_t offset, const RectVertexData& data)
 {
 	if (offset >= m_vecRenderData.size())
 	{
@@ -706,6 +625,12 @@ bool GLRectRenderData::UpdateSection(size_t offset, const RectVertexData& data)
 	}
 
 	memcpy(&m_vecRenderData[offset], &data, sizeof(RectVertexData));
+	return true;
+}
+
+bool GLRectRenderData::AddData(const RectVertexData& data)
+{
+	m_vecRenderData.push_back(data);
 	return true;
 }
 
@@ -740,18 +665,18 @@ void GLRectRenderData::Update()
 	if (m_nUpdateFlags & Flags::UpdateVertex)
 	{
 		// Dung lượng thay đổi → cấp phát lại
-		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectFillVertexData),
+		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(RectVertexData),
 			m_vecRenderData.data(), GL_DYNAMIC_DRAW);
 
 		m_nUpdateFlags &=~Flags::UpdateVertex;
 	}
-	else if(m_nUpdateFlags & Flags::UpdateData)
+	else if(m_nUpdateFlags & Flags::UpdateAllData)
 	{
 		// Kích thước không đổi → update nhanh
-		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(RectFillVertexData),
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(RectVertexData),
 			m_vecRenderData.data());
 
-		m_nUpdateFlags &= ~Flags::UpdateData;
+		m_nUpdateFlags &= ~Flags::UpdateAllData;
 	}
 }
 
@@ -762,5 +687,162 @@ void GLRectRenderData::Release()
 
 	RemoveData();
 
+	m_nUpdateFlags = 0;
+}
+
+
+GLTriangleRenderData::GLTriangleRenderData()
+{
+
+}
+
+GLTriangleRenderData::~GLTriangleRenderData()
+{
+	Release();
+}
+
+// here is dummy instance triangle data. they don't use for drawing
+float GLTriangleRenderData::s_trigVertices[]
+{
+	 0.0f,  0.0f, // Bottom-left
+	 1.0f,  1.0f, // Bottom-right
+	 2.0f,  2.0f, // Top-left
+};
+
+bool GLTriangleRenderData::CreateBuffersAndVAO()
+{
+	glGenVertexArrays(1, &m_nVao);
+
+	glGenBuffers(1, &m_nVbo);
+	glGenBuffers(1, &m_nVboInst);
+	glGenBuffers(1, &m_nEboInst);
+
+	if (m_nVao == 0 || m_nVbo == 0 || m_nVboInst == 0 || m_nEboInst == 0)
+		return false;
+
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR)
+		return false;
+
+	return true;
+}
+
+bool GLTriangleRenderData::BuildRenderData()
+{
+	glBindVertexArray(m_nVao);
+	{
+		// instance buffer
+		glBindBuffer(GL_ARRAY_BUFFER, m_nVboInst);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(s_trigVertices), s_trigVertices, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glVertexAttribDivisor(0, 0);
+
+		// draw data buffer
+		glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+		{
+			glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(TriangleVertexData), m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+
+			// === Layout ===
+			// Always call glVertexAttribPointer first, then glEnableVertexAttribArray.
+			// That way, when the attribute goes live, it already knows where and how to fetch its data.
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(TriangleVertexData), (void*)offsetof(TriangleVertexData, pos1));
+			glEnableVertexAttribArray(1);
+			glVertexAttribDivisor(1, 1);
+
+			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(TriangleVertexData), (void*)offsetof(TriangleVertexData, pos2));
+			glEnableVertexAttribArray(2);
+			glVertexAttribDivisor(2, 1);
+
+			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(TriangleVertexData), (void*)offsetof(TriangleVertexData, pos3));
+			glEnableVertexAttribArray(3);
+			glVertexAttribDivisor(3, 1);
+
+			glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(TriangleVertexData), (void*)offsetof(TriangleVertexData, thickness));
+			glEnableVertexAttribArray(4);
+			glVertexAttribDivisor(4, 1);
+
+			glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(TriangleVertexData), (void*)offsetof(TriangleVertexData, thickness_color));
+			glEnableVertexAttribArray(5);
+			glVertexAttribDivisor(5, 1);
+
+			glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(TriangleVertexData), (void*)offsetof(TriangleVertexData, fill_color));
+			glEnableVertexAttribArray(6);
+			glVertexAttribDivisor(6, 1);
+
+
+		}
+	}
+	glBindVertexArray(0);
+
+	return true;
+}
+
+bool GLTriangleRenderData::UpdateData(size_t offset, const TriangleVertexData& data)
+{
+	if (offset >= m_vecRenderData.size())
+	{
+		return false;
+	}
+
+	memcpy(&m_vecRenderData[offset], &data, sizeof(TriangleVertexData));
+
+	return true;
+}
+
+bool GLTriangleRenderData::AddData(const TriangleVertexData& data)
+{
+	m_vecRenderData.push_back(data);
+	return true;
+}
+
+bool GLTriangleRenderData::Create()
+{
+	if (m_nVao != 0 || m_nVbo != 0)
+	{
+		Release();
+	}
+
+	if (!CreateBuffersAndVAO())
+		return false;
+
+	if (!BuildRenderData())
+		return false;
+
+	return true;
+}
+
+void GLTriangleRenderData::Update()
+{
+	if (m_nVao == 0 || m_nVbo == 0)
+	{
+		if (Create() == false)
+			return;
+	}
+
+	// we need to optimize the code below to reduce the update time
+	glBindBuffer(GL_ARRAY_BUFFER, m_nVbo);
+	if (m_nUpdateFlags & Flags::UpdateVertex)
+	{
+		// Dung lượng thay đổi → cấp phát lại
+		glBufferData(GL_ARRAY_BUFFER, m_vecRenderData.size() * sizeof(TriangleVertexData),
+			m_vecRenderData.data(), GL_DYNAMIC_DRAW);
+
+		m_nUpdateFlags &= ~(Flags::UpdateVertex);
+	}
+	else
+	{
+		// Kích thước không đổi → update nhanh
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vecRenderData.size() * sizeof(TriangleVertexData),
+			m_vecRenderData.data());
+
+		m_nUpdateFlags &= ~(Flags::UpdateAllData);
+	}
+}
+
+void GLTriangleRenderData::Release()
+{
+	m_vecRenderData.clear();
 	m_nUpdateFlags = 0;
 }

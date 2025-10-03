@@ -20,7 +20,7 @@
 
 /***********************************************************************************/
 // Poly Draw Object Data
-
+/***********************************************************************************/
 struct PolyVertexData
 {
 	Vec3 position;
@@ -60,11 +60,10 @@ public:
 	std::vector<unsigned int> m_vecIndices;
 };
 
-/*********************************************************************************/
+
+/***********************************************************************************/
 // Line
-/*********************************************************************************/
-
-
+/***********************************************************************************/
 struct LineVertexData
 {
 	Vec3 pos_s;
@@ -107,12 +106,13 @@ public:
 	static unsigned int s_quadIndices[8];
 
 	std::vector<LineVertexData> m_vecRenderData;
+	int m_nInstances = 0;
 };
 
-/*********************************************************************************/
-// Circle
-/*********************************************************************************/
 
+/***********************************************************************************/
+// Circle
+/***********************************************************************************/
 struct CircleFillVertexData
 {
 	Vec3 center;
@@ -172,9 +172,10 @@ public:
 	int m_nInstances = 0;
 };
 
-/*********************************************************************************/
+
+/***********************************************************************************/
 // Rectangle
-/*********************************************************************************/
+/***********************************************************************************/
 struct RectVertexData
 {
 	Vec3 position;		// world
@@ -185,38 +186,20 @@ struct RectVertexData
 	Vec4 fill_color;
 };
 
-struct RectFillVertexData
-{
-	Vec3 position;		// world
-	float angle;		// radian
-	Vec2 size;
-	Vec4 color;
-};
-
-struct RectBorderVertexData
-{
-	Vec3 position;
-	float thickness;
-	Vec4 color;
-	int rectID;
-};
-
 class GLRectRenderData : public RenderData
 {
 public:
 	enum Flags
 	{
-		UpdateVertex = 1 << 0,
-		UpdateData = 1 << 1,
+		UpdateVertex  = 1 << 0,
+		UpdateAllData = 1 << 1,
+		UpdateElmData = 1 << 2
 	};
 public:
 	GLRectRenderData();
 	virtual ~GLRectRenderData();
 
 protected:
-	bool CreateBorderRender();
-	bool CreateFillRender();
-
 	bool CreateBuffersAndVAO();
 	bool BuildRenderData();
 
@@ -231,7 +214,8 @@ public:
 	virtual void Release();
 
 public:
-	bool UpdateSection(size_t offset, const RectVertexData& data);
+	bool UpdateData(size_t offset, const RectVertexData& data);
+	bool AddData(const RectVertexData& data);
 
 public:
 	unsigned int m_nVao = 0;
@@ -250,11 +234,59 @@ public:
 	std::vector<RectVertexData> m_vecRenderData;
 	std::unordered_map<size_t, size_t> m_mapOffset;		// map object id and render data offset.
 	size_t m_nInstances = 0;
+};
 
-	// Fill render data
-	std::vector<RectFillVertexData> m_vecFillRenderData;
 
-	// Border render data
-	std::vector<RectBorderVertexData> m_vecBorderRenderData;
-	std::vector<unsigned int> m_vecBorderIndices;
+/***********************************************************************************/
+// Triangle
+/***********************************************************************************/
+struct TriangleVertexData
+{
+	Vec3 pos1;
+	Vec3 pos2;
+	Vec3 pos3;
+	float thickness;
+	Vec4 thickness_color;
+	Vec4 fill_color;
+};
+
+class GLTriangleRenderData : public RenderData
+{
+public:
+	enum Flags
+	{
+		UpdateVertex  = 1 << 0,
+		UpdateAllData = 1 << 1,
+		UpdateElmData = 1 << 2
+	};
+
+public:
+	GLTriangleRenderData();
+	virtual ~GLTriangleRenderData();
+
+protected:
+	bool CreateBuffersAndVAO();
+	bool BuildRenderData();
+
+public:
+	bool UpdateData(size_t offset, const TriangleVertexData& data);
+	bool AddData(const TriangleVertexData& data);
+
+public:
+	virtual bool Create();
+	virtual void Update();
+	virtual void Release();
+
+public:
+	unsigned int m_nVao = 0;
+	unsigned int m_nVbo = 0;
+
+	unsigned int m_nVboInst = 0;
+	unsigned int m_nEboInst = 0;
+
+	static float s_trigVertices[6];
+
+	std::vector<TriangleVertexData> m_vecRenderData;
+	std::unordered_map<size_t, size_t> m_mapOffset;		// map object id and render data offset.
+	int m_nInstances = 0;
 };

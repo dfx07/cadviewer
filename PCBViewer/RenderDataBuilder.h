@@ -27,4 +27,7 @@ public:
 
 	virtual RenderDataPtr Make(RectDrawObjectList* pDrawObject) = 0;
 	virtual bool Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject) = 0;
+
+	virtual RenderDataPtr Make(TriangleDrawObjectList* pDrawObject) = 0;
+	virtual bool Update(RenderDataPtr pRenderData, TriangleDrawObjectList* pDrawObject) = 0;
 };

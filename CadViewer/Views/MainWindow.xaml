@@ -79,6 +79,9 @@
                                 </Polygon>
                                 <Ellipse Stroke="Red" Width="100" Height="100" StrokeThickness="2" Fill="Green" Canvas.Left="60" Canvas.Top="400">
                                 </Ellipse>
+                                <Line X1="100" Y1="100" X2="135" Y2="270" Stroke="Black" StrokeThickness="0.5" SnapsToDevicePixels="True">
+                                </Line>
+                                <Polygon Points="200,200 200,100 350,200" Fill="LightSkyBlue" Stroke="DarkBlue" StrokeThickness="4" />
                             </Canvas>
                         </StackPanel>
                     </ui:CNavSlider.Content>

@@ -40,6 +40,9 @@ public:
 	virtual RenderDataPtr Make(RectDrawObjectList* pDrawObject);
 	virtual bool Update(RenderDataPtr pRenderData, RectDrawObjectList* pDrawObject);
 
+	virtual RenderDataPtr Make(TriangleDrawObjectList* pDrawObject);
+	virtual bool Update(RenderDataPtr pRenderData, TriangleDrawObjectList* pDrawObject);
+
 private:
 	int m_nPolyIndex = 0;
 	float m_fCurrentZ = 10.f;

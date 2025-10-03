@@ -41,9 +41,9 @@ public:
 	virtual ~LineDrawObjectList() = default;
 
 public:
-	void Add(const LineDrawObjectPtr& poly);
+	void Add(const LineDrawObjectPtr pLine);
 
-	void Remove(const LineDrawObjectPtr& poly);
+	void Remove(const LineDrawObjectPtr pLine);
 
 	void Clear();
 

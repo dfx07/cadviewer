@@ -84,6 +84,7 @@ protected:
 	LineDrawObjectListPtr m_lines = nullptr;
 	CircleDrawObjectListPtr m_circles = nullptr;
 	RectDrawObjectListPtr m_rects = nullptr;
+	TriangleDrawObjectListPtr m_triangles = nullptr;
 
 
 	//RenderModelManagerPtr m_pModelManager = nullptr;

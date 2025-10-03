@@ -32,3 +32,10 @@ typedef std::shared_ptr<RectDrawObject> RectDrawObjectPtr;
 
 class RectDrawObjectList;
 typedef std::shared_ptr<RectDrawObjectList> RectDrawObjectListPtr;
+
+class TriangleDrawObject;
+typedef std::shared_ptr<TriangleDrawObject> TriangleDrawObjectPtr;
+
+class TriangleDrawObjectList;
+typedef std::shared_ptr<TriangleDrawObjectList> TriangleDrawObjectListPtr;
+

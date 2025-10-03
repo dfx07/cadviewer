@@ -16,12 +16,6 @@ DrawObjectPtr CircleDrawObject::Clone()
 
 void CircleDrawObject::Copy(DrawObject* pSource)
 {
-	if (!pSource)
-	{
-		assert(0);
-		return;
-	}
-
 	auto pSrcObj = dynamic_cast<CircleDrawObject*>(pSource);
 
 	if (!pSrcObj)
@@ -47,11 +41,11 @@ bool CircleDrawObject::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builde
 	return false;
 }
 
-void CircleDrawObjectList::Add(const CircleDrawObjectPtr& poly)
+void CircleDrawObjectList::Add(const CircleDrawObjectPtr pCircle)
 {
-	if (poly)
+	if (pCircle)
 	{
-		m_vecCircles.push_back(poly);
+		m_vecCircles.push_back(pCircle);
 	}
 	else
 	{
@@ -59,9 +53,9 @@ void CircleDrawObjectList::Add(const CircleDrawObjectPtr& poly)
 	}
 }
 
-void CircleDrawObjectList::Remove(const CircleDrawObjectPtr& poly)
+void CircleDrawObjectList::Remove(const CircleDrawObjectPtr pCircle)
 {
-	auto it = std::remove(m_vecCircles.begin(), m_vecCircles.end(), poly);
+	auto it = std::remove(m_vecCircles.begin(), m_vecCircles.end(), pCircle);
 	if (it != m_vecCircles.end())
 	{
 		m_vecCircles.erase(it, m_vecCircles.end());

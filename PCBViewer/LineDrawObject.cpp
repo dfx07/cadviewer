@@ -3,7 +3,8 @@
 
 LineDrawObject::LineDrawObject()
 	: DrawObject(),
-	m_clColor(0.f)
+	m_clColor(0.f),
+	m_fThickness(0.f)
 {
 
 }
@@ -17,12 +18,6 @@ DrawObjectPtr LineDrawObject::Clone()
 
 void LineDrawObject::Copy(DrawObject* pSource)
 {
-	if (!pSource)
-	{
-		assert(0);
-		return;
-	}
-
 	auto pSrcObj = dynamic_cast<LineDrawObject*>(pSource);
 
 	if (!pSrcObj)
@@ -48,11 +43,11 @@ bool LineDrawObject::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)
 	return false;
 }
 
-void LineDrawObjectList::Add(const LineDrawObjectPtr& poly)
+void LineDrawObjectList::Add(const LineDrawObjectPtr pLine)
 {
-	if (poly)
+	if (pLine)
 	{
-		m_vecLines.push_back(poly);
+		m_vecLines.push_back(pLine);
 	}
 	else
 	{
@@ -60,9 +55,9 @@ void LineDrawObjectList::Add(const LineDrawObjectPtr& poly)
 	}
 }
 
-void LineDrawObjectList::Remove(const LineDrawObjectPtr& poly)
+void LineDrawObjectList::Remove(const LineDrawObjectPtr pLine)
 {
-	auto it = std::remove(m_vecLines.begin(), m_vecLines.end(), poly);
+	auto it = std::remove(m_vecLines.begin(), m_vecLines.end(), pLine);
 	if (it != m_vecLines.end())
 	{
 		m_vecLines.erase(it, m_vecLines.end());

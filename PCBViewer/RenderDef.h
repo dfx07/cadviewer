@@ -66,6 +66,9 @@ typedef std::shared_ptr<GLCircleRenderData> GLCircleRenderDataPtr;
 class GLRectRenderData;
 typedef std::shared_ptr<GLRectRenderData> GLRectRenderDataPtr;
 
+class GLTriangleRenderData;
+typedef std::shared_ptr<GLTriangleRenderData> GLTriangleRenderDataPtr;
+
 template <typename T>
 struct SharedPtrAddrHash {
 	std::size_t operator()(const std::shared_ptr<T>& ptr) const {

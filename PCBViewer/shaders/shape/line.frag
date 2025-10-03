@@ -1,78 +1,72 @@
-#version 150 core
+#version 330 core
 
-in vec4 fColor;
+in vec4  v_v4Color;
+in vec3  v_v3WorldPos;
 
-in vec2 vLoc;
-flat in vec2 vSLine;
-flat in vec2 vELine;
-flat in float fThickness;
-flat in int fblur;
 
-flat in int nStartJoin;
-flat in int nEndJoin;
-flat in int nIsAxis;
+uniform mat4 u_Model;
+uniform mat4 u_View;
+uniform mat4 u_Proj;
+uniform vec2 u_Viewport;
+
+flat in float vf_fThickness;
+flat in float vf_fThicknessPx;
+
+flat in vec3  vf_v3PS;
+flat in vec3  vf_v3PE;
+
+flat in vec2 vf_v2PSPx;
+flat in vec2 vf_v2PEPx;
+
+flat in int  vf_nAA; // 0 (not use AA) | 1 (use AA)
 
 out vec4 FragColor;
 
-float distance_to_segment(vec2 P, vec2 A, vec2 B)
+float sdSegment( in vec2 p, in vec2 a, in vec2 b )
 {
-   vec2 g = B - A;
-   vec2 h = P - A;
-   float d = length(h - g * clamp(dot(g, h) / dot(g,g), 0.0, 1.0));
-   return d;
+    vec2 pa = p-a, ba = b-a;
+    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+    return length( pa - ba*h );
 }
 
-float signed_distance_to_line(vec2 P, vec2 A, vec2 B)
+vec2 world_to_px(vec3 worldPos, vec2 viewSize)
 {
-    vec2 dir = normalize(B - A);
-    vec2 normal = vec2(-dir.y, dir.x);
-    return dot(P - A, normal);
-}
+    // Step 1: World → Clip Space
+    vec4 clipPos = u_Proj * u_View * u_Model * vec4(worldPos, 1.0);
 
-float distance_to_line(vec2 P, vec2 A, vec2 B)
-{
-    return abs(signed_distance_to_line(P, A, B));
+    // Step 1: Clip Space → NDC
+    vec3 ndc = clipPos.xyz / clipPos.w; // [-1, 1]
+
+    // Step 1: NDC → Pixel Space
+    vec2 pixelPos = (ndc.xy * 0.5 + 0.5) * viewSize;
+
+    return pixelPos;
 }
 
 void main()
 {
-    float halfthickness = fThickness * 0.5;
-    float alpha;
-
-    if(nIsAxis == 1)
+    if(vf_nAA == 1)
     {
-        float dist = distance_to_line(vLoc, vSLine, vELine);
+        float fHalfThicknessPx = (vf_fThicknessPx) * 0.45;
+        vec2 v2PosPx = gl_FragCoord.xy;
+        float fDist = sdSegment(v2PosPx, vf_v2PSPx, vf_v2PEPx);
 
-        if(dist <= halfthickness - 0.01)
-            alpha = 1.f;
-        else if(dist >= halfthickness + 0.01)
-            alpha = 0.f;
-        else 
+        float aa = fwidth(fDist) * 0.8;
+
+        float fAlpha = 1 - smoothstep(fHalfThicknessPx - aa, fHalfThicknessPx + aa, abs(fDist));
+
+        FragColor = vec4(v_v4Color.rgb, v_v4Color.a * fAlpha);
+    }
+    else
+    {
+        float fHalfThicknessPx = (vf_fThicknessPx) * 0.5;
+        vec2 v2PosPx = gl_FragCoord.xy;
+
+        float fDist = sdSegment(v2PosPx, vf_v2PSPx, vf_v2PEPx);
+
+        if(abs(fDist) <= fHalfThicknessPx)
         {
-            float side = signed_distance_to_line(vLoc, vSLine, vELine);
-            if(side >= 0.0)
-                alpha = 1.f;
-            else
-                alpha = 0.f;
+            FragColor = v_v4Color;
         }
     }
-    else 
-    {
-        float dist = distance_to_segment(vLoc, vSLine, vELine);
-
-        if(fblur == 1)
-        {
-            float aa = max(fwidth(dist), 1.0);
-            alpha = smoothstep(halfthickness + aa + 0.01, halfthickness - aa - 0.06, dist) - 0.05;
-        }
-        else
-        {
-            if(dist <= halfthickness)
-                alpha = 0.5f;
-            else 
-                alpha = 0.f;
-        }
-    }
-
-    FragColor = vec4(1.0, 0.0, 0.0, alpha);
 }

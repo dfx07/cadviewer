@@ -183,6 +183,12 @@
     <ClInclude Include="RenderUtil.h">
       <Filter>Header Files\render_objects</Filter>
     </ClInclude>
+    <ClInclude Include="TriangleDrawSystem.h">
+      <Filter>Header Files\draw_systems</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleDrawObject.h">
+      <Filter>Header Files\shape_objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -256,6 +262,12 @@
     </ClCompile>
     <ClCompile Include="RenderUtil.cpp">
       <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleDrawSystem.cpp">
+      <Filter>Source Files\draw_systems</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleDrawObject.cpp">
+      <Filter>Source Files\shape_objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

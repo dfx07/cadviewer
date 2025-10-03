@@ -11,6 +11,7 @@
 #include "LineDrawObject.h"
 #include "CircleDrawObject.h"
 #include "RectDrawObject.h"
+#include "TriangleDrawObject.h"
 #include "RenderUtil.h"
 
 
@@ -132,6 +133,8 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 				line->m_fThickness 
 			}
 		);
+
+		pData->m_nInstances++;
 	}
 
 	pData->Create();
@@ -249,7 +252,7 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 {
 	GLRectRenderDataPtr pData = std::make_shared<GLRectRenderData>();
 
-	for (auto& pRect : pDrawObject->m_vecRects)
+	for (auto pRect : pDrawObject->m_vecRects)
 	{
 		Vec2 szRect = { pRect->m_fWidth, pRect->m_fHeight };
 		Point2 ptCenter = Vec2(pRect->m_ptX, pRect->m_ptY) + szRect / 2.f;
@@ -266,6 +269,8 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 			pRect->m_clThicknessColor,
 			pRect->m_clFillColor
 		});
+
+		auto rectData = Build(pRect.get());
 
 		pData->m_mapOffset.insert(std::make_pair(pRect->GetObjectID(), nSizeOffset));
 
@@ -342,18 +347,91 @@ bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, RectDrawObjectList* 
 		size_t szOffset = itOffsetFound->second;
 		auto rectData = Build(pRectObj.get());
 
-		pRectRenderData->UpdateSection(szOffset, rectData);
+		pRectRenderData->UpdateData(szOffset, rectData);
 
 		szUpdateObjCnt++;
 	}
 
 	if (szUpdateObjCnt > 0)
-		pRectRenderData->SetFlags(GLRectRenderData::Flags::UpdateData);
+		pRectRenderData->SetFlags(GLRectRenderData::Flags::UpdateAllData);
 
 	pRectRenderData->Update();
 
 	pDrawObject->ClearUpdateList();
 
 	return true;
+}
+
+RenderDataPtr GLRenderDataBuilder::Make(TriangleDrawObjectList* pDrawObject)
+{
+	auto pData = std::make_shared<GLTriangleRenderData>();
+
+	for (auto pTrig : pDrawObject->m_vecTrigs)
+	{
+		float z = NextZ();
+
+		size_t nSizeOffset = pData->m_vecRenderData.size();
+
+		pData->m_vecRenderData.push_back({
+			Vec3(pTrig->m_pt1.x, pTrig->m_pt1.y, z),
+			Vec3(pTrig->m_pt2.x, pTrig->m_pt2.y, z),
+			Vec3(pTrig->m_pt3.x, pTrig->m_pt3.y, z),
+			pTrig->m_fThickness,
+			pTrig->m_clThicknessColor,
+			pTrig->m_clColor
+		});
+
+		pData->m_mapOffset.insert(std::make_pair(pTrig->GetObjectID(), nSizeOffset));
+
+		pData->m_nInstances++;
+	}
+
+	pData->Create();
+	pData->SetFlags(0);
+
+	auto pMaterial = std::make_shared<MaterialComponent>();
+
+	// Load fill shader
+	{
+		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+
+		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
+		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/trig_f.vert";
+		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/trig_f.frag";
+
+		if (!pShader->LoadShaders(shaderSrc))
+			assert(0);
+
+		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+
+		// Add the material component to the draw object
+		pMaterial->Add("trig_f", pShader, pBinder);
+	}
+
+	// Load border shader
+	{
+		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+
+		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
+		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/trig_b.vert";
+		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/trig_b.frag";
+
+		if (!pShader->LoadShaders(shaderSrc))
+			assert(0);
+
+		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+
+		// Add the material component to the draw object
+		pMaterial->Add("trig_b", pShader, pBinder);
+	}
+
+	pDrawObject->AddComponent(pMaterial);
+
+	return pData;
+}
+
+bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, TriangleDrawObjectList* pDrawObject)
+{
+	return false;
 }
 
