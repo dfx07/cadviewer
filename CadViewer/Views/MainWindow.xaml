@@ -55,7 +55,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!--#region [LEFT] Content-->
-                <ui:CNavSlider x:Name="PART_NavLeftSlider" Grid.Row="0" Width="600" Background="#f3f3f3" BorderThickness="0,0,6,0" BorderBrush="#3b4453"
+                <ui:CNavSlider x:Name="PART_NavLeftSlider" Grid.Row="0" Width="401" Background="#f3f3f3" BorderThickness="0,0,6,0" BorderBrush="#3b4453"
                              Orientation="Horizontal" IsOpen="{Binding IsChecked, ElementName=NavToggle}">
                     <ui:CNavSlider.HeaderContent>
                         <Grid Background="#222933" VerticalAlignment="Center" Height="25">

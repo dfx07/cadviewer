@@ -126,16 +126,16 @@ GLLineRenderData::~GLLineRenderData()
 
 float GLLineRenderData::s_quadVertices[]
 {
-	-1.0f, -1.0f, // Bottom-left
-	 1.0f, -1.0f, // Bottom-right
-	-1.0f,  1.0f, // Top-left
-	 1.0f,  1.0f  // Top-right
+	0.f,  1.0f, // start-left
+	0.f, -1.0f, // start-right
+	1.f,  1.0f, // end-left
+	1.f, -1.0f  // end-right
 };
 
 unsigned int GLLineRenderData::s_quadIndices[]
 {
-	0, 1, 2,
-	2, 1, 3
+	0, 2, 1,
+	1, 2, 3
 };
 
 bool GLLineRenderData::CreateBuffersAndVAO()

@@ -227,7 +227,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pRect->m_fThickness = 1.f;
 
 	pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
-	//pRect->m_clFillColor = Col4(1.f, 0.f, 0.f, 1.f);
+	pRect->m_clFillColor = Col4(0.2f, 0.5f, 0.f, 1.f);
 	pRect->SetObjectID(4);
 
 	//RectDrawObjectPtr pRect2 = m_rects->CreateRectDrawObject();

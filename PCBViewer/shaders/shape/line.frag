@@ -9,11 +9,7 @@ uniform mat4 u_View;
 uniform mat4 u_Proj;
 uniform vec2 u_Viewport;
 
-flat in float vf_fThickness;
 flat in float vf_fThicknessPx;
-
-flat in vec3  vf_v3PS;
-flat in vec3  vf_v3PE;
 
 flat in vec2 vf_v2PSPx;
 flat in vec2 vf_v2PEPx;
@@ -51,7 +47,7 @@ void main()
         vec2 v2PosPx = gl_FragCoord.xy;
         float fDist = sdSegment(v2PosPx, vf_v2PSPx, vf_v2PEPx);
 
-        float aa = fwidth(fDist) * 0.8;
+        float aa = fwidth(fDist) * 0.65;
 
         float fAlpha = 1 - smoothstep(fHalfThicknessPx - aa, fHalfThicknessPx + aa, abs(fDist));
 
@@ -59,7 +55,7 @@ void main()
     }
     else
     {
-        float fHalfThicknessPx = (vf_fThicknessPx) * 0.5;
+        float fHalfThicknessPx = (vf_fThicknessPx) * 0.501;
         vec2 v2PosPx = gl_FragCoord.xy;
 
         float fDist = sdSegment(v2PosPx, vf_v2PSPx, vf_v2PEPx);
@@ -68,5 +64,7 @@ void main()
         {
             FragColor = v_v4Color;
         }
+        else 
+            discard;
     }
 }

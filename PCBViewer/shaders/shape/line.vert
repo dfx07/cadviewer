@@ -13,13 +13,8 @@ uniform mat4 u_Proj;
 uniform vec2 u_Viewport;
 
 out vec4  v_v4Color;
-out vec3  v_v3WorldPos;
 
-flat out float vf_fThickness;
 flat out float vf_fThicknessPx;
-
-flat out vec3 vf_v3PS;
-flat out vec3 vf_v3PE;
 
 flat out vec2 vf_v2PSPx;
 flat out vec2 vf_v2PEPx;
@@ -71,18 +66,29 @@ vec2 world_to_px(vec3 worldPos, vec2 viewSize)
     return pixelPos;
 }
 
-int GetVertexIdx(vec2 vlocal)
+int get_vertex_idx(vec2 vlocal)
 {
-    if(vlocal == vec2(-1.0,  1.0))
-        return 0;
-    if(vlocal == vec2(1.0,  1.0))
-        return 1;
-    if(vlocal == vec2(-1.0, -1.0))
-        return 2;
-    if(vlocal == vec2(1.0, -1.0))
-        return 3;
+    //******************************
+	//*  0.f,  1.0f, // sta-left
+	//*  0.f, -1.0f, // sta-right
+	//*  1.f,  1.0f, // end-left
+	//*  1.f, -1.0f  // end-right
+    //******************************/
 
-    return 0;
+    if((vlocal.x - 0.0) <= 0.001)
+    {
+        if(abs(vlocal.y - 1.0) <= 0.001)
+            return 0;
+        else 
+            return 1;
+    }
+    else 
+    {
+        if(abs(vlocal.y - 1.0) <= 0.001)
+            return 2;
+        else 
+            return 3;
+    }
 }
 
 vec3 GetNormalXY_CW(vec3 p1, vec3 p2)
@@ -101,15 +107,8 @@ vec3 GetNormalXY_CCW(vec3 p1, vec3 p2)
 
 void main()
 {
-    //******************************
-	//*  -1.0f, -1.0f, // end-left
-	//*   1.0f, -1.0f, // end-right
-	//*  -1.0f,  1.0f, // sta-left
-	//*   1.0f,  1.0f  // sta-right
-    //******************************/
-
     int nIdx = 0;  // 0(s-l) | 1(s-r) | 2(e-l) | 3(e-r)
-    nIdx = GetVertexIdx(a_v2LocalUV);
+    nIdx = get_vertex_idx(a_v2LocalUV);
 
     vec3 v3NLine, v3WorldPos;
     
@@ -118,52 +117,26 @@ void main()
     else 
         v3NLine = GetNormalXY_CCW(a_v3PS, a_v3PE);
 
-    float fZ = a_v3PE.z;
     vec3 v3Thickness = px_to_world(a_v3PS, a_fThickness, u_Viewport);
     float fThickness = length(v3Thickness.xy);
 
-    vec3 v3Offset = v3NLine * fThickness * 0.8;
-    v3Offset.z = fZ;
+    vec3 v3Offset = v3NLine * fThickness;
 
     if(nIdx == 0 || nIdx == 1)
     {
-        
         v3WorldPos = a_v3PS + v3Offset;
     }
     else 
     {
-        
         v3WorldPos = a_v3PE + v3Offset;
     }
-    
-    // if(gl_InstanceID == 2)
-    // {
-    //     if(nIdx == 1)
-    //     {
-    //         v_v4Color = vec4(1.0, 0.0, 0.0, 1.0);
-    //     }
-    //     else 
-    //     {
-    //         v_v4Color = vec4(0.0, 0.0, 1.0, 1.0);
-    //     }
-    // }
-    // else 
-    // {
-    //     v_v4Color = vec4(1.0, 0.0, 0.0, 1.0);
-    // }
-
-    v_v3WorldPos = v3WorldPos;
 
     gl_Position = u_Proj * u_View * u_Model * vec4(v3WorldPos, 1.0);
 
     // Set the ouput data for fragment shader
-    
+    v_v4Color = a_v4ColS;
 
-    vf_fThickness = fThickness;
     vf_fThicknessPx = a_fThickness;
-
-    vf_v3PS = a_v3PS;
-    vf_v3PE = a_v3PE;
 
     vf_v2PSPx = world_to_px(a_v3PS, u_Viewport);
     vf_v2PEPx = world_to_px(a_v3PE, u_Viewport);
