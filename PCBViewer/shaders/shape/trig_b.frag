@@ -26,13 +26,9 @@ float sdTriangle( in vec2 p, in vec2 p0, in vec2 p1, in vec2 p2 )
 void main()
 {
     float fHalfThicknessPx = vf_fThicknessPx * 0.5;
-
     vec2 v2PosPx = gl_FragCoord.xy;
-
     float fDist = sdTriangle(v2PosPx, vf_v2Pos1Px, vf_v2Pos2Px, vf_v2Pos3Px);
-
-    float aa = fwidth(fDist) * 0.7;
-
+    float aa = fwidth(fDist) * 0.5;
     float fAlpha = 1.0 - smoothstep(fHalfThicknessPx - aa,  fHalfThicknessPx + aa, abs(fDist));
 
     FragColor = vec4(v_v4Color.rgb, v_v4Color.a * fAlpha);

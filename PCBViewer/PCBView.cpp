@@ -247,11 +247,11 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	auto pTrig = m_triangles->CreateTriangleDrawObject();
 
-	pTrig->m_pt1 = { 100, 100 };
-	pTrig->m_pt2 = { 0, 100 };
+	pTrig->m_pt2 = { 100, 100 };
+	pTrig->m_pt1 = { 0, 100 };
 	pTrig->m_pt3 = { 100, -60 };
 
-	pTrig->m_fThickness = 10.f;
+	pTrig->m_fThickness = 1.f;
 	pTrig->m_clColor = Col4(0.5f, 1.f, 0.f, 1.f);
 	pTrig->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 

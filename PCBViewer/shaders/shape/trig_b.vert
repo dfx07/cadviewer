@@ -90,35 +90,22 @@ struct stTrig
     vec3 p3;
 };
 
-stTrig inflate(stTrig tri, float offset)
+vec2 get_miter_offset(in vec2 v0, in vec2 v1, in float thik)
 {
-    vec3 edge1 = tri.p2 - tri.p1;
-    vec3 edge2 = tri.p3 - tri.p2;
-    vec3 edge3 = tri.p1 - tri.p3;
+    vec2 n0 = normalize(vec2(-v0.y, v0.x));
+    vec2 n1 = normalize(vec2(-v1.y, v1.x));
 
-    // chỉ làm 2D (x,y) để ra normal theo mặt phẳng XY
-    vec2 n1 = normalize(vec2(edge1.y, -edge1.x));
-    vec2 n2 = normalize(vec2(edge2.y, -edge2.x));
-    vec2 n3 = normalize(vec2(edge3.y, -edge3.x));
+    vec2 miter = normalize(n0 + n1);
 
-    // “bisector” normal tại mỗi đỉnh (để inflate theo đều cạnh kề)
-    vec2 move1 = normalize(n1 + n3);
-    vec2 move2 = normalize(n2 + n1);
-    vec2 move3 = normalize(n3 + n2);
+    // cos(theta/2) = dot(miter, n0)
+    float denom = dot(miter, n0);
 
-    // scale follow offset
-    move1 *= offset;
-    move2 *= offset;
-    move3 *= offset;
+    if (abs(denom) < 1e-6)
+        return n0 * thik;
 
-    stTrig newtri;
+    float length = thik / denom;
 
-    // new expanded positions
-    newtri.p1 = tri.p1 + vec3(move1, 0.0);
-    newtri.p2 = tri.p2 + vec3(move2, 0.0);
-    newtri.p3 = tri.p3 + vec3(move3, 0.0);
-
-    return newtri;
+    return miter * length;
 }
 
 void main()
@@ -127,22 +114,49 @@ void main()
 
     vec3 v3Thickness = px_to_world(a_v3Pos1, a_fThickness, u_Viewport);
     float fThickness = length(v3Thickness);
+    float fHalfThickness = fThickness; // @_@
 
-    struct stTrig _tri;
-    _tri.p1 = a_v3Pos1;
-    _tri.p2 = a_v3Pos2;
-    _tri.p3 = a_v3Pos3;
+    vec3 v3Pos;
+    vec2 v2Offset;
 
-    stTrig tri = inflate(_tri, fThickness);
-    // stTrig tri = inflate(_tri, fThickness < 0.5 ? 0.5 : (fThickness * 0.5));
+    vec3 p0 = a_v3Pos1;
+    vec3 p1 = a_v3Pos2;
+    vec3 p2 = a_v3Pos3;
+    vec3 pX;
 
-    vec3 v3Pos = (idx == 1) ? tri.p1 : ((idx == 2) ? tri.p2 : tri.p3);
+    // default CWW
+    float crossZ = (p1.x - p0.x)*(p2.y - p0.y) - (p1.y - p0.y)*(p2.x - p0.x);
+    float sideSign = sign(crossZ); // +1 = CCW, -1 = CW
+
+    if(idx == 1)
+    {
+        pX = p0;
+        vec2 v0 = normalize(p0.xy - p1.xy);
+        vec2 v2 = normalize(p2.xy - p0.xy);
+        v2Offset = get_miter_offset(v0, v2, fHalfThickness * sideSign);
+    }
+    else if(idx == 2)
+    {
+        pX = p1;
+        vec2 v0 = normalize(p0.xy - p1.xy);
+        vec2 v1 = normalize(p1.xy - p2.xy);
+        v2Offset = get_miter_offset(v0, v1, fHalfThickness * sideSign);
+    }
+    else
+    {
+        pX = p2;
+        vec2 v1 = normalize(p1.xy - p2.xy);
+        vec2 v2 = normalize(p2.xy - p0.xy);
+        v2Offset = get_miter_offset(v1, v2, fHalfThickness * sideSign);
+    }
+
+    v3Pos = pX + vec3(v2Offset, 0.0);
 
     gl_Position = u_Proj * u_View * u_Model * vec4(v3Pos, 1.0);
 
-    vf_v2Pos1Px = world_to_px(a_v3Pos1, u_Viewport);
-    vf_v2Pos2Px = world_to_px(a_v3Pos2, u_Viewport);
-    vf_v2Pos3Px = world_to_px(a_v3Pos3, u_Viewport);
+    vf_v2Pos1Px = world_to_px(p0, u_Viewport);
+    vf_v2Pos2Px = world_to_px(p1, u_Viewport);
+    vf_v2Pos3Px = world_to_px(p2, u_Viewport);
 
     v_v4Color = a_v4ThicknessColor;
     vf_fThicknessPx = a_fThickness;
