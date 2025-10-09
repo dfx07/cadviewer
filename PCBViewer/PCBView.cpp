@@ -1,6 +1,4 @@
-﻿
-
-#include "PCBView.h"
+﻿#include "PCBView.h"
 #include "graphics/camera/xcamera.h"
 #include "GLRenderer.h"
 #include "PolyDrawObject.h"
@@ -21,6 +19,9 @@
 
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
+
+#include "stb/stb_image.h"
+#include "stb/stb_image_write.h"
 
 
 
@@ -85,7 +86,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 		return -1;
 	}
 
-	msdfgen::FontHandle* font = loadFont(ft, "D:\\dfx07\\cadviewer\\PCBViewer\\BBHSansBartle-Regular.ttf");
+	msdfgen::FontHandle* font = loadFont(ft, "D:\\dfx07\\cadviewer\\PCBViewer\\JetBrainsMonoNL-Regular.ttf");
 	if (!font) {
 		printf("Failed to load font\n");
 		deinitializeFreetype(ft);
@@ -93,20 +94,23 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	}
 
 	msdfgen::Shape shape;
-	if (loadGlyph(shape, font, 'A')) {
+	if (loadGlyph(shape, font, 0x00E1)) {
 		shape.normalize();
 
 		// Kích thước MSDF
 		int width = 64, height = 64;
-		double range = 4.0;
+		double range = 2.0;
 		double scale = 1.0;
-		msdfgen::Vector2 translate(4.0, 4.0);
+		msdfgen::Vector2 translate(0.0, 0.0);
 
 		msdfgen::Bitmap<float, 3> msdf(width, height);
 		generateMSDF(msdf, shape, range, scale, translate);
 
 		// Xuất ra file .png nếu bạn có stb_image_write.h
 		// hoặc tự xử lý dữ liệu msdf(x,y)[channel]
+
+		msdfgen::savePng(msdf, "glyph_A.png");
+
 	}
 
 	destroyFont(font);
