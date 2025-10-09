@@ -129,7 +129,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/3rdparty/include/freetype;../Library/tfxlibs/include;</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -140,7 +140,7 @@
       <ProgramDatabaseFile>$(SolutionDir)Build\$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(SolutionDir)Build\$(IntDir)$(TargetName).lib</ImportLibrary>
       <IncrementalLinkDatabaseFile>$(IntDir)$(TargetName).ilk</IncrementalLinkDatabaseFile>
-      <AdditionalDependencies>PCBModelData.lib;msdfgen-core.lib;msdfgen-ext.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PCBModelData.lib;msdfgen-core.lib;msdfgen-ext.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\3rdparty\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -154,7 +154,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include;../Library/tfxlibs/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/3rdparty/include/freetype;../Library/tfxlibs/include;../Library/tfxlibs/include</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -167,7 +167,7 @@
       <ProgramDatabaseFile>$(SolutionDir)Build\$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(SolutionDir)Build\$(IntDir)$(TargetName).lib</ImportLibrary>
       <IncrementalLinkDatabaseFile>$(IntDir)$(TargetName).ilk</IncrementalLinkDatabaseFile>
-      <AdditionalDependencies>PCBModelData.lib;msdfgen-core.lib;msdfgen-ext.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PCBModelData.lib;msdfgen-core.lib;msdfgen-ext.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\3rdparty\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

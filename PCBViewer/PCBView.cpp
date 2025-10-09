@@ -17,13 +17,15 @@
 #undef min
 #undef max
 
+
+#include "freetype/ft2build.h"
+#include FT_FREETYPE_H
+
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
 
-#include "stb/stb_image.h"
-#include "stb/stb_image_write.h"
-
-
+#include <iostream>
+#include <chrono>
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -92,26 +94,58 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 		deinitializeFreetype(ft);
 		return -1;
 	}
+	auto start = std::chrono::high_resolution_clock::now();
 
-	msdfgen::Shape shape;
-	if (loadGlyph(shape, font, 0x00E1)) {
-		shape.normalize();
+	// Lấy FT_Face gốc từ FontHandle
+	FT_Face face = (FT_Face)font->ftFace;
 
-		// Kích thước MSDF
-		int width = 64, height = 64;
-		double range = 2.0;
-		double scale = 1.0;
-		msdfgen::Vector2 translate(0.0, 0.0);
+	// Bắt đầu duyệt toàn bộ ký tự
+	FT_UInt glyphIndex;
+	FT_ULong charCode = FT_Get_First_Char(face, &glyphIndex);
 
-		msdfgen::Bitmap<float, 3> msdf(width, height);
-		generateMSDF(msdf, shape, range, scale, translate);
+	int count = 0;
+	while (glyphIndex != 0) {
+		count++;
 
-		// Xuất ra file .png nếu bạn có stb_image_write.h
-		// hoặc tự xử lý dữ liệu msdf(x,y)[channel]
+		// In ra codepoint và glyph index
+		std::cout << "Char: U+" << std::hex << charCode
+			<< "  GlyphIndex: " << std::dec << glyphIndex << std::endl;
 
-		msdfgen::savePng(msdf, "glyph_A.png");
+		// (tuỳ chọn) Load glyph và xuất MSDF:
+		msdfgen::Shape shape;
+		if (loadGlyph(shape, font, glyphIndex)) {
+			shape.normalize();
+			// ở đây bạn có thể gọi generateMSDF(...)
+		}
 
+		// Lấy ký tự kế tiếp
+		charCode = FT_Get_Next_Char(face, charCode, &glyphIndex);
 	}
+	auto end = std::chrono::high_resolution_clock::now();
+
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+	std::cout << "Thời gian thực thi: " << duration << " ms\n";
+
+	//msdfgen::Shape shape;
+	//if (loadGlyph(shape, font, 0x00E1)) {
+	//	shape.normalize();
+
+	//	// Kích thước MSDF
+	//	int width = 64, height = 64;
+	//	double range = 2.0;
+	//	double scale = 1.0;
+	//	msdfgen::Vector2 translate(0.0, 0.0);
+
+	//	msdfgen::Bitmap<float, 3> msdf(width, height);
+	//	generateMSDF(msdf, shape, range, scale, translate);
+
+	//	// Xuất ra file .png nếu bạn có stb_image_write.h
+	//	// hoặc tự xử lý dữ liệu msdf(x,y)[channel]
+
+	//	msdfgen::savePng(msdf, "glyph_A.png");
+
+	//}
 
 	destroyFont(font);
 	deinitializeFreetype(ft);
