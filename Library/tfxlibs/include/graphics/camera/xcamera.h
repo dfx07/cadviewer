@@ -11,9 +11,8 @@
 #ifndef XCAMERA_H
 #define XCAMERA_H
 
-#include "common/tfxtype.h"
+#include "common/typext.h"
 
-__BEGIN_NAMESPACE__
 
 enum class CameraType
 {
@@ -402,8 +401,6 @@ private:
 
 	int				m_iMode;   // Chế độ Camera đang hoạt động
 };
-
-__END_NAMESPACE__
 
 #endif // !XGPCAMERA_H
 

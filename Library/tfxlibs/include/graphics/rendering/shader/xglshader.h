@@ -15,7 +15,6 @@
 #include "xshader.h"
 #include <string>
 
-__BEGIN_NAMESPACE__
 
 class GLShaderLogger : public IShaderLogger
 {
@@ -75,6 +74,5 @@ protected:
 	unsigned int m_nProgramID;
 };
 
-__END_NAMESPACE__
 
 #endif // !XGLSHADER_H

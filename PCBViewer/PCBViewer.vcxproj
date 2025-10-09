@@ -43,13 +43,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -129,7 +129,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include;</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -140,7 +140,7 @@
       <ProgramDatabaseFile>$(SolutionDir)Build\$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(SolutionDir)Build\$(IntDir)$(TargetName).lib</ImportLibrary>
       <IncrementalLinkDatabaseFile>$(IntDir)$(TargetName).ilk</IncrementalLinkDatabaseFile>
-      <AdditionalDependencies>PCBModelData.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PCBModelData.lib;msdfgen-core.lib;msdfgen-ext.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\3rdparty\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -154,7 +154,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Library/3rdparty/include;../Library/tfxlibs/include;../Library/tfxlibs/include</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -167,7 +167,7 @@
       <ProgramDatabaseFile>$(SolutionDir)Build\$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(SolutionDir)Build\$(IntDir)$(TargetName).lib</ImportLibrary>
       <IncrementalLinkDatabaseFile>$(IntDir)$(TargetName).ilk</IncrementalLinkDatabaseFile>
-      <AdditionalDependencies>PCBModelData.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PCBModelData.lib;msdfgen-core.lib;msdfgen-ext.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Build\$(IntDir);$(SolutionDir)Library\3rdparty\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -176,19 +176,23 @@
     <ClInclude Include="..\Library\tfxlibs\include\common\apidef.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\dllexports.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\typext.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxutil.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfont.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontrenderer.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xglshader.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shape\xglpolyrender.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shape\xshapedata.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\modules\inputdevice.h" />
     <ClInclude Include="CircleDrawObject.h" />
     <ClInclude Include="CircleDrawSystem.h" />
     <ClInclude Include="DrawSystem.h" />
+    <ClInclude Include="GLBitmapFontRenderer.h" />
+    <ClInclude Include="GLSdfFontRenderer.h" />
+    <ClInclude Include="TextDrawSystem.h" />
     <ClInclude Include="GLRenderData.h" />
     <ClInclude Include="GLRenderDataBuilder.h" />
     <ClInclude Include="GLRenderEngine.h" />
@@ -220,15 +224,17 @@
     <ClInclude Include="WInputDeviceMap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
-    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shape\xglpolyrender.cpp" />
     <ClCompile Include="CircleDrawObject.cpp" />
     <ClCompile Include="CircleDrawSystem.cpp" />
+    <ClCompile Include="GLBitmapFontRenderer.cpp" />
     <ClCompile Include="GLRenderData.cpp" />
     <ClCompile Include="GLRenderDataBuilder.cpp" />
     <ClCompile Include="GLRenderEngine.cpp" />
     <ClCompile Include="GLRenderer.cpp" />
+    <ClCompile Include="GLSdfFontRenderer.cpp" />
     <ClCompile Include="LineDrawObject.cpp" />
     <ClCompile Include="PolyDrawSystem.cpp" />
     <ClCompile Include="PolyDrawObject.cpp" />
@@ -243,6 +249,7 @@
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderModelManager.cpp" />
     <ClCompile Include="RenderUtil.cpp" />
+    <ClCompile Include="TextDrawSystem.cpp" />
     <ClCompile Include="TriangleDrawObject.cpp" />
     <ClCompile Include="TriangleDrawSystem.cpp" />
     <ClCompile Include="WInputDeviceMap.cpp" />

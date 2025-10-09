@@ -14,8 +14,6 @@
 #include <unordered_map>
 #include <string>
 
-__BEGIN_NAMESPACE__
-
 enum class ShaderStage {
 	Vertex,
 	Fragment,
@@ -57,7 +55,5 @@ public:
 	virtual void SetVec3(const std::string& name, const float* vec3) = 0;
 	virtual void SetMat4(const std::string& name, const float* mat4) = 0;
 };
-
-__END_NAMESPACE__
 
 #endif // !XSHADER_H

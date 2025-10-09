@@ -19,7 +19,7 @@
 class GLRenderer : public Renderer
 {
 public:
-	GLRenderer(tfx::CameraPtr pCamera);
+	GLRenderer(CameraPtr pCamera);
 	~GLRenderer();
 
 public:

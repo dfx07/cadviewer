@@ -69,7 +69,7 @@ public:
 protected:
 	DeviceContextPtr m_pContext = nullptr;
 	RendererPtr		 m_pRenderer = nullptr;
-	tfx::CameraPtr	 m_pCamera = nullptr;
+	CameraPtr		 m_pCamera = nullptr;
 	
 	HWND			m_hHandle;
 	int				m_nWidth;

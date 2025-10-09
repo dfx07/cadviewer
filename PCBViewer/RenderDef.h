@@ -11,17 +11,9 @@
 #ifndef RENDERDEF_H
 #define RENDERDEF_H
 
-#include "common/tfxtype.h"
+#include "graphics/rendering/xrendertype.h"
 
 #include <memory>
-
-typedef tfx::Vec2 Vec2;
-typedef tfx::Vec2 Point2;
-typedef tfx::Vec3 Vec3;
-typedef tfx::Vec4 Vec4;
-typedef tfx::Vec4 Col4;
-typedef tfx::Mat4 Mat4;
-
 
 template<typename T>
 auto RENPTR(const T& obj) -> decltype(tfx::ValuePtr(obj)) {
@@ -68,6 +60,9 @@ typedef std::shared_ptr<GLRectRenderData> GLRectRenderDataPtr;
 
 class GLTriangleRenderData;
 typedef std::shared_ptr<GLTriangleRenderData> GLTriangleRenderDataPtr;
+
+class GLTextRenderData;
+typedef std::shared_ptr<GLTextRenderData> GLTextRenderDataPtr;
 
 template <typename T>
 struct SharedPtrAddrHash {

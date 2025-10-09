@@ -11,10 +11,6 @@
 #ifndef RENDERMODELMANAGER_H
 #define RENDERMODELMANAGER_H
 
-
-#include "common/tfxtype.h"
-#include "graphics/rendering/shape/xshapedata.h"
-
 #include "PCBViewType.h"
 #include <unordered_map>
 

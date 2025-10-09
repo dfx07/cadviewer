@@ -2,8 +2,6 @@
 #include "DrawObject.h"
 #include "RenderCache.h"
 
-#include "graphics/rendering/xrenderable.h"
-
 RenderCache::RenderCache(RenderDataBuilderPtr pBuilder):
 	m_builder(pBuilder)
 {

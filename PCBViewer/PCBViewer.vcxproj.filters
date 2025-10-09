@@ -49,6 +49,18 @@
     <Filter Include="Source Files\draw_systems">
       <UniqueIdentifier>{ff93a040-2f9a-4c82-9fdf-0c973c84f151}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\graphics\fonts">
+      <UniqueIdentifier>{e6defb01-64bd-4581-9ac9-e3f0d1d6b4cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\fonts">
+      <UniqueIdentifier>{61f94654-6090-4d61-adb8-b97f824e077e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\graphics\camera">
+      <UniqueIdentifier>{49bd3abe-3282-44ca-a15d-48a23ee12b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\camera">
+      <UniqueIdentifier>{c4a3cb34-08ec-4e31-a767-849f04d6cd44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCBView.h">
@@ -60,17 +72,11 @@
     <ClInclude Include="PCBViewDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h">
       <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrenderable.h">
-      <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h">
       <Filter>Header Files\graphics</Filter>
@@ -97,12 +103,6 @@
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xglshader.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shape\xshapedata.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shape\xglpolyrender.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="RenderModelManager.h">
@@ -189,6 +189,30 @@
     <ClInclude Include="TriangleDrawObject.h">
       <Filter>Header Files\shape_objects</Filter>
     </ClInclude>
+    <ClInclude Include="TextDrawSystem.h">
+      <Filter>Header Files\draw_systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontrenderer.h">
+      <Filter>Header Files\graphics\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.h">
+      <Filter>Header Files\graphics\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfont.h">
+      <Filter>Header Files\graphics\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="GLBitmapFontRenderer.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GLSdfFontRenderer.h">
+      <Filter>Header Files\render_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h">
+      <Filter>Header Files\graphics\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\typext.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -200,16 +224,10 @@
     <ClCompile Include="PCBViewIF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="WInputDeviceMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shape\xglpolyrender.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="RenderModelManager.cpp">
@@ -268,6 +286,21 @@
     </ClCompile>
     <ClCompile Include="TriangleDrawObject.cpp">
       <Filter>Source Files\shape_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="TextDrawSystem.cpp">
+      <Filter>Source Files\draw_systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.cpp">
+      <Filter>Source Files\graphics\fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="GLBitmapFontRenderer.cpp">
+      <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GLSdfFontRenderer.cpp">
+      <Filter>Source Files\render_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp">
+      <Filter>Source Files\graphics\camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

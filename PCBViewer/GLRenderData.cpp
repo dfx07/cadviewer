@@ -846,3 +846,11 @@ void GLTriangleRenderData::Release()
 	m_vecRenderData.clear();
 	m_nUpdateFlags = 0;
 }
+
+GLTextRenderData::GLTextRenderData()
+{
+}
+
+GLTextRenderData::~GLTextRenderData()
+{
+}

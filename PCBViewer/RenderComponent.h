@@ -39,7 +39,7 @@ public:
 	}
 
 public:
-	void Add(const char* strName, tfx::ShaderProgramPtr shader, tfx::ShaderDataBinderPtr binder)
+	void Add(const char* strName, ShaderProgramPtr shader, ShaderDataBinderPtr binder)
 	{
 		if (strName == nullptr)
 			return;
@@ -56,7 +56,7 @@ public:
 	}
 
 public:
-	tfx::ShaderProgramPtr GetShader(const char* strName = nullptr)
+	ShaderProgramPtr GetShader(const char* strName = nullptr)
 	{
 		if (strName == nullptr)
 		{
@@ -78,7 +78,7 @@ public:
 		return nullptr;
 	}
 
-	tfx::ShaderDataBinderPtr GetBinder(const char* strName = nullptr)
+	ShaderDataBinderPtr GetBinder(const char* strName = nullptr)
 	{
 		if (strName == nullptr)
 		{
@@ -99,8 +99,8 @@ public:
 	}
 
 protected:
-	std::unordered_map<std::string, tfx::ShaderProgramPtr> m_pShaders;
-	std::unordered_map<std::string, tfx::ShaderDataBinderPtr> m_pBinders;
+	std::unordered_map<std::string, ShaderProgramPtr> m_pShaders;
+	std::unordered_map<std::string, ShaderDataBinderPtr> m_pBinders;
 };
 
 class TransformComponent : public Component

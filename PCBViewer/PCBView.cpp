@@ -1,3 +1,5 @@
+﻿
+
 #include "PCBView.h"
 #include "graphics/camera/xcamera.h"
 #include "GLRenderer.h"
@@ -13,6 +15,14 @@
 #include <random>
 #include <graphics/rendering/xopenglctx.h>
 #include <string>
+
+#undef min
+#undef max
+
+#include "msdfgen/msdfgen.h"
+#include "msdfgen/msdfgen-ext.h"
+
+
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -69,8 +79,41 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 		return false;
 	}
 
+	msdfgen::FreetypeHandle* ft = msdfgen::initializeFreetype();
+	if (!ft) {
+		printf("Failed to init FreeType\n");
+		return -1;
+	}
+
+	msdfgen::FontHandle* font = loadFont(ft, "D:\\dfx07\\cadviewer\\PCBViewer\\BBHSansBartle-Regular.ttf");
+	if (!font) {
+		printf("Failed to load font\n");
+		deinitializeFreetype(ft);
+		return -1;
+	}
+
+	msdfgen::Shape shape;
+	if (loadGlyph(shape, font, 'A')) {
+		shape.normalize();
+
+		// Kích thước MSDF
+		int width = 64, height = 64;
+		double range = 4.0;
+		double scale = 1.0;
+		msdfgen::Vector2 translate(4.0, 4.0);
+
+		msdfgen::Bitmap<float, 3> msdf(width, height);
+		generateMSDF(msdf, shape, range, scale, translate);
+
+		// Xuất ra file .png nếu bạn có stb_image_write.h
+		// hoặc tự xử lý dữ liệu msdf(x,y)[channel]
+	}
+
+	destroyFont(font);
+	deinitializeFreetype(ft);
+
 	// create camera
-	m_pCamera = std::make_shared<tfx::Camera2D>();
+	m_pCamera = std::make_shared<Camera2D>();
 	m_pCamera->SetCamera({ 0.f, 0.f, 10000.f }, { 0.f, 0.f, 1.f }, { 0.f, 1.f, 0.f });
 	m_pCamera->SetDistPlane(0.f, 10000.f);
 

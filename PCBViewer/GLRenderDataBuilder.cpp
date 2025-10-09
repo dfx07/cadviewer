@@ -74,19 +74,19 @@ RenderDataPtr GLRenderDataBuilder::Make(PolyDrawObjectList* pDrawObject)
 	pData->UpdateVertexBuffer();
 	pData->SetFlags(0);
 
-	auto pShader = std::make_shared<tfx::GLShaderProgram>();
+	auto pShader = std::make_shared<GLShaderProgram>();
 
-	std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-	shaderSrc[tfx::ShaderStage::Vertex]   = "shaders/shape/poly.vert";
-	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/poly.frag"; 
-	shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/poly.geom";
+	std::unordered_map<ShaderStage, std::string> shaderSrc;
+	shaderSrc[ShaderStage::Vertex]   = "shaders/shape/poly.vert";
+	shaderSrc[ShaderStage::Fragment] = "shaders/shape/poly.frag"; 
+	shaderSrc[ShaderStage::Geometry] = "shaders/shape/poly.geom";
 
 	if (!pShader->LoadShaders(shaderSrc))
 	{
 		assert(0);
 	}
 
-	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+	auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
@@ -140,19 +140,19 @@ RenderDataPtr GLRenderDataBuilder::Make(LineDrawObjectList* pDrawObject)
 	pData->Create();
 	pData->SetFlags(0);
 
-	auto pShader = std::make_shared<tfx::GLShaderProgram>();
+	auto pShader = std::make_shared<GLShaderProgram>();
 
-	std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-	shaderSrc[tfx::ShaderStage::Vertex]   = "shaders/shape/line.vert";
-	shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/line.frag";
-	//shaderSrc[tfx::ShaderStage::Geometry] = "shaders/shape/line.geom";
+	std::unordered_map<ShaderStage, std::string> shaderSrc;
+	shaderSrc[ShaderStage::Vertex]   = "shaders/shape/line.vert";
+	shaderSrc[ShaderStage::Fragment] = "shaders/shape/line.frag";
+	//shaderSrc[ShaderStage::Geometry] = "shaders/shape/line.geom";
 
 	if (!pShader->LoadShaders(shaderSrc))
 	{
 		assert(0);
 	}
 
-	auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+	auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 	auto pMaterial = std::make_shared<MaterialComponent>();
 
@@ -206,16 +206,16 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 
 	// Load fill shader
 	{
-		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+		auto pShader = std::make_shared<GLShaderProgram>();
 
-		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/circle_f.vert";
-		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/circle_f.frag";
+		std::unordered_map<ShaderStage, std::string> shaderSrc;
+		shaderSrc[ShaderStage::Vertex] = "shaders/shape/circle_f.vert";
+		shaderSrc[ShaderStage::Fragment] = "shaders/shape/circle_f.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))
 			assert(0);
 
-		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+		auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 		// Add the material component to the draw object
 		pMaterial->Add("circle_f", pShader, pBinder);
@@ -223,16 +223,16 @@ RenderDataPtr GLRenderDataBuilder::Make(CircleDrawObjectList* pDrawObject)
 
 	// Load border shader
 	{
-		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+		auto pShader = std::make_shared<GLShaderProgram>();
 
-		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/circle_b.vert";
-		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/circle_b.frag";
+		std::unordered_map<ShaderStage, std::string> shaderSrc;
+		shaderSrc[ShaderStage::Vertex] = "shaders/shape/circle_b.vert";
+		shaderSrc[ShaderStage::Fragment] = "shaders/shape/circle_b.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))
 			assert(0);
 
-		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+		auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 		// Add the material component to the draw object
 		pMaterial->Add("circle_b", pShader, pBinder);
@@ -284,16 +284,16 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 	// Load fill shader
 	{
-		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+		auto pShader = std::make_shared<GLShaderProgram>();
 
-		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect_f.vert";
-		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect_f.frag";
+		std::unordered_map<ShaderStage, std::string> shaderSrc;
+		shaderSrc[ShaderStage::Vertex] = "shaders/shape/rect_f.vert";
+		shaderSrc[ShaderStage::Fragment] = "shaders/shape/rect_f.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))
 			assert(0);
 
-		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+		auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 		// Add the material component to the draw object
 		pMaterial->Add("rect_f", pShader, pBinder);
@@ -301,16 +301,16 @@ RenderDataPtr GLRenderDataBuilder::Make(RectDrawObjectList* pDrawObject)
 
 	// Load border shader
 	{
-		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+		auto pShader = std::make_shared<GLShaderProgram>();
 
-		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/rect_b.vert";
-		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/rect_b.frag";
+		std::unordered_map<ShaderStage, std::string> shaderSrc;
+		shaderSrc[ShaderStage::Vertex] = "shaders/shape/rect_b.vert";
+		shaderSrc[ShaderStage::Fragment] = "shaders/shape/rect_b.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))
 			assert(0);
 
-		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+		auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 		// Add the material component to the draw object
 		pMaterial->Add("rect_b", pShader, pBinder);
@@ -393,16 +393,16 @@ RenderDataPtr GLRenderDataBuilder::Make(TriangleDrawObjectList* pDrawObject)
 
 	// Load fill shader
 	{
-		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+		auto pShader = std::make_shared<GLShaderProgram>();
 
-		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/trig_f.vert";
-		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/trig_f.frag";
+		std::unordered_map<ShaderStage, std::string> shaderSrc;
+		shaderSrc[ShaderStage::Vertex] = "shaders/shape/trig_f.vert";
+		shaderSrc[ShaderStage::Fragment] = "shaders/shape/trig_f.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))
 			assert(0);
 
-		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+		auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 		// Add the material component to the draw object
 		pMaterial->Add("trig_f", pShader, pBinder);
@@ -410,16 +410,16 @@ RenderDataPtr GLRenderDataBuilder::Make(TriangleDrawObjectList* pDrawObject)
 
 	// Load border shader
 	{
-		auto pShader = std::make_shared<tfx::GLShaderProgram>();
+		auto pShader = std::make_shared<GLShaderProgram>();
 
-		std::unordered_map<tfx::ShaderStage, std::string> shaderSrc;
-		shaderSrc[tfx::ShaderStage::Vertex] = "shaders/shape/trig_b.vert";
-		shaderSrc[tfx::ShaderStage::Fragment] = "shaders/shape/trig_b.frag";
+		std::unordered_map<ShaderStage, std::string> shaderSrc;
+		shaderSrc[ShaderStage::Vertex] = "shaders/shape/trig_b.vert";
+		shaderSrc[ShaderStage::Fragment] = "shaders/shape/trig_b.frag";
 
 		if (!pShader->LoadShaders(shaderSrc))
 			assert(0);
 
-		auto pBinder = std::make_shared<tfx::GLShaderDataBinder>(pShader->GetProgramID());
+		auto pBinder = std::make_shared<GLShaderDataBinder>(pShader->GetProgramID());
 
 		// Add the material component to the draw object
 		pMaterial->Add("trig_b", pShader, pBinder);

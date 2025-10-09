@@ -290,3 +290,26 @@ public:
 	std::unordered_map<size_t, size_t> m_mapOffset;		// map object id and render data offset.
 	int m_nInstances = 0;
 };
+
+
+class GLTextRenderData : public RenderData
+{
+public:
+	enum Flags
+	{
+		UpdateVertex = 1 << 0,
+		UpdateAllData = 1 << 1,
+		UpdateElmData = 1 << 2
+	};
+
+	/*
+		Type of render : Bitmap, SDF, Outline complie data in here and push it to the draw system
+		Here, we determine the type of text rendering and call the corresponding render function.
+
+	*/
+public:
+	GLTextRenderData();
+	virtual ~GLTextRenderData();
+
+	int m_nInstances = 0;
+};

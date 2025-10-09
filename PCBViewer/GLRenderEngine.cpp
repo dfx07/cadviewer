@@ -13,6 +13,7 @@
 #include "CircleDrawSystem.h"
 #include "RectDrawSystem.h"
 #include "TriangleDrawSystem.h"
+#include "TextDrawSystem.h"
 
 
 GLRenderEngine::GLRenderEngine()
@@ -27,6 +28,7 @@ GLRenderEngine::GLRenderEngine()
 	m_pDrawSystemRegistry->RegisterSystem<GLCircleRenderData>(std::make_shared<CircleDrawSystem>());
 	m_pDrawSystemRegistry->RegisterSystem<GLRectRenderData>(std::make_shared<RectDrawSystem>());
 	m_pDrawSystemRegistry->RegisterSystem<GLTriangleRenderData>(std::make_shared<TriangleDrawSystem>());
+	m_pDrawSystemRegistry->RegisterSystem<GLTextRenderData>(std::make_shared<TextDrawSystem>());
 }
 
 GLRenderEngine::~GLRenderEngine()

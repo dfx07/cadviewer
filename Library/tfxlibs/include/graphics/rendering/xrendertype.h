@@ -11,25 +11,10 @@
 #ifndef XRENDERTYPE_H
 #define XRENDERTYPE_H
 
-#include "common/tfxdef.h"
+#include "common/typext.h"
 
 #include <memory>
 #include <vector>
-
-__BEGIN_NAMESPACE__
-
-class TFXRenderer;
-typedef std::shared_ptr<TFXRenderer> TFXRendererPtr;
-
-class TFXObjectRenderable;
-typedef std::shared_ptr<TFXObjectRenderable> TFXObjectRenderablePtr;
-typedef std::vector<TFXObjectRenderablePtr> TFXObjectRenderablePtrList;
-
-class TFXRenderData;
-typedef std::shared_ptr<TFXRenderData> TFXRenderDataPtr;
-
-class TFXRenderDataBuilder;
-typedef std::shared_ptr<TFXRenderDataBuilder> TFXRenderDataBuilderPtr;
 
 class Camera;
 typedef std::shared_ptr<Camera> CameraPtr;
@@ -46,6 +31,10 @@ typedef std::shared_ptr<IShaderProgram> ShaderProgramPtr;
 _interface IShaderDataBinder;
 typedef std::shared_ptr<IShaderDataBinder> ShaderDataBinderPtr;
 
-__END_NAMESPACE__
+_interface IFont;
+typedef std::shared_ptr<IFont> FontPtr;
+
+_interface IFontRender;
+typedef std::shared_ptr<IFontRender> FontRenderPtr;
 
 #endif // !XRENDERTYPE_H

@@ -20,9 +20,6 @@ RectDrawSystem::~RectDrawSystem()
 
 void RectDrawSystem::Draw(RenderDataPtr pRenderData, const DrawParams& params)
 {
-	if (!pRenderData)
-		return;
-
 	GLRectRenderDataPtr pRectData = std::dynamic_pointer_cast<GLRectRenderData>(pRenderData);
 	if (!pRectData)
 		return;

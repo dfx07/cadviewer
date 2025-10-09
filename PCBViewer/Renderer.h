@@ -23,7 +23,7 @@ public:
 
 	}
 
-	Renderer(tfx::CameraPtr pCamera)
+	Renderer(CameraPtr pCamera)
 		: m_pCamera(pCamera)
 	{
 
@@ -44,12 +44,12 @@ public:
 		m_pContext = pContext;
 	}
 
-	virtual void SetCamera(tfx::CameraPtr pCamera)
+	virtual void SetCamera(CameraPtr pCamera)
 	{
 		m_pCamera = pCamera;
 	}
 
 protected:
 	DeviceContextPtr m_pContext = nullptr;
-	tfx::CameraPtr	 m_pCamera = nullptr;
+	CameraPtr		 m_pCamera = nullptr;
 };

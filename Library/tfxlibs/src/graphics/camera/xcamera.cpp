@@ -1,7 +1,5 @@
 ﻿#include "graphics/camera/xcamera.h"
 
-__BEGIN_NAMESPACE__
-
 Camera::Camera():
 	m_iWidth(0), m_iHeight(0), m_fFar(0.f), m_fNear(0.f)
 {
@@ -535,7 +533,5 @@ void Camera3D::ZoomTo(Vec3 ptTarget, const float delta_z)
 {
 	// TODO : Implement
 }
-
-__END_NAMESPACE__
 
 

@@ -6,8 +6,6 @@
 
 #include <map>
 
-__BEGIN_NAMESPACE__
-
 #define MAX_LOG 1024
 
 const char strStatus[][6] {
@@ -341,7 +339,3 @@ void GLShaderDataBinder::SetMat4(const std::string& name, const float* mat4)
 	GLint loc = glGetUniformLocation(m_nProgramID, name.c_str());
 	glUniformMatrix4fv(loc, 1, GL_FALSE, mat4);
 }
-
-__END_NAMESPACE__
-
-

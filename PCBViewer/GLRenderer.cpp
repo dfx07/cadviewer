@@ -11,7 +11,7 @@
 
 
 
-GLRenderer::GLRenderer(tfx::CameraPtr pCamera)
+GLRenderer::GLRenderer(CameraPtr pCamera)
 	: Renderer(pCamera)
 {
 	m_RenderBuilder = std::make_shared<GLRenderDataBuilder>();
