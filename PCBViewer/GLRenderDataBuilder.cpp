@@ -12,6 +12,7 @@
 #include "CircleDrawObject.h"
 #include "RectDrawObject.h"
 #include "TriangleDrawObject.h"
+#include "TextDrawObject.h"
 #include "RenderUtil.h"
 
 
@@ -431,6 +432,23 @@ RenderDataPtr GLRenderDataBuilder::Make(TriangleDrawObjectList* pDrawObject)
 }
 
 bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, TriangleDrawObjectList* pDrawObject)
+{
+	return false;
+}
+
+RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
+{
+	auto pData = std::make_shared<GLTextRenderData>();
+
+	for (auto pTextObj : pDrawObject->m_vecTexts)
+	{
+
+	}
+
+	return pData;
+}
+
+bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, TextDrawObjectList* pDrawObject)
 {
 	return false;
 }

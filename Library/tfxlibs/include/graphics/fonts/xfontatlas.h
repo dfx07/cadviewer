@@ -4,24 +4,36 @@
 *                   MIT software Licencs, see the accompanying                      
 ************************************************************************************
 * @brief : Interface define free type font for rendering
-* @file  : freetypefont.h
-* @create: oct 06, 2025
+* @file  : xfontatlas.h
+* @create: oct 12, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-#ifndef FREETYPEFONT_H
-#define FREETYPEFONT_H
+#ifndef XFONTATLAS_H
+#define XFONTATLAS_H
 
-#include "xfont.h"
+#include "graphics/rendering/xrendertype.h"
 
-class FreeTypeFont : IFont
+struct GlyphBase
 {
-public:
-	FreeTypeFont();
-	virtual ~FreeTypeFont() = default;
-
-public:
-	virtual bool Load(const char* font_path);
-	virtual void Unload();
+	uint32_t codepoint;
+	float advanceX;
+	float offsetX, offsetY;
+	float width, height;
+	float u0, v0, u1, v1;
+	virtual ~GlyphBase() = default;
 };
 
-#endif // !FREETYPEFONT_H
+_interface IFontAtlas
+{
+public:
+	virtual ~IFontAtlas() = default;
+
+public:
+	virtual bool BuildFromFont(const IFont* font, int pixelHeight) = 0;
+	virtual int GetAtlasWidth() const = 0;
+	virtual int GetAtlasHeight() const = 0;
+
+	virtual const GlyphBase* GetGlyph(uint32_t codepoint) const = 0;
+};
+
+#endif // !XFONTATLAS_H

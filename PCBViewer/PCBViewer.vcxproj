@@ -43,13 +43,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -180,8 +180,8 @@
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\tfxutil.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfont.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontatlas.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontrenderer.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xglshader.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h" />
@@ -190,8 +190,11 @@
     <ClInclude Include="CircleDrawObject.h" />
     <ClInclude Include="CircleDrawSystem.h" />
     <ClInclude Include="DrawSystem.h" />
+    <ClInclude Include="FontAtlasMSDFGen.h" />
+    <ClInclude Include="FreeTypeFont.h" />
     <ClInclude Include="GLBitmapFontRenderer.h" />
     <ClInclude Include="GLSdfFontRenderer.h" />
+    <ClInclude Include="TextDrawObject.h" />
     <ClInclude Include="TextDrawSystem.h" />
     <ClInclude Include="GLRenderData.h" />
     <ClInclude Include="GLRenderDataBuilder.h" />
@@ -229,6 +232,8 @@
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
     <ClCompile Include="CircleDrawObject.cpp" />
     <ClCompile Include="CircleDrawSystem.cpp" />
+    <ClCompile Include="FontAtlasMSDFGen.cpp" />
+    <ClCompile Include="FreeTypeFont.cpp" />
     <ClCompile Include="GLBitmapFontRenderer.cpp" />
     <ClCompile Include="GLRenderData.cpp" />
     <ClCompile Include="GLRenderDataBuilder.cpp" />
@@ -249,6 +254,7 @@
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderModelManager.cpp" />
     <ClCompile Include="RenderUtil.cpp" />
+    <ClCompile Include="TextDrawObject.cpp" />
     <ClCompile Include="TextDrawSystem.cpp" />
     <ClCompile Include="TriangleDrawObject.cpp" />
     <ClCompile Include="TriangleDrawSystem.cpp" />

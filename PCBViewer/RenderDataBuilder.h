@@ -30,4 +30,7 @@ public:
 
 	virtual RenderDataPtr Make(TriangleDrawObjectList* pDrawObject) = 0;
 	virtual bool Update(RenderDataPtr pRenderData, TriangleDrawObjectList* pDrawObject) = 0;
+
+	virtual RenderDataPtr Make(TextDrawObjectList* pDrawObject) = 0;
+	virtual bool Update(RenderDataPtr pRenderData, TextDrawObjectList* pDrawObject) = 0;
 };

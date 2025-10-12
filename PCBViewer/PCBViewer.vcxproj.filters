@@ -31,18 +31,6 @@
     <Filter Include="Source Files\modules">
       <UniqueIdentifier>{ca06c37a-8450-4284-9629-92a9f91e0e79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\render_objects">
-      <UniqueIdentifier>{ba16ffe8-b3ab-4803-8d06-89a5173a2c73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\render_objects">
-      <UniqueIdentifier>{f1a54e52-1cb0-4678-81f3-bca621c1e56f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\shape_objects">
-      <UniqueIdentifier>{7c9e8829-fb50-4577-883e-056883d1e014}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\shape_objects">
-      <UniqueIdentifier>{70a884e8-ae7f-4f78-b260-456710661fa4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\draw_systems">
       <UniqueIdentifier>{b942678f-48a9-4b35-b820-bcd7d728c9e1}</UniqueIdentifier>
     </Filter>
@@ -60,6 +48,18 @@
     </Filter>
     <Filter Include="Source Files\graphics\camera">
       <UniqueIdentifier>{c4a3cb34-08ec-4e31-a767-849f04d6cd44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\render">
+      <UniqueIdentifier>{ba16ffe8-b3ab-4803-8d06-89a5173a2c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render">
+      <UniqueIdentifier>{f1a54e52-1cb0-4678-81f3-bca621c1e56f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\draw_objects">
+      <UniqueIdentifier>{7c9e8829-fb50-4577-883e-056883d1e014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\draw_objects">
+      <UniqueIdentifier>{70a884e8-ae7f-4f78-b260-456710661fa4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,40 +115,40 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PolyDrawObject.h">
-      <Filter>Header Files\shape_objects</Filter>
+      <Filter>Header Files\draw_objects</Filter>
     </ClInclude>
     <ClInclude Include="GLRenderDataBuilder.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="GLRenderer.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="RenderDef.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="RenderCache.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="RenderEngine.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="GLRenderData.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="RenderData.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="RenderDataBuilder.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="GLRenderEngine.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="PolyDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
@@ -157,10 +157,10 @@
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
     <ClInclude Include="RenderContext.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="LineDrawObject.h">
-      <Filter>Header Files\shape_objects</Filter>
+      <Filter>Header Files\draw_objects</Filter>
     </ClInclude>
     <ClInclude Include="LineDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
@@ -169,10 +169,10 @@
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
     <ClInclude Include="CircleDrawObject.h">
-      <Filter>Header Files\shape_objects</Filter>
+      <Filter>Header Files\draw_objects</Filter>
     </ClInclude>
     <ClInclude Include="RectDrawObject.h">
-      <Filter>Header Files\shape_objects</Filter>
+      <Filter>Header Files\draw_objects</Filter>
     </ClInclude>
     <ClInclude Include="RectDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
@@ -181,13 +181,13 @@
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="RenderUtil.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="TriangleDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
     <ClInclude Include="TriangleDrawObject.h">
-      <Filter>Header Files\shape_objects</Filter>
+      <Filter>Header Files\draw_objects</Filter>
     </ClInclude>
     <ClInclude Include="TextDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
@@ -195,23 +195,32 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontrenderer.h">
       <Filter>Header Files\graphics\fonts</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.h">
-      <Filter>Header Files\graphics\fonts</Filter>
-    </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfont.h">
       <Filter>Header Files\graphics\fonts</Filter>
     </ClInclude>
     <ClInclude Include="GLBitmapFontRenderer.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="GLSdfFontRenderer.h">
-      <Filter>Header Files\render_objects</Filter>
+      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h">
       <Filter>Header Files\graphics\camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\common\typext.h">
       <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontatlas.h">
+      <Filter>Header Files\graphics\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeTypeFont.h">
+      <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="TextDrawObject.h">
+      <Filter>Header Files\draw_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FontAtlasMSDFGen.h">
+      <Filter>Header Files\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -237,31 +246,31 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PolyDrawObject.cpp">
-      <Filter>Source Files\shape_objects</Filter>
+      <Filter>Source Files\draw_objects</Filter>
     </ClCompile>
     <ClCompile Include="GLRenderDataBuilder.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="GLRenderer.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="RenderCache.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="RenderEngine.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="GLRenderData.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="GLRenderEngine.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="LineDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
     <ClCompile Include="LineDrawObject.cpp">
-      <Filter>Source Files\shape_objects</Filter>
+      <Filter>Source Files\draw_objects</Filter>
     </ClCompile>
     <ClCompile Include="PolyDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
@@ -270,22 +279,22 @@
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
     <ClCompile Include="CircleDrawObject.cpp">
-      <Filter>Source Files\shape_objects</Filter>
+      <Filter>Source Files\draw_objects</Filter>
     </ClCompile>
     <ClCompile Include="RectDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
     <ClCompile Include="RectDrawObject.cpp">
-      <Filter>Source Files\shape_objects</Filter>
+      <Filter>Source Files\draw_objects</Filter>
     </ClCompile>
     <ClCompile Include="RenderUtil.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="TriangleDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
     <ClCompile Include="TriangleDrawObject.cpp">
-      <Filter>Source Files\shape_objects</Filter>
+      <Filter>Source Files\draw_objects</Filter>
     </ClCompile>
     <ClCompile Include="TextDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
@@ -294,13 +303,22 @@
       <Filter>Source Files\graphics\fonts</Filter>
     </ClCompile>
     <ClCompile Include="GLBitmapFontRenderer.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="GLSdfFontRenderer.cpp">
-      <Filter>Source Files\render_objects</Filter>
+      <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp">
       <Filter>Source Files\graphics\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeTypeFont.cpp">
+      <Filter>Source Files\render</Filter>
+    </ClCompile>
+    <ClCompile Include="TextDrawObject.cpp">
+      <Filter>Source Files\draw_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="FontAtlasMSDFGen.cpp">
+      <Filter>Source Files\render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

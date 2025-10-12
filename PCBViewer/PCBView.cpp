@@ -82,22 +82,31 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 		return false;
 	}
 
-	msdfgen::FreetypeHandle* ft = msdfgen::initializeFreetype();
-	if (!ft) {
-		printf("Failed to init FreeType\n");
+	//msdfgen::FreetypeHandle* ft = msdfgen::initializeFreetype();
+	//if (!ft) {
+	//	printf("Failed to init FreeType\n");
+	//	return -1;
+	//}
+
+	FT_Library oft;
+	if (FT_Init_FreeType(&oft)) {
+		std::cerr << "Không thể khởi tạo FreeType Library" << std::endl;
 		return -1;
 	}
 
-	msdfgen::FontHandle* font = loadFont(ft, "D:\\dfx07\\cadviewer\\PCBViewer\\JetBrainsMonoNL-Regular.ttf");
+	FT_Face face;
+	if (FT_New_Face(oft, "F:\\cad_viewer\\PCBViewer\\JetBrainsMonoNL-Regular.ttf", 0, &face)) {
+		std::cerr << "Không thể load font!" << std::endl;
+		return -1;
+	}
+
+	msdfgen::FontHandle* font = msdfgen::adoptFreetypeFont(face);
 	if (!font) {
 		printf("Failed to load font\n");
-		deinitializeFreetype(ft);
+		//deinitializeFreetype(ft);
 		return -1;
 	}
 	auto start = std::chrono::high_resolution_clock::now();
-
-	// Lấy FT_Face gốc từ FontHandle
-	FT_Face face = (FT_Face)font->ftFace;
 
 	// Bắt đầu duyệt toàn bộ ký tự
 	FT_UInt glyphIndex;
@@ -148,7 +157,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	//}
 
 	destroyFont(font);
-	deinitializeFreetype(ft);
+	//deinitializeFreetype(ft);
 
 	// create camera
 	m_pCamera = std::make_shared<Camera2D>();
