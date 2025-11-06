@@ -14,6 +14,7 @@
 #include "TriangleDrawObject.h"
 #include "TextDrawObject.h"
 #include "RenderUtil.h"
+#include "FontAtlasMSDFGen.h"
 
 
 RectVertexData GLRenderDataBuilder::Build(RectDrawObject* pRectObj)
@@ -440,15 +441,96 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 {
 	auto pData = std::make_shared<GLTextRenderData>();
 
+	//for (auto pTextObj : pDrawObject->m_vecTexts)
+	//{
+	//	auto pSelf = shared_from_this();
+	//	pTextObj->Make(pSelf);
+	//}
+
+	std::map<FontPtr, FontAtlasPtr> FontAtlasManager;
+
 	for (auto pTextObj : pDrawObject->m_vecTexts)
 	{
+		auto pFontRender = pTextObj->m_font;
 
+		if (pTextObj->m_eRenderType == ETextRenderType::SDF)
+		{
+			auto itFound = FontAtlasManager.find(pTextObj->m_font);
+
+			FontAtlasPtr pAtlasPtr = nullptr;
+
+			if (itFound != FontAtlasManager.end())
+			{
+				pAtlasPtr = itFound->second;
+			}
+			else
+			{
+				pAtlasPtr = std::make_shared<FontAtlasMSDFGen>();
+
+				if (pAtlasPtr->BuildFromFont(pFontRender.get(), 12))
+				{
+					FontAtlasManager.insert({ pTextObj->m_font, pAtlasPtr });
+				}
+				else
+				{
+					return nullptr;
+				}
+			}
+
+			float fZ = NextZ();
+
+			float fNextPosX = pTextObj->m_pt.x;
+			float fPosY = pTextObj->m_pt.y;
+
+			auto itIns = pData->m_sdfRenderData.insert({ pAtlasPtr,CharGlyphDataList{} });
+
+			for (auto& ch : pTextObj->m_data)
+			{
+				CharGlyphData glyphChar;
+
+				glyphChar.char_code = ch;
+				glyphChar.color = pTextObj->m_clColor;
+				glyphChar.dir = Vec2(1, 0);
+
+				auto pGlyphBase = pAtlasPtr->GetGlyph(glyphChar.char_code);
+
+				Point2 ptGlyphDraw;
+				ptGlyphDraw.x = fNextPosX + pGlyphBase->bearingX;
+				ptGlyphDraw.y = fPosY + pGlyphBase->bearingY;
+
+				glyphChar.pos = Vec3(ptGlyphDraw, fZ);
+
+				fNextPosX += pGlyphBase->advanceX;
+
+				itIns.first->second.push_back(glyphChar);
+			}
+		}
 	}
 
 	return pData;
 }
 
 bool GLRenderDataBuilder::Update(RenderDataPtr pRenderData, TextDrawObjectList* pDrawObject)
+{
+	return false;
+}
+
+RenderDataPtr GLRenderDataBuilder::MakeTextBitmap(TextDrawObject* pDrawObject)
+{
+	return RenderDataPtr();
+}
+
+bool GLRenderDataBuilder::UpdateTextBitmap(RenderDataPtr pRenderData, TextDrawObject* pDrawObject)
+{
+	return false;
+}
+
+RenderDataPtr GLRenderDataBuilder::MakeTextSdf(TextDrawObject* pDrawObject)
+{
+	return RenderDataPtr();
+}
+
+bool GLRenderDataBuilder::UpdateTextSdf(RenderDataPtr pRenderData, TextDrawObject* pDrawObject)
 {
 	return false;
 }

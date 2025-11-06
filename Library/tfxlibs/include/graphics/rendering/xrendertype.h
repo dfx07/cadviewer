@@ -37,4 +37,7 @@ typedef std::shared_ptr<IFont> FontPtr;
 _interface IFontRender;
 typedef std::shared_ptr<IFontRender> FontRenderPtr;
 
+_interface IFontAtlas;
+typedef std::shared_ptr<IFontAtlas> FontAtlasPtr;
+
 #endif // !XRENDERTYPE_H

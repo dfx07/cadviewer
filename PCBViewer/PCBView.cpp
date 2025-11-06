@@ -1,5 +1,13 @@
 ﻿#include "PCBView.h"
+
+#include <random>
+#include <string>
+#include <iostream>
+#include <chrono>
+
 #include "graphics/camera/xcamera.h"
+#include "graphics/rendering/xopenglctx.h"
+
 #include "GLRenderer.h"
 #include "PolyDrawObject.h"
 #include "LineDrawObject.h"
@@ -9,10 +17,8 @@
 #include "Renderer.h"
 
 #include "common/tfxutil.h"
+#include "common/tfxtype.h"
 
-#include <random>
-#include <graphics/rendering/xopenglctx.h>
-#include <string>
 
 #undef min
 #undef max
@@ -24,8 +30,10 @@
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
 
-#include <iostream>
-#include <chrono>
+
+
+
+typedef __Manager__<std::string, int> ManagerAB;
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -88,76 +96,89 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	//	return -1;
 	//}
 
-	FT_Library oft;
-	if (FT_Init_FreeType(&oft)) {
-		std::cerr << "Không thể khởi tạo FreeType Library" << std::endl;
-		return -1;
-	}
-
-	FT_Face face;
-	if (FT_New_Face(oft, "F:\\cad_viewer\\PCBViewer\\JetBrainsMonoNL-Regular.ttf", 0, &face)) {
-		std::cerr << "Không thể load font!" << std::endl;
-		return -1;
-	}
-
-	msdfgen::FontHandle* font = msdfgen::adoptFreetypeFont(face);
-	if (!font) {
-		printf("Failed to load font\n");
-		//deinitializeFreetype(ft);
-		return -1;
-	}
-	auto start = std::chrono::high_resolution_clock::now();
-
-	// Bắt đầu duyệt toàn bộ ký tự
-	FT_UInt glyphIndex;
-	FT_ULong charCode = FT_Get_First_Char(face, &glyphIndex);
-
-	int count = 0;
-	while (glyphIndex != 0) {
-		count++;
-
-		// In ra codepoint và glyph index
-		std::cout << "Char: U+" << std::hex << charCode
-			<< "  GlyphIndex: " << std::dec << glyphIndex << std::endl;
-
-		// (tuỳ chọn) Load glyph và xuất MSDF:
-		msdfgen::Shape shape;
-		if (loadGlyph(shape, font, glyphIndex)) {
-			shape.normalize();
-			// ở đây bạn có thể gọi generateMSDF(...)
-		}
-
-		// Lấy ký tự kế tiếp
-		charCode = FT_Get_Next_Char(face, charCode, &glyphIndex);
-	}
-	auto end = std::chrono::high_resolution_clock::now();
-
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-
-	std::cout << "Thời gian thực thi: " << duration << " ms\n";
-
-	//msdfgen::Shape shape;
-	//if (loadGlyph(shape, font, 0x00E1)) {
-	//	shape.normalize();
-
-	//	// Kích thước MSDF
-	//	int width = 64, height = 64;
-	//	double range = 2.0;
-	//	double scale = 1.0;
-	//	msdfgen::Vector2 translate(0.0, 0.0);
-
-	//	msdfgen::Bitmap<float, 3> msdf(width, height);
-	//	generateMSDF(msdf, shape, range, scale, translate);
-
-	//	// Xuất ra file .png nếu bạn có stb_image_write.h
-	//	// hoặc tự xử lý dữ liệu msdf(x,y)[channel]
-
-	//	msdfgen::savePng(msdf, "glyph_A.png");
-
+	//FT_Library oft;
+	//if (FT_Init_FreeType(&oft)) {
+	//	std::cerr << "Không thể khởi tạo FreeType Library" << std::endl;
+	//	return -1;
 	//}
 
-	destroyFont(font);
+	//FT_Face face;
+	//if (FT_New_Face(oft, "F:\\cad_viewer\\PCBViewer\\JetBrainsMonoNL-Regular.ttf", 0, &face)) {
+	//	std::cerr << "Không thể load font!" << std::endl;
+	//	return -1;
+	//}
+
+	//msdfgen::FontHandle* font = msdfgen::adoptFreetypeFont(face);
+	//if (!font) {
+	//	printf("Failed to load font\n");
+	//	//deinitializeFreetype(ft);
+	//	return -1;
+	//}
+	//auto start = std::chrono::high_resolution_clock::now();
+
+	//// Bắt đầu duyệt toàn bộ ký tự
+	//FT_UInt glyphIndex;
+	//FT_ULong charCode = FT_Get_First_Char(face, &glyphIndex);
+
+	//int count = 0;
+	//while (glyphIndex != 0) {
+	//	count++;
+
+	//	// In ra codepoint và glyph index
+	//	std::cout << "Char: U+" << std::hex << charCode
+	//		<< "  GlyphIndex: " << std::dec << glyphIndex << std::endl;
+
+	//	// (tuỳ chọn) Load glyph và xuất MSDF:
+	//	msdfgen::Shape shape;
+	//	if (loadGlyph(shape, font, glyphIndex)) {
+	//		shape.normalize();
+	//		// ở đây bạn có thể gọi generateMSDF(...)
+	//	}
+
+	//	// Lấy ký tự kế tiếp
+	//	charCode = FT_Get_Next_Char(face, charCode, &glyphIndex);
+	//}
+	//auto end = std::chrono::high_resolution_clock::now();
+
+	//auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+	//std::cout << "Thời gian thực thi: " << duration << " ms\n";
+
+	////msdfgen::Shape shape;
+	////if (loadGlyph(shape, font, 0x00E1)) {
+	////	shape.normalize();
+
+	////	// Kích thước MSDF
+	////	int width = 64, height = 64;
+	////	double range = 2.0;
+	////	double scale = 1.0;
+	////	msdfgen::Vector2 translate(0.0, 0.0);
+
+	////	msdfgen::Bitmap<float, 3> msdf(width, height);
+	////	generateMSDF(msdf, shape, range, scale, translate);
+
+	////	// Xuất ra file .png nếu bạn có stb_image_write.h
+	////	// hoặc tự xử lý dữ liệu msdf(x,y)[channel]
+
+	////	msdfgen::savePng(msdf, "glyph_A.png");
+
+	////}
+
+	//destroyFont(font);
 	//deinitializeFreetype(ft);
+
+	ManagerAB mana;
+
+	mana.Add("absc", 1);
+
+
+	//auto iA = mana.Get("absc");
+
+	//if (iA == nullptr)
+	//{
+	//	int a = 10;
+	//}
+
 
 	// create camera
 	m_pCamera = std::make_shared<Camera2D>();

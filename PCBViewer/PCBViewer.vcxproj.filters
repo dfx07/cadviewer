@@ -299,9 +299,6 @@
     <ClCompile Include="TextDrawSystem.cpp">
       <Filter>Source Files\draw_systems</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.cpp">
-      <Filter>Source Files\graphics\fonts</Filter>
-    </ClCompile>
     <ClCompile Include="GLBitmapFontRenderer.cpp">
       <Filter>Source Files\render</Filter>
     </ClCompile>

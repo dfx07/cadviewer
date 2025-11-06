@@ -17,7 +17,7 @@ struct GlyphBase
 {
 	uint32_t codepoint;
 	float advanceX;
-	float offsetX, offsetY;
+	float bearingX, bearingY;
 	float width, height;
 	float u0, v0, u1, v1;
 	virtual ~GlyphBase() = default;
@@ -34,6 +34,11 @@ public:
 	virtual int GetAtlasHeight() const = 0;
 
 	virtual const GlyphBase* GetGlyph(uint32_t codepoint) const = 0;
+};
+
+class FontAtlasManager
+{
+
 };
 
 #endif // !XFONTATLAS_H

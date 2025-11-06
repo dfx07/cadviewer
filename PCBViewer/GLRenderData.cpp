@@ -1,5 +1,6 @@
 ﻿#include "GLRenderData.h"
 #include "graphics/rendering/OpenGL/glew.h"
+#include "FontAtlasMSDFGen.h"
 
 GLPolyRenderData::GLPolyRenderData()
 {
@@ -853,4 +854,44 @@ GLTextRenderData::GLTextRenderData()
 
 GLTextRenderData::~GLTextRenderData()
 {
+}
+
+GLSDFTextRenderData::GLSDFTextRenderData()
+{
+}
+
+GLSDFTextRenderData::~GLSDFTextRenderData()
+{
+}
+
+void GLSDFTextRenderData::Create()
+{
+	//for (auto pairFontAtl : m_mapSdfRenderData)
+	//{
+	//	auto pFontAtl = pairFontAtl.first;
+
+	//	auto pFontAtlMSDGen = std::dynamic_pointer_cast<FontAtlasMSDFGen>(pFontAtl);
+	//	if (pFontAtlMSDGen != nullptr)
+	//	{
+	//		GLuint glyphSSBO;
+	//		glGenBuffers(1, &glyphSSBO);
+	//		glBindBuffer(GL_SHADER_STORAGE_BUFFER, glyphSSBO);
+	//		glBufferData(GL_SHADER_STORAGE_BUFFER, pFontAtlMSDGen->GetBuffer() * sizeof(GlyphMSDF), glyphMap.data(), GL_STATIC_DRAW);
+	//		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, glyphSSBO); // binding = 0
+	//	}
+	//}
+}
+
+bool GLSDFTextRenderData::Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList)
+{
+	auto it = m_mapSdfRenderData.insert({ fontAtl,charList });
+
+	if (it.second == false)
+	{
+		auto& vecCharList = it.first->second;
+
+		vecCharList.insert(vecCharList.end(), charList.begin(), charList.end());
+	}
+
+	return true;
 }

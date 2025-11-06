@@ -13,13 +13,15 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 
 #include "RenderDataBuilder.h"
 #include "PCBViewType.h"
 #include "GLRenderData.h"
 
 
-class GLRenderDataBuilder : public RenderDataBuilder
+class GLRenderDataBuilder : public RenderDataBuilder,
+	public std::enable_shared_from_this<GLRenderDataBuilder>
 {
 private:
 	RectVertexData Build(RectDrawObject* pObject);
@@ -46,8 +48,18 @@ public:
 	virtual RenderDataPtr Make(TextDrawObjectList* pDrawObject);
 	virtual bool Update(RenderDataPtr pRenderData, TextDrawObjectList* pDrawObject);
 
+	virtual RenderDataPtr MakeTextBitmap(TextDrawObject* pDrawObject);
+	virtual bool UpdateTextBitmap(RenderDataPtr pRenderData, TextDrawObject* pDrawObject);
+
+	virtual RenderDataPtr MakeTextSdf(TextDrawObject* pDrawObject);
+	virtual bool UpdateTextSdf(RenderDataPtr pRenderData, TextDrawObject* pDrawObject);
+
 private:
 	int m_nPolyIndex = 0;
 	float m_fCurrentZ = 10.f;
 	float m_fZStep = 0.01f;
+
+protected:
+
+	std::map<FontPtr, FontAtlasPtr> m_FontAtlasManager;
 };

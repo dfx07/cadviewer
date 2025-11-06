@@ -27,6 +27,9 @@ public:
 	Col4 m_clColor{ 0.f };	// Colors
 	float m_fAngle{ 0 };
 	std::string m_data;
+
+	ETextRenderType m_eRenderType{ ETextRenderType::SDF };
+	FontPtr m_font{ nullptr };
 };
 
 class TextDrawObjectList : public DrawObject

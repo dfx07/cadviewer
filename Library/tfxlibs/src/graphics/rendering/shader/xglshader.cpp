@@ -9,9 +9,9 @@
 #define MAX_LOG 1024
 
 const char strStatus[][6] {
-	"WARN",
-	"ERR",
-	"INFO",
+	"Warn",
+	"Error",
+	"Info",
 };
 
 std::map<int, std::string> mapShaderNames
@@ -196,7 +196,7 @@ void GLShaderLogger::WriteLog(ShaderLogStatus status, std::string& msg, bool bIn
 
 	if (!bIngoreStatus)
 	{
-		snprintf(&msgLogData[0], MAX_LOG, "[OPENGL][%s] : \n %s", strStatus[static_cast<int>(status)],
+		snprintf(&msgLogData[0], MAX_LOG, "[Shader][%s] : %s", strStatus[static_cast<int>(status)],
 			msg.c_str());
 	}
 	else

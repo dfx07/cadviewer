@@ -227,7 +227,6 @@
     <ClInclude Include="WInputDeviceMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Library\tfxlibs\include\graphics\fonts\freetypefont.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
     <ClCompile Include="CircleDrawObject.cpp" />

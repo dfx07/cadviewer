@@ -291,6 +291,22 @@ public:
 	int m_nInstances = 0;
 };
 
+/***********************************************************************************/
+// Triangle
+/***********************************************************************************/
+
+#include "graphics/fonts/xfontatlas.h"
+#include <map>
+
+struct CharGlyphData
+{
+	Vec3 pos;
+	Vec4 color;
+	Vec2 dir;
+	uint32_t char_code;
+};
+
+typedef std::vector<CharGlyphData> CharGlyphDataList;
 
 class GLTextRenderData : public RenderData
 {
@@ -311,5 +327,30 @@ public:
 	GLTextRenderData();
 	virtual ~GLTextRenderData();
 
+	std::map<FontAtlasPtr, CharGlyphDataList> m_sdfRenderData;
+	unsigned int m_ssboGlyph;
+
 	int m_nInstances = 0;
+};
+
+class GLBitmapTextRenderData : public GLTextRenderData
+{
+
+};
+
+class GLSDFTextRenderData
+{
+public:
+	GLSDFTextRenderData();
+	virtual ~GLSDFTextRenderData();
+
+public:
+	void Create();
+
+public:
+	bool Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList);
+
+public:
+	std::map<FontAtlasPtr, CharGlyphDataList> m_mapSdfRenderData;
+	std::map<FontAtlasPtr, unsigned int> m_mapFontAtlSSBOGlyph;
 };

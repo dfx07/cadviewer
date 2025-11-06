@@ -35,7 +35,16 @@ void TextDrawObject::Move(const Vec2& offset)
 
 RenderDataPtr TextDrawObject::DoMake(RenderDataBuilderPtr builder)
 {
-	return RenderDataPtr();
+	if (m_eRenderType == ETextRenderType::Bitmap)
+	{
+		builder->MakeTextBitmap(this);
+	}
+	else if (m_eRenderType == ETextRenderType::SDF)
+	{
+		builder->MakeTextSdf(this);
+	}
+
+	return nullptr;
 }
 
 bool TextDrawObject::DoUpdate(RenderDataPtr pData, RenderDataBuilderPtr builder)

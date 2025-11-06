@@ -33,4 +33,10 @@ public:
 
 	virtual RenderDataPtr Make(TextDrawObjectList* pDrawObject) = 0;
 	virtual bool Update(RenderDataPtr pRenderData, TextDrawObjectList* pDrawObject) = 0;
+
+	virtual RenderDataPtr MakeTextBitmap(TextDrawObject* pDrawObject) = 0;
+	virtual bool UpdateTextBitmap(RenderDataPtr pRenderData, TextDrawObject* pDrawObject) = 0;
+
+	virtual RenderDataPtr MakeTextSdf(TextDrawObject* pDrawObject) = 0;
+	virtual bool UpdateTextSdf(RenderDataPtr pRenderData, TextDrawObject* pDrawObject) = 0;
 };

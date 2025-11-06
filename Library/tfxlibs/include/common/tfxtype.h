@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////
 /*!*********************************************************************************
 * @Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
 *            All rights reserved.
@@ -125,5 +125,67 @@ typedef tagVec2 Mat4;
 __BEGIN_NAMESPACE__
 
 #endif // USE_GLM
+
+/*
+	Template class manager
+*/
+
+#include <map>
+#include <memory>
+#include <type_traits>
+
+namespace tsp
+{
+	template<typename U> U* ToPtr(U& obj) { return &obj; }
+	template<typename U> U* ToPtr(U* ptr) { return ptr; }
+	template<typename U> U* ToPtr(const std::shared_ptr<U>& ptr) { return ptr.get(); }
+}
+
+
+template<typename K, typename T>
+class __Manager__
+{
+public:
+	typedef T type;
+
+public:
+	bool Add(const K& key,const type& object)
+	{
+		return m_objects.emplace(key, object).second;
+	}
+
+	bool Remove(const K& key)
+	{
+		return m_objects.erase(key) > 0;
+	}
+
+	//template<typename U = T>
+	template<typename U = T>
+	typename std::enable_if<std::is_fundamental<U>::value, U>::type
+	Get(const K& key) const
+	{
+		auto it = m_objects.find(key);
+		if (it != m_objects.end())
+			return it->second;
+
+		return T{};
+	}
+
+	//template<typename U = T>
+	
+	template<typename U = T>
+	typename std::enable_if<!std::is_fundamental<U>::value, U*>::type
+	Get(const K& key) const
+	{
+		auto it = m_objects.find(key);
+		if (it != m_objects.end())
+			return tsp::ToPtr(it->second);
+		return nullptr;
+	}
+
+private:
+	std::map<K, T> m_objects;
+};
+
 
 #endif // !TFXTYPE_H

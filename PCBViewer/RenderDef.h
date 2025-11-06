@@ -20,6 +20,12 @@ auto RENPTR(const T& obj) -> decltype(tfx::ValuePtr(obj)) {
 	return tfx::ValuePtr(obj);
 };
 
+enum ETextRenderType
+{
+	Bitmap,
+	SDF,
+};
+
 struct ViewPort
 {
 	int x;

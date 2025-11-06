@@ -37,6 +37,7 @@ public:
 	virtual int GetAtlasHeight() const override;
 
 	virtual const GlyphBase* GetGlyph(uint32_t codepoint) const override;
+	virtual const float* GetBuffer() const;
 
 private:
 	uint32_t m_textureID = 0;

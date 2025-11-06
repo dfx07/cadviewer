@@ -113,8 +113,8 @@ bool FontAtlasMSDFGen::BuildFromFont(const IFont* font, int pixelHeight)
 			GlyphMSDF g{};
 			g.codepoint = charCode;
 			g.advanceX = advanceX;
-			g.offsetX = offsetX;
-			g.offsetY = offsetY;
+			g.bearingX = offsetX;
+			g.bearingY = offsetY;
 			g.width = (float)glyphW;
 			g.height = (float)glyphH;
 			g.u0 = (float)(penX + padding) / atlasWidth;
@@ -155,4 +155,9 @@ const GlyphBase* FontAtlasMSDFGen::GetGlyph(uint32_t codepoint) const
 		return nullptr;
 
 	return &itFound->second;
+}
+
+const float* FontAtlasMSDFGen::GetBuffer() const
+{
+	return m_buffer.data();
 }
