@@ -12,7 +12,7 @@
 #define XCTX_H
 
 #include <memory>
-#include "common/tfxdef.h"
+#include "common/tfx_def.h"
 
 
 _interface DeviceContext;

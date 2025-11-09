@@ -61,5 +61,5 @@ private:
 
 protected:
 
-	std::map<FontPtr, FontAtlasPtr> m_FontAtlasManager;
+	FontAtlasManager m_FontAtlasManager;
 };

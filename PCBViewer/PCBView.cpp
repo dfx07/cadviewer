@@ -16,8 +16,8 @@
 #include "TriangleDrawObject.h"
 #include "Renderer.h"
 
-#include "common/tfxutil.h"
-#include "common/tfxtype.h"
+#include "common/tfx_utils.h"
+#include "common/tfx_type.h"
 
 
 #undef min
@@ -29,11 +29,6 @@
 
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
-
-
-
-
-typedef __Manager__<std::string, int> ManagerAB;
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -166,19 +161,6 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 
 	//destroyFont(font);
 	//deinitializeFreetype(ft);
-
-	ManagerAB mana;
-
-	mana.Add("absc", 1);
-
-
-	//auto iA = mana.Get("absc");
-
-	//if (iA == nullptr)
-	//{
-	//	int a = 10;
-	//}
-
 
 	// create camera
 	m_pCamera = std::make_shared<Camera2D>();

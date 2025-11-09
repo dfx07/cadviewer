@@ -28,6 +28,3 @@
 #ifndef FALSE
 #define FALSE	0
 #endif // !FALSE
-
-
-#define NULL_RETURN(ptr, ...) if (ptr == nullptr) return __VA_ARGS__

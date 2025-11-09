@@ -12,7 +12,7 @@
 #define XFONT_H
 
 #include <memory>
-#include "common/tfxtype.h"
+#include "common/tfx_type.h"
 
 #include <map>
 #include <string>
@@ -24,6 +24,7 @@ public:
 public:
 	virtual bool Load(const char* font_path) = 0;
 	virtual void Unload() = 0;
+	virtual std::string GetGUID() = 0;
 };
 
 class FontManager

@@ -36,9 +36,4 @@ public:
 	virtual const GlyphBase* GetGlyph(uint32_t codepoint) const = 0;
 };
 
-class FontAtlasManager
-{
-
-};
-
 #endif // !XFONTATLAS_H

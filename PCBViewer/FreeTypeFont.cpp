@@ -1,5 +1,6 @@
 ﻿#include "FreeTypeFont.h"
 #include <mutex>
+#include "common/tfx_utils.h"
 
 class FreeTypeFontSystem
 {
@@ -58,6 +59,7 @@ public:
 FreeTypeFont::FreeTypeFont() :
 	m_face(nullptr)
 {
+	m_strGUID = NSP::CreateGUID();
 	assert(FTSytem);
 }
 
@@ -83,6 +85,11 @@ void FreeTypeFont::Unload()
 {
 	if(m_face)
 		FT_Done_Face(m_face);
+}
+
+std::string FreeTypeFont::GetGUID()
+{
+	return m_strGUID;
 }
 
 FT_Face FreeTypeFont::GetHandle() const

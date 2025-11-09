@@ -3,30 +3,27 @@
 * @Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
 *            All rights reserved.
 ************************************************************************************
-* @file     tfxdef.h
+* @file     tfx_def.h
 * @create   June 09, 2025
 * @note     For conditions of distribution and use, see copyright notice in readme.txt
 ***********************************************************************************/
-#ifndef TFXDEF_H
-#define TFXDEF_H
+#ifndef TFX_DEF_H
+#define TFX_DEF_H
+
+#include "macros.h"
 
 #define TFX_VERSION "1.0.0"
 
-#define __NAME_SPACE__ tfx
+#define TFX_NAMESPACE tfx
 
-#define __BEGIN_NAMESPACE__ namespace __NAME_SPACE__ {
+#define NSP TFX_NAMESPACE
+
+#define __BEGIN_NAMESPACE__ namespace TFX_NAMESPACE {
 #define __BEGIN_NAMESPACE_NO_TFX_ namespace {
 #define __END_NAMESPACE__ }
 
-#define USING_NAMESPACE using namespace __NAME_SPACE__;
+#define __NAMESPACE_SEC__(_name_) namespace _name_ {
 
-#ifdef _interface
-#undef _interface
-#endif
-#define _interface struct
+#define USING_NAMESPACE using namespace TFX_NAMESPACE;
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif // !M_PI
-
-#endif // !TFXDEF_H
+#endif // !TFX_DEF_H

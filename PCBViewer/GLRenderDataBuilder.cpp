@@ -6,6 +6,8 @@
 #include "graphics/rendering/shader/xglshader.h"
 #include "graphics/rendering/OpenGL/glew.h"
 
+#include "graphics/fonts/xfont.h"
+
 
 #include "PolyDrawObject.h"
 #include "LineDrawObject.h"
@@ -447,35 +449,30 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 	//	pTextObj->Make(pSelf);
 	//}
 
-	std::map<FontPtr, FontAtlasPtr> FontAtlasManager;
-
 	for (auto pTextObj : pDrawObject->m_vecTexts)
 	{
-		auto pFontRender = pTextObj->m_font;
+		auto pFont = pTextObj->m_font;
+
+		std::string strKey = pFont->GetGUID();
 
 		if (pTextObj->m_eRenderType == ETextRenderType::SDF)
 		{
-			auto itFound = FontAtlasManager.find(pTextObj->m_font);
+			auto pAtlasPtr = m_FontAtlasManager.Get(strKey);
 
-			FontAtlasPtr pAtlasPtr = nullptr;
-
-			if (itFound != FontAtlasManager.end())
+			if (pAtlasPtr == nullptr)
 			{
-				pAtlasPtr = itFound->second;
-			}
-			else
-			{
-				pAtlasPtr = std::make_shared<FontAtlasMSDFGen>();
+				auto pAtlasPtr = std::make_shared<FontAtlasMSDFGen>();
 
-				if (pAtlasPtr->BuildFromFont(pFontRender.get(), 12))
+				if (pAtlasPtr->BuildFromFont(pFont.get(), 12))
 				{
-					FontAtlasManager.insert({ pTextObj->m_font, pAtlasPtr });
+					m_FontAtlasManager.Add(pTextObj->m_font->GetGUID(), pAtlasPtr);
 				}
 				else
 				{
 					return nullptr;
 				}
 			}
+
 
 			float fZ = NextZ();
 

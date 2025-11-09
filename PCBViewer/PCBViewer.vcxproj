@@ -174,11 +174,12 @@
   <ItemGroup>
     <ClInclude Include="..\Library\tfxlibs\include\common\apicom.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\apidef.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\common\dllexports.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\macros.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_def.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_type_traits.h" />
     <ClInclude Include="..\Library\tfxlibs\include\common\typext.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h" />
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfxutil.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_type.h" />
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_utils.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfont.h" />
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontatlas.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="WInputDeviceMap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Library\tfxlibs\src\common\tfx_utils.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
     <ClCompile Include="CircleDrawObject.cpp" />

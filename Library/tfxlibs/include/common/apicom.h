@@ -1,4 +1,4 @@
-#include "dllexports.h"
+#include "macros.h"
 #include "apidef.h"
 #include "../Modules/NotifyObject.h"
 

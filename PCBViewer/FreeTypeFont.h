@@ -23,14 +23,16 @@ public:
 	virtual ~FreeTypeFont();
 
 public:
-	virtual bool Load(const char* font_path);
-	virtual void Unload();
+	virtual bool Load(const char* font_path) override;
+	virtual void Unload() override;
+	virtual std::string GetGUID() override;
 
 public:
 	virtual FT_Face GetHandle() const;
 
 protected:
 	FT_Face m_face;
+	std::string m_strGUID;
 };
 
 #endif // !FREETYPEFONT_H

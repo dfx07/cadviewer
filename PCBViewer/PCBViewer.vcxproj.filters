@@ -72,10 +72,10 @@
     <ClInclude Include="PCBViewDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfxtype.h">
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_type.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfxdef.h">
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_def.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h">
@@ -94,9 +94,6 @@
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\common\apidef.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\dllexports.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h">
@@ -177,7 +174,7 @@
     <ClInclude Include="RectDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfxutil.h">
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_utils.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="RenderUtil.h">
@@ -221,6 +218,12 @@
     </ClInclude>
     <ClInclude Include="FontAtlasMSDFGen.h">
       <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_type_traits.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\common\macros.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="FontAtlasMSDFGen.cpp">
       <Filter>Source Files\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\tfxlibs\src\common\tfx_utils.cpp">
+      <Filter>Source Files\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

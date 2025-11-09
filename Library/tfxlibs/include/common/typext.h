@@ -12,7 +12,7 @@
 #ifndef TYPEXT_H
 #define TYPEXT_H
 
-#include "tfxtype.h"
+#include "tfx_type.h"
 
 typedef tfx::Vec2 Vec2;
 typedef tfx::Vec3 Vec3;

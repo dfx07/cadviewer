@@ -11,7 +11,7 @@
 #ifndef XGLSHADER_H
 #define XGLSHADER_H
 
-#include "common/tfxdef.h"
+#include "common/tfx_def.h"
 #include "xshader.h"
 #include <string>
 

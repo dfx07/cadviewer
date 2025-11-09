@@ -11,10 +11,13 @@
 #ifndef XRENDERTYPE_H
 #define XRENDERTYPE_H
 
+#include "common/tfx_type.h"
+#include "common/tfx_type_traits.h"
 #include "common/typext.h"
 
 #include <memory>
 #include <vector>
+#include <string>
 
 class Camera;
 typedef std::shared_ptr<Camera> CameraPtr;
@@ -39,5 +42,7 @@ typedef std::shared_ptr<IFontRender> FontRenderPtr;
 
 _interface IFontAtlas;
 typedef std::shared_ptr<IFontAtlas> FontAtlasPtr;
+
+typedef tfx::_tfxManager<std::string, FontAtlasPtr> FontAtlasManager;
 
 #endif // !XRENDERTYPE_H
