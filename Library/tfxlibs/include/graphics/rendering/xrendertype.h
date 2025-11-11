@@ -11,22 +11,12 @@
 #ifndef XRENDERTYPE_H
 #define XRENDERTYPE_H
 
-#include "common/tfx_type.h"
-#include "common/tfx_type_traits.h"
-#include "common/typext.h"
+#include "core/tfx_type.h"
+#include "core/tfx_type_traits.h"
 
 #include <memory>
 #include <vector>
 #include <string>
-
-class Camera;
-typedef std::shared_ptr<Camera> CameraPtr;
-
-class Camera2D;
-typedef std::shared_ptr<Camera2D> Camera2DPtr;
-
-class Camera3D;
-typedef std::shared_ptr<Camera3D> Camera3DPtr;
 
 _interface IShaderProgram;
 typedef std::shared_ptr<IShaderProgram> ShaderProgramPtr;

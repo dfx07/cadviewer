@@ -12,7 +12,7 @@
 #define XFONT_H
 
 #include <memory>
-#include "common/tfx_type.h"
+#include "core/tfx_type.h"
 
 #include <map>
 #include <string>

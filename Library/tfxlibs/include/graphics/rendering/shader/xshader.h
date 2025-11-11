@@ -13,6 +13,7 @@
 
 #include <unordered_map>
 #include <string>
+#include "core/macros.h"
 
 enum class ShaderStage {
 	Vertex,

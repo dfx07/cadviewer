@@ -11,7 +11,7 @@
 * @brief    Defines interfaces (abstract classes) representing behaviors that can be attached to a "view"
 ***********************************************************************************/
 
-#include <common/tfx_def.h>
+#include <core/tfx_def.h>
 #include <modules/inputdevice.h>
 
 _interface ITFXMouseInteractiveView

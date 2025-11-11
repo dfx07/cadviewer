@@ -14,7 +14,7 @@
 #include "graphics/fonts/xfontrenderer.h"
 #include "RenderDef.h"
 
-class GLSdfFontRenderer : public IFontRender
+class GLSdfFontRenderer : public tfx::IFontRender
 {
 public:
 	GLSdfFontRenderer();

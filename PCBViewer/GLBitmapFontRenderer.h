@@ -12,8 +12,9 @@
 #define GLBITMAPFONTRENDERER_H
 
 #include "graphics/fonts/xfontrenderer.h"
+#include "RenderDef.h"
 
-class GLBitmapFontRenderer : public IFontRender
+class GLBitmapFontRenderer : public tfx::IFontRender
 {
 public:
 	GLBitmapFontRenderer();

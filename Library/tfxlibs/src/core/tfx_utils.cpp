@@ -1,4 +1,4 @@
-#include "common/tfx_utils.h"
+#include "core/tfx_utils.h"
 
 #if _WIN_FLAT
 #include <objbase.h>

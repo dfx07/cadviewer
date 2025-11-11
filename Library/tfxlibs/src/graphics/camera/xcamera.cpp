@@ -1,6 +1,8 @@
 ﻿#include "graphics/camera/xcamera.h"
 
-Camera::Camera():
+__BEGIN_NAMESPACE__
+
+_tfxCamera::_tfxCamera():
 	m_iWidth(0), m_iHeight(0), m_fFar(0.f), m_fNear(0.f)
 {
 	m_position = { 0.f, 0.f, 0.f };
@@ -12,7 +14,7 @@ Camera::Camera():
 	m_modelMat = Mat4(1.f);
 }
 
-Camera::~Camera()
+_tfxCamera::~_tfxCamera()
 {
 
 }
@@ -25,7 +27,7 @@ Camera::~Camera()
 *! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 *******************************************************************************/
 
-Vec2 Camera::PointLT2Center(const Vec2& p) const
+Vec2 _tfxCamera::PointLT2Center(const Vec2& p) const
 {
 	Vec2 point = { 0, 0 };  // Để mặc định
 	point.x = (p.x - m_iWidth / 2);
@@ -34,39 +36,39 @@ Vec2 Camera::PointLT2Center(const Vec2& p) const
 }
 
 
-Mat4& Camera::GetViewMatrix()
+Mat4& _tfxCamera::GetViewMatrix()
 {
 	return m_viewMat;
 }
 
 
-Mat4& Camera::GetProjMatrix()
+Mat4& _tfxCamera::GetProjMatrix()
 {
 	return m_projMat;
 }
 
 
-Mat4& Camera::GetModelMatrix()
+Mat4& _tfxCamera::GetModelMatrix()
 {
 	return m_modelMat;
 }
 
-Vec3 Camera::World2ScreenPoint(const Vec3& p) const
+Vec3 _tfxCamera::World2ScreenPoint(const Vec3& p) const
 {
 	return Vec3();
 }
 
-Vec3 Camera::Screen2WorldPoint(const Vec3& p) const
+Vec3 _tfxCamera::Screen2WorldPoint(const Vec3& p) const
 {
 	return Vec3();
 }
 
-void Camera::ZoomTo(Vec3 ptTarget, const float delta_z)
+void _tfxCamera::ZoomTo(Vec3 ptTarget, const float delta_z)
 {
 }
 
 
-void Camera::SetCamera(const Vec3& pos, const Vec3& dir, const Vec3& up)
+void _tfxCamera::SetCamera(const Vec3& pos, const Vec3& dir, const Vec3& up)
 {
 	m_position = pos;
 	m_direction = dir;
@@ -74,38 +76,38 @@ void Camera::SetCamera(const Vec3& pos, const Vec3& dir, const Vec3& up)
 }
 
 
-void Camera::SetView(const int width, const int height)
+void _tfxCamera::SetView(const int width, const int height)
 {
 	m_iWidth = width;
 	m_iHeight = height;
 }
 
-Vec2 Camera::GetView() const
+Vec2 _tfxCamera::GetView() const
 {
 	return Vec2(m_iWidth, m_iHeight);
 }
 
 
-void Camera::SetDistPlane(const float _near, const float _far)
+void _tfxCamera::SetDistPlane(const float _near, const float _far)
 {
 	m_fNear = _near;
 	m_fFar = _far;
 }
 
 
-Vec3 Camera::GetPosition() const
+Vec3 _tfxCamera::GetPosition() const
 {
 	return m_position;
 }
 
 
-void Camera::SetPosition(const Vec3& pos)
+void _tfxCamera::SetPosition(const Vec3& pos)
 {
 	m_position = pos;
 }
 
 
-void Camera::SetPosition(float phi, float theta, float distance, Vec3 target)
+void _tfxCamera::SetPosition(float phi, float theta, float distance, Vec3 target)
 {
 	// caculate position based on spherical coordinates
 	float x = cos(phi) * sin(theta);
@@ -129,14 +131,14 @@ void Camera::SetPosition(float phi, float theta, float distance, Vec3 target)
 }
 
 
-void Camera::Move(const Vec3& vOffset)
+void _tfxCamera::Move(const Vec3& vOffset)
 {
 	m_position += vOffset;
 
 	UpdateViewMatrix();
 }
 
-void Camera::UpdateZoom(const float fDelta)
+void _tfxCamera::UpdateZoom(const float fDelta)
 {
 }
 
@@ -145,13 +147,13 @@ void Camera::UpdateZoom(const float fDelta)
 /// Camera2D ////////////////////////////////////////////////////////////
 /// </summary>
 
-Camera2D::Camera2D() : Camera(),
+_tfxCamera2D::_tfxCamera2D() : _tfxCamera(),
 m_fZoom(1.f)
 {
 	m_projMatNozoom = Mat4(1.f);
 }
 
-Camera2D::~Camera2D()
+_tfxCamera2D::~_tfxCamera2D()
 {
 
 }
@@ -163,7 +165,7 @@ Camera2D::~Camera2D()
 *! @author : thuong.nv          - [Date] : 2025.06.12
 *! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 *******************************************************************************/
-Vec3 Camera2D::World2ScreenPoint(const Vec3& p) const
+Vec3 _tfxCamera2D::World2ScreenPoint(const Vec3& p) const
 {
 	Vec3 point = { 0 , 0 , 0};   // Để mặc định
 	point.x = (float(m_iWidth / 2) - m_fZoom * (m_position.x - p.x));
@@ -178,7 +180,7 @@ Vec3 Camera2D::World2ScreenPoint(const Vec3& p) const
 *! @author : thuong.nv          - [Date] : 2025.06.12
 *! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 *******************************************************************************/
-Vec3 Camera2D::Screen2WorldPoint(const Vec3& p) const
+Vec3 _tfxCamera2D::Screen2WorldPoint(const Vec3& p) const
 {
 	Vec3 point = { 0 , 0 , 0 };    // Để mặc định
 	point.x = m_position.x + (p.x - float(m_iWidth / 2)) / m_fZoom;
@@ -191,7 +193,7 @@ Vec3 Camera2D::Screen2WorldPoint(const Vec3& p) const
 *! @return : void
 *! @author : thuong.nv          - [Date] : 2025.06.12
 *******************************************************************************/
-void Camera2D::ZoomTo(Vec3 ptTarget, const float delta_z)
+void _tfxCamera2D::ZoomTo(Vec3 ptTarget, const float delta_z)
 {
 	ptTarget.z = 0.f;
 
@@ -206,12 +208,12 @@ void Camera2D::ZoomTo(Vec3 ptTarget, const float delta_z)
 	m_position.y -= vMove.y;
 }
 
-float Camera2D::GetZoom() const
+float _tfxCamera2D::GetZoom() const
 {
 	return m_fZoom;
 }
 
-Mat4& Camera2D::GetProjMatrixNozoom()
+Mat4& _tfxCamera2D::GetProjMatrixNozoom()
 {
 	return m_projMatNozoom;
 }
@@ -223,7 +225,7 @@ Mat4& Camera2D::GetProjMatrixNozoom()
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera2D::UpdateViewMatrix()
+void _tfxCamera2D::UpdateViewMatrix()
 {
 	m_viewMat = glm::lookAt(m_position, m_position - m_direction, m_up);
 }
@@ -234,7 +236,7 @@ void Camera2D::UpdateViewMatrix()
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera2D::UpdateProjMatrix()
+void _tfxCamera2D::UpdateProjMatrix()
 {
 	// Projection matrix không sử dụng zoom
 	float left		= -float(m_iWidth / 2);
@@ -259,7 +261,7 @@ void Camera2D::UpdateProjMatrix()
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera2D::UpdateMatrix()
+void _tfxCamera2D::UpdateMatrix()
 {
 	UpdateViewMatrix();
 	UpdateProjMatrix();
@@ -270,7 +272,7 @@ void Camera2D::UpdateMatrix()
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera2D::UpdateZoom(float zDelta)
+void _tfxCamera2D::UpdateZoom(float zDelta)
 {
 	static constexpr float ZOOM_MIN = 0.01f;
 	static constexpr float ZOOM_MAX = 100.f;
@@ -300,7 +302,7 @@ void Camera2D::UpdateZoom(float zDelta)
 	}
 }
 
-CameraType Camera2D::GetType() const
+CameraType _tfxCamera2D::GetType() const
 {
 	return CameraType::C2D;
 }
@@ -312,7 +314,7 @@ CameraType Camera2D::GetType() const
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera2D::Move(float delx, float dely)
+void _tfxCamera2D::Move(float delx, float dely)
 {
 	float deltax_glo = -delx / m_fZoom;
 	float deltay_glo = dely / m_fZoom;
@@ -324,14 +326,15 @@ void Camera2D::Move(float delx, float dely)
 /// Camera3D ////////////////////////////////////////////////////////////
 /// </summary>
 
-Camera3D::Camera3D() : Camera(), m_fFov(1.f), m_fTheta(0.f), m_fPhi(0.f),
+_tfxCamera3D::_tfxCamera3D() : _tfxCamera(),
+m_fFov(1.f), m_fTheta(0.f), m_fPhi(0.f),
 m_fDis(0.f), m_iMode(0)
 {
 	m_modelMat = Mat4(1.f);
 	m_vTarget = { 0.f, 0.f, 0.f };
 }
 
-Camera3D::~Camera3D()
+_tfxCamera3D::~_tfxCamera3D()
 {
 
 }
@@ -342,7 +345,7 @@ Camera3D::~Camera3D()
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera3D::SetModelMatrix(Mat4& mat)
+void _tfxCamera3D::SetModelMatrix(Mat4& mat)
 {
 	m_modelMat = mat;
 }
@@ -353,7 +356,7 @@ void Camera3D::SetModelMatrix(Mat4& mat)
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera3D::UpdateViewMatrix()
+void _tfxCamera3D::UpdateViewMatrix()
 {
 	m_viewMat = glm::lookAt(m_position, m_position - m_direction, m_up);
 }
@@ -364,7 +367,7 @@ void Camera3D::UpdateViewMatrix()
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera3D::UpdateProjMatrix()
+void _tfxCamera3D::UpdateProjMatrix()
 {
 	float aspect = float(m_iWidth) / float(m_iHeight);
 	m_projMat = glm::perspective(glm::radians(m_fFov), aspect, m_fNear, m_fFar);
@@ -376,13 +379,13 @@ void Camera3D::UpdateProjMatrix()
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera3D::UpdateMatrix()
+void _tfxCamera3D::UpdateMatrix()
 {
 	this->UpdateViewMatrix();
 	this->UpdateProjMatrix();
 }
 
-void Camera3D::UpdateOrbitTarget(float phi, float theta)
+void _tfxCamera3D::UpdateOrbitTarget(float phi, float theta)
 {
 	//↓ 2021.09.22 N.V.Thuong [Xử lý ngoại lệ và khoảng xoay]
 	//if (fabs(phi) > M3_HPI)
@@ -417,17 +420,17 @@ void Camera3D::UpdateOrbitTarget(float phi, float theta)
 	//↑ 2021.09.22 N.V.Thuong [Cập nhật thông số camera]
 }
 
-CameraType Camera3D::GetType() const
+CameraType _tfxCamera3D::GetType() const
 {
 	return CameraType::C3D;
 }
 
-void Camera3D::SetFieldOfView(float fov)
+void _tfxCamera3D::SetFieldOfView(float fov)
 {
 	m_fFov = fov;
 }
 
-void Camera3D::SetUpOrbitTarget(Vec3 position, Vec3 target)
+void _tfxCamera3D::SetUpOrbitTarget(Vec3 position, Vec3 target)
 {
 	m_vTarget = target;
 	m_fDis = glm::distance(position, target);
@@ -435,7 +438,7 @@ void Camera3D::SetUpOrbitTarget(Vec3 position, Vec3 target)
 	this->UpdateOrbitTarget(m_fPhi, m_fTheta);
 }
 
-void Camera3D::OrbitTarget(float delPhi, float delTheta)
+void _tfxCamera3D::OrbitTarget(float delPhi, float delTheta)
 {
 	float phi = m_fPhi + delPhi;
 	float theta = m_fTheta + delTheta;
@@ -448,7 +451,7 @@ void Camera3D::OrbitTarget(float delPhi, float delTheta)
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera3D::ZoomTo(float delta)
+void _tfxCamera3D::ZoomTo(float delta)
 {
 	Vec3 vUint = glm::normalize(m_direction);
 	Vec3 vPositionNew = m_position - vUint * delta;
@@ -472,7 +475,7 @@ void Camera3D::ZoomTo(float delta)
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera3D::OrbitMove(float delta)
+void _tfxCamera3D::OrbitMove(float delta)
 {
 	Vec3 vuint_move = glm::cross(m_up, -m_direction);
 	m_position += vuint_move * delta;
@@ -480,7 +483,7 @@ void Camera3D::OrbitMove(float delta)
 	this->UpdateViewMatrix();
 }
 
-Vec3 Camera3D::World2ScreenPoint(const Vec3& p) const
+Vec3 _tfxCamera3D::World2ScreenPoint(const Vec3& p) const
 {
 	return Vec3();
 }
@@ -491,7 +494,7 @@ Vec3 Camera3D::World2ScreenPoint(const Vec3& p) const
 *! @return : void
 *! @author : thuong.nv          - [Date] : 22/04/2023
 *******************************************************************************/
-void Camera3D::OrbitMove1(float x, float y)
+void _tfxCamera3D::OrbitMove1(float x, float y)
 {
 	float xtemp = m_position.x + x;
 	float ytemp = m_position.y + y;
@@ -518,7 +521,7 @@ void Camera3D::OrbitMove1(float x, float y)
 *! @author : thuong.nv          - [Date] : 2025.06.12
 *! @note   : Tọa độ [x, y] đầu vào là tọa độ trên view  (Left Top)
 *******************************************************************************/
-Vec3 Camera3D::Screen2WorldPoint(const Vec3& p) const
+Vec3 _tfxCamera3D::Screen2WorldPoint(const Vec3& p) const
 {
 	// TODO : Implement
 	return Vec3();
@@ -529,9 +532,10 @@ Vec3 Camera3D::Screen2WorldPoint(const Vec3& p) const
 *! @return : void
 *! @author : thuong.nv          - [Date] : 2025.06.12
 *******************************************************************************/
-void Camera3D::ZoomTo(Vec3 ptTarget, const float delta_z)
+void _tfxCamera3D::ZoomTo(Vec3 ptTarget, const float delta_z)
 {
 	// TODO : Implement
 }
 
 
+__END_NAMESPACE__

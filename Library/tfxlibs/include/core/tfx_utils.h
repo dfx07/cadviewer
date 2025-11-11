@@ -12,8 +12,10 @@
 #ifndef TFX_UTILS_H
 #define TFX_UTILS_H
 
-#include "tfx_def.h"
 #include <string>
+
+#include "tfx_def.h"
+#include "tfx_math.h"
 
 __BEGIN_NAMESPACE__
 

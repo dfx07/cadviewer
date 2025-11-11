@@ -443,12 +443,6 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 {
 	auto pData = std::make_shared<GLTextRenderData>();
 
-	//for (auto pTextObj : pDrawObject->m_vecTexts)
-	//{
-	//	auto pSelf = shared_from_this();
-	//	pTextObj->Make(pSelf);
-	//}
-
 	for (auto pTextObj : pDrawObject->m_vecTexts)
 	{
 		auto pFont = pTextObj->m_font;
@@ -473,7 +467,6 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 				}
 			}
 
-
 			float fZ = NextZ();
 
 			float fNextPosX = pTextObj->m_pt.x;
@@ -483,23 +476,24 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 
 			for (auto& ch : pTextObj->m_data)
 			{
-				CharGlyphData glyphChar;
+				if (auto pGlyphBase = pAtlasPtr->GetGlyph(ch))
+				{
+					CharGlyphData glyphChar;
 
-				glyphChar.char_code = ch;
-				glyphChar.color = pTextObj->m_clColor;
-				glyphChar.dir = Vec2(1, 0);
+					glyphChar.char_code = ch;
+					glyphChar.color = pTextObj->m_clColor;
+					glyphChar.dir = Vec2(1, 0);
 
-				auto pGlyphBase = pAtlasPtr->GetGlyph(glyphChar.char_code);
+					Point2 ptGlyphDraw;
+					ptGlyphDraw.x = fNextPosX + pGlyphBase->bearingX;
+					ptGlyphDraw.y = fPosY + pGlyphBase->bearingY;
 
-				Point2 ptGlyphDraw;
-				ptGlyphDraw.x = fNextPosX + pGlyphBase->bearingX;
-				ptGlyphDraw.y = fPosY + pGlyphBase->bearingY;
+					glyphChar.pos = Vec3(ptGlyphDraw, fZ);
 
-				glyphChar.pos = Vec3(ptGlyphDraw, fZ);
+					fNextPosX += pGlyphBase->advanceX;
 
-				fNextPosX += pGlyphBase->advanceX;
-
-				itIns.first->second.push_back(glyphChar);
+					itIns.first->second.push_back(glyphChar);
+				}
 			}
 		}
 	}

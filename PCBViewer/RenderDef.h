@@ -11,9 +11,21 @@
 #ifndef RENDERDEF_H
 #define RENDERDEF_H
 
+#include "core/tfx_math.h"
 #include "graphics/rendering/xrendertype.h"
+#include "graphics/camera/xcamera.h"
 
 #include <memory>
+
+typedef tfx::Vec2 Vec2;
+typedef tfx::Vec3 Vec3;
+typedef tfx::Vec4 Vec4;
+typedef tfx::Vec2 Point2;
+typedef tfx::Vec3 Point3;
+typedef tfx::Vec3 Col3;
+typedef tfx::Vec4 Col4;
+typedef tfx::Mat4 Mat4;
+typedef tfx::Mat3 Mat3;
 
 template<typename T>
 auto RENPTR(const T& obj) -> decltype(tfx::ValuePtr(obj)) {
@@ -33,6 +45,15 @@ struct ViewPort
 	int width;
 	int height;
 };
+
+typedef tfx::_tfxCamera Camera;
+typedef std::shared_ptr<Camera> CameraPtr;
+
+typedef tfx::_tfxCamera2D Camera2D;
+typedef std::shared_ptr<Camera2D> Camera2DPtr;
+
+typedef tfx::_tfxCamera3D Camera3D;
+typedef std::shared_ptr<Camera3D> Camera3DPtr;
 
 class RenderData;
 typedef std::shared_ptr<RenderData> RenderDataPtr;

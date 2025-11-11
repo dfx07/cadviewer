@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include <Common/apicom.h>
+#include "core/apicom.h"
 #include "PCBViewDef.h"
 
 C_STYLE

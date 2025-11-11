@@ -19,12 +19,6 @@
     <Filter Include="Header Files\modules">
       <UniqueIdentifier>{6a56458e-c108-4442-a46c-62206b7c33fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\common">
-      <UniqueIdentifier>{924cc71f-34b0-4f51-adde-a791dabe473a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\common">
-      <UniqueIdentifier>{108991a1-fd37-44de-b90a-1407108701ea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{6e0f50d1-38b6-4fd6-b148-237af74ee61a}</UniqueIdentifier>
     </Filter>
@@ -61,6 +55,15 @@
     <Filter Include="Source Files\draw_objects">
       <UniqueIdentifier>{70a884e8-ae7f-4f78-b260-456710661fa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{924cc71f-34b0-4f51-adde-a791dabe473a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{108991a1-fd37-44de-b90a-1407108701ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\resources">
+      <UniqueIdentifier>{8e5079ab-d7e6-41d2-955a-ba3cb61954ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCBView.h">
@@ -71,12 +74,6 @@
     </ClInclude>
     <ClInclude Include="PCBViewDef.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_type.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_def.h">
-      <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h">
       <Filter>Header Files\graphics</Filter>
@@ -89,12 +86,6 @@
     </ClInclude>
     <ClInclude Include="WInputDeviceMap.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\apicom.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\apidef.h">
-      <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h">
       <Filter>Header Files\graphics</Filter>
@@ -174,9 +165,6 @@
     <ClInclude Include="RectDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_utils.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="RenderUtil.h">
       <Filter>Header Files\render</Filter>
     </ClInclude>
@@ -204,9 +192,6 @@
     <ClInclude Include="..\Library\tfxlibs\include\graphics\camera\xcamera.h">
       <Filter>Header Files\graphics\camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\typext.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontatlas.h">
       <Filter>Header Files\graphics\fonts</Filter>
     </ClInclude>
@@ -219,11 +204,32 @@
     <ClInclude Include="FontAtlasMSDFGen.h">
       <Filter>Header Files\render</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\tfx_type_traits.h">
-      <Filter>Header Files\common</Filter>
+    <ClInclude Include="..\Library\tfxlibs\include\core\apicom.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\common\macros.h">
-      <Filter>Header Files\common</Filter>
+    <ClInclude Include="..\Library\tfxlibs\include\core\apidef.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\core\macros.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\core\tfx_def.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\core\tfx_type.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\core\tfx_type_traits.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\core\tfx_utils.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\core\tfx_math.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Header Files\resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -320,8 +326,8 @@
     <ClCompile Include="FontAtlasMSDFGen.cpp">
       <Filter>Source Files\render</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\tfxlibs\src\common\tfx_utils.cpp">
-      <Filter>Source Files\common</Filter>
+    <ClCompile Include="..\Library\tfxlibs\src\core\tfx_utils.cpp">
+      <Filter>Source Files\core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ﻿#include "FreeTypeFont.h"
 #include <mutex>
-#include "common/tfx_utils.h"
+#include "core/tfx_utils.h"
 
 class FreeTypeFontSystem
 {

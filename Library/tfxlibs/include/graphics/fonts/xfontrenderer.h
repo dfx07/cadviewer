@@ -14,6 +14,9 @@
 #include <string>
 
 #include "graphics/rendering/xrendertype.h"
+#include "core/tfx_math.h"
+
+__BEGIN_NAMESPACE__
 
 _interface IFontRender
 {
@@ -22,5 +25,7 @@ public:
 public:
 	virtual bool Draw(const IFont * font, const std::string txt, float x, float y, Vec2 dir, const Col4& col) = 0;
 };
+
+__END_NAMESPACE__
 
 #endif // !XFONTRENDERER_H

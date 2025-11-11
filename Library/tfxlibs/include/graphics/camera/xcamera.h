@@ -11,8 +11,7 @@
 #ifndef XCAMERA_H
 #define XCAMERA_H
 
-#include "common/typext.h"
-
+#include "core/tfx_math.h"
 
 enum class CameraType
 {
@@ -28,15 +27,17 @@ enum class CameraMode
 };
 
 
+__BEGIN_NAMESPACE__
+
 /**********************************************************************************
-* ⮟⮟ Class name: Camera
+* ⮟⮟ Class name: _tfxCamera
 *  Camera template class
 ***********************************************************************************/
-class Camera
+class _tfxCamera
 {
 public:
-	Camera();
-	virtual ~Camera();
+	_tfxCamera();
+	virtual ~_tfxCamera();
 
 public:
 	virtual CameraType GetType() const = 0;
@@ -181,15 +182,15 @@ protected:
 * ⮟⮟ Class name: Camera2D
 * Base class for window handle inheritance
 ***********************************************************************************/
-class Camera2D : public Camera
+class _tfxCamera2D : public _tfxCamera
 {
 private:
 	float	m_fZoom;         // Tỷ lệ zoom
 	Mat4	m_projMatNozoom; //projection matrix nozoom
 
 public:
-	Camera2D();
-	virtual ~Camera2D();
+	_tfxCamera2D();
+	virtual ~_tfxCamera2D();
 
 public:
 	/*******************************************************************************
@@ -281,15 +282,15 @@ public:
 };
 
 /**********************************************************************************
-* ⮟⮟ Class name: Camera3D
+* ⮟⮟ Class name: _tfxCamera3D
 * Base class for window handle inheritance
 ***********************************************************************************/
-class Camera3D : public Camera
+class _tfxCamera3D : public _tfxCamera
 {
 public:
-	Camera3D();
+	_tfxCamera3D();
 
-	virtual ~Camera3D();
+	virtual ~_tfxCamera3D();
 
 	/*******************************************************************************
 	*! @brief  : Cập nhật model matrix
@@ -401,6 +402,8 @@ private:
 
 	int				m_iMode;   // Chế độ Camera đang hoạt động
 };
+
+__END_NAMESPACE__
 
 #endif // !XGPCAMERA_H
 

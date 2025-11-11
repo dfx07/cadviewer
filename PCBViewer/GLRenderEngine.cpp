@@ -5,7 +5,7 @@
 #include "RenderComponent.h"
 
 #include "graphics/rendering/shader/xglshader.h"
-#include "common/tfx_type.h"
+#include "core/tfx_type.h"
 
 #include "DrawSystem.h"
 #include "PolyDrawSystem.h"

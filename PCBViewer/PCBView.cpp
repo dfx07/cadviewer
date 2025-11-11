@@ -16,8 +16,8 @@
 #include "TriangleDrawObject.h"
 #include "Renderer.h"
 
-#include "common/tfx_utils.h"
-#include "common/tfx_type.h"
+#include "core/tfx_utils.h"
+#include "core/tfx_type.h"
 
 
 #undef min

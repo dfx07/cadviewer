@@ -45,8 +45,4 @@
 #define NULL_BREAK(ptr) if ((ptr) == nullptr) break
 #define SAFE_DELETE(ptr) if ((ptr) != nullptr) { delete (ptr); (ptr) = nullptr; }
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif // !M_PI
-
 #endif // !MACROS_H
