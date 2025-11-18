@@ -19,15 +19,21 @@
 #include "PCBViewType.h"
 #include "GLRenderData.h"
 
-
 class GLRenderDataBuilder : public RenderDataBuilder,
 	public std::enable_shared_from_this<GLRenderDataBuilder>
 {
+public:
+	GLRenderDataBuilder(RenderResourceManagerPtr pFontAtlasManager = nullptr);
+	~GLRenderDataBuilder();
+
 private:
 	RectVertexData Build(RectDrawObject* pObject);
 
 public:
 	float NextZ();
+
+public:
+	void SetFontAtlasManager(RenderResourceManagerPtr pFontAtlasManager);
 
 public:
 	virtual RenderDataPtr Make(PolyDrawObjectList* pDrawObject);
@@ -61,5 +67,5 @@ private:
 
 protected:
 
-	FontAtlasManager m_FontAtlasManager;
+	RenderResourceManagerPtr m_pRenderResourceManger;
 };

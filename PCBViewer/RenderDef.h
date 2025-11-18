@@ -13,9 +13,11 @@
 
 #include "core/tfx_math.h"
 #include "graphics/rendering/xrendertype.h"
+#include "graphics/fonts/xfontatlas.h"
 #include "graphics/camera/xcamera.h"
 
 #include <memory>
+#include "ResourceDef.h"
 
 typedef tfx::Vec2 Vec2;
 typedef tfx::Vec3 Vec3;
@@ -55,6 +57,13 @@ typedef std::shared_ptr<Camera2D> Camera2DPtr;
 typedef tfx::_tfxCamera3D Camera3D;
 typedef std::shared_ptr<Camera3D> Camera3DPtr;
 
+typedef tfx::_tfxIFontRender IFontRender;
+typedef std::shared_ptr<IFontRender> FontRenderPtr;
+
+
+class RenderResourceManager;
+typedef std::shared_ptr<RenderResourceManager> RenderResourceManagerPtr;
+
 class RenderData;
 typedef std::shared_ptr<RenderData> RenderDataPtr;
 
@@ -87,6 +96,12 @@ typedef std::shared_ptr<GLRectRenderData> GLRectRenderDataPtr;
 
 class GLTriangleRenderData;
 typedef std::shared_ptr<GLTriangleRenderData> GLTriangleRenderDataPtr;
+
+class GLBitmapTextRenderData;
+typedef std::shared_ptr<GLBitmapTextRenderData> GLBitmapTextRenderDataPtr;
+
+class GLSDFTextRenderData;
+typedef std::shared_ptr<GLSDFTextRenderData> GLSDFTextRenderDataPtr;
 
 class GLTextRenderData;
 typedef std::shared_ptr<GLTextRenderData> GLTextRenderDataPtr;

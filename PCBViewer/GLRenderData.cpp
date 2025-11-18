@@ -848,13 +848,25 @@ void GLTriangleRenderData::Release()
 	m_nUpdateFlags = 0;
 }
 
-GLTextRenderData::GLTextRenderData()
+GLBitmapTextRenderData::GLBitmapTextRenderData()
 {
 }
 
-GLTextRenderData::~GLTextRenderData()
+GLBitmapTextRenderData::~GLBitmapTextRenderData()
 {
 }
+
+bool GLBitmapTextRenderData::Create()
+{
+	// TODO : create
+	return true;
+}
+
+bool GLBitmapTextRenderData::Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList)
+{
+	return true;
+}
+
 
 GLSDFTextRenderData::GLSDFTextRenderData()
 {
@@ -864,7 +876,7 @@ GLSDFTextRenderData::~GLSDFTextRenderData()
 {
 }
 
-void GLSDFTextRenderData::Create()
+bool GLSDFTextRenderData::Create()
 {
 	//for (auto pairFontAtl : m_mapSdfRenderData)
 	//{
@@ -880,6 +892,9 @@ void GLSDFTextRenderData::Create()
 	//		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, glyphSSBO); // binding = 0
 	//	}
 	//}
+
+	// TODO : create
+	return true;
 }
 
 bool GLSDFTextRenderData::Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList)
@@ -894,4 +909,14 @@ bool GLSDFTextRenderData::Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList)
 	}
 
 	return true;
+}
+
+GLTextRenderData::GLTextRenderData()
+{
+	m_pSDFRenderData = std::make_shared<GLSDFTextRenderData>();
+	m_pBitmapRenderData = std::make_shared<GLBitmapTextRenderData>();
+}
+
+GLTextRenderData::~GLTextRenderData()
+{
 }

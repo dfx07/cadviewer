@@ -13,6 +13,27 @@
 #include "DrawSystem.h"
 
 
+class SDFTextDrawSystem : public DrawSystem
+{
+public:
+	SDFTextDrawSystem();
+	~SDFTextDrawSystem();
+
+public:
+	virtual void Draw(RenderDataPtr data, const DrawParams& params) override;
+};
+
+class BitmapTextDrawSystem : public DrawSystem
+{
+public:
+	BitmapTextDrawSystem();
+	~BitmapTextDrawSystem();
+
+public:
+	virtual void Draw(RenderDataPtr data, const DrawParams& params) override;
+};
+
+
 class TextDrawSystem : public DrawSystem
 {
 public:
@@ -20,5 +41,8 @@ public:
 	~TextDrawSystem();
 
 public:
-	virtual void Draw(RenderDataPtr data, const DrawParams& params);
+	virtual void Draw(RenderDataPtr data, const DrawParams& params) override;
+
+public:
+	DrawSystemRegistryPtr m_pTextDrawSystemRegistry;
 };

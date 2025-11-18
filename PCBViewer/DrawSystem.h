@@ -42,6 +42,17 @@ public:
 			it->second->Draw(data, params);
 	}
 
+	template<typename T>
+	auto GetSystemInstance()
+	{
+		auto itFound = m_map.find(typeid(T).hash_code());
+
+		if (itFound != m_map.end())
+			itFound->second;
+
+		return nullptr;
+	}
+
 private:
 	std::unordered_map<size_t, std::shared_ptr<DrawSystem>> m_map;
 };

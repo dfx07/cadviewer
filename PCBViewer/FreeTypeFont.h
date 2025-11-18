@@ -11,12 +11,13 @@
 #ifndef FREETYPEFONT_H
 #define FREETYPEFONT_H
 
-#include "graphics/fonts/xfont.h"
-
 #include "freetype/ft2build.h"
 #include FT_FREETYPE_H
 
-class FreeTypeFont : IFont
+#include "Font.h"
+
+
+class FreeTypeFont : public IFont
 {
 public:
 	FreeTypeFont();

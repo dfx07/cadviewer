@@ -13,6 +13,8 @@
 
 #include "graphics/rendering/xrendertype.h"
 
+__BEGIN_NAMESPACE__
+
 struct GlyphBase
 {
 	uint32_t codepoint;
@@ -23,17 +25,21 @@ struct GlyphBase
 	virtual ~GlyphBase() = default;
 };
 
-_interface IFontAtlas
+
+template<typename _TFont_>
+_interface _tfxIFontAtlas
 {
 public:
-	virtual ~IFontAtlas() = default;
+	virtual ~_tfxIFontAtlas() = default;
 
 public:
-	virtual bool BuildFromFont(const IFont* font, int pixelHeight) = 0;
+	virtual bool BuildFromFont(const _TFont_* font, int pixelHeight) = 0;
 	virtual int GetAtlasWidth() const = 0;
 	virtual int GetAtlasHeight() const = 0;
 
 	virtual const GlyphBase* GetGlyph(uint32_t codepoint) const = 0;
 };
+
+__END_NAMESPACE__
 
 #endif // !XFONTATLAS_H

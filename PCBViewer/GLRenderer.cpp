@@ -8,16 +8,21 @@
 #include "graphics/rendering/OpenGL/glew.h"
 
 #include "DrawObject.h"
+#include "RenderResourceManager.h"
 
 
 
 GLRenderer::GLRenderer(CameraPtr pCamera)
-	: Renderer(pCamera)
+	: Renderer(pCamera),
+	m_pRenderResourceManager(nullptr)
 {
-	m_RenderBuilder = std::make_shared<GLRenderDataBuilder>();
-	m_RenderCache = std::make_shared<RenderCache>(m_RenderBuilder);
+	m_pRenderResourceManager = std::make_shared<RenderResourceManager>();
 
-	m_RenderEngine = std::make_shared<GLRenderEngine>();
+	m_pRenderBuilder = std::make_shared<GLRenderDataBuilder>(m_pRenderResourceManager);
+
+	m_pRenderCache = std::make_shared<RenderCache>(m_pRenderBuilder);
+
+	m_pRenderEngine = std::make_shared<GLRenderEngine>();
 }
 
 GLRenderer::~GLRenderer()
@@ -62,14 +67,14 @@ void GLRenderer::Render(std::vector<DrawObjectPtr>& model)
 
 	for (auto& pDrawObj : model)
 	{
-		RenderDataPtr pRenderData = m_RenderCache->GetOrCreateRenderData(pDrawObj);
+		RenderDataPtr pRenderData = m_pRenderCache->GetOrCreateRenderData(pDrawObj);
 
 		auto pMaterial = pDrawObj->GetComponent<MaterialComponent>();
 		auto pTransform = pDrawObj->GetComponent<TransformComponent>();
 
 		if (pRenderData)
 		{
-			m_RenderEngine->DrawRenderData(pRenderData, pRenderContext, pMaterial, pTransform);
+			m_pRenderEngine->DrawRenderData(pRenderData, pRenderContext, pMaterial, pTransform);
 		}
 	}
 

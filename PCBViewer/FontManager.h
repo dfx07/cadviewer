@@ -1,10 +1,18 @@
 #pragma once
 
-#include "graphics/fonts/xfont.h"
+#include "ResourceDef.h"
+#include "core/tfx_type_traits.h"
+#include "Font.h"
 
-class PCBPontManager : public FontManager
+
+class FontManager : public tfx::_tfxManager<std::string, FontPtr>
 {
+public:
+	virtual bool Add(const std::string& name, FontPtr& font) override;
+	virtual bool Remove(const std::string& name) override;
+};
 
-
+class FontAtlasManager : public tfx::_tfxManager<std::string, FontAtlasPtr>
+{
 
 };

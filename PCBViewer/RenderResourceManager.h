@@ -3,26 +3,27 @@
 *         Copyright (C) 2023-202x thuong.nv <thuong.nv.mta@gmail.com>
 *                   MIT software Licencs, see the accompanying
 ************************************************************************************
-* @brief : Render text using SDF (Signed Distance Field)
-* @file  : GLSdfFontRenderer.h
-* @create: Oct 06, 2025
+* @brief : Render resource manager
+* @file  : RenderResourceManager.h
+* @create: Nov 16, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-#ifndef GLSDFFONTRENDERER_H
-#define GLSDFFONTRENDERER_H
+#pragma once
 
-#include "ResourceDef.h"
-#include "graphics/fonts/xfontrenderer.h"
-#include "RenderDef.h"
+#include "FontManager.h"
 
-class GLSdfFontRenderer : public IFontRender
+class RenderResourceManager
 {
 public:
-	GLSdfFontRenderer();
-	virtual ~GLSdfFontRenderer() = default;
+	RenderResourceManager();
+	~RenderResourceManager();
+
 
 public:
-	virtual bool Draw(const IFont* font, const std::string txt, float x, float y, Vec2 dir, const Col4& col);
-};
+	FontAtlasManager* GetFontAtlasMana() {
+		return &m_FontAtlasManager;
+	}
 
-#endif // !GLSDFFONTRENDERER_H
+private:
+	FontAtlasManager m_FontAtlasManager;
+};

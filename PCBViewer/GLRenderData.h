@@ -297,6 +297,7 @@ public:
 
 #include "graphics/fonts/xfontatlas.h"
 #include <map>
+#include "RenderDef.h"
 
 struct CharGlyphData
 {
@@ -307,6 +308,41 @@ struct CharGlyphData
 };
 
 typedef std::vector<CharGlyphData> CharGlyphDataList;
+
+class GLBitmapTextRenderData : public RenderData
+{
+public:
+	GLBitmapTextRenderData();
+	virtual ~GLBitmapTextRenderData();
+
+public:
+	virtual bool Create() override;
+
+public:
+	bool Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList);
+
+public:
+	int m_nInstances = 0;
+};
+
+class GLSDFTextRenderData : public RenderData
+{
+public:
+	GLSDFTextRenderData();
+	virtual ~GLSDFTextRenderData();
+
+public:
+	virtual bool Create() override;
+
+public:
+	bool Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList);
+
+public:
+	std::map<FontAtlasPtr, CharGlyphDataList> m_mapSdfRenderData;
+	std::map<FontAtlasPtr, unsigned int> m_mapFontAtlSSBOGlyph;
+
+	int m_nInstances = 0;
+};
 
 class GLTextRenderData : public RenderData
 {
@@ -321,36 +357,12 @@ public:
 	/*
 		Type of render : Bitmap, SDF, Outline complie data in here and push it to the draw system
 		Here, we determine the type of text rendering and call the corresponding render function.
-
 	*/
 public:
 	GLTextRenderData();
 	virtual ~GLTextRenderData();
 
-	std::map<FontAtlasPtr, CharGlyphDataList> m_sdfRenderData;
-	unsigned int m_ssboGlyph;
-
-	int m_nInstances = 0;
+	GLSDFTextRenderDataPtr m_pSDFRenderData;
+	GLBitmapTextRenderDataPtr m_pBitmapRenderData;
 };
 
-class GLBitmapTextRenderData : public GLTextRenderData
-{
-
-};
-
-class GLSDFTextRenderData
-{
-public:
-	GLSDFTextRenderData();
-	virtual ~GLSDFTextRenderData();
-
-public:
-	void Create();
-
-public:
-	bool Add(FontAtlasPtr fontAtl, CharGlyphDataList& charList);
-
-public:
-	std::map<FontAtlasPtr, CharGlyphDataList> m_mapSdfRenderData;
-	std::map<FontAtlasPtr, unsigned int> m_mapFontAtlSSBOGlyph;
-};

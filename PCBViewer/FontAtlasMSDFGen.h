@@ -11,10 +11,11 @@
 #ifndef FONTATLASMSDFGEN_H
 #define FONTATLASMSDFGEN_H
 
-#include "graphics/fonts/xfontatlas.h"
-
 #include <unordered_map>
 #include <vector>
+
+#include "RenderDef.h"
+#include "FontAtlas.h"
 
 
 #define ATLAS_MSD_WIDTH_DF 1024

@@ -20,7 +20,6 @@
 #endif // !M_PI
 
 
-
 // //////////////////////////////////////////////////////////////////////////////////
 // User can define USE_GLM to use GLM types, otherwise custom types will be used
 #ifdef USE_GLM
@@ -38,17 +37,10 @@ typedef glm::mat2 Mat2;
 typedef glm::mat3 Mat3;
 typedef glm::mat4 Mat4;
 
-typedef glm::vec3 Col3;
-typedef glm::vec4 Col4;
-
 template<typename T>
 auto ValuePtr(const T& obj) -> decltype(glm::value_ptr(obj)) {
 	return glm::value_ptr(obj);
 }
-
-typedef _tfx2Point<float> TFX2Point;
-
-__END_NAMESPACE__
 
 // //////////////////////////////////////////////////////////////////////////////////
 // Custom types for 2D, 3D, and 4D vectors and matrices
@@ -59,24 +51,40 @@ __BEGIN_NAMESPACE__
 struct tagVec2
 {
 	float x, y;
-	Vec2() : x(0), y(0) {}
-	Vec2(float _x, float _y) : x(_x), y(_y) {}
-	Vec2 operator+(const Vec2& other) const { return Vec2(x + other.x, y + other.y); }
-	Vec2 operator-(const Vec2& other) const { return Vec2(x - other.x, y - other.y); }
-	Vec2 operator*(float scalar) const { return Vec2(x * scalar, y * scalar); }
-	Vec2 operator/(float scalar) const { return Vec2(x / scalar, y / scalar); }
+	tagVec2() : x(0), y(0) {}
+	tagVec2(float _x, float _y) : x(_x), y(_y) {}
+	tagVec2 operator+(const tagVec2& other) const { return tagVec2(x + other.x, y + other.y); }
+	tagVec2 operator-(const tagVec2& other) const { return tagVec2(x - other.x, y - other.y); }
+	tagVec2 operator*(float scalar) const { return tagVec2(x * scalar, y * scalar); }
+	tagVec2 operator/(float scalar) const { return tagVec2(x / scalar, y / scalar); }
+};
+
+struct tagVec3
+{
+	float x, y, z;
+	tagVec3() : x(0), y(0), z(0) {}
+	tagVec3(float _x, float _y) : x(_x), y(_y) {}
+	tagVec3 operator+(const tagVec3& other) const { return tagVec3(x + other.x, y + other.y, z + other.z); }
+	tagVec3 operator-(const tagVec3& other) const { return tagVec3(x - other.x, y - other.y, z - other.z); }
+	tagVec3 operator*(float scalar) const { return tagVec3(x * scalar, y * scalar, z * scalar); }
+	tagVec3 operator/(float scalar) const { return tagVec3(x / scalar, y / scalar, z / scalar); }
 };
 
 
 typedef tagVec2 Vec2;
-typedef tagVec2 Vec3;
+typedef tagVec3 Vec3;
 typedef tagVec2 Vec4;
 typedef tagVec2 Mat2;
 typedef tagVec2 Mat3;
 typedef tagVec2 Mat4;
 
-__BEGIN_NAMESPACE__
+template<typename T>
+auto ValuePtr(const T& obj) -> decltype(value_ptr(obj)) {
+	return glm::value_ptr(obj);
+}
 
 #endif // USE_GLM
+
+__END_NAMESPACE__
 
 #endif // !TFX_TYPE_H

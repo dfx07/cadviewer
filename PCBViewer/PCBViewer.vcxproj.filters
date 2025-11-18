@@ -64,6 +64,12 @@
     <Filter Include="Header Files\resources">
       <UniqueIdentifier>{8e5079ab-d7e6-41d2-955a-ba3cb61954ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\resources">
+      <UniqueIdentifier>{8d4bf895-b1e6-48c9-9b2a-3b834c5cf836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\graphics\renderer">
+      <UniqueIdentifier>{cc18574e-ebac-45b5-9ce6-f96197e37b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCBView.h">
@@ -75,9 +81,6 @@
     <ClInclude Include="PCBViewDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="ViewBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,9 +89,6 @@
     </ClInclude>
     <ClInclude Include="WInputDeviceMap.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h">
-      <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xglshader.h">
       <Filter>Header Files\graphics</Filter>
@@ -177,9 +177,6 @@
     <ClInclude Include="TextDrawSystem.h">
       <Filter>Header Files\draw_systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontrenderer.h">
-      <Filter>Header Files\graphics\fonts</Filter>
-    </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfont.h">
       <Filter>Header Files\graphics\fonts</Filter>
     </ClInclude>
@@ -194,9 +191,6 @@
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontatlas.h">
       <Filter>Header Files\graphics\fonts</Filter>
-    </ClInclude>
-    <ClInclude Include="FreeTypeFont.h">
-      <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="TextDrawObject.h">
       <Filter>Header Files\draw_objects</Filter>
@@ -230,6 +224,30 @@
     </ClInclude>
     <ClInclude Include="FontManager.h">
       <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeTypeFont.h">
+      <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceDef.h">
+      <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\fonts\xfontrenderer.h">
+      <Filter>Header Files\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\xrendertype.h">
+      <Filter>Header Files\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\tfxlibs\include\graphics\rendering\shader\xshader.h">
+      <Filter>Header Files\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="FontAtlas.h">
+      <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderResourceManager.h">
+      <Filter>Header Files\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,9 +335,6 @@
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp">
       <Filter>Source Files\graphics\camera</Filter>
     </ClCompile>
-    <ClCompile Include="FreeTypeFont.cpp">
-      <Filter>Source Files\render</Filter>
-    </ClCompile>
     <ClCompile Include="TextDrawObject.cpp">
       <Filter>Source Files\draw_objects</Filter>
     </ClCompile>
@@ -328,6 +343,15 @@
     </ClCompile>
     <ClCompile Include="..\Library\tfxlibs\src\core\tfx_utils.cpp">
       <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeTypeFont.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderResourceManager.cpp">
+      <Filter>Source Files\render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

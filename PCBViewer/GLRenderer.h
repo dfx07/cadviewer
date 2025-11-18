@@ -29,10 +29,12 @@ public:
 	virtual void Update(float deltaTime) override;
 
 protected:
-	RenderCachePtr m_RenderCache;
-	RenderEnginePtr m_RenderEngine;
+	RenderCachePtr m_pRenderCache;
+	RenderEnginePtr m_pRenderEngine;
 
-	RenderDataBuilderPtr m_RenderBuilder;
+	RenderDataBuilderPtr m_pRenderBuilder;
+
+	RenderResourceManagerPtr m_pRenderResourceManager;
 
 	Vec4 m_v4ClearColor;
 	ViewPort m_viewPort;

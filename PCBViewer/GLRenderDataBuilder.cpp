@@ -6,9 +6,6 @@
 #include "graphics/rendering/shader/xglshader.h"
 #include "graphics/rendering/OpenGL/glew.h"
 
-#include "graphics/fonts/xfont.h"
-
-
 #include "PolyDrawObject.h"
 #include "LineDrawObject.h"
 #include "CircleDrawObject.h"
@@ -16,8 +13,22 @@
 #include "TriangleDrawObject.h"
 #include "TextDrawObject.h"
 #include "RenderUtil.h"
+#include "Font.h"
 #include "FontAtlasMSDFGen.h"
+#include "FontManager.h"
 
+#include "RenderResourceManager.h"
+
+
+GLRenderDataBuilder::GLRenderDataBuilder(RenderResourceManagerPtr pFontAtlasManager/* = nullptr*/) :
+	RenderDataBuilder(),
+	m_pRenderResourceManger(pFontAtlasManager)
+{
+}
+
+GLRenderDataBuilder::~GLRenderDataBuilder()
+{
+}
 
 RectVertexData GLRenderDataBuilder::Build(RectDrawObject* pRectObj)
 {
@@ -41,6 +52,11 @@ float GLRenderDataBuilder::NextZ()
 	float z = m_fCurrentZ;
 	m_fCurrentZ += m_fZStep;
 	return z;
+}
+
+void GLRenderDataBuilder::SetFontAtlasManager(RenderResourceManagerPtr pResourceManager)
+{
+	m_pRenderResourceManger = pResourceManager;
 }
 
 RenderDataPtr GLRenderDataBuilder::Make(PolyDrawObjectList* pDrawObject)
@@ -443,6 +459,8 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 {
 	auto pData = std::make_shared<GLTextRenderData>();
 
+	auto pFontAtlasMana = m_pRenderResourceManger->GetFontAtlasMana();
+
 	for (auto pTextObj : pDrawObject->m_vecTexts)
 	{
 		auto pFont = pTextObj->m_font;
@@ -451,15 +469,18 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 
 		if (pTextObj->m_eRenderType == ETextRenderType::SDF)
 		{
-			auto pAtlasPtr = m_FontAtlasManager.Get(strKey);
+			auto pSdfRenderData = pData->m_pSDFRenderData;
+
+			auto pAtlasPtr = pFontAtlasMana->Get(strKey);
 
 			if (pAtlasPtr == nullptr)
 			{
-				auto pAtlasPtr = std::make_shared<FontAtlasMSDFGen>();
+				auto pNewAtlasPtr = std::make_shared<FontAtlasMSDFGen>();
 
-				if (pAtlasPtr->BuildFromFont(pFont.get(), 12))
+				if (pNewAtlasPtr->BuildFromFont(pFont.get(), 12))
 				{
-					m_FontAtlasManager.Add(pTextObj->m_font->GetGUID(), pAtlasPtr);
+					pFontAtlasMana->Add(pTextObj->m_font->GetGUID(), pNewAtlasPtr);
+					pAtlasPtr = pNewAtlasPtr;
 				}
 				else
 				{
@@ -472,7 +493,7 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 			float fNextPosX = pTextObj->m_pt.x;
 			float fPosY = pTextObj->m_pt.y;
 
-			auto itIns = pData->m_sdfRenderData.insert({ pAtlasPtr,CharGlyphDataList{} });
+			CharGlyphDataList glyphLists;
 
 			for (auto& ch : pTextObj->m_data)
 			{
@@ -491,10 +512,14 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 					glyphChar.pos = Vec3(ptGlyphDraw, fZ);
 
 					fNextPosX += pGlyphBase->advanceX;
-
-					itIns.first->second.push_back(glyphChar);
+					glyphLists.push_back(glyphChar);
 				}
 			}
+			pSdfRenderData->Add(pAtlasPtr, glyphLists);
+		}
+		else if (pTextObj->m_eRenderType == ETextRenderType::Bitmap)
+		{
+			// TODO : 
 		}
 	}
 

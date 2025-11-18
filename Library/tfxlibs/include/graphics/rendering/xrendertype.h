@@ -11,8 +11,7 @@
 #ifndef XRENDERTYPE_H
 #define XRENDERTYPE_H
 
-#include "core/tfx_type.h"
-#include "core/tfx_type_traits.h"
+#include "core/tfx_math.h"
 
 #include <memory>
 #include <vector>
@@ -24,15 +23,21 @@ typedef std::shared_ptr<IShaderProgram> ShaderProgramPtr;
 _interface IShaderDataBinder;
 typedef std::shared_ptr<IShaderDataBinder> ShaderDataBinderPtr;
 
-_interface IFont;
-typedef std::shared_ptr<IFont> FontPtr;
 
-_interface IFontRender;
-typedef std::shared_ptr<IFontRender> FontRenderPtr;
+__BEGIN_NAMESPACE__
 
-_interface IFontAtlas;
-typedef std::shared_ptr<IFontAtlas> FontAtlasPtr;
+_interface _tfxIFontRender;
 
-typedef tfx::_tfxManager<std::string, FontAtlasPtr> FontAtlasManager;
+template<typename _TFont_>
+_interface _tfxIFontAtlas;
+
+_interface _tfxIFont;
+
+class _tfxFontManager;
+
+typedef Vec3 Col3;
+typedef Vec4 Col4;
+
+__END_NAMESPACE__
 
 #endif // !XRENDERTYPE_H

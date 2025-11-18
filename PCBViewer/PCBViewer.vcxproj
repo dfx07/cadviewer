@@ -191,11 +191,15 @@
     <ClInclude Include="CircleDrawObject.h" />
     <ClInclude Include="CircleDrawSystem.h" />
     <ClInclude Include="DrawSystem.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="FontAtlas.h" />
     <ClInclude Include="FontAtlasMSDFGen.h" />
     <ClInclude Include="FreeTypeFont.h" />
     <ClInclude Include="GLBitmapFontRenderer.h" />
     <ClInclude Include="GLSdfFontRenderer.h" />
     <ClInclude Include="FontManager.h" />
+    <ClInclude Include="RenderResourceManager.h" />
+    <ClInclude Include="ResourceDef.h" />
     <ClInclude Include="TextDrawObject.h" />
     <ClInclude Include="TextDrawSystem.h" />
     <ClInclude Include="GLRenderData.h" />
@@ -235,6 +239,7 @@
     <ClCompile Include="CircleDrawObject.cpp" />
     <ClCompile Include="CircleDrawSystem.cpp" />
     <ClCompile Include="FontAtlasMSDFGen.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FreeTypeFont.cpp" />
     <ClCompile Include="GLBitmapFontRenderer.cpp" />
     <ClCompile Include="GLRenderData.cpp" />
@@ -255,6 +260,7 @@
     <ClCompile Include="RenderCache.cpp" />
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderModelManager.cpp" />
+    <ClCompile Include="RenderResourceManager.cpp" />
     <ClCompile Include="RenderUtil.cpp" />
     <ClCompile Include="TextDrawObject.cpp" />
     <ClCompile Include="TextDrawSystem.cpp" />

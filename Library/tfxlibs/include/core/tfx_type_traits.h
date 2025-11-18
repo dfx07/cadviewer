@@ -51,17 +51,17 @@ public:
 	typedef T type;
 
 public:
-	bool Add(const K& key, const type& object)
+	virtual bool Add(const K& key, type& object)
 	{
 		return m_objects.emplace(key, object).second;
 	}
 
-	bool Add(const K& key, type&& object)
+	virtual bool Add(const K& key, type&& object)
 	{
 		return m_objects.emplace(key, std::move(object)).second;
 	}
 
-	bool Remove(const K& key)
+	virtual bool Remove(const K& key)
 	{
 		return m_objects.erase(key) > 0;
 	}
@@ -119,7 +119,7 @@ public:
 		return nullptr;
 	}
 
-private:
+protected:
 	std::map<K, T> m_objects;
 };
 

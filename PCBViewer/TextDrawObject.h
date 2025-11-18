@@ -4,6 +4,8 @@
 #include "PCBViewType.h"
 #include "RenderDef.h"
 
+#include "ResourceDef.h"
+
 #include <vector>
 
 class TextDrawObject : public DrawObject

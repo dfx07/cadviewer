@@ -14,10 +14,10 @@
 #include "CircleDrawObject.h"
 #include "RectDrawObject.h"
 #include "TriangleDrawObject.h"
+#include "TextDrawObject.h"
 #include "Renderer.h"
 
 #include "core/tfx_utils.h"
-#include "core/tfx_type.h"
 
 
 #undef min
@@ -29,6 +29,7 @@
 
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
+
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -335,7 +336,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	//pRect->m_clThicknessColor = Col4(0.f, 0.f, 0.f, 1.f);
 
 	// ********************************************************************
-	// Rectangles
+	// Triangle
 	m_triangles = std::make_shared<TriangleDrawObjectList>();
 
 	auto pTrig = m_triangles->CreateTriangleDrawObject();
@@ -363,6 +364,20 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	//	vec2(dot(pq2, pq2), s * (v2.x * e2.y - v2.y * e2.x)));
 	//return -sqrt(d.x) * sign(d.y);
 
+
+	// ********************************************************************
+	// Text
+	m_texts = std::make_shared<TextDrawObjectList>();
+
+	auto pText = m_texts->CreateTextDrawObject();
+
+	pText->m_pt = { 0, 0 };
+	pText->m_clColor = Col4(0.5f, 1.f, 0.f, 1.f);
+	pText->m_fAngle = 0.f;
+	pText->m_data = "Ngo van thuong";
+
+
+
 	return true;
 }
 
@@ -386,6 +401,7 @@ void PCBView::Draw()
 	model.push_back(m_circles);
 	model.push_back(m_rects);
 	model.push_back(m_triangles);
+	model.push_back(m_texts);
 
 	m_pRenderer->Render(model);
 }

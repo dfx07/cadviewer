@@ -14,16 +14,15 @@
 #include <string>
 
 #include "graphics/rendering/xrendertype.h"
-#include "core/tfx_math.h"
 
 __BEGIN_NAMESPACE__
 
-_interface IFontRender
+_interface _tfxIFontRender
 {
 public:
-	virtual ~IFontRender() = default;
+	virtual ~_tfxIFontRender() = default;
 public:
-	virtual bool Draw(const IFont * font, const std::string txt, float x, float y, Vec2 dir, const Col4& col) = 0;
+	virtual bool Draw(const _tfxIFont * font, const std::string txt, float x, float y, Vec2 dir, const Col4& col) = 0;
 };
 
 __END_NAMESPACE__
