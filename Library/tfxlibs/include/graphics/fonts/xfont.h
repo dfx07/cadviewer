@@ -24,8 +24,6 @@ _interface _tfxIFont
 public:
 	virtual ~_tfxIFont() = default;
 public:
-	virtual bool Load(const char* font_path) = 0;
-	virtual void Unload() = 0;
 	virtual std::string GetGUID() = 0;
 };
 

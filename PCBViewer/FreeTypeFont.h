@@ -24,12 +24,11 @@ public:
 	virtual ~FreeTypeFont();
 
 public:
-	virtual bool Load(const char* font_path) override;
-	virtual void Unload() override;
 	virtual std::string GetGUID() override;
 
 public:
 	virtual FT_Face GetHandle() const;
+	void SetHandle(FT_Face face);
 
 protected:
 	FT_Face m_face;

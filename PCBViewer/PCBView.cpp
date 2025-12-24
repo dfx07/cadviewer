@@ -376,8 +376,6 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pText->m_fAngle = 0.f;
 	pText->m_data = "Ngo van thuong";
 
-
-
 	return true;
 }
 
