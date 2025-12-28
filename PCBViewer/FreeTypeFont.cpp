@@ -21,6 +21,12 @@ std::string FreeTypeFont::GetGUID()
 	return m_strGUID;
 }
 
+void FreeTypeFont::Release()
+{
+	if(m_face)
+		FT_Done_Face(m_face);
+}
+
 FT_Face FreeTypeFont::GetHandle() const
 {
 	return m_face;

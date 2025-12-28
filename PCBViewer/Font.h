@@ -19,7 +19,6 @@ _interface IFont
 public:
 	virtual ~IFont() = default;
 public:
-	virtual bool Load(const char* font_path) = 0;
-	virtual void Unload() = 0;
+	virtual void Release() = 0;
 	virtual std::string GetGUID() = 0;
 };

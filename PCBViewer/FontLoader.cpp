@@ -1,7 +1,10 @@
 #include "FontLoader.h"
 
-#include "FreeTypeFont.h"
 #include <cassert>
+
+#include "core/tfx_utils.h"
+#include "ResourceType.h"
+#include "FreeTypeFont.h"
 
 class FreeTypeFontSystem
 {
@@ -65,9 +68,30 @@ FreeTypeFontLoader::~FreeTypeFontLoader()
 
 std::unique_ptr<IFont> FreeTypeFontLoader::Load(const wchar_t* path)
 {
-	std::unique_ptr<FreeTypeFont> pFTFont = std::make_unique<FreeTypeFont>();
+	auto pFTFont = std::make_unique<FreeTypeFont>();
 
-	FT_Face face;
+	std::string fileData = tfx::ReadFile(path);
+	if (fileData.empty())
+		return nullptr;
+
+	FT_Face face{ nullptr };
+
+	auto err = FT_New_Memory_Face(FreeTypeSytem, reinterpret_cast<const FT_Byte*>(fileData.data()),
+		static_cast<FT_Long>(fileData.size()), 0, &face);
+
+	if (err != FT_Err_Ok)
+		return nullptr;
+
+	pFTFont->SetHandle(face);
+
+	return pFTFont;
+}
+
+std::unique_ptr<IFont> FreeTypeFontLoader::Load(const char* path)
+{
+	auto pFTFont = std::make_unique<FreeTypeFont>();
+
+	FT_Face face{ nullptr };
 	if (FT_New_Face(FreeTypeSytem, path, 0, &face))
 	{
 		return nullptr;
@@ -75,10 +99,38 @@ std::unique_ptr<IFont> FreeTypeFontLoader::Load(const wchar_t* path)
 
 	pFTFont->SetHandle(face);
 
-	return std::unique_ptr<IFont>();
+	return pFTFont;
 }
 
 void FreeTypeFontLoader::UnLoad(IFont* pFont)
 {
+	if (pFont)
+		pFont->Release();
+}
 
+FontLoader* FontFactory::GetLoader(const AssetOption* pOption)
+{
+	NULL_RETURN(pOption, nullptr);
+
+	auto pFontAssetOption = dynamic_cast<const FontAssetOption*>(pOption);
+
+	NULL_RETURN(pFontAssetOption, nullptr);
+
+	switch (pFontAssetOption->m_loadType)
+	{
+	case FontLoadType::FreeType:
+	{
+		if (!pFreeTypeLoader)
+			pFreeTypeLoader = std::make_unique<FreeTypeFontLoader>();
+
+		if (pFreeTypeLoader)
+			return pFreeTypeLoader.get();
+		break;
+	}
+
+	default:
+		break;
+	};
+
+	return nullptr;
 }

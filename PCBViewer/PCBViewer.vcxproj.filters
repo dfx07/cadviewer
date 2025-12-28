@@ -258,6 +258,9 @@
     <ClInclude Include="FontLoader.h">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceType.h">
+      <Filter>Header Files\resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -349,9 +352,6 @@
     </ClCompile>
     <ClCompile Include="FontAtlasMSDFGen.cpp">
       <Filter>Source Files\render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\tfxlibs\src\core\tfx_utils.cpp">
-      <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="FreeTypeFont.cpp">
       <Filter>Source Files\resources</Filter>

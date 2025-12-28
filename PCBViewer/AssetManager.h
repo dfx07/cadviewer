@@ -22,27 +22,13 @@ private:
 
 class AssetManager
 {
+public:
+	AssetManager();
+	~AssetManager();
+
 private:
-	IResource* GetResourceInternal(const std::string& guid)
-	{
-		auto pMeta = m_data_meta.GetMeta(guid);
-		if (pMeta == nullptr)
-			return nullptr;
+	IResource* GetResourceInternal(const std::string& guid);
 
-		auto itResource = m_data_resources.find(guid);
-		if (itResource != m_data_resources.end())
-			return itResource->second.get();
-
-		auto itLoader = m_asset_loaders.find(pMeta->type);
-		if (itLoader == m_asset_loaders.end())
-			return nullptr;
-
-		std::unique_ptr<IResource> resource = itLoader->second->Load(*pMeta);
-
-		IResource* pResource = resource.get();
-		m_data_resources[guid] = std::move(resource);
-		return pResource;
-	}
 public:
 	template<typename T>
 	T* GetResource(const std::string& guid)
@@ -53,7 +39,8 @@ public:
 	}
 
 public:
-	AssetDatabase m_data_meta;
+	std::unique_ptr<AssetDatabase> m_data_meta{ nullptr };
+	std::unique_ptr<FontManager> m_font_manager{ nullptr };
 
 public:
 	std::unordered_map<std::string, std::unique_ptr<IResource>> m_data_resources;

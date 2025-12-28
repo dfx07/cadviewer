@@ -51,7 +51,9 @@ public:
 	typedef T type;
 
 public:
-	virtual bool Add(const K& key, type& object)
+
+	template<typename U = T>
+	auto Add(const K& key, const U& object) -> std::enable_if_t<!is_unique_ptr<U>::value, bool>
 	{
 		return m_objects.emplace(key, object).second;
 	}

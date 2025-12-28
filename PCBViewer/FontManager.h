@@ -5,14 +5,21 @@
 #include "Font.h"
 
 
-class FontManager : public tfx::_tfxManager<std::string, FontPtr>
-{
-public:
-	virtual bool Add(const std::string& name, FontPtr& font) override;
-	virtual bool Remove(const std::string& name) override;
-};
+//class FontManager : public tfx::_tfxManager<std::string, FontPtr>
+//{
+//public:
+//	virtual bool Add(const std::string& name, FontPtr& font) override;
+//	virtual bool Remove(const std::string& name) override;
+//};
 
 class FontAtlasManager : public tfx::_tfxManager<std::string, FontAtlasPtr>
 {
 
+};
+
+
+class FontManager : public tfx::_tfxManager<std::string, std::unique_ptr<IFont>>
+{
+public:
+	virtual bool Remove(const std::string& name) override;
 };

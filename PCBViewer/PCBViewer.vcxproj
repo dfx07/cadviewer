@@ -203,6 +203,7 @@
     <ClInclude Include="ResourceDef.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="ResourceType.h" />
     <ClInclude Include="TextDrawObject.h" />
     <ClInclude Include="TextDrawSystem.h" />
     <ClInclude Include="GLRenderData.h" />
@@ -236,7 +237,6 @@
     <ClInclude Include="WInputDeviceMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Library\tfxlibs\src\core\tfx_utils.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\Camera\xcamera.cpp" />
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
     <ClCompile Include="CircleDrawObject.cpp" />

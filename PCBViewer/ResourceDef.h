@@ -23,12 +23,19 @@ enum AssetType
 	Font,
 };
 
+class AssetOption
+{
+public:
+	virtual ~AssetOption() = default;
+};
+
 class AssetMeta
 {
 public:
 	std::string guid;
 	std::string path;
 	AssetType type;
+	AssetOption* option{ nullptr };
 };
 
 _interface IResource

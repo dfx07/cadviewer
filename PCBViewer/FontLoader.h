@@ -10,6 +10,7 @@ public:
 
 public:
 	virtual std::unique_ptr<IFont> Load(const wchar_t* path) = 0;
+	virtual std::unique_ptr<IFont> Load(const char* path) = 0;
 	virtual void UnLoad(IFont* pFont) = 0;
 };
 
@@ -21,6 +22,14 @@ public:
 
 public:
 	virtual std::unique_ptr<IFont> Load(const wchar_t* path) override;
+	virtual std::unique_ptr<IFont> Load(const char* path) override;
 	virtual void UnLoad(IFont* pFont) override;
 };
 
+class FontFactory
+{
+public:
+	FontLoader* GetLoader(const AssetOption* pOption);
+public:
+	std::unique_ptr<FreeTypeFontLoader> pFreeTypeLoader{ nullptr };
+};

@@ -25,6 +25,7 @@ public:
 
 public:
 	virtual std::string GetGUID() override;
+	virtual void Release() override;
 
 public:
 	virtual FT_Face GetHandle() const;
