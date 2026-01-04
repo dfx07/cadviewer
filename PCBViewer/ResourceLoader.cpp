@@ -8,7 +8,7 @@
 FontResourceLoader::FontResourceLoader(FontManager* pFontManager):
 	m_pFontManager(pFontManager)
 {
-	m_pFactory = new FontFactory();
+	m_pFactory = new FontLoaderFactory();
 }
 
 FontResourceLoader::~FontResourceLoader()
@@ -32,14 +32,18 @@ std::unique_ptr<IResource> FontResourceLoader::Load(const AssetMeta& meta)
 
 	std::string key = pFont->GetGUID();
 
-	m_pFontManager->Add(key, std::move(pFont));
+	if (m_pFontManager)
+	{
+		m_pFontManager->Add(key, std::move(pFont));
 
-	auto pFontRef = m_pFontManager->Get(key);
+		auto pFontRef = m_pFontManager->Get(key);
 
-	if (pFontRef)
-		pFontResouce->Set(pFontRef);
+		if (pFontRef)
+			pFontResouce->Set(pFontRef);
+		return pFontResouce;
+	}
 
-	return pFontResouce;
+	return nullptr;
 }
 
 ImageResourceLoader::ImageResourceLoader()

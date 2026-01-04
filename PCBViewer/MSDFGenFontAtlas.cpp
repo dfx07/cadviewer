@@ -1,4 +1,4 @@
-﻿#include "FontAtlasMSDFGen.h"
+﻿#include "MSDFGenFontAtlas.h"
 #include "FreeTypeFont.h"
 
 #include "freetype/ft2build.h"
@@ -10,19 +10,19 @@
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
 
-FontAtlasMSDFGen::FontAtlasMSDFGen(const int w /*= ATLAS_MSD_WIDTH_DF*/, const int h /*= ATLAS_MSD_HEIGHT_DF*/) :
+MSDFGenFontAtlas::MSDFGenFontAtlas(const int w /*= ATLAS_MSD_WIDTH_DF*/, const int h /*= ATLAS_MSD_HEIGHT_DF*/) :
 	m_width(w),
 	m_height(h)
 {
 
 }
 
-FontAtlasMSDFGen::~FontAtlasMSDFGen()
+MSDFGenFontAtlas::~MSDFGenFontAtlas()
 {
 	//msdfgen::destroyFont(font);
 }
 
-bool FontAtlasMSDFGen::BuildFromFont(const IFont* font, int pixelHeight)
+bool MSDFGenFontAtlas::BuildFromFont(const IFont* font, int pixelHeight)
 {
 	if (auto pFTFont = dynamic_cast<const FreeTypeFont*>(font))
 	{
@@ -134,17 +134,17 @@ bool FontAtlasMSDFGen::BuildFromFont(const IFont* font, int pixelHeight)
 	return true;
 }
 
-int FontAtlasMSDFGen::GetAtlasWidth() const
+int MSDFGenFontAtlas::GetAtlasWidth() const
 {
 	return m_width;
 }
 
-int FontAtlasMSDFGen::GetAtlasHeight() const
+int MSDFGenFontAtlas::GetAtlasHeight() const
 {
 	return m_height;
 }
 
-const GlyphBase* FontAtlasMSDFGen::GetGlyph(uint32_t codepoint) const
+const GlyphBase* MSDFGenFontAtlas::GetGlyph(uint32_t codepoint) const
 {
 	auto itFound = m_glyphs.find(codepoint);
 
@@ -154,7 +154,7 @@ const GlyphBase* FontAtlasMSDFGen::GetGlyph(uint32_t codepoint) const
 	return &itFound->second;
 }
 
-const float* FontAtlasMSDFGen::GetBuffer() const
+const float* MSDFGenFontAtlas::GetBuffer() const
 {
 	return m_buffer.data();
 }

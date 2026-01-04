@@ -195,7 +195,7 @@
     <ClInclude Include="TextDrawObject.h">
       <Filter>Header Files\draw_objects</Filter>
     </ClInclude>
-    <ClInclude Include="FontAtlasMSDFGen.h">
+    <ClInclude Include="MSDFGenFontAtlas.h">
       <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\tfxlibs\include\core\apicom.h">
@@ -350,7 +350,7 @@
     <ClCompile Include="TextDrawObject.cpp">
       <Filter>Source Files\draw_objects</Filter>
     </ClCompile>
-    <ClCompile Include="FontAtlasMSDFGen.cpp">
+    <ClCompile Include="MSDFGenFontAtlas.cpp">
       <Filter>Source Files\render</Filter>
     </ClCompile>
     <ClCompile Include="FreeTypeFont.cpp">

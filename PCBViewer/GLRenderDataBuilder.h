@@ -68,4 +68,6 @@ private:
 protected:
 
 	RenderResourceManagerPtr m_pRenderResourceManger;
+
+	AssetManager* m_pAssetManager{ nullptr };
 };

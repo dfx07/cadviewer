@@ -193,7 +193,7 @@
     <ClInclude Include="DrawSystem.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontAtlas.h" />
-    <ClInclude Include="FontAtlasMSDFGen.h" />
+    <ClInclude Include="MSDFGenFontAtlas.h" />
     <ClInclude Include="FontLoader.h" />
     <ClInclude Include="FreeTypeFont.h" />
     <ClInclude Include="GLBitmapFontRenderer.h" />
@@ -241,7 +241,7 @@
     <ClCompile Include="..\Library\tfxlibs\src\graphics\rendering\shader\xglshader.cpp" />
     <ClCompile Include="CircleDrawObject.cpp" />
     <ClCompile Include="CircleDrawSystem.cpp" />
-    <ClCompile Include="FontAtlasMSDFGen.cpp" />
+    <ClCompile Include="MSDFGenFontAtlas.cpp" />
     <ClCompile Include="FontLoader.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FreeTypeFont.cpp" />

@@ -26,7 +26,7 @@ public:
 	virtual void UnLoad(IFont* pFont) override;
 };
 
-class FontFactory
+class FontLoaderFactory
 {
 public:
 	FontLoader* GetLoader(const AssetOption* pOption);

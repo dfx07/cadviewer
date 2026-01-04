@@ -4,12 +4,12 @@
 *                   MIT software Licencs, see the accompanying                      
 ************************************************************************************
 * @brief : Interface define free type font for rendering
-* @file  : FontAtlasMSDFGen.h
+* @file  : MSDFGenFontAtlas.h
 * @create: oct 12, 2025
 * @note  : For conditions of distribution and use, see copyright notice in readme.txt
 ************************************************************************************/
-#ifndef FONTATLASMSDFGEN_H
-#define FONTATLASMSDFGEN_H
+#ifndef MSDFGENFONTATLAS_H
+#define MSDFGENFONTATLAS_H
 
 #include <unordered_map>
 #include <vector>
@@ -26,11 +26,11 @@ class GlyphMSDF : public GlyphBase
 
 };
 
-class FontAtlasMSDFGen : public IFontAtlas
+class MSDFGenFontAtlas : public IFontAtlas
 {
 public:
-	FontAtlasMSDFGen(const int w = ATLAS_MSD_WIDTH_DF, const int h = ATLAS_MSD_HEIGHT_DF);
-	virtual ~FontAtlasMSDFGen();
+	MSDFGenFontAtlas(const int w = ATLAS_MSD_WIDTH_DF, const int h = ATLAS_MSD_HEIGHT_DF);
+	virtual ~MSDFGenFontAtlas();
 
 public:
 	virtual bool BuildFromFont(const IFont* font, int pixelHeight) override;
@@ -51,4 +51,4 @@ private:
 	std::vector<float> m_buffer;
 };
 
-#endif // !FONTATLASMSDFGEN_H
+#endif // !MSDFGENFONTATLAS_H

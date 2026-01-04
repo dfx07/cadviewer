@@ -11,9 +11,23 @@ public:
 		m_map[meta.guid] = meta;
 	}
 
+	void Remove(const std::string guid)
+	{
+		m_map.erase(guid);
+	}
+
 	const AssetMeta* GetMeta(const std::string& guid) const {
 		auto it = m_map.find(guid);
 		return it != m_map.end() ? &it->second : nullptr;
+	}
+
+	template<typename Func>
+	void ForEach(Func&& fn) const
+	{
+		for (const auto& it : m_map)
+		{
+			fn(it.first, it.second);
+		}
 	}
 
 private:
@@ -37,6 +51,8 @@ public:
 
 		return dynamic_cast<T*>(pResource);
 	}
+
+	void ReloadResource(std::vector<std::string>* pvecmsg_error);
 
 public:
 	std::unique_ptr<AssetDatabase> m_data_meta{ nullptr };

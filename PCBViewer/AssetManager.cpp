@@ -37,7 +37,21 @@ IResource* AssetManager::GetResourceInternal(const std::string& guid)
 
 	std::unique_ptr<IResource> resource = itLoader->second->Load(*pMeta);
 
-	IResource* pResource = resource.get();
 	m_data_resources[guid] = std::move(resource);
-	return pResource;
+
+	return m_data_resources[guid].get();
+}
+
+void AssetManager::ReloadResource(std::vector<std::string>* pvecmsg_error)
+{
+	m_data_meta->ForEach([&] (const std::string& guid, const AssetMeta& meta)
+	{
+		auto itLoader = m_asset_loaders.find(meta.type);
+		if (itLoader == m_asset_loaders.end())
+			return;
+
+		std::unique_ptr<IResource> resource = itLoader->second->Load(meta);
+
+		m_data_resources[guid] = std::move(resource);
+	});
 }

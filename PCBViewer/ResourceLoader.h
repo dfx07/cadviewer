@@ -2,7 +2,7 @@
 
 #include "ResourceDef.h"
 
-class FontFactory;
+class FontLoaderFactory;
 
 class FontResourceLoader : public IResourceLoader
 {
@@ -14,8 +14,8 @@ public:
 	virtual std::unique_ptr<IResource> Load(const AssetMeta& meta);
 
 protected:
-	FontFactory* m_pFactory;
-	FontManager* m_pFontManager{ nullptr };
+	FontLoaderFactory* m_pFactory;
+	FontManager*       m_pFontManager{ nullptr };
 };
 
 class ImageResourceLoader : public IResourceLoader

@@ -108,7 +108,7 @@ void FreeTypeFontLoader::UnLoad(IFont* pFont)
 		pFont->Release();
 }
 
-FontLoader* FontFactory::GetLoader(const AssetOption* pOption)
+FontLoader* FontLoaderFactory::GetLoader(const AssetOption* pOption)
 {
 	NULL_RETURN(pOption, nullptr);
 

@@ -14,7 +14,7 @@
 #include "TextDrawObject.h"
 #include "RenderUtil.h"
 #include "Font.h"
-#include "FontAtlasMSDFGen.h"
+#include "MSDFGenFontAtlas.h"
 #include "FontManager.h"
 
 #include "RenderResourceManager.h"
@@ -475,7 +475,7 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 
 			if (pAtlasPtr == nullptr)
 			{
-				auto pNewAtlasPtr = std::make_shared<FontAtlasMSDFGen>();
+				auto pNewAtlasPtr = std::make_shared<MSDFGenFontAtlas>();
 
 				if (pNewAtlasPtr->BuildFromFont(pFont.get(), 12))
 				{

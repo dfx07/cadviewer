@@ -1,6 +1,6 @@
 ﻿#include "GLRenderData.h"
 #include "graphics/rendering/OpenGL/glew.h"
-#include "FontAtlasMSDFGen.h"
+#include "MSDFGenFontAtlas.h"
 
 GLPolyRenderData::GLPolyRenderData()
 {

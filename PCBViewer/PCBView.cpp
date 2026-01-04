@@ -16,6 +16,8 @@
 #include "TriangleDrawObject.h"
 #include "TextDrawObject.h"
 #include "Renderer.h"
+#include "ResourceType.h"
+#include "AssetManager.h"
 
 #include "core/tfx_utils.h"
 
@@ -30,6 +32,8 @@
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
 
+
+AssetManager* g_pAsset{ nullptr };
 
 
 PCBView::PCBView() : NotifyObject(),
@@ -51,6 +55,22 @@ bool PCBView::Create(HWND hWnd, const int nWidth, const int nHeight)
 
 	m_nWidth = nWidth;
 	m_nHeight = nHeight;
+
+	g_pAsset = new AssetManager();
+
+	AssetMeta fontAsset;
+
+	fontAsset.guid = "font_001";
+	fontAsset.type = AssetType::Font;
+	fontAsset.path = "fonts/JetBrainsMonoNL-Regular.ttf";
+	auto pFontOption = new FontAssetOption();
+
+	pFontOption->m_loadType = FontLoadType::FreeType;
+	fontAsset.option = pFontOption;
+
+	g_pAsset->m_data_meta->AddAsset(fontAsset);
+
+	g_pAsset->ReloadResource(nullptr);
 
 	return true;
 }
@@ -375,6 +395,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pText->m_clColor = Col4(0.5f, 1.f, 0.f, 1.f);
 	pText->m_fAngle = 0.f;
 	pText->m_data = "Ngo van thuong";
+	pText->m_font = g_pAsset->GetResource();
 
 	return true;
 }
