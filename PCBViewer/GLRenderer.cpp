@@ -8,7 +8,7 @@
 #include "graphics/rendering/OpenGL/glew.h"
 
 #include "DrawObject.h"
-#include "RenderResourceManager.h"
+#include "RenderAsset.h"
 
 
 

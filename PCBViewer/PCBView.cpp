@@ -31,7 +31,7 @@
 
 #include "msdfgen/msdfgen.h"
 #include "msdfgen/msdfgen-ext.h"
-
+#include <mutex>
 
 AssetManager* g_pAsset{ nullptr };
 
@@ -62,7 +62,7 @@ bool PCBView::Create(HWND hWnd, const int nWidth, const int nHeight)
 
 	fontAsset.guid = "font_001";
 	fontAsset.type = AssetType::Font;
-	fontAsset.path = "fonts/JetBrainsMonoNL-Regular.ttf";
+	fontAsset.path = "fonts\\JetBrainsMonoNL-Regular.ttf";
 	auto pFontOption = new FontAssetOption();
 
 	pFontOption->m_loadType = FontLoadType::FreeType;
@@ -395,7 +395,7 @@ bool PCBView::CreateContext(ContextConfig ctx_conf)
 	pText->m_clColor = Col4(0.5f, 1.f, 0.f, 1.f);
 	pText->m_fAngle = 0.f;
 	pText->m_data = "Ngo van thuong";
-	pText->m_font = g_pAsset->GetResource();
+	pText->m_strFontKey = "font_001";
 
 	return true;
 }

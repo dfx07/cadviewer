@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "DrawObject.h"
 #include "PCBViewType.h"
@@ -31,7 +31,7 @@ public:
 	std::string m_data;
 
 	ETextRenderType m_eRenderType{ ETextRenderType::SDF };
-	FontPtr m_font{ nullptr };
+	std::string m_strFontKey{};
 };
 
 class TextDrawObjectList : public DrawObject

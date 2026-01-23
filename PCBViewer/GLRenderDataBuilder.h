@@ -23,7 +23,7 @@ class GLRenderDataBuilder : public RenderDataBuilder,
 	public std::enable_shared_from_this<GLRenderDataBuilder>
 {
 public:
-	GLRenderDataBuilder(RenderResourceManagerPtr pFontAtlasManager = nullptr);
+	GLRenderDataBuilder(RenderAssetPtr pRenderAsset = nullptr);
 	~GLRenderDataBuilder();
 
 private:
@@ -33,7 +33,7 @@ public:
 	float NextZ();
 
 public:
-	void SetFontAtlasManager(RenderResourceManagerPtr pFontAtlasManager);
+	void SetRenderAsset(RenderAssetPtr pRenderAsset);
 
 public:
 	virtual RenderDataPtr Make(PolyDrawObjectList* pDrawObject);
@@ -67,7 +67,7 @@ private:
 
 protected:
 
-	RenderResourceManagerPtr m_pRenderResourceManger;
+	RenderAssetPtr m_pRenderAsset;
 
 	AssetManager* m_pAssetManager{ nullptr };
 };

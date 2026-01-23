@@ -61,8 +61,8 @@ typedef tfx::_tfxIFontRender IFontRender;
 typedef std::shared_ptr<IFontRender> FontRenderPtr;
 
 
-class RenderResourceManager;
-typedef std::shared_ptr<RenderResourceManager> RenderResourceManagerPtr;
+class RenderAsset;
+typedef std::shared_ptr<RenderAsset> RenderAssetPtr;
 
 class RenderData;
 typedef std::shared_ptr<RenderData> RenderDataPtr;

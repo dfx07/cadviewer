@@ -23,6 +23,10 @@ public:
 		m_pFont = font;
 	}
 
+	IFont* Get() const {
+		return m_pFont;
+	}
+
 protected:
 	IFont* m_pFont;
 };

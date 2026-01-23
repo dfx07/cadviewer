@@ -55,6 +55,11 @@ public:
 	void ReloadResource(std::vector<std::string>* pvecmsg_error);
 
 public:
+	FontManager* GetFontManager() const {
+		return m_font_manager.get();
+	}
+
+public:
 	std::unique_ptr<AssetDatabase> m_data_meta{ nullptr };
 	std::unique_ptr<FontManager> m_font_manager{ nullptr };
 
