@@ -22,9 +22,10 @@
 #include "ResourceType.h"
 
 
-GLRenderDataBuilder::GLRenderDataBuilder(RenderAssetPtr pRenderAsset/* = nullptr*/) :
-	RenderDataBuilder(),
-	m_pRenderAsset(pRenderAsset)
+GLRenderDataBuilder::GLRenderDataBuilder(RenderAsset* pRenderAsset /*= nullptr*/,
+	AssetManager* pAssetManager /*= nullptr*/) : RenderDataBuilder(),
+	m_pRenderAsset(pRenderAsset),
+	m_pAssetManager(pAssetManager)
 {
 }
 
@@ -56,7 +57,7 @@ float GLRenderDataBuilder::NextZ()
 	return z;
 }
 
-void GLRenderDataBuilder::SetRenderAsset(RenderAssetPtr pRenderAsset)
+void GLRenderDataBuilder::SetRenderAsset(RenderAsset* pRenderAsset)
 {
 	m_pRenderAsset = pRenderAsset;
 }
@@ -461,23 +462,23 @@ RenderDataPtr GLRenderDataBuilder::Make(TextDrawObjectList* pDrawObject)
 {
 	auto pData = std::make_shared<GLTextRenderData>();
 
-	auto pFontAtlasMana = m_pRenderResourceManger->GetFontAtlasMana();
+	auto pFontAtlasMana = m_pRenderAsset->GetFontAtlasMana();
 
 	for (auto pTextObj : pDrawObject->m_vecTexts)
 	{
-		std::string strFontKey = pTextObj->m_strFontKey;
+		const std::string& strFontKey = pTextObj->m_strFontKey;
 
 		if (pTextObj->m_eRenderType == ETextRenderType::SDF)
 		{
 			auto pSdfRenderData = pData->m_pSDFRenderData;
 
-			auto pFont = m_pAssetManager->GetResource<FontResource>(strFontKey);
-			NULL_CONTINUE(pFont);
-
 			auto pAtlasPtr = pFontAtlasMana->Get(strFontKey);
 
 			if (pAtlasPtr == nullptr)
 			{
+				auto pFont = m_pAssetManager->GetResource<FontResource>(strFontKey);
+				NULL_CONTINUE(pFont);
+
 				auto pNewAtlasPtr = std::make_shared<MSDFGenFontAtlas>();
 
 				if (pNewAtlasPtr->BuildFromFont(pFont->Get(), 12))

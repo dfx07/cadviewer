@@ -19,7 +19,7 @@
 class GLRenderer : public Renderer
 {
 public:
-	GLRenderer(CameraPtr pCamera);
+	GLRenderer(CameraPtr pCamera, AssetManager* pAssetManager = nullptr);
 	~GLRenderer();
 
 public:
@@ -34,7 +34,8 @@ protected:
 
 	RenderDataBuilderPtr m_pRenderBuilder;
 
-	RenderResourceManagerPtr m_pRenderResourceManager;
+	RenderAssetPtr m_pRenderAsset;
+	AssetManager* m_pAssetManager;
 
 	Vec4 m_v4ClearColor;
 	ViewPort m_viewPort;

@@ -23,7 +23,7 @@ class GLRenderDataBuilder : public RenderDataBuilder,
 	public std::enable_shared_from_this<GLRenderDataBuilder>
 {
 public:
-	GLRenderDataBuilder(RenderAssetPtr pRenderAsset = nullptr);
+	GLRenderDataBuilder(RenderAsset* pRenderAsset = nullptr, AssetManager* pAssetManager = nullptr);
 	~GLRenderDataBuilder();
 
 private:
@@ -33,7 +33,7 @@ public:
 	float NextZ();
 
 public:
-	void SetRenderAsset(RenderAssetPtr pRenderAsset);
+	void SetRenderAsset(RenderAsset* pRenderAsset);
 
 public:
 	virtual RenderDataPtr Make(PolyDrawObjectList* pDrawObject);
@@ -67,7 +67,7 @@ private:
 
 protected:
 
-	RenderAssetPtr m_pRenderAsset;
+	RenderAsset*  m_pRenderAsset;
 
 	AssetManager* m_pAssetManager{ nullptr };
 };

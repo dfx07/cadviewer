@@ -12,13 +12,13 @@
 
 
 
-GLRenderer::GLRenderer(CameraPtr pCamera)
+GLRenderer::GLRenderer(CameraPtr pCamera, AssetManager* pAssetManager /*= nullptr*/)
 	: Renderer(pCamera),
-	m_pRenderResourceManager(nullptr)
+	m_pAssetManager(pAssetManager)
 {
-	m_pRenderResourceManager = std::make_shared<RenderResourceManager>();
+	m_pRenderAsset = std::make_shared<RenderAsset>();
 
-	m_pRenderBuilder = std::make_shared<GLRenderDataBuilder>(m_pRenderResourceManager);
+	m_pRenderBuilder = std::make_shared<GLRenderDataBuilder>(m_pRenderAsset.get(), m_pAssetManager);
 
 	m_pRenderCache = std::make_shared<RenderCache>(m_pRenderBuilder);
 
